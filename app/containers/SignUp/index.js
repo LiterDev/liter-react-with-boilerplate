@@ -15,20 +15,17 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import makeSelectSignUp from './selectors';
+import { makeSelectSignUp } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import Form from './Form';
 // import Input from './Input';
 import Section from './Section';
+import { signupAction } from './actions';
 /* eslint-disable react/prefer-stateless-function */
 export class SignUp extends React.PureComponent {
   render() {
-    // const { loading, error, repos } = this.props;
-    // const { loading, error, repos } = this.props;
-    // const { username, password } = this.state;
-    // const { classes, location, pathname, onSubmitLogin, auth } = this.props;
     return (
       <div>
         <Helmet>
@@ -41,6 +38,7 @@ export class SignUp extends React.PureComponent {
             <label htmlFor="username">
               <Input
                 id="username"
+                name="username"
                 type="text"
                 placeholder="mxstbr"
                 // value={this.props.username}
@@ -50,7 +48,8 @@ export class SignUp extends React.PureComponent {
             <Button
               variant="contained"
               color="primary"
-              onClick={this.props.onSubmitForm}
+              type="submit"
+              // onClick={this.props.onSubmitForm}
             >
               로딩
             </Button>
@@ -72,12 +71,14 @@ const mapStateToProps = createStructuredSelector({
   signup: makeSelectSignUp(),
 });
 
-function mapDispatchToProps() {
+function mapDispatchToProps(dispatch) {
   return {
     onSubmitForm: evt => {
+      console.log(evt);
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      alert('1111');
-      // dispatch(loadRepos());
+      const data = new FormData(evt.target);
+      console.log(data.get('username'));
+      dispatch(signupAction(data));
     },
   };
 }

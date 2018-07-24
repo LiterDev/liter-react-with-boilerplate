@@ -9,9 +9,10 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Hidden from '@material-ui/core/Hidden';
 import { FormattedMessage } from 'react-intl';
-import { HeaderLink } from './HeaderLink';
 import messages from './messages';
-// import LinkBar from './LinkBar';
+import { Link } from 'react-router-dom';
+import ListItem from '@material-ui/core/ListItem';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   paper: {
@@ -41,6 +42,34 @@ const styles = theme => ({
   anchor: {
     color: theme.palette.text.secondary,
   },
+  item: {
+    display: 'block',
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  itemLeaf: {
+    display: 'flex',
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  button: {
+    justifyContent: 'flex-start',
+    textTransform: 'none',
+    width: '100%',
+  },
+  buttonLeaf: {
+    justifyContent: 'flex-start',
+    textTransform: 'none',
+    width: '100%',
+    fontWeight: theme.typography.fontWeightRegular,
+    '&.depth-0': {
+      fontWeight: theme.typography.fontWeightMedium,
+    },
+  },
+  active: {
+    color: theme.palette.primary.main,
+    fontWeight: theme.typography.fontWeightMedium,
+  },
 });
 
 // iOS is hosted on high-end devices. We can enable the backdrop transition without
@@ -48,20 +77,51 @@ const styles = theme => ({
 // So: <SwipeableDrawer disableBackdropTransition={false} />
 const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-function AppDrawer(props, context) {
-  const { classes, className, mobileOpen, onClose, onOpen } = props;
-
+function AppDrawer(props) {
+  const {
+    classes,
+    className,
+    disablePermanent,
+    mobileOpen,
+    onClose,
+    onOpen,
+    onClick,
+    href,
+  } = props;
+  const style = {
+    paddingLeft: 8 * (3 + 2 * 0),
+  };
   const drawer = (
     <div className={classes.nav}>
       <div className={classes.toolbarIe11}>
         <div className={classes.toolbar}>
           <Typography variant="title" color="inherit">
-            Material-UI
+            LITER
           </Typography>
         </div>
       </div>
       <Divider />
       {/* {renderNavItems({ props, pages: context.pages, activePage: context.activePage, depth: 0 })} */}
+      {/* <HeaderLink to="/features">
+        <FormattedMessage {...messages.features} />
+      </HeaderLink> */}
+      <List>
+        <ListItem className={classes.itemLeaf}>
+          <Button
+            component={props => (
+              <Link to="/signup" onClick={onClose}>
+                signup
+              </Link>
+            )}
+            className={classNames(classes.buttonLeaf, `depth-0`)}
+            disableRipple
+            onClick={onClick}
+            style={style}
+          >
+            about
+          </Button>
+        </ListItem>
+      </List>
     </div>
   );
 

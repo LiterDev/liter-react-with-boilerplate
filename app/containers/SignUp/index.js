@@ -20,7 +20,7 @@ import saga from './saga';
 import messages from './messages';
 
 /* eslint-disable react/prefer-stateless-function */
-export class SignUp extends React.Component {
+export class SignUp extends React.PureComponent {
   render() {
     return (
       <div>
@@ -35,7 +35,7 @@ export class SignUp extends React.Component {
 }
 
 SignUp.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  //dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({

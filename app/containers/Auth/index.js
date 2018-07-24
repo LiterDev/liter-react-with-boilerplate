@@ -18,15 +18,46 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 
-/* eslint-disable react/prefer-stateless-function */
-export class Auth extends React.PureComponent {
-  render() {
-    return (
-      <div>
-        <FormattedMessage {...messages.header} />
-      </div>
-    );
-  }
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect,
+  withRouter,
+} from 'react-router-dom';
+
+const fakeAuth = {
+  isAuthenticated: false,
+  authenticate(cb) {
+    this.isAuthenticated = true;
+    setTimeout(cb, 100); // fake async
+  },
+  signout(cb) {
+    this.isAuthenticated = false;
+    setTimeout(cb, 100);
+  },
+};
+
+export const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      fakeAuth.isAuthenticated ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{
+            pathname: '/login',
+            state: { from: props.location },
+          }}
+        />
+      )
+    }
+  />
+);
+
+function Auth() {
+  return <div>{/* <FormattedMessage {...messages.header} /> */}</div>;
 }
 
 Auth.propTypes = {

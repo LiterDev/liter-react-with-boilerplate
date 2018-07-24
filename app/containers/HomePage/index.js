@@ -24,7 +24,7 @@ import ReposList from 'components/ReposList';
 import AtPrefix from './AtPrefix';
 import CenteredSection from './CenteredSection';
 import Form from './Form';
-import Input from './Input';
+// import Input from './Input';
 import Section from './Section';
 import messages from './messages';
 import { loadRepos } from '../App/actions';
@@ -32,6 +32,10 @@ import { changeUsername } from './actions';
 import { makeSelectUsername } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+
+import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
+
 
 /* eslint-disable react/prefer-stateless-function */
 export class HomePage extends React.PureComponent {
@@ -88,8 +92,15 @@ export class HomePage extends React.PureComponent {
                   onChange={this.props.onChangeUsername}
                 />
               </label>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.props.onSubmitForm}
+              >
+                로딩
+              </Button>
             </Form>
-            <ReposList {...reposListProps} />
+            {/* <ReposList {...reposListProps} /> */}
           </Section>
         </div>
       </article>
@@ -106,12 +117,13 @@ HomePage.propTypes = {
   onChangeUsername: PropTypes.func,
 };
 
-export function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
-    onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
+    //onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
     onSubmitForm: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(loadRepos());
+      alert('1111');
+      //dispatch(loadRepos());
     },
   };
 }

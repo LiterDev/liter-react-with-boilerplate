@@ -17,7 +17,7 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import { PrivateRoute } from 'containers/Auth';
-import { SignUp } from '../SignUp';
+import SignUp from 'containers/SignUp/Loadable';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);

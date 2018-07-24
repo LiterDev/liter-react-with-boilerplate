@@ -25,9 +25,8 @@ import Button from '@material-ui/core/Button';
 
 /* eslint-disable react/prefer-stateless-function */
 export class SignUp extends React.PureComponent {
-  
   render() {
-    const { loading, error, repos } = this.props;
+    // const { loading, error, repos } = this.props;
     // const { loading, error, repos } = this.props;
     // const { username, password } = this.state;
     // const { classes, location, pathname, onSubmitLogin, auth } = this.props;
@@ -64,7 +63,7 @@ export class SignUp extends React.PureComponent {
 }
 
 SignUp.propTypes = {
-  //dispatch: PropTypes.func.isRequired,
+  // dispatch: PropTypes.func.isRequired,
   onSubmitForm: PropTypes.func,
   // username: PropTypes.string,
   // onChangeUsername: PropTypes.func,
@@ -79,7 +78,7 @@ function mapDispatchToProps(dispatch) {
     onSubmitForm: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       alert('1111');
-      //dispatch(loadRepos());
+      // dispatch(loadRepos());
     },
   };
 }

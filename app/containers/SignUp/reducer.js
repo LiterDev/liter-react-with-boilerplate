@@ -7,7 +7,9 @@
 import { fromJS } from 'immutable';
 import { DEFAULT_ACTION } from './constants';
 
-export const initialState = fromJS({});
+export const initialState = fromJS({
+  test: '',
+});
 
 function signUpReducer(state = initialState, action) {
   switch (action.type) {

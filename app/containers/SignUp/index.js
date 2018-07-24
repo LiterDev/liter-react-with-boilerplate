@@ -5,6 +5,8 @@
  */
 
 import React from 'react';
+import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -20,9 +22,6 @@ import messages from './messages';
 import Form from './Form';
 // import Input from './Input';
 import Section from './Section';
-import Input from '@material-ui/core/Input';
-import Button from '@material-ui/core/Button';
-
 /* eslint-disable react/prefer-stateless-function */
 export class SignUp extends React.PureComponent {
   render() {

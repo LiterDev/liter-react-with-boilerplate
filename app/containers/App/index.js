@@ -21,10 +21,10 @@ import SignUp from 'containers/SignUp/Loadable';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
-  margin: 56px auto;
+  // margin: 56px auto;
   display: flex;
   min-height: 100%;
-  // padding: 0 16px;
+  padding: 80px 16px;
   flex-direction: column;
 `;
 

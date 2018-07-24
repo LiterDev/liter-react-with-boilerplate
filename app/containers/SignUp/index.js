@@ -44,6 +44,14 @@ export class SignUp extends React.PureComponent {
                 // value={this.props.username}
                 // onChange={this.props.onChangeUsername}
               />
+              <Input
+                id="password"
+                name="password"
+                type="text"
+                placeholder="mxstbr"
+                // value={this.props.username}
+                // onChange={this.props.onChangeUsername}
+              />
             </label>
             <Button
               variant="contained"

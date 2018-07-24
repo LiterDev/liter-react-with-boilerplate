@@ -74,10 +74,8 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     onSubmitForm: evt => {
-      console.log(evt);
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       const data = new FormData(evt.target);
-      console.log(data.get('username'));
       dispatch(signupAction(data));
     },
   };

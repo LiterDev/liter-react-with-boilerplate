@@ -73,7 +73,7 @@ const mapStateToProps = createStructuredSelector({
   signup: makeSelectSignUp(),
 });
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps() {
   return {
     onSubmitForm: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();

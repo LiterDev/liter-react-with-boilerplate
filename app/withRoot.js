@@ -7,17 +7,43 @@ import {
   createGenerateClassName,
   jssPreset,
 } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
-import green from '@material-ui/core/colors/green';
+// import purple from '@material-ui/core/colors/purple';
+// import grey from '@material-ui/core/colors/grey';
+
+// import green from '@material-ui/core/colors/green';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 // A theme with custom primary and secondary color.
 // It's optional.
+
+// const theme = createMuiTheme({
+//   palette: {
+//     primary: {
+//       light: grey[50],
+//       main: grey[50],
+//       dark: grey[50],
+//     },
+//     secondary: {
+//       light: green[300],
+//       main: green[500],
+//       dark: green[700],
+//     },
+//   },
+// });
 const theme = createMuiTheme({
   palette: {
-    primary: purple,
-    secondary: green,
+    primary: {
+      light: '#ffffff',
+      main: '#ffffff',
+      dark: '#ffffff',
+      contrastText: '#999999',
+    },
+    background: {
+      paper: '#ffffff',
+      default: '#ffffff',
+    },
   },
+  shadows: [0],
 });
 
 // Create a JSS instance with the default preset of plugins.

@@ -7,12 +7,12 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import AppDrawer from "./AppDrawer";
+import AppDrawer from './AppDrawer';
 
-
-const styles = {
+const styles = theme => ({
   root: {
     flexGrow: 1,
+    paddingTop: theme.spacing.unit * 0,
   },
   flex: {
     flexGrow: 1,
@@ -21,7 +21,25 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
-};
+  top_box: {
+    // width: '375px',
+    height: 64,
+    background: {
+      color: '#ffffff',
+    },
+  },
+  ic_round_menu: {
+    width: 24,
+    height: 24,
+    object: {
+      fit: 'contain',
+    },
+    marginRight: 20,
+  },
+  toolbar: {
+    height: '100vh',
+  },
+});
 
 /* eslint-disable react/prefer-stateless-function */
 class Header extends React.Component {
@@ -42,10 +60,10 @@ class Header extends React.Component {
     const { classes } = this.props;
     return (
       <div>
-        <AppBar position="fixed">
-          <Toolbar>
+        <AppBar position="fixed" className={classes.top_box}>
+          <Toolbar className={classes.toolbar}>
             <IconButton
-              className={classes.menuButton}
+              className={classes.ic_round_menu}
               color="inherit"
               aria-label="Menu"
               onClick={this.handleDrawerOpen}
@@ -84,6 +102,10 @@ class Header extends React.Component {
     );
   }
 }
+
+Header.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 // export default Header;
 export default withStyles(styles)(Header);

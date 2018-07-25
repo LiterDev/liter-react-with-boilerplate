@@ -8,7 +8,7 @@ import {
   createGenerateClassName,
   jssPreset,
 } from '@material-ui/core/styles';
-// import purple from '@material-ui/core/colors/purple';
+import blue from '@material-ui/core/colors/blue';
 // import grey from '@material-ui/core/colors/grey';
 
 // import green from '@material-ui/core/colors/green';
@@ -40,10 +40,11 @@ const theme = createMuiTheme({
       dark: '#ffffff',
       contrastText: '#999999',
     },
-    background: {
-      paper: '#ffffff',
-      default: '#ffffff',
-    },
+    secondary: blue,
+    // background: {
+    //   paper: '#ffffff',
+    //   default: '#ffffff',
+    // },
   },
   // shadows: ['none'],
   shadows: Array(25).fill('none'),

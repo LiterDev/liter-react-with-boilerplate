@@ -9,6 +9,6 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   header: {
     id: 'app.containers.ReviewForm.header',
-    defaultMessage: 'This is ReviewForm container !',
+    defaultMessage: 'ReviewForm',
   },
 });

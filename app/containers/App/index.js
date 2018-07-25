@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
@@ -60,6 +61,10 @@ function App(props) {
     </AppWrapper>
   );
 }
+
+App.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 // export default App;
 export default withRoot(withStyles(styles)(App));

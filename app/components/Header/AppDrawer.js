@@ -11,6 +11,7 @@ import Divider from '@material-ui/core/Divider';
 import Hidden from '@material-ui/core/Hidden';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
+// import HeaderLink from './HeaderLink';
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
 
@@ -107,14 +108,20 @@ function AppDrawer(props) {
       </HeaderLink> */}
       <List>
         <ListItem className={classes.itemLeaf}>
-          <Link href="/signup" onClick={onClose}>
+          {
+            // eslint-disable-next-line anchor-is-valid
+          }
+          <Link to="/signup" onClick={onClose} role="button">
             <Button>signup</Button>
           </Link>
         </ListItem>
         <ListItem className={classes.itemLeaf}>
-          <Button onClick={onClose}>
-            <Link href="/review/write">review</Link>
-          </Button>
+          {
+            // eslint-disable-next-line anchor-is-valid
+          }
+          <Link to="/review/write" onClick={onClose} role="button">
+            <Button>review</Button>
+          </Link>
         </ListItem>
       </List>
     </div>

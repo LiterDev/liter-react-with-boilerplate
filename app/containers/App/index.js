@@ -18,6 +18,8 @@ import Header from 'components/Header';
 import Footer from 'components/Footer';
 import { PrivateRoute } from 'containers/Auth';
 import SignUp from 'containers/SignUp/Loadable';
+import { withStyles } from '@material-ui/core/styles';
+import withRoot from 'withRoot';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -27,10 +29,20 @@ const AppWrapper = styled.div`
   padding: 80px 16px;
   flex-direction: column;
 `;
+const styles = theme => ({
+  root: {
+    textAlign: 'center',
+    paddingTop: theme.spacing.unit * 10,
+    min: {
+      height: '100vh',
+    },
+  },
+});
 
-export default function App() {
+function App(props) {
+  const { classes } = props;
   return (
-    <AppWrapper>
+    <AppWrapper className={classes.root}>
       <Helmet
         titleTemplate="%s - React.js Boilerplate"
         defaultTitle="React.js Boilerplate"
@@ -48,3 +60,6 @@ export default function App() {
     </AppWrapper>
   );
 }
+
+// export default App;
+export default withRoot(withStyles(styles)(App));

@@ -1,18 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
-import Drawer from '@material-ui/core/Drawer';
+// import Drawer from '@material-ui/core/Drawer';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Hidden from '@material-ui/core/Hidden';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
-import { Link } from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
+// import { FormattedMessage } from 'react-intl';
+// import messages from './messages';
 
 const styles = theme => ({
   paper: {
@@ -81,16 +81,16 @@ function AppDrawer(props) {
   const {
     classes,
     className,
-    disablePermanent,
+    // disablePermanent,
     mobileOpen,
     onClose,
     onOpen,
-    onClick,
-    href,
+    // onClick,
+    // href,
   } = props;
-  const style = {
-    paddingLeft: 8 * (3 + 2 * 0),
-  };
+  // const style = {
+  //   paddingLeft: 8 * (3 + 2 * 0),
+  // };
   const drawer = (
     <div className={classes.nav}>
       <div className={classes.toolbarIe11}>
@@ -107,18 +107,13 @@ function AppDrawer(props) {
       </HeaderLink> */}
       <List>
         <ListItem className={classes.itemLeaf}>
-          <Button
-            component={props => (
-              <Link to="/signup" onClick={onClose}>
-                signup
-              </Link>
-            )}
-            className={classNames(classes.buttonLeaf, `depth-0`)}
-            disableRipple
-            onClick={onClick}
-            style={style}
-          >
-            about
+          <Link href="/signup" onClick={onClose}>
+            <Button>signup</Button>
+          </Link>
+        </ListItem>
+        <ListItem className={classes.itemLeaf}>
+          <Button onClick={onClose}>
+            <Link href="/review/write">review</Link>
           </Button>
         </ListItem>
       </List>

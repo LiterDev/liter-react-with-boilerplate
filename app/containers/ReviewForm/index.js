@@ -51,8 +51,44 @@ const styles = theme => ({
 });
 /* eslint-disable react/prefer-stateless-function */
 export class ReviewForm extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      // file: '',
+      imagePreviewUrl: '',
+    };
+    this.handleImageChange = this.handleImageChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    // TODO: do something with -> this.state.file
+  }
+
+  handleImageChange(e) {
+    e.preventDefault();
+
+    const reader = new FileReader();
+    const file = e.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        // file,
+        imagePreviewUrl: reader.result,
+      });
+    };
+
+    reader.readAsDataURL(file);
+  }
+
   render() {
     const { classes } = this.props;
+    const { imagePreviewUrl } = this.state;
+    // let imagePreview = null;
+    // if (imagePreviewUrl) {
+    //   imagePreview = <img src={imagePreviewUrl} />;
+    // }
     return (
       <div>
         <div className={classes.container}>
@@ -68,6 +104,15 @@ export class ReviewForm extends React.PureComponent {
             }}
           />
         </div>
+        <div>
+          <form onSubmit={this.handleSubmit}>
+            <input type="file" onChange={this.handleImageChange} multiple />
+            <button type="submit" onClick={this.handleSubmit}>
+              Upload Image
+            </button>
+          </form>
+          {imagePreviewUrl && <img src={imagePreviewUrl} alt="test" />}
+        </div>
       </div>
     );
   }
@@ -75,6 +120,7 @@ export class ReviewForm extends React.PureComponent {
 
 ReviewForm.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  imagePreviewUrl: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({

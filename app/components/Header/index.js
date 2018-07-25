@@ -57,7 +57,7 @@ class Header extends React.Component {
     this.setState({ mobileOpen: false });
   };
   render() {
-    const { classes } = this.props;
+    const { classes, headerTitle } = this.props;
     return (
       <div>
         <AppBar position="fixed" className={classes.top_box}>
@@ -75,7 +75,7 @@ class Header extends React.Component {
               color="inherit"
               className={classes.flex}
             >
-              Title
+              {headerTitle}
             </Typography>
             <Button color="inherit">Login</Button>
           </Toolbar>
@@ -105,6 +105,7 @@ class Header extends React.Component {
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
+  headerTitle: PropTypes.string.isRequired,
 };
 
 // export default Header;

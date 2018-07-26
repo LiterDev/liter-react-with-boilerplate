@@ -17,7 +17,7 @@ import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import ReviewForm from 'containers/ReviewForm/Loadable';
 // import Header from 'components/Header';
-import Footer from 'components/Footer';
+// import Footer from 'components/Footer';
 import { PrivateRoute } from 'containers/Auth';
 import SignUp from 'containers/SignUp/Loadable';
 import { withStyles } from '@material-ui/core/styles';
@@ -59,7 +59,7 @@ function App(props) {
         <Route path="/review/write" component={ReviewForm} />
         <Route path="" component={NotFoundPage} />
       </Switch>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

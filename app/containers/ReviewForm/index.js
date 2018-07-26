@@ -14,9 +14,13 @@ import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import Header from 'components/Header';
+import ImagePreviewButton from 'components/ImagePreviewButton';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
+
 // import Button from '@material-ui/core/Button';
+
+// import Upload from 'material-ui-upload/Upload';
 
 import makeSelectReviewForm from './selectors';
 import reducer from './reducer';
@@ -28,6 +32,7 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     backgroundColor: '#ffffff',
+    margin: '0px 0px 12px',
   },
   input: {
     margin: theme.spacing.unit,
@@ -39,6 +44,7 @@ const styles = theme => ({
       borderBottomColor: '#1591ff',
     },
   },
+  inputfile: { display: 'none' },
   cssFocused: {},
   cssUnderline: {
     '&:before': {
@@ -48,47 +54,56 @@ const styles = theme => ({
       borderBottomColor: '#e3e3e3',
     },
   },
+  button: {
+    margin: theme.spacing.unit,
+  },
+  leftIcon: {
+    marginRight: theme.spacing.unit,
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
+  },
+  iconSmall: {
+    fontSize: 20,
+  },
+  previewimg: {
+    flex: 1,
+    width: '100%',
+  },
 });
+
 /* eslint-disable react/prefer-stateless-function */
 export class ReviewForm extends React.PureComponent {
+  // constructor(props) {
+  //   super(props);
+  // }
   constructor(props) {
     super(props);
     this.state = {
-      // file: '',
-      imagePreviewUrl: '',
+      files: new FormData(),
     };
-    this.handleImageChange = this.handleImageChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleImageAppend = this.handleImageAppend.bind(this);
+    this.handleImageRemove = this.handleImageRemove.bind(this);
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    // TODO: do something with -> this.state.file
-  }
-
-  handleImageChange(e) {
-    e.preventDefault();
-
-    const reader = new FileReader();
-    const file = e.target.files[0];
-
-    reader.onloadend = () => {
-      this.setState({
-        // file,
-        imagePreviewUrl: reader.result,
-      });
-    };
-
-    reader.readAsDataURL(file);
-  }
-
+  handleImageAppend = (name, file) => {
+    // alert('We pass argument from Child to Parent: ' + someArg);
+    // console.log(name);
+    // console.log(file);
+    this.state.files.append(name, file);
+    // console.log(this.state.files.length);
+    console.log(Array.from(this.state.files.entries()).length);
+  };
+  handleImageRemove = name => {
+    // this.state.files.append(name);
+    this.state.files.delete(name);
+    console.log(Array.from(this.state.files.entries()).length);
+  };
   render() {
     const { classes } = this.props;
-    const { imagePreviewUrl } = this.state;
-    // let imagePreview = null;
-    // if (imagePreviewUrl) {
-    //   imagePreview = <img src={imagePreviewUrl} />;
-    // }
+    // const list = this.state.array.map((item, i) => <li key={i}>{item}</li>);
+    // const handleToUpdate = this.handleToUpdate;
+    // console.log(this.state.files);
     return (
       <div>
         <div className={classes.container}>
@@ -104,15 +119,39 @@ export class ReviewForm extends React.PureComponent {
             }}
           />
         </div>
-        <div>
-          <form onSubmit={this.handleSubmit}>
+        <div className={classes.container}>
+          <ImagePreviewButton
+            handleImageAppend={this.handleImageAppend}
+            handleImageRemove={this.handleImageRemove}
+          />
+          {/* <Upload label="Add" onFileLoad={this.onFileLoad} /> */}
+
+          {/* <Input
+            // defaultValue="Hello world"
+            placeholder="Placeholder"
+            className={classes.input}
+            inputProps={{
+              'aria-label': 'Description',
+            }}
+            type="file"
+          /> */}
+          {/* <form onSubmit={this.handleSubmit}>
             <input type="file" onChange={this.handleImageChange} multiple />
             <button type="submit" onClick={this.handleSubmit}>
               Upload Image
             </button>
           </form>
-          {imagePreviewUrl && <img src={imagePreviewUrl} alt="test" />}
+          {imagePreviewUrl && <img src={imagePreviewUrl} alt="test" />} */}
         </div>
+        <div>
+          {/* <input type="file" onChange={this.handleChange} /> */}
+          {/* <img
+            src={this.state.file}
+            alt="test"
+            className={classes.previewimg}
+          /> */}
+        </div>
+        {/* <ul>{list}</ul> */}
       </div>
     );
   }
@@ -121,7 +160,19 @@ export class ReviewForm extends React.PureComponent {
 ReviewForm.propTypes = {
   dispatch: PropTypes.func.isRequired,
   imagePreviewUrl: PropTypes.string,
+  accept: PropTypes.string,
+  label: PropTypes.any,
+  multi: PropTypes.bool,
+  passBase64: PropTypes.bool,
 };
+
+// const propTypes = {
+//   accept: React.PropTypes.string,
+//   label: React.PropTypes.any,
+//   multi: React.PropTypes.bool,
+//   onUpload: React.PropTypes.func.isRequired,
+//   passBase64: React.PropTypes.bool,
+// };
 
 const mapStateToProps = createStructuredSelector({
   reviewform: makeSelectReviewForm(),

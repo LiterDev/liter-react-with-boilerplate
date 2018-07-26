@@ -18,4 +18,7 @@ const selectMyPageDomain = state => state.get('myPage', initialState);
 const makeSelectMyPage = () =>
   createSelector(selectMyPageDomain, substate => substate.toJS());
 
+// const makeSelectUsername = () =>
+//   createSelector(selectMyPageDomain, substate => substate.get('username'));
+
 export { selectMyPageDomain, makeSelectMyPage };

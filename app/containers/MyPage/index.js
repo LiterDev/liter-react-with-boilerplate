@@ -18,22 +18,18 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import {
-  makeSelectRepos,
-  makeSelectLoading,
-  makeSelectError,
-} from 'containers/App/selectors';
 
 import H2 from 'components/H2';
-import ReposList from 'components/ReposList';
 import AtPrefix from './AtPrefix';
 import CenteredSection from './CenteredSection';
 import Form from './Form';
 import Section from './Section';
 import messages from './messages';
-import { changeUsername } from './actions';
-import { loadRepos } from '../App/actions';
-import { makeSelectUsername, makeSelectMyPage } from './selectors';
+import defaultMessage from '../App/messages';
+import homeMessage from '../HomePage/messages';
+
+import { mypageAction } from './actions';
+import { makeSelectMyPage } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -82,16 +78,8 @@ const RewardingListItem = styled.div`
 /* eslint-disable react/prefer-stateless-function */
 export class MyPage extends React.PureComponent {
   render() {
-    const { loading, error, repos, rewardsReviews } = this.props;
-    const reposListProps = {
-      loading,
-      error,
-      repos,
-      rewardsReviews,
-    };
-
     return (
-      <article>
+      <div>
         <Helmet>
           <title>My Page</title>
           <meta name="description" content="Description of MyPage" />
@@ -102,25 +90,26 @@ export class MyPage extends React.PureComponent {
               <FormattedMessage {...messages.startProjectHeader} />
             </H2>
             <p>
-              <FormattedMessage {...messages.startProjectMessage} />
+              <FormattedMessage {...defaultMessage.startProjectHeader} />
             </p>
           </CenteredSection>
           <Section>
             <H2>
-              <FormattedMessage {...messages.trymeHeader} />
+              <FormattedMessage {...homeMessage.trymeHeader} />
             </H2>
             <Form onSubmit={this.props.onSubmitForm}>
-              <label htmlFor="username">
-                <FormattedMessage {...messages.trymeMessage} />
+              <label htmlFor="id">
+                <FormattedMessage {...homeMessage.trymeMessage} />
                 <AtPrefix>
-                  <FormattedMessage {...messages.trymeAtPrefix} />
+                  <FormattedMessage {...homeMessage.trymeAtPrefix} />
                 </AtPrefix>
                 <Input
-                  id="username"
+                  id="id"
+                  name="id"
                   type="text"
                   placeholder="mxstbr"
-                  value={this.props.username}
-                  onChange={this.props.onChangeUsername}
+                  // value={this.props.username}
+                  // onChange={this.props.onChangeUsername}
                 />
               </label>
               <Button
@@ -131,7 +120,6 @@ export class MyPage extends React.PureComponent {
                 로딩
               </Button>
             </Form>
-            {<ReposList {...reposListProps} />}
             <Panel />
             <Tab>
               <TabItem>리뷰</TabItem>
@@ -143,7 +131,7 @@ export class MyPage extends React.PureComponent {
             </RewardingList>
           </Section>
         </div>
-      </article>
+      </div>
     );
   }
 }
@@ -155,32 +143,36 @@ export class MyPage extends React.PureComponent {
 * */
 
 MyPage.propTypes = {
-  loading: PropTypes.bool,
-  error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  repos: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
-  rewardsReviews: PropTypes.oneOfType([PropTypes.array(), PropTypes.bool()]),
+  // loading: PropTypes.bool,
+  // error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  // repos: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  // rewardsReviews: PropTypes.oneOfType([PropTypes.array(), PropTypes.bool()]),
   onSubmitForm: PropTypes.func,
-  username: PropTypes.string,
-  onChangeUsername: PropTypes.func,
+  // username: PropTypes.string,
+  // onChangeUsername: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
-  repos: makeSelectRepos(),
+  // repos: makeSelectRepos(),
   rewardsReviews: makeSelectMyPage(),
-  username: makeSelectUsername(),
-  loading: makeSelectLoading(),
-  error: makeSelectError(),
+  // username: makeSelectUsername(),
+  // loading: makeSelectLoading(),
+  // error: makeSelectError(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
+    // onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
 
     onSubmitForm: evt => {
-      console.log('homePage');
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(loadRepos());
-      alert('1111');
+      const data = new FormData(evt.target);
+      // console.log("####length::"+data.getAll.length);
+      // console.log("##::"+data.get("id"));
+      // for(var key of data.keys() ) {
+      //   console.log("###--"+data.get(key));
+      // }
+      dispatch(mypageAction(data));
     },
   };
 }

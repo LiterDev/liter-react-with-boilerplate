@@ -23,7 +23,7 @@ import H2 from 'components/H2';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 
-import Header from 'components/Header';
+// import Header from 'components/Header';
 // import ReposList from 'components/ReposList';
 import AtPrefix from './AtPrefix';
 import CenteredSection from './CenteredSection';
@@ -58,7 +58,6 @@ export class HomePage extends React.PureComponent {
 
     return (
       <article>
-        <Header headerTitle="Home" />
         <Helmet>
           <title>Home Page</title>
           <meta

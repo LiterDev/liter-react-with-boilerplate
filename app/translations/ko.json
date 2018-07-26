@@ -43,6 +43,8 @@
   "boilerplate.containers.LocaleToggle.de": "de",
   "boilerplate.containers.LocaleToggle.en": "en",
   "boilerplate.containers.NotFoundPage.header": "Page not found.",
+  "app.containers.App.header": "App Title",
   "app.containers.SignUp.header": "SignUp",
-  "app.containers.ReviewForm.header": "리뷰작성"
+  "app.containers.ReviewForm.header": "리뷰작성",
+  "app.containers.MyPage.header": "마이 페이지"
 }

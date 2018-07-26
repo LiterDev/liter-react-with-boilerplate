@@ -119,6 +119,14 @@ function AppDrawer(props) {
           {
             // eslint-disable-next-line anchor-is-valid
           }
+          <Link to="/mypage" onClick={onClose} role="button">
+            <Button>MyPage</Button>
+          </Link>
+        </ListItem>
+        <ListItem className={classes.itemLeaf}>
+          {
+            // eslint-disable-next-line anchor-is-valid
+          }
           <Link to="/review/write" onClick={onClose} role="button">
             <Button>review</Button>
           </Link>

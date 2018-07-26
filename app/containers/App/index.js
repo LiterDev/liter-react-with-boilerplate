@@ -15,6 +15,7 @@ import { Switch, Route } from 'react-router-dom';
 import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import MyPage from 'containers/MyPage/Loadable';
 import ReviewForm from 'containers/ReviewForm/Loadable';
 // import Header from 'components/Header';
 // import Footer from 'components/Footer';
@@ -56,6 +57,7 @@ function App(props) {
         <Route exact path="/" component={HomePage} />
         <PrivateRoute path="/features" component={FeaturePage} />
         <Route path="/signup" component={SignUp} />
+        <Route path="/mypage" component={MyPage} />
         <Route path="/review/write" component={ReviewForm} />
         <Route path="" component={NotFoundPage} />
       </Switch>

@@ -65,13 +65,17 @@ class ImagePreviewButton extends React.PureComponent {
     super(props);
     this.state = {
       imageCount: 0,
-      numChildren: 0,
+      // numChildren: 0,
+      imageComponent: [],
     };
     this.handleAppend = this.handleAppend.bind(this);
-    this.onAddChild = this.onAddChild.bind(this);
+    this.updateState = this.updateState.bind(this);
+    // this.onAddChild = this.onAddChild.bind(this);
   }
 
   handleAppend(event) {
+    console.log(event);
+
     // this.setState({
     //   file: URL.createObjectURL(event.target.files[0]),
 
@@ -83,7 +87,18 @@ class ImagePreviewButton extends React.PureComponent {
         // console.log(URL.createObjectURL(event.target.files[0]));
         // console.log(URL.createObjectURL(event.target.files[1]));
         // const form = new FormData();
+        const imageComponentTmp = [];
         for (let i = 0; i < event.target.files.length; i += 1) {
+          this.state.imageCount += 1;
+          imageComponentTmp.push(
+            {
+              id: this.state.imageCount,
+              name: `imgnames[${this.state.imageCount}]`,
+              src: URL.createObjectURL(event.target.files[i]),
+              alt: event.target.files[i].name,
+            },
+            // <Img src={URL.createObjectURL(event.target.files[i])} />,
+          );
           // event.target.files
           // form.append('imgnames[0]', event.target.files[i]);
           // form.append('imgnames[1]', event.target.files[1]);
@@ -91,11 +106,22 @@ class ImagePreviewButton extends React.PureComponent {
             `imgnames[${this.state.imageCount}]`,
             event.target.files[i],
           );
-          this.state.imageCount += 1;
+
+          // this.state.imageCount += 1;
+          // imageCount: this.state.imageCount + 1,
+
+          // this.setState(
+          //   imageComponent: this.state.imageComponent.concat([{ id: 2, name: 'Another Name' }]),
+          // );
+          // this.state.imageComponent.concat([{ id: 2, name: 'Another Name' }]);
+          // imgPreviewArea.append(<Img/>);
           // <Img />
           // console.log(this.state.imageCount);
         }
+        this.updateState(imageComponentTmp);
       }
+      const eventStatus = event;
+      eventStatus.target.value = null;
     }
 
     // form.append('names[]', 'John');
@@ -106,7 +132,7 @@ class ImagePreviewButton extends React.PureComponent {
     //   .filter(name => name !== 'Bob')
     //   .forEach(name => form.append('names[]', name));
     // console.log(Array.from(form.entries()));
-    // this.setState({ files: this.state.files.concat(event.target.files[0]) });
+
     // this.setState({ files: this.state.files.concat(event.target.files[1]) });
     // let filteredArray = this.state.people.filter(
     //   item => item !== e.target.value,
@@ -119,23 +145,30 @@ class ImagePreviewButton extends React.PureComponent {
   handleRemove(name) {
     this.props.handleImageRemove(name);
   }
-  onAddChild = () => {
-    console.log('=======');
+  updateState(imageComponentTmp) {
+    console.log(imageComponentTmp);
     this.setState({
-      numChildren: this.state.numChildren + 1,
+      imageComponent: this.state.imageComponent.concat(imageComponentTmp),
     });
-  };
+    // console.log(this.state.imageComponent);
+  }
+  // onAddChild = () => {
+  //   console.log('=======');
+  //   this.setState({
+  //     numChildren: this.state.numChildren + 1,
+  //   });
+  // };
   render() {
     const { classes } = this.props;
     // console.log(Array.from(this.state.files.entries()));
     // const handleToUpdate = this.props.handleToUpdate;
     // return (<div><button onClick={() => handleToUpdate('someVar')}>Push me</button></div>
-    const children = [];
-    console.log(this.state.numChildren);
-    for (let i = 0; i < this.state.numChildren; i += 1) {
-      children.push(<ChildComponent key={i} number={i} />);
-    }
-
+    // const children = [];
+    // // console.log(this.state.numChildren);
+    // for (let i = 0; i < this.state.numChildren; i += 1) {
+    //   children.push(<ChildComponent key={i} number={i} />);
+    // }
+    console.log(this.state.imageComponent);
     return (
       <div>
         {/* <FormattedMessage {...messages.header} /> */}
@@ -145,7 +178,7 @@ class ImagePreviewButton extends React.PureComponent {
           id="raised-button-file"
           multiple
           type="file"
-          onChange={this.handleAppend}
+          onInput={this.handleAppend}
         />
         <label htmlFor="raised-button-file">
           <Button
@@ -158,24 +191,39 @@ class ImagePreviewButton extends React.PureComponent {
             <CloudUploadIcon className={classes.rightIcon} />
           </Button>
         </label>
-        <ParentComponent addChild={this.onAddChild}>{children}</ParentComponent>
+        {/* <ParentComponent addChild={this.onAddChild}>{children}</ParentComponent> */}
+        {this.state.imageComponent.map(movie => {
+          console.log(movie);
+          // console.log(movie.id);
+          return (
+            <li key={movie.id}>
+              {/* <Img /> */}
+              <img
+                src={movie.src}
+                alt={movie.alt}
+                id={movie.name}
+                width="60px"
+              />
+            </li>
+          );
+        })}
       </div>
     );
   }
 }
 
-const ParentComponent = props => (
-  <div className="card calculator">
-    <p>
-      <button href="#" onClick={props.addChild}>
-        Add Another Child Component
-      </button>
-    </p>
-    <div id="children-pane">{props.children}</div>
-  </div>
-);
+// const ParentComponent = props => (
+//   <div className="card calculator">
+//     {/* <p>
+//       <button href="#" onClick={props.addChild}>
+//         Add Another Child Component
+//       </button>
+//     </p> */}
+//     <div id="children-pane">{props.children}</div>
+//   </div>
+// );
 
-const ChildComponent = props => <div>I am child{props.number}</div>;
+// const ChildComponent = props => <div>I am child{props.number}</div>;
 
 ImagePreviewButton.propTypes = {
   classes: PropTypes.object.isRequired,

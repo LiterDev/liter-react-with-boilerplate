@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import AppDrawer from './AppDrawer';
@@ -13,9 +13,29 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     paddingTop: theme.spacing.unit * 0,
+    textAlign: 'center',
   },
   flex: {
     flexGrow: 1,
+    width: 103,
+    height: 20,
+    font: {
+      family: 'AppleSDGothicNeo',
+      size: 17,
+      weight: 600,
+      style: 'normal',
+      stretch: 'normal',
+    },
+    line: {
+      height: 'normal',
+    },
+    letter: {
+      spacing: 'normal',
+    },
+    text: {
+      align: 'center',
+    },
+    color: '#111111',
   },
   menuButton: {
     marginLeft: -12,
@@ -35,6 +55,7 @@ const styles = theme => ({
       fit: 'contain',
     },
     marginRight: 20,
+    position: 'absolute',
   },
   toolbar: {
     height: '100vh',
@@ -57,7 +78,7 @@ class Header extends React.Component {
     this.setState({ mobileOpen: false });
   };
   render() {
-    const { classes } = this.props;
+    const { classes, headerTitle } = this.props;
     return (
       <div>
         <AppBar position="fixed" className={classes.top_box}>
@@ -75,9 +96,9 @@ class Header extends React.Component {
               color="inherit"
               className={classes.flex}
             >
-              Title
+              {headerTitle}
             </Typography>
-            <Button color="inherit">Login</Button>
+            {/* <Button color="inherit">Login</Button> */}
           </Toolbar>
         </AppBar>
         <AppDrawer
@@ -105,6 +126,7 @@ class Header extends React.Component {
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
+  headerTitle: PropTypes.object.isRequired,
 };
 
 // export default Header;

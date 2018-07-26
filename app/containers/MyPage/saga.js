@@ -32,7 +32,7 @@ export function* mypage(pageData) {
   // const data = new FormData(event.target);
   // console.log(pageData.data);
   // console.log(pageData.data.get('id'));
-  // console.log(pageData.data.get('username'));
+  console.log(pageData.data.get('userId'));
   const requestURL = `http://127.0.0.1:8080/user/detail`;
 
   try {

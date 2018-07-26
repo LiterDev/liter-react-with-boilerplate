@@ -44,6 +44,8 @@
   "boilerplate.containers.LocaleToggle.en": "en",
   "boilerplate.containers.NotFoundPage.header": "Page not found.",
   "app.containers.SignUp.header": "SignUp",
+
   "app.containers.MyPage.start_project.header": "MyPage",
+  "app.containers.MyPage.header": "My Page",
   "app.containers.App.header": "App Test"
 }

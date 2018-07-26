@@ -9,6 +9,8 @@ import { DEFAULT_ACTION, MYPAGE_ACTION } from './constants';
 
 export const initialState = fromJS({
   username: '',
+  id: '',
+  data: [],
 });
 
 function myPageReducer(state = initialState, action) {

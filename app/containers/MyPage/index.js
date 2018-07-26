@@ -8,21 +8,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import styled from 'styled-components';
 
-import Input from '@material-ui/core/Input';
-import Button from '@material-ui/core/Button';
-
-import { Helmet } from 'react-helmet';
+import { withStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
+import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
+import styled from 'styled-components';
 import H2 from 'components/H2';
+import Header from 'components/Header';
 import AtPrefix from './AtPrefix';
 import CenteredSection from './CenteredSection';
-import Form from './Form';
+// import Form from './Form';
 import Section from './Section';
 import messages from './messages';
 import defaultMessage from '../App/messages';
@@ -30,12 +30,21 @@ import homeMessage from '../HomePage/messages';
 
 import { mypageAction } from './actions';
 import { makeSelectMyPage } from './selectors';
+
 import reducer from './reducer';
 import saga from './saga';
 
 // import messages from './messages';
 
 // import Panel from './Panel';
+
+const styles = {
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    backgroundColor: '#ffffff',
+  },
+};
 
 const Panel = styled.div`
   width: 100%;
@@ -77,18 +86,29 @@ const RewardingListItem = styled.div`
 `;
 /* eslint-disable react/prefer-stateless-function */
 export class MyPage extends React.PureComponent {
+  state = {
+    userId: '',
+  };
+  handleChange = e => {
+    this.setState({
+      userId: e.target.value,
+    });
+  };
+  handleSubmit = e => {
+    e.preventDefault();
+    this.setState({
+      userId: '',
+    });
+  };
   render() {
+    const { classes } = this.props;
     return (
       <div>
-        <Helmet>
-          <title>My Page</title>
-          <meta name="description" content="Description of MyPage" />
-        </Helmet>
+        <div className={classes.container}>
+          <Header headerTitle={<FormattedMessage {...messages.header} />} />
+        </div>
         <div>
           <CenteredSection>
-            <H2>
-              <FormattedMessage {...messages.startProjectHeader} />
-            </H2>
             <p>
               <FormattedMessage {...defaultMessage.startProjectHeader} />
             </p>
@@ -97,29 +117,24 @@ export class MyPage extends React.PureComponent {
             <H2>
               <FormattedMessage {...homeMessage.trymeHeader} />
             </H2>
-            <Form onSubmit={this.props.onSubmitForm}>
-              <label htmlFor="id">
-                <FormattedMessage {...homeMessage.trymeMessage} />
-                <AtPrefix>
-                  <FormattedMessage {...homeMessage.trymeAtPrefix} />
-                </AtPrefix>
-                <Input
-                  id="id"
-                  name="id"
-                  type="text"
-                  placeholder="mxstbr"
-                  // value={this.props.username}
-                  // onChange={this.props.onChangeUsername}
-                />
-              </label>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.props.onSubmitForm}
-              >
-                로딩
-              </Button>
-            </Form>
+            <form onSubmit={this.props.onSubmitForm}>
+              <FormattedMessage {...homeMessage.trymeMessage} />
+              <AtPrefix>
+                <FormattedMessage {...homeMessage.trymeAtPrefix} />
+              </AtPrefix>
+              <Input
+                name="userId"
+                placeholder="아이디"
+                value={this.state.userId}
+                onChange={this.handleChange}
+                // value={this.props.username}
+                // onChange={this.props.onChangeUsername}
+              />
+              <H2>
+                <div>{this.state.id}</div>
+              </H2>
+              <Button type="submit"> 로딩 </Button>
+            </form>
             <Panel />
             <Tab>
               <TabItem>리뷰</TabItem>
@@ -143,6 +158,7 @@ export class MyPage extends React.PureComponent {
 * */
 
 MyPage.propTypes = {
+  id: PropTypes.string,
   // loading: PropTypes.bool,
   // error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   // repos: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
@@ -167,11 +183,6 @@ function mapDispatchToProps(dispatch) {
     onSubmitForm: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       const data = new FormData(evt.target);
-      // console.log("####length::"+data.getAll.length);
-      // console.log("##::"+data.get("id"));
-      // for(var key of data.keys() ) {
-      //   console.log("###--"+data.get(key));
-      // }
       dispatch(mypageAction(data));
     },
   };
@@ -189,4 +200,5 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
+  withStyles(styles),
 )(MyPage);

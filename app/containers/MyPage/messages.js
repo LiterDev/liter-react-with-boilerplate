@@ -6,8 +6,8 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  startProjectHeader: {
-    id: 'app.containers.MyPage.start_project.header',
-    defaultMessage: 'MY PAGE',
+  header: {
+    id: 'app.containers.MyPage.header',
+    defaultMessage: 'My Page',
   },
 });

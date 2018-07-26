@@ -47,5 +47,6 @@
   "boilerplate.containers.NotFoundPage.header": "Seite nicht gefunden.",
   "app.containers.SignUp.header": "SignUp",
   "app.containers.MyPage.start_project.header": "MyPage",
-  "app.containers.App.header": "App Test"
+  "app.containers.App.header": "App Test",
+  "app.containers.MyPage.header": "My Page"
 }

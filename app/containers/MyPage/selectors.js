@@ -8,10 +8,6 @@ import { initialState } from './reducer';
 const selectMyPageDomain = state => state.get('myPage', initialState);
 
 /**
- * Other specific selectors
- */
-
-/**
  * Default selector used by MyPage
  */
 

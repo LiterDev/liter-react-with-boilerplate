@@ -6,6 +6,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -32,10 +34,6 @@ import { changeUsername } from './actions';
 import { makeSelectUsername } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-
-import Input from '@material-ui/core/Input';
-import Button from '@material-ui/core/Button';
-
 
 /* eslint-disable react/prefer-stateless-function */
 export class HomePage extends React.PureComponent {
@@ -100,7 +98,7 @@ export class HomePage extends React.PureComponent {
                 로딩
               </Button>
             </Form>
-            {/* <ReposList {...reposListProps} /> */}
+            {<ReposList {...reposListProps} />}
           </Section>
         </div>
       </article>
@@ -119,11 +117,10 @@ HomePage.propTypes = {
 
 function mapDispatchToProps(dispatch) {
   return {
-    //onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
+    onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
     onSubmitForm: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      alert('1111');
-      //dispatch(loadRepos());
+      dispatch(loadRepos());
     },
   };
 }

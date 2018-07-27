@@ -100,6 +100,35 @@ const styles = {
 export class MyPage extends React.PureComponent {
   state = {
     // userId: '',
+    tabData: [
+      {
+        tabLabel: '리뷰',
+        hit: 10,
+        list: {
+          imgUrl: 'aaa,jpg',
+          userName: 'test1',
+          update: '111',
+          title: '켬 김에 왕까지!! 플레이스테이션4 패드 놓을 수 없는 순간!',
+          ingBoolean: true,
+          exportsCnt: 22,
+          starAvg: 3,
+        },
+      },
+      {
+        tabLabel: '보상 내역',
+        hit: 20,
+        list: {
+          imgUrl: 'bbb.jpg',
+          userName: 'test2',
+          update: '111',
+          title:
+            '초보 커플을 위한, 플레이스테이션4 PS4 2인용 게임 낵(KNACK) 1, 2 모든 연령을 위한 공략법',
+          ingBoolean: 662.11,
+          exportsCnt: 433,
+          starAvg: 4,
+        },
+      },
+    ],
   };
   // handleChange = e => {
   //   this.setState({
@@ -134,7 +163,7 @@ export class MyPage extends React.PureComponent {
           </div>
           <div className={classes.row}>numero</div>
           <div className={classes.row}>
-            <Typography variant="Headline">
+            <Typography variant="headline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="10"
@@ -166,7 +195,7 @@ export class MyPage extends React.PureComponent {
             </div>
           </div>
         </div>
-        <Tabs />
+        <Tabs tabData={this.state.tabData} />
         {/* <Tabs>
           <Tab label="리뷰" />
           <Tab label="보상 내역" />

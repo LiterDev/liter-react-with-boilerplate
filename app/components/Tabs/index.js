@@ -34,17 +34,23 @@ class SimpleTabs extends React.Component {
     this.setState({ value });
   };
 
+  renderTab() {
+    const { tabData } = this.props;
+    return tabData.map(tab => <Tab label={tab.tabLabel} />);
+  }
+
   render() {
     const { classes } = this.props;
+    const { tabData } = this.props;
     const { value } = this.state;
 
     return (
       <div className={classes.root}>
+        {tabData[0].tabLabel}
+
         <AppBar position="static">
           <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="Item One" />
-            <Tab label="Item Two" />
-            <Tab label="Item Three" href="#basic-tabs" />
+            {this.renderTab()}
           </Tabs>
         </AppBar>
         {value === 0 && <TabContainer>Item One</TabContainer>}
@@ -56,6 +62,7 @@ class SimpleTabs extends React.Component {
 
 SimpleTabs.propTypes = {
   classes: PropTypes.object.isRequired,
+  tabData: PropTypes.array,
 };
 
 export default withStyles(styles)(SimpleTabs);

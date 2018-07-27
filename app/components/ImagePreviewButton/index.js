@@ -203,24 +203,9 @@ class ImagePreviewButton extends React.PureComponent {
     });
     // console.log(this.state.imageComponent);
   }
-  // onAddChild = () => {
-  //   console.log('=======');
-  //   this.setState({
-  //     numChildren: this.state.numChildren + 1,
-  //   });
-  // };
 
   render() {
     const { classes } = this.props;
-    // console.log(Array.from(this.state.files.entries()));
-    // const handleToUpdate = this.props.handleToUpdate;
-    // return (<div><button onClick={() => handleToUpdate('someVar')}>Push me</button></div>
-    // const children = [];
-    // // console.log(this.state.numChildren);
-    // for (let i = 0; i < this.state.numChildren; i += 1) {
-    //   children.push(<ChildComponent key={i} number={i} />);
-    // }
-    // console.log(this.state.imageComponent);
 
     const settings = {
       dots: false,
@@ -279,19 +264,6 @@ class ImagePreviewButton extends React.PureComponent {
     );
   }
 }
-
-// const ParentComponent = props => (
-//   <div className="card calculator">
-//     {/* <p>
-//       <button href="#" onClick={props.addChild}>
-//         Add Another Child Component
-//       </button>
-//     </p> */}
-//     <div id="children-pane">{props.children}</div>
-//   </div>
-// );
-
-// const ChildComponent = props => <div>I am child{props.number}</div>;
 
 ImagePreviewButton.propTypes = {
   classes: PropTypes.object.isRequired,

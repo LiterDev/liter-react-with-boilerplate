@@ -258,22 +258,19 @@ class ImagePreviewButton extends React.PureComponent {
           <Grid item xs={12}>
             {this.state.imageComponent && (
               <Slider {...settings}>
-                {this.state.imageComponent.map(movie => {
-                  console.log('=====');
-                  return (
-                    <div key={movie.toString()}>
-                      <ImagePreview
-                        // key={movie.key}
-                        src={movie.src}
-                        alt={movie.alt}
-                        name={movie.name}
-                        // width="60px"
-                        className={classes.previewimg}
-                        handleRemove={this.handleRemove}
-                      />
-                    </div>
-                  );
-                })}
+                {this.state.imageComponent.map(movie => (
+                  <div key={movie.toString()}>
+                    <ImagePreview
+                      // key={movie.key}
+                      src={movie.src}
+                      alt={movie.alt}
+                      name={movie.name}
+                      // width="60px"
+                      className={classes.previewimg}
+                      handleRemove={this.handleRemove}
+                    />
+                  </div>
+                ))}
               </Slider>
             )}
           </Grid>

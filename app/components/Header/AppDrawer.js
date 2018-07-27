@@ -158,6 +158,7 @@ function AppDrawer(props) {
           ModalProps={{
             keepMounted: true,
           }}
+          anchor="right"
         >
           {drawer}
         </SwipeableDrawer>

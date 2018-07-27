@@ -73,9 +73,6 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 export class ReviewForm extends React.PureComponent {
-  // constructor(props) {
-  //   super(props);
-  // }
   constructor(props) {
     super(props);
     this.state = {
@@ -86,13 +83,7 @@ export class ReviewForm extends React.PureComponent {
   }
 
   handleImageAppend = (name, file) => {
-    // alert('We pass argument from Child to Parent: ' + someArg);
-    // console.log(name);
-    // console.log(file);
     this.state.files.append(name, file);
-    // console.log(this.state.files.length);
-    // console.log('ReviewForm');
-    // console.log(Array.from(this.state.files.entries()).length);
   };
   handleImageRemove = name => {
     // this.state.files.append(name);
@@ -101,9 +92,7 @@ export class ReviewForm extends React.PureComponent {
   };
   render() {
     const { classes } = this.props;
-    // const list = this.state.array.map((item, i) => <li key={i}>{item}</li>);
-    // const handleToUpdate = this.handleToUpdate;
-    // console.log(this.state.files);
+
     return (
       <div>
         <div className={classes.container}>
@@ -138,14 +127,6 @@ ReviewForm.propTypes = {
   multi: PropTypes.bool,
   passBase64: PropTypes.bool,
 };
-
-// const propTypes = {
-//   accept: React.PropTypes.string,
-//   label: React.PropTypes.any,
-//   multi: React.PropTypes.bool,
-//   onUpload: React.PropTypes.func.isRequired,
-//   passBase64: React.PropTypes.bool,
-// };
 
 const mapStateToProps = createStructuredSelector({
   reviewform: makeSelectReviewForm(),

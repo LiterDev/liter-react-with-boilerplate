@@ -6,7 +6,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 // import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+// import MenuIcon from '@material-ui/icons/Menu';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import SvgIcon from '@material-ui/core/SvgIcon';
+// import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import AppDrawer from './AppDrawer';
 
 const styles = theme => ({
@@ -54,14 +59,36 @@ const styles = theme => ({
     object: {
       fit: 'contain',
     },
+    // marginRight: 20,
+    right: 20,
+    position: 'absolute',
+  },
+  ic_round_home: {
+    width: 24,
+    height: 24,
+    object: {
+      fit: 'contain',
+    },
     marginRight: 20,
+    // right: 20,
     position: 'absolute',
   },
   toolbar: {
     height: '100vh',
   },
+  icon: {
+    // margin: theme.spacing.unit * 2,
+    color: 'black',
+  },
 });
 
+function HomeIcon(props) {
+  return (
+    <SvgIcon {...props}>
+      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+    </SvgIcon>
+  );
+}
 /* eslint-disable react/prefer-stateless-function */
 class Header extends React.Component {
   state = {
@@ -77,6 +104,12 @@ class Header extends React.Component {
     // this.props.dispatch(toggleAppDrawer());
     this.setState({ mobileOpen: false });
   };
+
+  moveHome = () => {
+    console.log('home');
+    // return <Redirect to="/login" />;
+    this.props.history.push('/');
+  };
   render() {
     const { classes, headerTitle } = this.props;
     return (
@@ -84,12 +117,16 @@ class Header extends React.Component {
         <AppBar position="fixed" className={classes.top_box}>
           <Toolbar className={classes.toolbar}>
             <IconButton
-              className={classes.ic_round_menu}
+              className={classes.ic_round_home}
               color="inherit"
               aria-label="Menu"
-              onClick={this.handleDrawerOpen}
+              onClick={this.moveHome}
             >
-              <MenuIcon />
+              {/* <MenuIcon /> */}
+              {/* <Link to="/"> */}
+              <HomeIcon className={classes.icon} />
+
+              {/* </Link> */}
             </IconButton>
             <Typography
               variant="title"
@@ -99,6 +136,15 @@ class Header extends React.Component {
               {headerTitle}
             </Typography>
             {/* <Button color="inherit">Login</Button> */}
+            <IconButton
+              className={classes.ic_round_menu}
+              color="inherit"
+              aria-label="Menu"
+              onClick={this.handleDrawerOpen}
+            >
+              {/* <MenuIcon /> */}
+              <MoreVertIcon className={classes.icon} />
+            </IconButton>
           </Toolbar>
         </AppBar>
         <AppDrawer
@@ -130,4 +176,8 @@ Header.propTypes = {
 };
 
 // export default Header;
-export default withStyles(styles)(Header);
+// export default withStyles(styles)(Header);
+export default compose(
+  withRouter,
+  withStyles(styles),
+)(Header);

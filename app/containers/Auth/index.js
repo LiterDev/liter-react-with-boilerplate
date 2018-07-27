@@ -5,26 +5,25 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import {
+  // BrowserRouter as Router,
+  Route,
+  // Link,
+  Redirect,
+  // withRouter,
+} from 'react-router-dom';
 import makeSelectAuth from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
-
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Redirect,
-  withRouter,
-} from 'react-router-dom';
+// import messages from './messages';
 
 const fakeAuth = {
   isAuthenticated: false,
@@ -61,7 +60,7 @@ function Auth() {
 }
 
 Auth.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  // dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({

@@ -9,24 +9,31 @@ import PropTypes from 'prop-types';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import { withStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-import Input from '@material-ui/core/Input';
-import Button from '@material-ui/core/Button';
-import styled from 'styled-components';
-import H2 from 'components/H2';
+import { withStyles } from '@material-ui/core/styles';
+// import Input from '@material-ui/core/Input';
+// import Button from '@material-ui/core/Button';
+// import Tabs from '@material-ui/core/Tabs';
+// import Tab from '@material-ui/core/Tab';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
+
+import classNames from 'classnames';
+
+// import styled from 'styled-components';
+// import H2 from 'components/H2';
 import Header from 'components/Header';
-import AtPrefix from './AtPrefix';
-import CenteredSection from './CenteredSection';
+import Tabs from 'components/Tabs';
+// import AtPrefix from './AtPrefix';
 // import Form from './Form';
-import Section from './Section';
+// import Section from './Section';
 import messages from './messages';
-import defaultMessage from '../App/messages';
-import homeMessage from '../HomePage/messages';
+// import defaultMessage from '../App/messages';
+// import homeMessage from '../HomePage/messages';
 
 import { mypageAction } from './actions';
 import { makeSelectMyPage } from './selectors';
@@ -44,75 +51,130 @@ const styles = {
     flexWrap: 'wrap',
     backgroundColor: '#ffffff',
   },
+  panel: {
+    flexGrow: 1,
+    backgroundColor: '#fbfbfb',
+  },
+  panelInfo: {
+    marginTop: 20,
+    height: 88,
+  },
+  row: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  col: {
+    flexGrow: 1,
+  },
+  avatar: {
+    margin: 10,
+  },
+  bigAvatar: {
+    width: 60,
+    height: 60,
+  },
+  avatarDiv: {
+    position: 'relative',
+  },
+  levelTagInner: {
+    position: 'absolute',
+    bottom: '10px',
+    width: '34px',
+    height: '18px',
+    fontFamily: 'SFProText',
+    fontSize: '12px',
+    fontWeight: 'normal',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: '1.5',
+    letterSpacing: '-0.3px',
+    textAlign: 'rigth',
+    borderRadius: '10px',
+    backgroundColor: '#6a88a5',
+    color: '#ffffff',
+    zIndex: '9999',
+  },
 };
 
-const Panel = styled.div`
-  width: 100%;
-  height: 500px;
-  display: flex;
-  align-items: space-between;
-  background: #e3e3e3;
-`;
-
-const Tab = styled.div`
-  width: 100%;
-  height: 100px;
-  display: flex;
-  align-items: space-between;
-`;
-
-const TabItem = styled.div`
-  text-align: center;
-  width: 50%;
-  height: 100px;
-  display: flex;
-  align-items: space-between;
-`;
-
-const RewardingList = styled.div`
-  text-align: center;
-  width: 100%;
-  height: 500px;
-  display: flex;
-  align-items: space-between;
-`;
-
-const RewardingListItem = styled.div`
-  text-align: center;
-  width: 100%;
-  height: 500px;
-  display: flex;
-  align-items: space-between;
-`;
 /* eslint-disable react/prefer-stateless-function */
 export class MyPage extends React.PureComponent {
   state = {
-    userId: '',
+    // userId: '',
   };
-  handleChange = e => {
-    this.setState({
-      userId: e.target.value,
-    });
-  };
+  // handleChange = e => {
+  //   this.setState({
+  //     // userId: e.target.value,
+  //   });
+  // };
   handleSubmit = e => {
     e.preventDefault();
     this.setState({
-      userId: '',
+      // userId: '',
     });
   };
   render() {
     const { classes } = this.props;
+    const photoPath =
+      'http://www.bigjungbo.com/xe/files/attach/images/163/825/047/578a17e481940d85a81c5e3c7f184c80.jpg';
     return (
       <div>
         <div className={classes.container}>
           <Header headerTitle={<FormattedMessage {...messages.header} />} />
         </div>
+        <div className={classes.panel}>
+          <div className={classes.row}>
+            <div className={classes.avatarDiv}>
+              <Avatar
+                alt="Adelle Charles"
+                src={photoPath}
+                className={classNames(classes.avatar, classes.bigAvatar)}
+              />
+              <span className={classes.levelTagInner}>Lv 1</span>
+            </div>
+          </div>
+          <div className={classes.row}>numero</div>
+          <div className={classes.row}>
+            <Typography variant="Headline">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="10"
+                height="21"
+                viewBox="0 0 10 21"
+              >
+                <g fill="none" fillRule="evenodd">
+                  <path fill="#FFF" d="M-155-201h375v667h-375z" />
+                  <path
+                    fill="#1591FF"
+                    fillRule="nonzero"
+                    stroke="#1591FF"
+                    strokeWidth=".2"
+                    d="M7.886 6.502l.114.1v.972l-.034.072-.142.08A3.67 3.67 0 0 0 4.776 9.37l3.108.048.116.106-.059 1.022-.12.096-3.388-.042c-.018.139-.027.26-.027.376l.001.075v.028c.003.104.003.174-.002.233l3.48.05.115.105-.059 1.023-.12.096-3-.067c.596 1.045 1.747 1.71 3.066 1.757l.113.107-.059 1.022-.117.096c-2.01 0-3.798-1.186-4.44-2.918l-1.272-.048L2 12.428l.059-1.022.125-.096.861.048a4.1 4.1 0 0 1-.018-.383c0-.14.01-.25.037-.341l-.953-.043L2 10.485l.059-1.023.121-.096 1.153.033c.704-1.78 2.504-2.948 4.553-2.897z"
+                  />
+                </g>
+              </svg>
+              662.11
+            </Typography>
+          </div>
+          <div className={classNames(classes.row, classes.panelInfo)}>
+            <div className={classes.col}>
+              <div className={classes.row}>144</div>
+              <div className={classes.row}>팔로워</div>
+            </div>
+            <div className={classes.col}>
+              <div className={classes.row}>654</div>
+              <div className={classes.row}>팔로잉</div>
+            </div>
+          </div>
+        </div>
+        <Tabs />
+        {/* <Tabs>
+          <Tab label="리뷰" />
+          <Tab label="보상 내역" />
+        </Tabs>
         <div>
-          <CenteredSection>
-            <p>
-              <FormattedMessage {...defaultMessage.startProjectHeader} />
-            </p>
-          </CenteredSection>
+          <p>
+            <FormattedMessage {...defaultMessage.startProjectHeader} />
+          </p>
           <Section>
             <H2>
               <FormattedMessage {...homeMessage.trymeHeader} />
@@ -124,28 +186,24 @@ export class MyPage extends React.PureComponent {
               </AtPrefix>
               <Input
                 name="userId"
-                placeholder="아이디"
+                placeholder="이름"
                 value={this.state.userId}
                 onChange={this.handleChange}
                 // value={this.props.username}
                 // onChange={this.props.onChangeUsername}
               />
               <H2>
-                <div>{this.state.id}</div>
+                <div>{this.state.userId}</div>
               </H2>
               <Button type="submit"> 로딩 </Button>
             </form>
-            <Panel />
-            <Tab>
-              <TabItem>리뷰</TabItem>
-              <TabItem>보상 내역</TabItem>
-            </Tab>
+
             <RewardingList>
               보상 진행중인 리뷰가 없습니다.
               <RewardingListItem />
             </RewardingList>
           </Section>
-        </div>
+        </div> */}
       </div>
     );
   }
@@ -159,6 +217,7 @@ export class MyPage extends React.PureComponent {
 
 MyPage.propTypes = {
   id: PropTypes.string,
+  classes: PropTypes.object.isRequired,
   // loading: PropTypes.bool,
   // error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   // repos: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
@@ -183,6 +242,7 @@ function mapDispatchToProps(dispatch) {
     onSubmitForm: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       const data = new FormData(evt.target);
+      console.log('submit');
       dispatch(mypageAction(data));
     },
   };

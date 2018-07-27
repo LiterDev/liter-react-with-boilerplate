@@ -2,29 +2,11 @@
  * Gets the repositories of the user from Github
  */
 
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import { reposLoaded, repoLoadingError } from 'containers/App/actions';
 
 import request from 'utils/request';
-import { makeSelectUsername } from 'containers/HomePage/selectors';
 import { MYPAGE_ACTION } from './constants';
-
-/**
- * Github repos request/response handler
- */
-export function* getRepos() {
-  // Select username from store
-  const username = yield select(makeSelectUsername());
-  const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`;
-
-  try {
-    // Call our request helper (see 'utils/request')
-    const repos = yield call(request, requestURL);
-    yield put(reposLoaded(repos, username));
-  } catch (err) {
-    yield put(repoLoadingError(err));
-  }
-}
 
 export function* mypage(pageData) {
   // Select username from store
@@ -33,7 +15,8 @@ export function* mypage(pageData) {
   // console.log(pageData.data);
   // console.log(pageData.data.get('id'));
   console.log(pageData.data.get('userId'));
-  const requestURL = `http://127.0.0.1:8080/user/detail`;
+  const userId = pageData.data.get('userId');
+  const requestURL = `http://localhost:8080/user/detail/${userId}`;
 
   try {
     // Call our request helper (see 'utils/request')
@@ -58,6 +41,7 @@ export function* mypage(pageData) {
 
     // const req = request(request, requestURL, options);
     const repos = yield call(request, requestURL, options);
+    console.log(repos);
     yield put(reposLoaded(repos, repos));
   } catch (err) {
     yield put(repoLoadingError(err));

@@ -6,17 +6,29 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
-function TabContainer(props) {
+function ReviewContainer(props) {
   return (
     <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
+      <div>{props.data.imgUrl}</div>
+      <div>{props.data.userName}</div>
+      <div>{props.data.update}</div>
+      <div>{props.data.title}</div>
+      <div>{props.data.ingBoolean}</div>
+      <div>{props.data.exportsCnt}</div>
+      <div>{props.data.starAvg}</div>
     </Typography>
   );
 }
 
-TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-};
+function RewardContainer(props) {
+  return (
+    <Typography component="div" style={{ padding: 8 * 3 }}>
+      <div>{props.data.date}</div>
+      <div>{props.data.coin}</div>
+      <div>{props.data.sum}</div>
+    </Typography>
+  );
+}
 
 const styles = theme => ({
   root: {
@@ -39,22 +51,36 @@ class SimpleTabs extends React.Component {
     return tabData.map(tab => <Tab label={tab.tabLabel} />);
   }
 
-  render() {
-    const { classes } = this.props;
+  renderContainer() {
     const { tabData } = this.props;
     const { value } = this.state;
+    console.log(tabData[value].type);
+    if (tabData[value].type === 'REVIEW') {
+      return tabData[value].list.map(list => (
+        <ReviewContainer type={tabData[value].type} data={list} />
+      ));
+    } else if (tabData[value].type === 'REWARD') {
+      return tabData[value].list.map(list => (
+        <RewardContainer type={tabData[value].type} data={list} />
+      ));
+    }
 
+    return tabData[value].list.map(list => (
+      <ReviewContainer type={tabData[value].type} data={list} />
+    ));
+  }
+
+  render() {
+    const { classes } = this.props;
+    const { value } = this.state;
     return (
       <div className={classes.root}>
-        {tabData[0].tabLabel}
-
         <AppBar position="static">
           <Tabs value={value} onChange={this.handleChange}>
             {this.renderTab()}
           </Tabs>
         </AppBar>
-        {value === 0 && <TabContainer>Item One</TabContainer>}
-        {value === 1 && <TabContainer>Item Two</TabContainer>}
+        {this.renderContainer()}
       </div>
     );
   }

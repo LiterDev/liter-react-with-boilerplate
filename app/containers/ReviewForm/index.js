@@ -17,7 +17,6 @@ import Header from 'components/Header';
 import ImagePreviewButton from 'components/ImagePreviewButton';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
-
 // import Button from '@material-ui/core/Button';
 
 // import Upload from 'material-ui-upload/Upload';
@@ -124,34 +123,7 @@ export class ReviewForm extends React.PureComponent {
             handleImageAppend={this.handleImageAppend}
             handleImageRemove={this.handleImageRemove}
           />
-          {/* <Upload label="Add" onFileLoad={this.onFileLoad} /> */}
-
-          {/* <Input
-            // defaultValue="Hello world"
-            placeholder="Placeholder"
-            className={classes.input}
-            inputProps={{
-              'aria-label': 'Description',
-            }}
-            type="file"
-          /> */}
-          {/* <form onSubmit={this.handleSubmit}>
-            <input type="file" onChange={this.handleImageChange} multiple />
-            <button type="submit" onClick={this.handleSubmit}>
-              Upload Image
-            </button>
-          </form>
-          {imagePreviewUrl && <img src={imagePreviewUrl} alt="test" />} */}
         </div>
-        <div>
-          {/* <input type="file" onChange={this.handleChange} /> */}
-          {/* <img
-            src={this.state.file}
-            alt="test"
-            className={classes.previewimg}
-          /> */}
-        </div>
-        {/* <ul>{list}</ul> */}
       </div>
     );
   }

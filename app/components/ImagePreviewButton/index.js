@@ -9,7 +9,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-// import Img from 'components/Img';
+import ImagePreview from 'components/ImagePreview';
+// import Sliders from 'components/Sliders';
 // import styled from 'styled-components';
 
 // import { FormattedMessage } from 'react-intl';
@@ -17,8 +18,8 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 const styles = theme => ({
   container: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    // display: 'flex',
+    // flexWrap: 'wrap',
     backgroundColor: '#ffffff',
     margin: '0px 0px 12px',
   },
@@ -56,7 +57,14 @@ const styles = theme => ({
   },
   previewimg: {
     flex: 1,
-    width: '100%',
+    // width: '100%',
+    width: 86,
+    height: 86,
+    border: {
+      radius: 4,
+      solid: 0.5,
+      color: '#e3e3e3',
+    },
   },
 });
 /* eslint-disable react/prefer-stateless-function */
@@ -158,6 +166,13 @@ class ImagePreviewButton extends React.PureComponent {
   //     numChildren: this.state.numChildren + 1,
   //   });
   // };
+  next() {
+    this.reactSwipe.next();
+  }
+
+  prev() {
+    this.reactSwipe.prev();
+  }
   render() {
     const { classes } = this.props;
     // console.log(Array.from(this.state.files.entries()));
@@ -169,44 +184,50 @@ class ImagePreviewButton extends React.PureComponent {
     //   children.push(<ChildComponent key={i} number={i} />);
     // }
     console.log(this.state.imageComponent);
+
     return (
       <div>
         {/* <FormattedMessage {...messages.header} /> */}
-        <input
-          accept="image/*"
-          className={classes.inputfile}
-          id="raised-button-file"
-          multiple
-          type="file"
-          onInput={this.handleAppend}
-        />
-        <label htmlFor="raised-button-file">
-          <Button
-            variant="raised"
-            color="default"
-            className={classes.button}
-            component="span"
-          >
-            Upload
-            <CloudUploadIcon className={classes.rightIcon} />
-          </Button>
-        </label>
-        {/* <ParentComponent addChild={this.onAddChild}>{children}</ParentComponent> */}
-        {this.state.imageComponent.map(movie => {
-          console.log(movie);
-          // console.log(movie.id);
-          return (
-            <li key={movie.id}>
-              {/* <Img /> */}
-              <img
-                src={movie.src}
-                alt={movie.alt}
-                id={movie.name}
-                width="60px"
-              />
-            </li>
-          );
-        })}
+        <div>
+          <input
+            accept="image/*"
+            className={classes.inputfile}
+            id="raised-button-file"
+            multiple
+            type="file"
+            onInput={this.handleAppend}
+          />
+          <label htmlFor="raised-button-file">
+            <Button
+              variant="raised"
+              color="default"
+              className={classes.button}
+              component="span"
+            >
+              Upload
+              <CloudUploadIcon className={classes.rightIcon} />
+            </Button>
+          </label>
+          {/* <ParentComponent addChild={this.onAddChild}>{children}</ParentComponent> */}
+          {this.state.imageComponent &&
+            this.state.imageComponent.map(movie => {
+              console.log(movie);
+              // console.log(movie.id);
+              return (
+                <div key={movie.id}>
+                  {/* <Img /> */}
+                  <ImagePreview
+                    src={movie.src}
+                    alt={movie.alt}
+                    id={movie.name}
+                    width="60px"
+                    className={classes.previewimg}
+                  />
+                </div>
+              );
+            })}
+        </div>
+        <div>{/* <Sliders /> */}</div>
       </div>
     );
   }

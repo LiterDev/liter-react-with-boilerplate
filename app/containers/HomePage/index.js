@@ -22,6 +22,7 @@ import {
 import H2 from 'components/H2';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
+import Header from 'components/Header';
 
 // import Header from 'components/Header';
 // import ReposList from 'components/ReposList';
@@ -65,6 +66,9 @@ export class HomePage extends React.PureComponent {
             content="A React.js Boilerplate application homepage"
           />
         </Helmet>
+        <Header
+          headerTitle={<FormattedMessage {...messages.startProjectHeader} />}
+        />
         <div>
           <CenteredSection>
             <H2>

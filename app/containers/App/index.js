@@ -17,6 +17,9 @@ import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import MyPage from 'containers/MyPage/Loadable';
 import ReviewForm from 'containers/ReviewForm/Loadable';
+
+import SlideTest from 'containers/SlideTest/Loadable';
+
 // import Header from 'components/Header';
 // import Footer from 'components/Footer';
 import { PrivateRoute } from 'containers/Auth';
@@ -36,9 +39,9 @@ const styles = theme => ({
   root: {
     textAlign: 'center',
     paddingTop: theme.spacing.unit * 9.5,
-    min: {
-      height: '100vh',
-    },
+    minHeight: '100vh',
+    // display: 'flex',
+    width: '100%',
   },
 });
 
@@ -59,6 +62,7 @@ function App(props) {
         <Route path="/signup" component={SignUp} />
         <Route path="/mypage" component={MyPage} />
         <Route path="/review/write" component={ReviewForm} />
+        <Route path="/slide" component={SlideTest} />
         <Route path="" component={NotFoundPage} />
       </Switch>
       {/* <Footer /> */}

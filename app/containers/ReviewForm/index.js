@@ -28,8 +28,8 @@ import messages from './messages';
 
 const styles = theme => ({
   container: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    // display: 'flex',
+    // flexWrap: 'wrap',
     backgroundColor: '#ffffff',
     margin: '0px 0px 12px',
   },
@@ -91,7 +91,8 @@ export class ReviewForm extends React.PureComponent {
     // console.log(file);
     this.state.files.append(name, file);
     // console.log(this.state.files.length);
-    console.log(Array.from(this.state.files.entries()).length);
+    // console.log('ReviewForm');
+    // console.log(Array.from(this.state.files.entries()).length);
   };
   handleImageRemove = name => {
     // this.state.files.append(name);

@@ -10,6 +10,10 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import ImagePreview from 'components/ImagePreview';
+// import ImagePreviews from 'components/ImagePreviews';
+import Slider from 'react-slick';
+import Grid from '@material-ui/core/Grid';
+
 // import Sliders from 'components/Sliders';
 // import styled from 'styled-components';
 
@@ -56,16 +60,23 @@ const styles = theme => ({
     fontSize: 20,
   },
   previewimg: {
-    flex: 1,
-    // width: '100%',
-    width: 86,
-    height: 86,
+    // flex: 1,
+    width: '100%',
+    // width: 86,
+    // height: 86,
     border: {
       radius: 4,
       solid: 0.5,
       color: '#e3e3e3',
     },
   },
+  // slideItem: {
+  //   width: 77,
+  //   height: 86,
+  //   borderRadius: 4,
+  //   border: 'solid 0.5px #e3e3e3',
+  //   marginLeft: 8,
+  // },
 });
 /* eslint-disable react/prefer-stateless-function */
 class ImagePreviewButton extends React.PureComponent {
@@ -78,6 +89,7 @@ class ImagePreviewButton extends React.PureComponent {
     };
     this.handleAppend = this.handleAppend.bind(this);
     this.updateState = this.updateState.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
     // this.onAddChild = this.onAddChild.bind(this);
   }
 
@@ -151,10 +163,41 @@ class ImagePreviewButton extends React.PureComponent {
     // });
   }
   handleRemove(name) {
+    // console.log(`imgnames====[${name}]`);
+    // console.log(this.state.imageComponent);
+    // console.log(this.state.imageComponent.length);
+
+    const findRemoveIndex = [];
+    if (this.state.imageComponent.length > 0) {
+      for (let i = 0; i < this.state.imageComponent.length; i += 1) {
+        // console.log(this.state.imageComponent[i]);
+        // console.log(this.state.imageComponent[i].name);
+        if (name === this.state.imageComponent[i].name) {
+          findRemoveIndex.push(i);
+        }
+      }
+    }
+    // console.log(`findRemoveIndex====[${findRemoveIndex}]`);
+    // const clone = this.state.imageComponent;
+    // clone.concat(this.state.imageComponent);
+    // console.log(clone);
+    const copy = [...this.state.imageComponent];
+    // console.log(copy);
+    if (findRemoveIndex.length > 0) {
+      for (let i = 0; i < findRemoveIndex.length; i += 1) {
+        // this.state.imageComponent.splice(findRemoveIndex[i], 1);
+        copy.splice(findRemoveIndex[i], 1);
+      }
+    }
+    this.setState({
+      imageComponent: copy,
+    });
+    // console.log(`imgnames after ====[${this.state.imageComponent.length}]`);
+    // console.log(this.state.imageComponent);
     this.props.handleImageRemove(name);
   }
   updateState(imageComponentTmp) {
-    console.log(imageComponentTmp);
+    // console.log(imageComponentTmp);
     this.setState({
       imageComponent: this.state.imageComponent.concat(imageComponentTmp),
     });
@@ -166,13 +209,7 @@ class ImagePreviewButton extends React.PureComponent {
   //     numChildren: this.state.numChildren + 1,
   //   });
   // };
-  next() {
-    this.reactSwipe.next();
-  }
 
-  prev() {
-    this.reactSwipe.prev();
-  }
   render() {
     const { classes } = this.props;
     // console.log(Array.from(this.state.files.entries()));
@@ -183,8 +220,17 @@ class ImagePreviewButton extends React.PureComponent {
     // for (let i = 0; i < this.state.numChildren; i += 1) {
     //   children.push(<ChildComponent key={i} number={i} />);
     // }
-    console.log(this.state.imageComponent);
+    // console.log(this.state.imageComponent);
 
+    const settings = {
+      dots: false,
+      infinite: false,
+      speed: 500,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      // lazyLoad: true,
+      // initialSlide: 0,
+    };
     return (
       <div>
         {/* <FormattedMessage {...messages.header} /> */}
@@ -209,25 +255,29 @@ class ImagePreviewButton extends React.PureComponent {
             </Button>
           </label>
           {/* <ParentComponent addChild={this.onAddChild}>{children}</ParentComponent> */}
-          {this.state.imageComponent &&
-            this.state.imageComponent.map(movie => {
-              console.log(movie);
-              // console.log(movie.id);
-              return (
-                <div key={movie.id}>
-                  {/* <Img /> */}
-                  <ImagePreview
-                    src={movie.src}
-                    alt={movie.alt}
-                    id={movie.name}
-                    width="60px"
-                    className={classes.previewimg}
-                  />
-                </div>
-              );
-            })}
+          <Grid item xs={12}>
+            {this.state.imageComponent && (
+              <Slider {...settings}>
+                {this.state.imageComponent.map(movie => {
+                  console.log('=====');
+                  return (
+                    <div key={movie.toString()}>
+                      <ImagePreview
+                        // key={movie.key}
+                        src={movie.src}
+                        alt={movie.alt}
+                        name={movie.name}
+                        // width="60px"
+                        className={classes.previewimg}
+                        handleRemove={this.handleRemove}
+                      />
+                    </div>
+                  );
+                })}
+              </Slider>
+            )}
+          </Grid>
         </div>
-        <div>{/* <Sliders /> */}</div>
       </div>
     );
   }

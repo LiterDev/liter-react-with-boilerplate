@@ -16,6 +16,7 @@ import injectReducer from 'utils/injectReducer';
 import Header from 'components/Header';
 import Slider from 'react-slick';
 import { withStyles } from '@material-ui/core/styles';
+import Icon from '@material-ui/core/Icon';
 import makeSelectSlideTest from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -81,6 +82,32 @@ export class SlideTest extends React.PureComponent {
             </div>
           </div>
         </Slider>
+        <div className={classes.root}>
+          <Icon className={classes.icon}>add_circle</Icon>
+          <Icon className={classes.icon} color="primary">
+            add_circle
+          </Icon>
+          <Icon className={classes.icon} color="secondary">
+            add_circle
+          </Icon>
+          <Icon className={classes.icon} color="action">
+            add_circle
+          </Icon>
+          <Icon
+            className={classes.iconHover}
+            color="error"
+            style={{ fontSize: 30 }}
+          >
+            add_circle
+          </Icon>
+          <Icon
+            className={classes.icon}
+            color="disabled"
+            style={{ fontSize: 36 }}
+          >
+            add_circle
+          </Icon>
+        </div>
       </div>
     );
   }

@@ -73,13 +73,13 @@ class ImagePreviews extends React.PureComponent {
 
     this.remove = this.remove.bind(this);
   }
-  remove = name => {
-    console.log(name);
-  };
-  // remove(name) {
+  // remove = name => {
   //   console.log(name);
-  //   // this.props.handleRemove(name);
-  // }
+  // };
+  remove(name) {
+    console.log(name);
+    this.props.handleRemove(name);
+  }
   render() {
     const { classes } = this.props;
     return (
@@ -111,7 +111,7 @@ ImagePreviews.propTypes = {
   src: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
   // name: PropTypes.string.isRequired,
-  // handleRemove: PropTypes.func.isRequired,
+  handleRemove: PropTypes.func.isRequired,
 };
 
 // export default ImagePreviews;

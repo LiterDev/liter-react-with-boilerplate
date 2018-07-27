@@ -14,9 +14,12 @@ import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import Header from 'components/Header';
-import ImagePreviewButton from 'components/ImagePreviewButton';
+import ImagePreviewButtonWithoutSlider from 'components/ImagePreviewButtonWithoutSlider';
+import UploadSlider from 'components/UploadSlider';
+
 import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
+
 // import Button from '@material-ui/core/Button';
 
 // import Upload from 'material-ui-upload/Upload';
@@ -28,8 +31,6 @@ import messages from './messages';
 
 const styles = theme => ({
   container: {
-    // display: 'flex',
-    // flexWrap: 'wrap',
     backgroundColor: '#ffffff',
     margin: '0px 0px 12px',
   },
@@ -77,16 +78,62 @@ export class ReviewForm extends React.PureComponent {
     super(props);
     this.state = {
       files: new FormData(),
+      imageCount: 0,
+      imageComponent: [],
     };
     this.handleImageAppend = this.handleImageAppend.bind(this);
     this.handleImageRemove = this.handleImageRemove.bind(this);
   }
 
-  handleImageAppend = (name, file) => {
-    this.state.files.append(name, file);
+  handleImageAppend = fileList => {
+    if (fileList) {
+      if (fileList.length > 0) {
+        const imageComponentTmp = [];
+        for (let i = 0; i < fileList.length; i += 1) {
+          this.state.files.append(
+            `imgnames[${this.state.imageCount}]`,
+            fileList[i],
+          );
+
+          imageComponentTmp.push({
+            id: this.state.imageCount,
+            name: `imgnames[${this.state.imageCount}]`,
+            src: URL.createObjectURL(fileList[i]),
+            alt: fileList[i].name,
+          });
+          this.state.imageCount += 1;
+        }
+        this.setState({
+          imageComponent: this.state.imageComponent.concat(imageComponentTmp),
+        });
+      }
+    }
+
+    // this.state.imageCount += 1;
+
+    console.log(this.state.imageComponent.length);
+    console.log(Array.from(this.state.files.entries()).length);
   };
   handleImageRemove = name => {
-    // this.state.files.append(name);
+    const findRemoveIndex = [];
+    if (this.state.imageComponent.length > 0) {
+      for (let i = 0; i < this.state.imageComponent.length; i += 1) {
+        if (name === this.state.imageComponent[i].name) {
+          findRemoveIndex.push(i);
+        }
+      }
+    }
+    const copy = [...this.state.imageComponent];
+    // console.log(copy);
+    if (findRemoveIndex.length > 0) {
+      for (let i = 0; i < findRemoveIndex.length; i += 1) {
+        // this.state.imageComponent.splice(findRemoveIndex[i], 1);
+        copy.splice(findRemoveIndex[i], 1);
+      }
+    }
+    this.setState({
+      imageComponent: copy,
+    });
     this.state.files.delete(name);
     console.log(Array.from(this.state.files.entries()).length);
   };
@@ -109,10 +156,16 @@ export class ReviewForm extends React.PureComponent {
           />
         </div>
         <div className={classes.container}>
-          <ImagePreviewButton
+          <ImagePreviewButtonWithoutSlider
             handleImageAppend={this.handleImageAppend}
+            // handleImageRemove={this.handleImageRemove}
+          />
+          {/* TTT: {this.state.imageComponent} */}
+          <UploadSlider
+            imageComponent={this.state.imageComponent}
             handleImageRemove={this.handleImageRemove}
           />
+          {/* )} */}
         </div>
       </div>
     );

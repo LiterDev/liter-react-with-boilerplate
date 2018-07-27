@@ -8,11 +8,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+// import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import ImagePreview from 'components/ImagePreview';
 // import ImagePreviews from 'components/ImagePreviews';
 import Slider from 'react-slick';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Icon from '@material-ui/core/Icon';
 
 // import Sliders from 'components/Sliders';
 // import styled from 'styled-components';
@@ -49,6 +51,10 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing.unit,
+    color: '#99999',
+    width: 165,
+    height: 40,
+    backgroundColor: '#f4f4f4',
   },
   leftIcon: {
     marginRight: theme.spacing.unit,
@@ -70,6 +76,9 @@ const styles = theme => ({
       color: '#e3e3e3',
     },
   },
+  icon: {
+    margin: theme.spacing.unit * 2,
+  },
   // slideItem: {
   //   width: 77,
   //   height: 86,
@@ -77,6 +86,20 @@ const styles = theme => ({
   //   border: 'solid 0.5px #e3e3e3',
   //   marginLeft: 8,
   // },
+
+  buttonText: {
+    width: 60,
+    height: 18,
+    fontFamily: 'AppleSDGothicNeo',
+    fontSize: 16,
+    fontWeight: 'normal',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    textAlign: 'center',
+    color: '#999999',
+  },
 });
 /* eslint-disable react/prefer-stateless-function */
 class ImagePreviewButton extends React.PureComponent {
@@ -235,8 +258,15 @@ class ImagePreviewButton extends React.PureComponent {
               className={classes.button}
               component="span"
             >
-              Upload
-              <CloudUploadIcon className={classes.rightIcon} />
+              <Typography className={classes.buttonText}>사진 추가</Typography>
+              {/* <CloudUploadIcon className={classes.rightIcon} /> */}
+              <Icon
+                className={classes.icon}
+                color="disabled"
+                style={{ fontSize: 16 }}
+              >
+                add_circle
+              </Icon>
             </Button>
           </label>
           {/* <ParentComponent addChild={this.onAddChild}>{children}</ParentComponent> */}

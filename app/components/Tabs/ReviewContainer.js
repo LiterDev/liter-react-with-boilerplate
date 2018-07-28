@@ -1,18 +1,53 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
+
+const styles = {
+  row: {
+    display: 'flex',
+    justifyContent: 'left',
+  },
+  col1: {
+    flexGrow: 1,
+  },
+  col3: {
+    flexGrow: 3,
+  },
+  reviewPhoto: {
+    width: '90px',
+    height: '90px',
+    borderRadius: '2px',
+  },
+  left: {
+    float: 'left',
+  },
+};
 
 function ReviewContainer(props) {
+  const { classes } = props;
   return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      <div>{props.data.imgUrl}</div>
-      <div>{props.data.userName}</div>
-      <div>{props.data.update}</div>
-      <div>{props.data.title}</div>
-      <div>{props.data.ingBoolean}</div>
-      <div>{props.data.exportsCnt}</div>
-      <div>{props.data.starAvg}</div>
-    </Typography>
+    <div className={classes.row}>
+      <div>{props.key}</div>
+      <span className={classes.col1}>
+        <img alt="" className={classes.reviewPhoto} src={props.data.imgUrl} />
+      </span>
+      <span className={classes.col3}>
+        <div className={classes.row}>
+          <span className={classNames(classes.left)}>
+            {props.data.userName}
+          </span>
+          <span>{props.data.update}</span>
+          <span>팔로우</span>
+        </div>
+        <div className={classes.row}>{props.data.title}</div>
+        <div className={classes.row}>
+          <span className={classes.col1}>{props.data.ingBoolean}</span>
+          <span className={classes.col1}>{props.data.exportsCnt}</span>
+          <span className={classes.col1}>{props.data.starAvg}</span>
+        </div>
+      </span>
+    </div>
   );
 }
 
-export default ReviewContainer;
+export default withStyles(styles)(ReviewContainer);

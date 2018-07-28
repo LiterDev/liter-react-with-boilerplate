@@ -107,7 +107,8 @@ export class MyPage extends React.PureComponent {
         hit: 10,
         list: [
           {
-            imgUrl: 'aaa,jpg',
+            imgUrl:
+              'https://i2.wp.com/beebom.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg?resize=640%2C426',
             userName: 'test1',
             update: '111',
             title: '켬 김에 왕까지!! 플레이스테이션4 패드 놓을 수 없는 순간!',
@@ -116,7 +117,8 @@ export class MyPage extends React.PureComponent {
             starAvg: 3,
           },
           {
-            imgUrl: 'aaa,jpg',
+            imgUrl:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxadr9ykSPoaet-5e7-_YZtueYaRJSvggWtEShh2EJyAjAf5-D',
             userName: 'test1',
             update: '111',
             title:
@@ -126,12 +128,13 @@ export class MyPage extends React.PureComponent {
             starAvg: 3,
           },
           {
-            imgUrl: 'bbb.jpg',
+            imgUrl:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ84hMKGYnLjbYASltpjWRIIumEGrwWPmkDFVkkr4hppCPekUIY',
             userName: 'test2',
             update: '111',
             title:
               '초보 커플을 위한, 플레이스테이션4 PS4 2인용 게임 낵(KNACK) 1, 2 모든 연령을 위한 공략법',
-            ingBoolean: 662.11,
+            ingBoolean: false,
             exportsCnt: 433,
             starAvg: 4,
           },

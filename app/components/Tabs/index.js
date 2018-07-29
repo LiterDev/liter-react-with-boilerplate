@@ -4,31 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 
-function ReviewContainer(props) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      <div>{props.data.imgUrl}</div>
-      <div>{props.data.userName}</div>
-      <div>{props.data.update}</div>
-      <div>{props.data.title}</div>
-      <div>{props.data.ingBoolean}</div>
-      <div>{props.data.exportsCnt}</div>
-      <div>{props.data.starAvg}</div>
-    </Typography>
-  );
-}
-
-function RewardContainer(props) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      <div>{props.data.date}</div>
-      <div>{props.data.coin}</div>
-      <div>{props.data.sum}</div>
-    </Typography>
-  );
-}
+import ReviewContainer from './ReviewContainer';
+import RewardContainer from './RewardContainer';
 
 const styles = theme => ({
   root: {
@@ -55,19 +33,23 @@ class SimpleTabs extends React.Component {
     const { tabData } = this.props;
     const { value } = this.state;
     console.log(tabData[value].type);
+    const result = [];
     if (tabData[value].type === 'REVIEW') {
-      return tabData[value].list.map(list => (
-        <ReviewContainer type={tabData[value].type} data={list} />
-      ));
+      result.push(<div>리뷰 11</div>);
+      result.push(
+        tabData[value].list.map(list => (
+          <ReviewContainer type={tabData[value].type} data={list} />
+        )),
+      );
     } else if (tabData[value].type === 'REWARD') {
-      return tabData[value].list.map(list => (
-        <RewardContainer type={tabData[value].type} data={list} />
-      ));
+      result.push(
+        tabData[value].list.map(list => (
+          <RewardContainer type={tabData[value].type} data={list} />
+        )),
+      );
     }
 
-    return tabData[value].list.map(list => (
-      <ReviewContainer type={tabData[value].type} data={list} />
-    ));
+    return result;
   }
 
   render() {

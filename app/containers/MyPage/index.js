@@ -103,30 +103,76 @@ export class MyPage extends React.PureComponent {
     tabData: [
       {
         tabLabel: '리뷰',
+        type: 'REVIEW',
         hit: 10,
-        list: {
-          imgUrl: 'aaa,jpg',
-          userName: 'test1',
-          update: '111',
-          title: '켬 김에 왕까지!! 플레이스테이션4 패드 놓을 수 없는 순간!',
-          ingBoolean: true,
-          exportsCnt: 22,
-          starAvg: 3,
-        },
+        list: [
+          {
+            imgUrl: 'aaa,jpg',
+            userName: 'test1',
+            update: '111',
+            title: '켬 김에 왕까지!! 플레이스테이션4 패드 놓을 수 없는 순간!',
+            ingBoolean: true,
+            exportsCnt: 22,
+            starAvg: 3,
+          },
+          {
+            imgUrl: 'aaa,jpg',
+            userName: 'test1',
+            update: '111',
+            title:
+              'Test. 켬 김에 왕까지!! 플레이스테이션4 패드 놓을 수 없는 순간!',
+            ingBoolean: true,
+            exportsCnt: 22,
+            starAvg: 3,
+          },
+          {
+            imgUrl: 'bbb.jpg',
+            userName: 'test2',
+            update: '111',
+            title:
+              '초보 커플을 위한, 플레이스테이션4 PS4 2인용 게임 낵(KNACK) 1, 2 모든 연령을 위한 공략법',
+            ingBoolean: 662.11,
+            exportsCnt: 433,
+            starAvg: 4,
+          },
+        ],
       },
       {
         tabLabel: '보상 내역',
+        type: 'REWARD',
         hit: 20,
-        list: {
-          imgUrl: 'bbb.jpg',
-          userName: 'test2',
-          update: '111',
-          title:
-            '초보 커플을 위한, 플레이스테이션4 PS4 2인용 게임 낵(KNACK) 1, 2 모든 연령을 위한 공략법',
-          ingBoolean: 662.11,
-          exportsCnt: 433,
-          starAvg: 4,
-        },
+        list: [
+          {
+            date: '2018-07-18 13:10:23',
+            coin: '12.00',
+            sum: '217.00',
+          },
+          {
+            date: '2018-07-18 13:10:23',
+            coin: '3.0',
+            sum: '205.0',
+          },
+          {
+            date: '2018-07-18 13:10:23',
+            coin: '100.0',
+            sum: '202.0',
+          },
+          {
+            date: '2018-07-18 13:10:23',
+            coin: '100.0',
+            sum: '102.0',
+          },
+          {
+            date: '2018-07-18 13:10:23',
+            coin: '1.00',
+            sum: '2.00',
+          },
+          {
+            date: '2018-07-18 13:10:23',
+            coin: '1.00',
+            sum: '1.00',
+          },
+        ],
       },
     ],
   };

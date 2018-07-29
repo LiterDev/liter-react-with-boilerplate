@@ -81,6 +81,9 @@ const styles = theme => ({
     textAlign: 'center',
     color: '#999999',
   },
+  slider: {
+    paddingTop: 10,
+  },
 });
 /* eslint-disable react/prefer-stateless-function */
 class UploadSlider extends React.PureComponent {
@@ -95,11 +98,12 @@ class UploadSlider extends React.PureComponent {
     const { classes } = this.props;
     // console.log(imageComponent);
     const settings = {
-      dots: false,
+      dots: true,
       infinite: false,
       speed: 500,
       slidesToShow: 4,
       slidesToScroll: 1,
+      swipeToSlide: true,
     };
     return (
       <div>

@@ -1,6 +1,6 @@
 /**
  *
- * ImagePreviewButtonWithoutSlider
+ * MoviePreviewButton
  *
  */
 
@@ -10,6 +10,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
+
+// import { FormattedMessage } from 'react-intl';
+// import messages from './messages';
 
 const styles = theme => ({
   container: {
@@ -44,6 +47,7 @@ const styles = theme => ({
     width: 160,
     height: 40,
     backgroundColor: '#f4f4f4',
+    // textAlign: 'left',
   },
   leftIcon: {
     marginRight: theme.spacing.unit,
@@ -66,13 +70,14 @@ const styles = theme => ({
     // margin: theme.spacing.unit * 2,
     position: 'absolute',
     right: '24px',
+    // paddingRight: 12,
   },
   buttonText: {
-    width: '100%',
-    height: 18,
     position: 'absolute',
     // left: '33px',
     right: '12px',
+    width: '100%',
+    height: 18,
     fontFamily: 'AppleSDGothicNeo',
     fontSize: 16,
     fontWeight: 'normal',
@@ -85,27 +90,7 @@ const styles = theme => ({
   },
 });
 /* eslint-disable react/prefer-stateless-function */
-class ImagePreviewButtonWithoutSlider extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.handleAppend = this.handleAppend.bind(this);
-  }
-
-  handleAppend(event) {
-    if (event.target.files) {
-      if (event.target.files.length > 0) {
-        // for (let i = 0; i < event.target.files.length; i += 1) {
-
-        // }
-        this.props.handleImageAppend(event.target.files);
-      }
-
-      const eventStatus = event;
-      eventStatus.target.value = null;
-    }
-  }
-
+class MoviePreviewButton extends React.PureComponent {
   render() {
     const { classes } = this.props;
     return (
@@ -126,7 +111,9 @@ class ImagePreviewButtonWithoutSlider extends React.PureComponent {
               className={classes.button}
               component="span"
             >
-              <Typography className={classes.buttonText}>사진 추가</Typography>
+              <Typography className={classes.buttonText}>
+                동영상 추가
+              </Typography>
               <Icon
                 className={classes.icon}
                 color="disabled"
@@ -142,10 +129,10 @@ class ImagePreviewButtonWithoutSlider extends React.PureComponent {
   }
 }
 
-ImagePreviewButtonWithoutSlider.propTypes = {
+MoviePreviewButton.propTypes = {
   classes: PropTypes.object.isRequired,
-  handleImageAppend: PropTypes.func.isRequired,
-  // handleImageRemove: PropTypes.func.isRequired,
+  // handleImageAppend: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(ImagePreviewButtonWithoutSlider);
+// export default MoviePreviewButton;
+export default withStyles(styles)(MoviePreviewButton);

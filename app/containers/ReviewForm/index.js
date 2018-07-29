@@ -15,11 +15,15 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import Header from 'components/Header';
 import ImagePreviewButtonWithoutSlider from 'components/ImagePreviewButtonWithoutSlider';
+import MoviePreviewButton from 'components/MoviePreviewButton';
+
 import UploadSlider from 'components/UploadSlider';
 
 import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
-
+import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
 // import Button from '@material-ui/core/Button';
 
 // import Upload from 'material-ui-upload/Upload';
@@ -28,11 +32,21 @@ import makeSelectReviewForm from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+import { postAction } from './actions';
 
 const styles = theme => ({
+  containerWrap: {
+    paddingLeft: 0,
+    paddingRight: 0,
+  },
   container: {
     backgroundColor: '#ffffff',
     margin: '0px 0px 12px',
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 8,
+    paddingBottom: 8,
+    // width: '100%',
   },
   input: {
     margin: theme.spacing.unit,
@@ -70,6 +84,15 @@ const styles = theme => ({
     flex: 1,
     width: '100%',
   },
+  divader: {
+    marginTop: 4,
+    paddingLeft: 6,
+    paddingRight: 6,
+    // marginBottom: 4,
+  },
+  uploadSlider: {
+    paddingTop: 10,
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -78,17 +101,20 @@ export class ReviewForm extends React.PureComponent {
     super(props);
     this.state = {
       files: new FormData(),
+      // filesArray: [],
       imageCount: 0,
       imageComponent: [],
     };
     this.handleImageAppend = this.handleImageAppend.bind(this);
     this.handleImageRemove = this.handleImageRemove.bind(this);
+    this.onSubmitFormInit = this.onSubmitFormInit.bind(this);
   }
 
   handleImageAppend = fileList => {
     if (fileList) {
       if (fileList.length > 0) {
         const imageComponentTmp = [];
+        // const filesArrayTmp = [];
         for (let i = 0; i < fileList.length; i += 1) {
           this.state.files.append(
             `imgnames[${this.state.imageCount}]`,
@@ -100,7 +126,9 @@ export class ReviewForm extends React.PureComponent {
             name: `imgnames[${this.state.imageCount}]`,
             src: URL.createObjectURL(fileList[i]),
             alt: fileList[i].name,
+            file: fileList[i],
           });
+
           this.state.imageCount += 1;
         }
         this.setState({
@@ -137,36 +165,80 @@ export class ReviewForm extends React.PureComponent {
     this.state.files.delete(name);
     console.log(Array.from(this.state.files.entries()).length);
   };
+  onSubmitFormInit(event) {
+    event.preventDefault();
+    // if (event !== undefined && event.preventDefault) event.preventDefault();
+    // console.log('submit');
+
+    // console.log(event.target);
+    // console.log(this.state.files);
+    const data = new FormData(event.target);
+    console.log(data);
+    console.log(data.get('title'));
+    // data.append('mutifile', this.state.files);
+    // console.log(data.get('mutifile'));
+    // console.log(data.get('mutifile'));
+
+    if (this.state.imageComponent.length > 0) {
+      for (let i = 0; i < this.state.imageComponent.length; i += 1) {
+        data.append(`files[${i}]`, this.state.imageComponent[i].file);
+      }
+    }
+    this.props.onSubmitForm(data);
+  }
   render() {
     const { classes } = this.props;
 
     return (
       <div>
-        <div className={classes.container}>
-          <Header headerTitle={<FormattedMessage {...messages.header} />} />
-          {/* <Button color="primary">Primary</Button>
-          <Button color="secondary">Secondary</Button> */}
-          <Input
-            // defaultValue="Hello world"
-            placeholder="Placeholder"
-            className={classes.input}
-            inputProps={{
-              'aria-label': 'Description',
-            }}
-          />
-        </div>
-        <div className={classes.container}>
-          <ImagePreviewButtonWithoutSlider
-            handleImageAppend={this.handleImageAppend}
-            // handleImageRemove={this.handleImageRemove}
-          />
-          {/* TTT: {this.state.imageComponent} */}
-          <UploadSlider
-            imageComponent={this.state.imageComponent}
-            handleImageRemove={this.handleImageRemove}
-          />
-          {/* )} */}
-        </div>
+        <form onSubmit={this.onSubmitFormInit}>
+          <div className={classes.container}>
+            <Header headerTitle={<FormattedMessage {...messages.header} />} />
+            <Input
+              placeholder="Placeholder"
+              className={classes.input}
+              inputProps={{
+                'aria-label': 'Description',
+              }}
+              name="title"
+            />
+          </div>
+          <div className={classes.container}>
+            <Grid container spacing={16}>
+              <Grid item xs={6} sm={6}>
+                <ImagePreviewButtonWithoutSlider
+                  handleImageAppend={this.handleImageAppend}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <MoviePreviewButton
+                  handleImageAppend={this.handleImageAppend}
+                />
+              </Grid>
+            </Grid>
+            <Divider className={classes.divader} />
+            <div className={classes.uploadSlider}>
+              <UploadSlider
+                imageComponent={this.state.imageComponent}
+                handleImageRemove={this.handleImageRemove}
+              />
+            </div>
+          </div>
+          <div className={classes.container}>
+            구매정보를 입력해주세요.
+            <Divider className={classes.propsdivader} />
+          </div>
+          <Button
+            variant="contained"
+            component="button"
+            className={classes.button}
+            // onClick={this.onSubmitFormInit}
+            type="submit"
+          >
+            작성 완료
+          </Button>
+          {/* <button>작성 완료</button> */}
+        </form>
       </div>
     );
   }
@@ -179,6 +251,7 @@ ReviewForm.propTypes = {
   label: PropTypes.any,
   multi: PropTypes.bool,
   passBase64: PropTypes.bool,
+  onSubmitForm: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -187,6 +260,17 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
+    // onSubmitForm: evt => {
+    //   if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+    //   console.log('submit');
+    //   console.log(this.state.files);
+    //   const data = new FormData(evt.target);
+    //   data.concat(this.state.files);
+    //   dispatch(postAction(data));
+    // },
+    onSubmitForm: data => {
+      dispatch(postAction(data));
+    },
     dispatch,
   };
 }

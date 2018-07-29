@@ -5,13 +5,15 @@
  */
 
 import { fromJS } from 'immutable';
-import { DEFAULT_ACTION } from './constants';
+import { DEFAULT_ACTION, POST_ACTION } from './constants';
 
 export const initialState = fromJS({});
 
 function reviewFormReducer(state = initialState, action) {
   switch (action.type) {
     case DEFAULT_ACTION:
+      return state;
+    case POST_ACTION:
       return state;
     default:
       return state;

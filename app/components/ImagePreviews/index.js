@@ -21,6 +21,7 @@ const styles = theme => ({
     width: '100%',
     // width: 86,
     height: 86,
+    // paddingTop: 10,
   },
   previewDiv: {
     // flex: 1,
@@ -38,10 +39,12 @@ const styles = theme => ({
     border: 'solid 1px #e3e3e3',
     // position: 'relative',
     // paddingLeft: 8,
+    // paddingTop: 10,
   },
   previewWrap: {
     paddingLeft: 8,
     position: 'relative',
+    paddingTop: 10,
   },
   button: {
     // margin: theme.spacing.unit,

@@ -17,8 +17,9 @@ import AppDrawer from './AppDrawer';
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    paddingTop: theme.spacing.unit * 0,
-    textAlign: 'center',
+    // paddingTop: theme.spacing.unit * 0,
+    // textAlign: 'center',
+    display: 'flex',
   },
   flex: {
     flexGrow: 1,
@@ -48,9 +49,15 @@ const styles = theme => ({
   },
   top_box: {
     // width: '375px',
-    height: 64,
-    background: {
-      color: '#ffffff',
+    // height: 64,
+    height: theme.spacing.unit * 8,
+    // background: {
+    //   color: '#ffffff',
+    // },
+    boxShadow: '0 0.5px 0 0 #eeeeee',
+    transition: theme.transitions.create('width'),
+    '@media print': {
+      // position: 'absolute',
     },
   },
   ic_round_menu: {
@@ -172,7 +179,7 @@ class Header extends React.Component {
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
-  headerTitle: PropTypes.object.isRequired,
+  headerTitle: PropTypes.string.isRequired,
 };
 
 // export default Header;

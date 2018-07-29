@@ -38,7 +38,8 @@ import withRoot from 'withRoot';
 const styles = theme => ({
   root: {
     textAlign: 'center',
-    paddingTop: theme.spacing.unit * 9.5,
+    paddingTop: theme.spacing.unit * 8,
+    // paddingTop: 64,
     minHeight: '100vh',
     // display: 'flex',
     width: '100%',

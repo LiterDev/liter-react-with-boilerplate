@@ -11,4 +11,20 @@ export default defineMessages({
     id: 'app.containers.SignUp.header',
     defaultMessage: 'This is SignUp container !',
   },
+  email: {
+    id: 'app.containers.SignUp.email',
+    defaultMessage: 'email',
+  },
+  username: {
+    id: 'app.containers.SignUp.username',
+    defaultMessage: 'username',
+  },
+  password: {
+    id: 'app.containers.SignUp.password',
+    defaultMessage: 'password',
+  },
+  passwordRepeat: {
+    id: 'app.containers.SignUp.passwordRepeat',
+    defaultMessage: 'passwordRepeat',
+  },
 });

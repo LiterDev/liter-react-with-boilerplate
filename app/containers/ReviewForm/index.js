@@ -41,11 +41,17 @@ const styles = theme => ({
   },
   container: {
     backgroundColor: '#ffffff',
-    margin: '0px 0px 12px',
+    margin: '12px 0px 0px',
     paddingLeft: 10,
     paddingRight: 10,
     paddingTop: 8,
     paddingBottom: 8,
+    // margin: {
+    //   top: 0,
+    //   left: 0,
+    //   right: 0,
+    //   bottom: 12,
+    // },
     // width: '100%',
   },
   input: {
@@ -191,9 +197,9 @@ export class ReviewForm extends React.PureComponent {
 
     return (
       <div>
+        <Header headerTitle={<FormattedMessage {...messages.header} />} />
         <form onSubmit={this.onSubmitFormInit}>
           <div className={classes.container}>
-            <Header headerTitle={<FormattedMessage {...messages.header} />} />
             <Input
               placeholder="Placeholder"
               className={classes.input}

@@ -43,9 +43,12 @@
   "boilerplate.containers.LocaleToggle.de": "de",
   "boilerplate.containers.LocaleToggle.en": "en",
   "boilerplate.containers.NotFoundPage.header": "Page not found.",
-  "app.containers.SignUp.header": "SignUp",
-
-  "app.containers.MyPage.start_project.header": "MyPage",
+  "app.containers.App.header": "App Title",
   "app.containers.MyPage.header": "My Page",
-  "app.containers.App.header": "App Test"
+  "app.containers.ReviewForm.header": "Review Form",
+  "app.containers.SignUp.header": "SignUp",
+  "app.containers.SignUp.email": "Eamil",
+  "app.containers.SignUp.username": "Username",
+  "app.containers.SignUp.password": "Password",
+  "app.containers.SignUp.passwordRepeat": "Password Repeat"
 }

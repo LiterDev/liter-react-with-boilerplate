@@ -20,6 +20,8 @@ import ReviewForm from 'containers/ReviewForm/Loadable';
 
 import SlideTest from 'containers/SlideTest/Loadable';
 
+import FollowActionPage from 'containers/FollowActionPage/Loadable';
+
 // import Header from 'components/Header';
 // import Footer from 'components/Footer';
 import { PrivateRoute } from 'containers/Auth';
@@ -62,6 +64,7 @@ function App(props) {
         <PrivateRoute path="/features" component={FeaturePage} />
         <Route path="/signup" component={SignUp} />
         <Route path="/mypage" component={MyPage} />
+        <Route path="/follow" component={FollowActionPage} />
         <Route path="/review/write" component={ReviewForm} />
         <Route path="/slide" component={SlideTest} />
         <Route path="" component={NotFoundPage} />

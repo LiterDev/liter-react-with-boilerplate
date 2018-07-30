@@ -26,7 +26,15 @@ function checkStatus(response) {
     return response;
   }
 
+  // console.log(response);
   const error = new Error(response.statusText);
+  // console.log(response.json());
+
+  // response.json().then(data => {
+  //   console.log(data);
+  //   console.log(data.code);
+  //   return data;
+  // });
   error.response = response;
   throw error;
 }

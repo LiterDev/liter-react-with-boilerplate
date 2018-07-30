@@ -44,11 +44,16 @@
   "boilerplate.containers.NotFoundPage.header": "Page not found.",
   "app.containers.App.header": "App Title",
 
-  "app.containers.ReviewForm.header": "리뷰작성",
   "app.containers.MyPage.header": "마이 페이지",
+  "app.containers.ReviewForm.header": "리뷰작성",
   "app.containers.SignUp.header": "SignUp",
-  "app.containers.SignUp.email": "이메일",
+  "app.containers.SignUp.email": "이메일 주소",
   "app.containers.SignUp.username": "사용자 이름",
   "app.containers.SignUp.password": "비밀번호",
-  "app.containers.SignUp.passwordRepeat": "비밀번호 확인"
+  "app.containers.SignUp.passwordRepeat": "비밀번호 확인",
+  "app.containers.SignUp.info1":
+    "회원님의 정보는 암호화되어 안전하게 관리됩니다.",
+  "app.containers.SignUp.info2":
+    "LITER는 회원님의 소중한 정보를 지켜드리기 위해 최선을 다할 것입니다.",
+  "app.containers.SignUp.next": "다음"
 }

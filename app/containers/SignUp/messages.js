@@ -27,4 +27,16 @@ export default defineMessages({
     id: 'app.containers.SignUp.passwordRepeat',
     defaultMessage: 'passwordRepeat',
   },
+  info1: {
+    id: 'app.containers.SignUp.info1',
+    defaultMessage: 'info1',
+  },
+  info2: {
+    id: 'app.containers.SignUp.info2',
+    defaultMessage: 'info2',
+  },
+  next: {
+    id: 'app.containers.SignUp.next',
+    defaultMessage: 'next',
+  },
 });

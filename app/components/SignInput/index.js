@@ -36,8 +36,27 @@ const styles = theme => ({
     paddingBottom: 4,
     verticalAlign: 'middle',
     lineHeight: '100%',
-    border: 'solid 0.5px #ff9393',
     marginBottom: 8,
+    // marginLeft: 'auto',
+    // marginRight: 'auto',
+  },
+
+  inputWrapError: {
+    position: 'relative',
+    width: '100%',
+    height: 44,
+    borderRadius: 3,
+    backgroundColor: '#fafafa',
+    // border: 'solid 0.5px #eeeeee',
+    textAlign: 'left',
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 4,
+    paddingBottom: 4,
+    verticalAlign: 'middle',
+    lineHeight: '100%',
+    marginBottom: 8,
+    border: 'solid 0.5px #ff9393',
     // marginLeft: 'auto',
     // marginRight: 'auto',
   },
@@ -80,23 +99,26 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 class SignInput extends React.PureComponent {
   render() {
-    const { classes, label, placeholder } = this.props;
+    const { classes, label, placeholder, error, type } = this.props;
+    // console.log(placeholder);
+    // console.log(placeholder.props.id);
     return (
       // <div>
       //   <FormattedMessage {...messages.header} />
       // </div>
-      <div className={classes.inputWrap}>
+      <div className={error ? classes.inputWrapError : classes.inputWrap}>
         <div className={classes.inputWrapText}>{label}</div>
         {/* <input
           type="text"
           placeholder={placeholder}
           className={classes.inputWrapInput}
         /> */}
-        <div className={classes.inputWrapWarn}>이메일</div>
+        {error && <div className={classes.inputWrapWarn}>{error}</div>}
+
         <FormattedMessage id={placeholder.props.id}>
           {message => (
             <input
-              type="text"
+              type={type}
               // name="id"
               placeholder={message}
               className={classes.inputWrapInput}
@@ -111,6 +133,8 @@ class SignInput extends React.PureComponent {
 SignInput.propTypes = {
   label: PropTypes.object.isRequired,
   placeholder: PropTypes.object,
+  error: PropTypes.object,
+  type: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(SignInput);

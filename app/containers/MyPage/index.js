@@ -94,6 +94,9 @@ const styles = {
     color: '#ffffff',
     zIndex: '9999',
   },
+  userCoin: {
+    color: '#1591ff',
+  },
 };
 
 /* eslint-disable react/prefer-stateless-function */
@@ -107,36 +110,39 @@ export class MyPage extends React.PureComponent {
         hit: 10,
         list: [
           {
+            index: 1,
             imgUrl:
               'https://i2.wp.com/beebom.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg?resize=640%2C426',
             userName: 'test1',
-            update: '111',
+            update: '방금전',
             title: '켬 김에 왕까지!! 플레이스테이션4 패드 놓을 수 없는 순간!',
             ingBoolean: true,
             exportsCnt: 22,
-            starAvg: 3,
+            starAvg: '3.0',
           },
           {
+            index: 2,
             imgUrl:
               'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxadr9ykSPoaet-5e7-_YZtueYaRJSvggWtEShh2EJyAjAf5-D',
             userName: 'test1',
-            update: '111',
+            update: '5분전',
             title:
               'Test. 켬 김에 왕까지!! 플레이스테이션4 패드 놓을 수 없는 순간!',
             ingBoolean: true,
             exportsCnt: 22,
-            starAvg: 3,
+            starAvg: '3.0',
           },
           {
+            index: 3,
             imgUrl:
               'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ84hMKGYnLjbYASltpjWRIIumEGrwWPmkDFVkkr4hppCPekUIY',
             userName: 'test2',
-            update: '111',
+            update: '2018-07-27',
             title:
               '초보 커플을 위한, 플레이스테이션4 PS4 2인용 게임 낵(KNACK) 1, 2 모든 연령을 위한 공략법',
             ingBoolean: false,
             exportsCnt: 433,
-            starAvg: 4,
+            starAvg: '4.0',
           },
         ],
       },
@@ -212,7 +218,7 @@ export class MyPage extends React.PureComponent {
           </div>
           <div className={classes.row}>numero</div>
           <div className={classes.row}>
-            <Typography variant="headline">
+            <Typography variant="headline" className={classes.userCoin}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="10"

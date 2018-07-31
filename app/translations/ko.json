@@ -58,5 +58,6 @@
   "app.containers.SignUp.next": "다음",
 
   "app.containers.SignIn.bodytext": "경험을 나누고 보상을 받으세요",
-  "app.containers.SignIn.login": "로그인"
+  "app.containers.SignIn.login": "로그인",
+  "app.containers.Reviews.header": "리뷰"
 }

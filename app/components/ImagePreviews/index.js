@@ -24,15 +24,6 @@ const styles = theme => ({
     // paddingTop: 10,
   },
   previewDiv: {
-    // flex: 1,
-    // width: '100%',
-    // width: 86,
-    // height: 86,
-    // border: {
-    //   radius: 4,
-    //   solid: 0.5,
-    //   color: '#e3e3e3',
-    // },
     width: '100%',
     height: 86,
     borderRadius: 4,
@@ -47,25 +38,21 @@ const styles = theme => ({
     paddingTop: 10,
   },
   button: {
-    // margin: theme.spacing.unit,
-    // margin: {
-    //   top: 4,
-    //   left: 10,
-    // },
     position: 'absolute',
-    // top: -5,
-    // backgroundColor: '#ffffff',
-
     top: 6,
     right: 6,
     width: 20,
     height: 20,
+    margin: 0,
     // right: 0,
   },
   ic_close_photo: {
     width: 20,
     height: 20,
     objectFit: 'contain',
+  },
+  iconBtn: {
+    margin: 0,
   },
 });
 
@@ -80,7 +67,7 @@ class ImagePreviews extends React.PureComponent {
   //   console.log(name);
   // };
   remove(name) {
-    console.log(name);
+    // console.log(name);
     this.props.handleRemove(name);
   }
   render() {

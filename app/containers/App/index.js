@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet';
 // import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 
-import HomePage from 'containers/HomePage/Loadable';
+// import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import MyPage from 'containers/MyPage/Loadable';
@@ -21,6 +21,7 @@ import ReviewForm from 'containers/ReviewForm/Loadable';
 import SlideTest from 'containers/SlideTest/Loadable';
 
 import FollowActionPage from 'containers/FollowActionPage/Loadable';
+import Reviews from 'containers/Reviews/Loadable';
 
 // import Header from 'components/Header';
 // import Footer from 'components/Footer';
@@ -61,7 +62,7 @@ function App(props) {
       </Helmet>
       {/* <Header /> */}
       <Switch>
-        <Route exact path="/" component={HomePage} />
+        <Route exact path="/" component={Reviews} />
         <PrivateRoute path="/features" component={FeaturePage} />
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />

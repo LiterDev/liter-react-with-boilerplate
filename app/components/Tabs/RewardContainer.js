@@ -49,10 +49,7 @@ function RewardContainer(props) {
         <span className={classNames(classes.dateCol, classes.colDivider)}>
           <div className={classes.dateWidth}>{props.data.date}</div>
         </span>
-        <span
-          numeric
-          className={classNames(classes.rewardCol, classes.colDivider)}
-        >
+        <span className={classNames(classes.rewardCol, classes.colDivider)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="8"
@@ -70,7 +67,7 @@ function RewardContainer(props) {
           </svg>
           {props.data.coin}
         </span>
-        <span numeric className={classNames(classes.totalCol)}>
+        <span className={classNames(classes.totalCol)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="8"

@@ -12,9 +12,9 @@ export function* mypage(pageData) {
   // Select username from store
   // const data = yield select(makeSelectSignUp());
   // const data = new FormData(event.target);
-  // console.log(pageData.data);
+  console.log(pageData);
   // console.log(pageData.data.get('id'));
-  console.log(pageData.data.get('userId'));
+  // console.log(pageData.data.get('userId'));
   const userId = pageData.data.get('userId');
   const requestURL = `http://localhost:8080/user/detail/${userId}`;
 

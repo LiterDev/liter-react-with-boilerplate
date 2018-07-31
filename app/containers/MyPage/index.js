@@ -15,25 +15,14 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 import { withStyles } from '@material-ui/core/styles';
-// import Input from '@material-ui/core/Input';
-// import Button from '@material-ui/core/Button';
-// import Tabs from '@material-ui/core/Tabs';
-// import Tab from '@material-ui/core/Tab';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 
 import classNames from 'classnames';
 
-// import styled from 'styled-components';
-// import H2 from 'components/H2';
 import Header from 'components/Header';
 import Tabs from 'components/Tabs';
-// import AtPrefix from './AtPrefix';
-// import Form from './Form';
-// import Section from './Section';
 import messages from './messages';
-// import defaultMessage from '../App/messages';
-// import homeMessage from '../HomePage/messages';
 
 import { mypageAction } from './actions';
 import { makeSelectMyPage } from './selectors';
@@ -41,9 +30,7 @@ import { makeSelectMyPage } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
-// import messages from './messages';
-
-// import Panel from './Panel';
+import { makeSelectSignInSuccess } from '../SignIn/selectors';
 
 const styles = {
   container: {
@@ -102,7 +89,11 @@ const styles = {
 /* eslint-disable react/prefer-stateless-function */
 export class MyPage extends React.PureComponent {
   state = {
-    // userId: '',
+    userData: {
+      userId: '1',
+      photoPath:
+        'http://www.bigjungbo.com/xe/files/attach/images/163/825/047/578a17e481940d85a81c5e3c7f184c80.jpg',
+    },
     tabData: [
       {
         tabLabel: '리뷰',
@@ -197,9 +188,9 @@ export class MyPage extends React.PureComponent {
     });
   };
   render() {
-    const { classes } = this.props;
-    const photoPath =
-      'http://www.bigjungbo.com/xe/files/attach/images/163/825/047/578a17e481940d85a81c5e3c7f184c80.jpg';
+    const { classes, signinSuccess } = this.props;
+    const { userData } = this.state;
+    // signIn.signinSuccess.username
     return (
       <div>
         <div className={classes.container}>
@@ -209,14 +200,18 @@ export class MyPage extends React.PureComponent {
           <div className={classes.row}>
             <div className={classes.avatarDiv}>
               <Avatar
-                alt="Adelle Charles"
-                src={photoPath}
+                alt=""
+                src={userData.photoPath}
                 className={classNames(classes.avatar, classes.bigAvatar)}
               />
               <span className={classes.levelTagInner}>Lv 1</span>
             </div>
           </div>
-          <div className={classes.row}>numero</div>
+          <div className={classes.row}>
+            <button onClick={this.props.selectMyReview}>
+              {signinSuccess.username}
+            </button>
+          </div>
           <div className={classes.row}>
             <Typography variant="headline" className={classes.userCoin}>
               <svg
@@ -251,53 +246,10 @@ export class MyPage extends React.PureComponent {
           </div>
         </div>
         <Tabs tabData={this.state.tabData} />
-        {/* <Tabs>
-          <Tab label="리뷰" />
-          <Tab label="보상 내역" />
-        </Tabs>
-        <div>
-          <p>
-            <FormattedMessage {...defaultMessage.startProjectHeader} />
-          </p>
-          <Section>
-            <H2>
-              <FormattedMessage {...homeMessage.trymeHeader} />
-            </H2>
-            <form onSubmit={this.props.onSubmitForm}>
-              <FormattedMessage {...homeMessage.trymeMessage} />
-              <AtPrefix>
-                <FormattedMessage {...homeMessage.trymeAtPrefix} />
-              </AtPrefix>
-              <Input
-                name="userId"
-                placeholder="이름"
-                value={this.state.userId}
-                onChange={this.handleChange}
-                // value={this.props.username}
-                // onChange={this.props.onChangeUsername}
-              />
-              <H2>
-                <div>{this.state.userId}</div>
-              </H2>
-              <Button type="submit"> 로딩 </Button>
-            </form>
-
-            <RewardingList>
-              보상 진행중인 리뷰가 없습니다.
-              <RewardingListItem />
-            </RewardingList>
-          </Section>
-        </div> */}
       </div>
     );
   }
 }
-/** Panel
-   Tab
-   LiterCoin
-   rewarding review
-   <LikeCount>
-* */
 
 MyPage.propTypes = {
   id: PropTypes.string,
@@ -306,7 +258,7 @@ MyPage.propTypes = {
   // error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   // repos: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   // rewardsReviews: PropTypes.oneOfType([PropTypes.array(), PropTypes.bool()]),
-  onSubmitForm: PropTypes.func,
+  selectMyReview: PropTypes.func,
   // username: PropTypes.string,
   // onChangeUsername: PropTypes.func,
 };
@@ -314,19 +266,17 @@ MyPage.propTypes = {
 const mapStateToProps = createStructuredSelector({
   // repos: makeSelectRepos(),
   rewardsReviews: makeSelectMyPage(),
+  signinSuccess: makeSelectSignInSuccess(),
   // username: makeSelectUsername(),
   // loading: makeSelectLoading(),
   // error: makeSelectError(),
 });
 
 function mapDispatchToProps(dispatch) {
+  console.log('mapDispatch');
   return {
-    // onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
-
-    onSubmitForm: evt => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      const data = new FormData(evt.target);
-      console.log('submit');
+    selectMyReview: data => {
+      console.log('select My Review call!!!');
       dispatch(mypageAction(data));
     },
   };

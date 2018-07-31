@@ -82,6 +82,7 @@ const styles = theme => ({
   },
   toolbar: {
     height: '100vh',
+    textAlign: 'center',
   },
   icon: {
     // margin: theme.spacing.unit * 2,

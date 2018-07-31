@@ -13,6 +13,9 @@ import MoviePreviewButton from 'components/MoviePreviewButton';
 import ReviewCategory from 'components/ReviewCategory';
 import TabLabel from 'components/TabLabel';
 import TabContainer from 'components/TabContainer';
+import ReviewFormTabOnline from 'components/ReviewFormTabOnline';
+import ReviewFormTabOffline from 'components/ReviewFormTabOffline';
+import ReviewFormTabEtc from 'components/ReviewFormTabEtc';
 
 import Input from '@material-ui/core/Input';
 import Divider from '@material-ui/core/Divider';
@@ -25,6 +28,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Button from '@material-ui/core/Button';
 // import Typography from '@material-ui/core/Typography';
 // import PhoneIcon from '@material-ui/icons/Phone';
 
@@ -170,8 +174,9 @@ class ReviewWrite extends React.PureComponent {
       imageCount: 0,
       imageComponent: [],
       open: false,
-      // selectedValue: false,
+      selectedValue: false,
       value: 0,
+      storeValue: 'SHOP',
     };
     this.handleImageAppend = this.handleImageAppend.bind(this);
     this.handleImageRemove = this.handleImageRemove.bind(this);
@@ -235,18 +240,11 @@ class ReviewWrite extends React.PureComponent {
   };
   onSubmitFormInit(event) {
     event.preventDefault();
-    // if (event !== undefined && event.preventDefault) event.preventDefault();
-    // console.log('submit');
 
     // console.log(event.target);
     // console.log(this.state.files);
     const data = new FormData(event.target);
-    // console.log(data);
-    // console.log(data.get('title'));
-    // data.append('mutifile', this.state.files);
-    // console.log(data.get('mutifile'));
-    // console.log(data.get('mutifile'));
-
+    console.log(data.get('tags'));
     if (this.state.imageComponent.length > 0) {
       for (let i = 0; i < this.state.imageComponent.length; i += 1) {
         data.append(`files[${i}]`, this.state.imageComponent[i].file);
@@ -262,21 +260,31 @@ class ReviewWrite extends React.PureComponent {
   };
 
   // 카테고리팝업 핸들러
-  // handleClose = value => {
-  //   this.setState({ selectedValue: value, open: false });
-  // };
+  handleClose = value => {
+    this.setState({ selectedValue: value, open: false });
+  };
 
   handleChange = (event, value) => {
-    this.setState({ value });
+    let storeVal = 'SHOP';
+    if (value === 1) {
+      storeVal = 'PRODUCT';
+    } else if (value === 2) {
+      storeVal = 'ETC';
+    }
+    this.setState({
+      value,
+      storeValue: storeVal,
+    });
   };
   render() {
     const { classes } = this.props;
     return (
       <div>
-        <div className={classes.rowdiv}>
-          <div>
-            <FormControl className={classes.formControl}>
-              {/* <InputLabel
+        <form onSubmit={this.onSubmitFormInit}>
+          <div className={classes.rowdiv}>
+            <div>
+              <FormControl className={classes.formControl}>
+                {/* <InputLabel
               FormLabelClasses={{
                 root: classes.cssLabel,
                 focused: classes.cssFocused,
@@ -285,35 +293,37 @@ class ReviewWrite extends React.PureComponent {
             >
               Custom CSS
             </InputLabel> */}
-              <Input
+                <Input
+                  classes={{
+                    underline: classes.cssUnderline,
+                  }}
+                  id="custom-css-input"
+                  className={classes.inputTop}
+                  multiline
+                  placeholder="제목"
+                  name="title"
+                />
+              </FormControl>
+            </div>
+            <div className={classes.cateWrap}>
+              <IconButton
+                color="primary"
+                // className={classes.buttonCate}
+                aria-label="Add to shopping cart"
+                onClick={this.handleClickOpen}
+                // className={classNames(classes.root)}
                 classes={{
-                  underline: classes.cssUnderline,
+                  root: classes.iconBtn,
+                  // disabled: 'disabled',
                 }}
-                id="custom-css-input"
-                className={classes.inputTop}
-                placeholder="제목"
-              />
-            </FormControl>
-          </div>
-          <div className={classes.cateWrap}>
-            <IconButton
-              color="primary"
-              // className={classes.buttonCate}
-              aria-label="Add to shopping cart"
-              onClick={this.handleClickOpen}
-              // className={classNames(classes.root)}
-              classes={{
-                root: classes.iconBtn,
-                // disabled: 'disabled',
-              }}
-            >
-              <Icon className={classes.icon} color="secondary">
-                add_circle
-              </Icon>
-            </IconButton>
+              >
+                <Icon className={classes.icon} color="secondary">
+                  add_circle
+                </Icon>
+              </IconButton>
 
-            <span className={classes.cateText}>카테고리를 선택해주세요.</span>
-            {/* <Button
+              <span className={classes.cateText}>카테고리를 선택해주세요.</span>
+              {/* <Button
               variant="contained"
               size="small"
               className={classes.buttonCate}
@@ -326,110 +336,118 @@ class ReviewWrite extends React.PureComponent {
               </Icon>
               카테고리를 선택해주세요.
             </Button> */}
+            </div>
           </div>
-        </div>
-        <div className={classes.rowdivSec}>
-          <div className={classes.imageBtn}>
-            <ImagePreviewButtonWithoutSlider
-              handleImageAppend={this.handleImageAppend}
-            />
+          <div className={classes.rowdivSec}>
+            <div className={classes.imageBtn}>
+              <ImagePreviewButtonWithoutSlider
+                handleImageAppend={this.handleImageAppend}
+              />
+            </div>
+            <div className={classes.movieBtn}>
+              <MoviePreviewButton handleImageAppend={this.handleImageAppend} />
+            </div>
+            <Divider className={classes.propsdivader} />
+            <div className={classes.uploadSlider}>
+              <UploadSlider
+                imageComponent={this.state.imageComponent}
+                handleImageRemove={this.handleImageRemove}
+              />
+            </div>
           </div>
-          <div className={classes.movieBtn}>
-            <MoviePreviewButton handleImageAppend={this.handleImageAppend} />
-          </div>
-          <Divider className={classes.propsdivader} />
-          <div className={classes.uploadSlider}>
-            <UploadSlider
-              imageComponent={this.state.imageComponent}
-              handleImageRemove={this.handleImageRemove}
-            />
-          </div>
-        </div>
-        <div className={classes.rowdiv}>
-          <div className={classes.buyWrap}>
-            <IconButton
-              color="primary"
-              aria-label="Add to shopping cart"
-              onClick={this.handleClickOpen}
-              classes={{
-                root: classes.iconBtn,
-              }}
-            >
-              <Icon className={classes.iconShopping}>shopping_basket</Icon>
-            </IconButton>
-            <span className={classes.cateText}>구매정보를 입력해주세요.</span>
-          </div>
-          <Divider className={classes.dvideSec} />
-          {/* check_circle */}
-          <div className={classes.tabBar}>
-            <span className={classes.whereText}>어디서 구매하셨나요?</span>
-            <Paper className={classes.tabPaper}>
-              <Tabs
-                value={this.state.value}
-                onChange={this.handleChange}
-                indicatorColor="primary"
-                textColor="secondary"
-                centered
+          <div className={classes.rowdiv}>
+            <div className={classes.buyWrap}>
+              <IconButton
+                color="primary"
+                aria-label="Add to shopping cart"
+                onClick={this.handleClickOpen}
+                classes={{
+                  root: classes.iconBtn,
+                }}
               >
-                <Tab
-                  label={<TabLabel>인터넷구매</TabLabel>}
-                  // icon={<Icon>check_circle</Icon>}
-                  classes={{
-                    root: classes.tabRoot,
-                    labelIcon: classes.tabIcon,
-                  }}
-                />
-                <Tab
-                  label={<TabLabel>매장방문</TabLabel>}
-                  // icon={<Icon>check_circle</Icon>}
-                  classes={{
-                    root: classes.tabRoot,
-                    labelIcon: classes.tabIcon,
-                  }}
-                />
-                <Tab
-                  label={<TabLabel>기타</TabLabel>}
-                  // icon={<Icon>check_circle</Icon>}
-                  classes={{
-                    root: classes.tabRoot,
-                    labelIcon: classes.tabIcon,
-                  }}
-                />
-              </Tabs>
-            </Paper>
+                <Icon className={classes.iconShopping}>shopping_basket</Icon>
+              </IconButton>
+              <span className={classes.cateText}>구매정보를 입력해주세요.</span>
+            </div>
+            <Divider className={classes.dvideSec} />
+            {/* check_circle */}
+            <div className={classes.tabBar}>
+              <span className={classes.whereText}>어디서 구매하셨나요?</span>
+              <Paper className={classes.tabPaper}>
+                <Tabs
+                  value={this.state.value}
+                  onChange={this.handleChange}
+                  indicatorColor="primary"
+                  textColor="secondary"
+                  centered
+                >
+                  <Tab
+                    label={<TabLabel>인터넷구매</TabLabel>}
+                    classes={{
+                      root: classes.tabRoot,
+                      labelIcon: classes.tabIcon,
+                    }}
+                  />
+                  <Tab
+                    label={<TabLabel>매장방문</TabLabel>}
+                    classes={{
+                      root: classes.tabRoot,
+                      labelIcon: classes.tabIcon,
+                    }}
+                  />
+                  <Tab
+                    label={<TabLabel>기타</TabLabel>}
+                    classes={{
+                      root: classes.tabRoot,
+                      labelIcon: classes.tabIcon,
+                    }}
+                  />
+                </Tabs>
+              </Paper>
+            </div>
           </div>
-          {this.state.value === 0 && <TabContainer>Item One</TabContainer>}
-          {this.state.value === 1 && <TabContainer>Item Two</TabContainer>}
-          {this.state.value === 2 && <TabContainer>Item Three</TabContainer>}
-        </div>
-        <div>
-          <ReviewCategory open={this.state.open} onClose={this.handleClose} />
-        </div>
+          {this.state.value === 0 && (
+            <TabContainer>
+              <ReviewFormTabOnline />
+            </TabContainer>
+          )}
+          {this.state.value === 1 && (
+            <TabContainer>
+              <TabContainer>
+                <ReviewFormTabOffline />
+              </TabContainer>
+            </TabContainer>
+          )}
+          {this.state.value === 2 && (
+            <TabContainer>
+              <TabContainer>
+                <ReviewFormTabEtc />
+              </TabContainer>
+            </TabContainer>
+          )}
+          <div>
+            <ReviewCategory open={this.state.open} onClose={this.handleClose} />
+          </div>
+          <Button
+            variant="contained"
+            component="button"
+            className={classes.button}
+            // onClick={this.onSubmitFormInit}
+            type="submit"
+          >
+            작성 완료
+          </Button>
+          <input
+            type="hidden"
+            name="category"
+            value={this.state.selectedValue}
+          />
+          <input type="hidden" name="store" value={this.state.storeValue} />
+        </form>
       </div>
     );
   }
 }
-
-// function TabContainer(props) {
-//   return (
-//     <Typography component="div" style={{ padding: 8 * 3 }}>
-//       {props.children}
-//     </Typography>
-//   );
-// }
-
-// function TabLabel(props) {
-//   return (
-//     <div>
-//       <Icon>check_circle</Icon>
-//       <span>{props.children}</span>
-//     </div>
-//   );
-// }
-
-// TabContainer.propTypes = {
-//   children: PropTypes.node.isRequired,
-// };
 
 ReviewWrite.propTypes = {
   onSubmitForm: PropTypes.func.isRequired,

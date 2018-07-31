@@ -41,7 +41,7 @@ import withRoot from 'withRoot';
 // `;
 const styles = theme => ({
   root: {
-    textAlign: 'center',
+    // textAlign: 'center',
     paddingTop: theme.spacing.unit * 8,
     // paddingTop: 64,
     minHeight: '100vh',
@@ -68,7 +68,7 @@ function App(props) {
         <Route path="/signin" component={SignIn} />
         <Route path="/mypage" component={MyPage} />
         <Route path="/follow" component={FollowActionPage} />
-        <Route path="/review/write" component={ReviewForm} />
+        <PrivateRoute path="/review/write" component={ReviewForm} />
         <Route path="/slide" component={SlideTest} />
         <Route path="" component={NotFoundPage} />
       </Switch>

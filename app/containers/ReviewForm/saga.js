@@ -12,8 +12,9 @@ export function* post(postData) {
   // console.log(postData.data.mutifile.entries());
 
   // console.log(signData.data.get('username'));
-  const requestURL = `http://127.0.0.1:8080/sample`;
-
+  const requestURL = `http://127.0.0.1:8080/review`;
+  const accessToken = localStorage.getItem('accessToken');
+  const token = `Bearer ${accessToken}`;
   try {
     const options = {
       method: 'POST',
@@ -21,6 +22,7 @@ export function* post(postData) {
         Accept: 'application/json',
         // 'Content-Type': 'multipart/form-data;',
         'Access-Control-Allow-Origin': '*',
+        Authorization: token,
       },
       body: postData.data,
     };

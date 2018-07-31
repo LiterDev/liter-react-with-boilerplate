@@ -47,7 +47,7 @@ export function* signup(signData) {
       },
       body: JSON.stringify({
         email: signData.data.get('email'),
-        username: signData.data.get('username'),
+        userNickName: signData.data.get('username'),
         password: signData.data.get('password'),
         passwordRepeat: signData.data.get('passwordRepeat'),
       }),

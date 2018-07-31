@@ -18,6 +18,8 @@ import Header from 'components/Header';
 import ReviewWrite from 'components/ReviewWrite';
 
 import { withStyles } from '@material-ui/core/styles';
+// import SvgIcon from '@material-ui/core/SvgIcon';
+
 // import Button from '@material-ui/core/Button';
 
 // import Upload from 'material-ui-upload/Upload';
@@ -40,13 +42,6 @@ const styles = theme => ({
     paddingRight: 10,
     paddingTop: 8,
     paddingBottom: 8,
-    // margin: {
-    //   top: 0,
-    //   left: 0,
-    //   right: 0,
-    //   bottom: 12,
-    // },
-    // width: '100%',
   },
   input: {
     margin: theme.spacing.unit,
@@ -92,6 +87,9 @@ const styles = theme => ({
   },
   uploadSlider: {
     paddingTop: 10,
+  },
+  icon: {
+    margin: theme.spacing.unit * 2,
   },
 });
 

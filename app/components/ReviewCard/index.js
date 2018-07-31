@@ -18,14 +18,17 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 // import red from '@material-ui/core/colors/red';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';
 import ShareIcon from '@material-ui/icons/Share';
+import GradeIcon from '@material-ui/icons/Grade';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Divider from '@material-ui/core/Divider';
 import classnames from 'classnames';
+import SvgIcon from '@material-ui/core/SvgIcon';
 
-// import { FormattedMessage } from 'react-intl';
-// import messages from './messages';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 const styles = theme => ({
   root: {
@@ -41,6 +44,7 @@ const styles = theme => ({
   },
   actions: {
     display: 'flex',
+    height: '48px',
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -55,10 +59,84 @@ const styles = theme => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
-  // avatar: {
-  //   backgroundColor: red[500],
-  // },
+  avatar: {
+    width: '36px',
+    height: '36px',
+  },
+  cardHeader: {
+    title: {
+      backgroundColor: 'black',
+    },
+  },
+  reviewTitle: {
+    fontFamily: 'AppleSDGothicNeo',
+    fontSize: '18px',
+    fontWeight: '500',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: '1.44',
+    letterSpacing: 'normal',
+    color: ' #333333',
+  },
+  divider: {
+    margin: 'auto',
+    width: '91%',
+  },
+  captionText: {
+    padding: '0 0 0 5px',
+    fontSize: '15px',
+    fontWeight: '500',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: '1.27',
+    letterSpacing: 'normal',
+    color: '#1591ff',
+  },
+  shareText: {
+    padding: '0 0 0 5px',
+    fontSize: '15px',
+    fontWeight: '500',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: '1.27',
+    letterSpacing: 'normal',
+    color: '#aaaaaa',
+  },
+  gradeText: {
+    padding: '0 0 0 5px',
+    fontSize: '15px',
+    fontWeight: '500',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: '1.27',
+    letterSpacing: 'normal',
+    color: '#7c7c7c',
+  },
+  shareicons: {
+    width: '19px',
+    height: '19px',
+    color: '#aaaaaa',
+  },
+  gradeicons: {
+    width: '19px',
+    height: '19px',
+    color: '#7c7c7c',
+  },
+  icons: {
+    width: '19px',
+    height: '19px',
+    color: '#1591ff',
+  },
+  activeStatus: {
+    padding: '0 0 0 16px',
+    float: 'left',
+  },
+  activeRStatus: {
+    padding: '0 0 0 16px',
+    float: 'right',
+  },
 });
+
 /* eslint-disable react/prefer-stateless-function */
 class ReviewCard extends React.PureComponent {
   state = { expanded: false };
@@ -68,14 +146,23 @@ class ReviewCard extends React.PureComponent {
   };
   render() {
     const { classes } = this.props;
-    const imageUrl = 'http://cfile217.uf.daum.net/image/27458C4B5427B61919A21A';
-    const avatarImageUrl =
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-6gG0UXRs6Mn7E5W0xWtMWl0gnvq4BXXwTtdj2LMXOHgGjjUo';
+    const { review } = this.props;
+
+    console.log(review);
+
+    const mediaCollection = review.mediaCollection;
+    const mainImageUrl = mediaCollection[0].name;
+
+    const avatarImageUrl = review.user.profileImageUrl;
+    // temp date
+    // call time-diff function (6 level)
+    const timeDiff = '방금전';
 
     return (
       <div>
         <Card className={classes.card}>
           <CardHeader
+            className={classes.cardHeader}
             avatar={
               <Avatar
                 aria-label="Recipe"
@@ -84,78 +171,44 @@ class ReviewCard extends React.PureComponent {
               />
             }
             action={
-              <IconButton>
-                <MoreVertIcon />
-              </IconButton>
+              <Typography>
+                <FormattedMessage {...messages.followText} />
+              </Typography>
             }
-            title="Shrimp and Chorizo Paella"
-            subheader="September 14, 2016"
+            title={review.user.username}
+            subheader={timeDiff}
           />
           <CardMedia
             className={classes.media}
-            image={imageUrl}
-            title="Contemplative Reptile"
+            image={mainImageUrl}
+            title={review.username}
           />
           <CardContent>
-            <Typography component="p">
-              This impressive paella is a perfect party dish and a fun meal to
-              cook together with your guests. Add 1 cup of frozen peas along
-              with the mussels, if you like.
+            <Typography className={classes.reviewTitle} component="p">
+              {review.title}
             </Typography>
           </CardContent>
+          <div>
+            <Divider className={classes.divider} light />
+          </div>
           <CardActions className={classes.actions} disableActionSpacing>
-            <IconButton aria-label="Add to favorites">
-              <FavoriteIcon />
-            </IconButton>
-            <IconButton aria-label="Share">
-              <ShareIcon />
-            </IconButton>
-            <IconButton
-              className={classnames(classes.expand, {
-                [classes.expandOpen]: this.state.expanded,
-              })}
-              onClick={this.handleExpandClick}
-              aria-expanded={this.state.expanded}
-              aria-label="Show more"
-            >
-              <ExpandMoreIcon />
-            </IconButton>
+            <div className={classes.activeStatus}>
+              <ArrowDropDownCircleIcon className={classes.icons} />
+              <span className={classes.captionText}>
+                <FormattedMessage {...messages.rewardActive} />
+              </span>
+            </div>
+            <div className={classes.activeRStatus}>
+              <ShareIcon className={classes.shareicons} />
+              <span className={classes.shareText}>
+                <FormattedMessage {...messages.sharingText} />
+              </span>
+            </div>
+            <div className={classes.activeRStatus}>
+              <GradeIcon className={classes.gradeicons} />
+              <span className={classes.gradeText}>{review.totalScore}</span>
+            </div>
           </CardActions>
-          <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <Typography paragraph variant="body2">
-                Method:
-              </Typography>
-              <Typography paragraph>
-                Heat 1/2 cup of the broth in a pot until simmering, add saffron
-                and set aside for 10 minutes.
-              </Typography>
-              <Typography paragraph>
-                Heat oil in a (14- to 16-inch) paella pan or a large, deep
-                skillet over medium-high heat. Add chicken, shrimp and chorizo,
-                and cook, stirring occasionally until lightly browned, 6 to 8
-                minutes. Transfer shrimp to a large plate and set aside, leaving
-                chicken and chorizo in the pan. Add pimentón, bay leaves,
-                garlic, tomatoes, onion, salt and pepper, and cook, stirring
-                often until thickened and fragrant, about 10 minutes. Add
-                saffron broth and remaining 4 1/2 cups chicken broth; bring to a
-                boil.
-              </Typography>
-              <Typography paragraph>
-                Add rice and stir very gently to distribute. Top with artichokes
-                and peppers, and cook without stirring, until most of the liquid
-                is absorbed, 15 to 18 minutes. Reduce heat to medium-low, add
-                reserved shrimp and mussels, tucking them down into the rice,
-                and cook again without stirring, until mussels have opened and
-                rice is just tender, 5 to 7 minutes more. (Discard any mussels
-                that don’t open.)
-              </Typography>
-              <Typography>
-                Set aside off of the heat to let rest for 10 minutes, and then
-                serve.
-              </Typography>
-            </CardContent>
-          </Collapse>
         </Card>
       </div>
     );

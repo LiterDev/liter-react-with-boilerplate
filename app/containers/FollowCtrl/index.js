@@ -29,13 +29,15 @@ import messages from './messages';
 import { followAction } from './actions';
 
 const styles = theme => ({
-  button: {
-    backgroundColor: '#1591ff',
-    color: 'white',
+  buttonStyles: {
     margin: theme.spacing.unit,
+    backgroundColor: '#1591ff',
     width: '89px',
     height: '32px',
     borderRadius: '3px',
+    '&:hover': {
+      backgroundColor: '#1591ff',
+    },
   },
   buttonText: {
     width: '34px',
@@ -54,18 +56,32 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 export class FollowCtrl extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.handleSetFollow = this.handleSetFollow.bind(this);
+  }
+
+  handleSetFollow = () => {
+    const { followid } = this.props;
+    this.props.onFollow(followid);
+  };
+
   render() {
     const { classes } = this.props;
     const { followid } = this.props;
+    const { userid } = this.props;
 
-    console.log(followid);
+    // console.log(followid);
+    // console.log(userid);
+    // console.log(this.props.onFollow);
 
     return (
       <div>
         <Button
-          className={classes.button}
+          className={classes.buttonStyles}
           userid={this.props.userId}
           onClick={this.props.onFollow}
+          onClick={this.handleSetFollow}
         >
           <Typography className={classes.buttonText}>
             <FormattedMessage {...messages.buttonTitle} />
@@ -89,10 +105,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    onFollow: evt => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(followAction());
-    },
+    dispatch,
   };
 }
 

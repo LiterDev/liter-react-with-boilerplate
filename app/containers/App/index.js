@@ -21,6 +21,7 @@ import ReviewForm from 'containers/ReviewForm/Loadable';
 import SlideTest from 'containers/SlideTest/Loadable';
 
 import FollowActionPage from 'containers/FollowActionPage/Loadable';
+import FollowingActionPage from 'containers/FollowingActionPage/Loadable';
 import Reviews from 'containers/Reviews/Loadable';
 
 // import Header from 'components/Header';
@@ -68,7 +69,12 @@ function App(props) {
         <Route path="/signin" component={SignIn} />
         <Route path="/mypage" component={MyPage} />
         <Route path="/follow" component={FollowActionPage} />
+<<<<<<< HEAD
         <PrivateRoute path="/review/write" component={ReviewForm} />
+=======
+        <Route path="/following" component={FollowingActionPage} />
+        <Route path="/review/write" component={ReviewForm} />
+>>>>>>> 387de60fdf880903ccccf0e9e30af72d4d721da0
         <Route path="/slide" component={SlideTest} />
         <Route path="" component={NotFoundPage} />
       </Switch>

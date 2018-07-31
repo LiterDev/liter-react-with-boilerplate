@@ -6,25 +6,29 @@ import { makeSelectUserID } from '../ActionListContainer/selectors';
 
 export function* setFollowSagaData(userid) {
   const selectid = yield select(makeSelectUserID());
-  if (selectid === userid) {
-    console.log(selectid);
-    const requestURL = `http://localhost:8080/user/follow`;
-    try {
-      const options = {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
-        body: JSON.stringify({
-          userid,
-        }),
-      };
-      const detail = yield call(request, requestURL, options);
-      yield put(actions.followSuccess(detail));
-    } catch (error) {
-      yield put(actions.followFailure(error));
+  console.log(userid);
+
+  if (false) {
+    if (selectid === userid) {
+      console.log(selectid);
+      const requestURL = `http://localhost:8080/user/follow`;
+      try {
+        const options = {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
+          body: JSON.stringify({
+            userid,
+          }),
+        };
+        const detail = yield call(request, requestURL, options);
+        yield put(actions.followSuccess(detail));
+      } catch (error) {
+        yield put(actions.followFailure(error));
+      }
     }
   }
 }

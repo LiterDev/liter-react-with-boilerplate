@@ -1,6 +1,6 @@
 /*
  *
- * FollowActionPage reducer
+ * FollowingActionPage reducer
  *
  */
 
@@ -9,10 +9,10 @@ import { DEFAULT_ACTION } from './constants';
 
 export const initialState = fromJS({
   userid: '1',
-  followType: 'follow',
+  followType: 'following',
 });
 
-function followActionPageReducer(state = initialState, action) {
+function followingActionPageReducer(state = initialState, action) {
   switch (action.type) {
     case DEFAULT_ACTION:
       return state;
@@ -21,4 +21,4 @@ function followActionPageReducer(state = initialState, action) {
   }
 }
 
-export default followActionPageReducer;
+export default followingActionPageReducer;

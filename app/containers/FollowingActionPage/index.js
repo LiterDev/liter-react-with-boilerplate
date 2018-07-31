@@ -1,6 +1,6 @@
 /**
  *
- * FollowActionPage
+ * FollowingActionPage
  *
  */
 
@@ -17,7 +17,7 @@ import injectReducer from 'utils/injectReducer';
 
 import ActionListContainer from 'containers/ActionListContainer';
 
-import { makeSelectFollowActionPage } from './selectors';
+import { makeSelectFollowingActionPage } from './selectors';
 import { makeSelectPageType } from './selectors';
 
 import reducer from './reducer';
@@ -25,11 +25,9 @@ import saga from './saga';
 import messages from './messages';
 
 /* eslint-disable react/prefer-stateless-function */
-export class FollowActionPage extends React.PureComponent {
+export class FollowingActionPage extends React.PureComponent {
   render() {
     const { followType, userid } = this.props;
-
-    console.log(followType);
 
     return (
       <div>
@@ -43,12 +41,12 @@ export class FollowActionPage extends React.PureComponent {
   }
 }
 
-FollowActionPage.propTypes = {
+FollowingActionPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  followactionpage: makeSelectFollowActionPage(),
+  followingactionpage: makeSelectFollowingActionPage(),
   followType: makeSelectPageType(),
 });
 
@@ -70,4 +68,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(FollowActionPage);
+)(FollowingActionPage);

@@ -24,8 +24,14 @@ const makeSelectUserID = () =>
     substate.get('userid'),
   );
 
+const makeSelectPageType = () =>
+  createSelector(selectFollowActionPageDomain, substate =>
+    substate.get('followType'),
+  );
+
 export {
   selectFollowActionPageDomain,
   makeSelectFollowActionPage,
   makeSelectUserID,
+  makeSelectPageType,
 };

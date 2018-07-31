@@ -16,8 +16,6 @@ import injectReducer from 'utils/injectReducer';
 import { makeSelectLoading, makeSelectError } from 'containers/App/selectors';
 
 import { makeSelectUserID } from 'containers/FollowActionPage/selectors';
-
-// include FollowCtrl
 import FollowCtrl from 'containers/FollowCtrl';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -27,19 +25,33 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
-import { loadList } from './actions';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+
+import Header from 'components/Header';
+
+import { makeSelectPageType } from 'containers/FollowActionPage/selectors';
+
+import { loadList, setFollow } from './actions';
 import { makeSelectList, makeSelectListContents } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
+import Tmessages from './messages';
 
 const styles = theme => ({
   root: {
     width: '100%',
     backgroundColor: theme.palette.background.paper,
   },
-  header: {
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    backgroundColor: '#ffffff',
+  },
+  followCaption: {
     lineHeight: '40px',
     height: '40px',
     textAlign: 'left',
@@ -73,27 +85,62 @@ const styles = theme => ({
     height: 60,
   },
   button: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: '#1591ff',
+    color: 'white',
     margin: theme.spacing.unit,
+    width: '89px',
+    height: '32px',
+    borderRadius: '3px',
+  },
+  buttonText: {
+    width: '34px',
+    height: '16px',
+    fontFamily: 'AppleSDGothicNeo',
+    fontSize: '13px',
+    fontWeight: '600',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    textAlign: 'center',
+    color: '#ffffff',
+  },
+  close: {
+    width: theme.spacing.unit * 4,
+    height: theme.spacing.unit * 4,
   },
 });
 
 /* eslint-disable react/prefer-stateless-function */
 export class ActionListContainer extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    console.log(props);
+    this.onFollowCtrlClick = this.onFollowCtrlClick.bind(this);
+  }
+
   componentDidMount() {
     if (this.props.userid && this.props.userid.trim().length > 0)
       this.props.onLoadList();
   }
 
+  onFollowCtrlClick = followid => {
+    this.props.onSetFollow(followid);
+  };
+
   render() {
     const { classes } = this.props;
-    const { contents } = this.props;
+    const { followType, contents } = this.props;
+
+    const nType = followType == 'follow' ? 0 : 1;
+    const messages = Tmessages[nType];
 
     let content = null;
+    const followArray = contents.content != null ? contents.content : [];
 
-    const followArray = contents;
-    if (contents !== false) {
-      content = followArray.map((item, idx) => (
+    if (this.props.contents != false) {
+      const filledArray = this.props.contents.content;
+      content = filledArray.map((item, idx) => (
         <ListItem
           key={`item-${item.id}`}
           item={item}
@@ -102,7 +149,7 @@ export class ActionListContainer extends React.PureComponent {
           <ListItemIcon>
             <div className={classes.row}>
               <Avatar
-                alt="Remy Sharp"
+                alt={item.username}
                 src={item.profileImageUrl}
                 className={classes.avatar}
               />
@@ -114,46 +161,35 @@ export class ActionListContainer extends React.PureComponent {
                 {item.username}
               </Typography>
               <Typography variant="caption">
-                리뷰수 {item.reviewCount}
+                <FormattedMessage {...messages.reviewCaption} />{' '}
+                {item.reviewCount}
               </Typography>
               <Typography variant="caption">{item.tags}</Typography>
             </ListItemText>
           </div>
-          <FollowCtrl
-            key={`${item.id}`}
-            idx={idx}
-            userid={item.id}
-            isFollow={false}
-          />
+          <div>
+            <FollowCtrl followid={item.id} onFollow={this.onFollowCtrlClick} />
+          </div>
         </ListItem>
       ));
     }
 
     return (
-      <div className={classes.root}>
-        <Typography className={classes.header}>
-          팔로워 {this.props.contents.length}
-        </Typography>
-        <List>{content}</List>
+      <div>
+        <div className={classes.container}>
+          <Header
+            headerTitle={<FormattedMessage {...messages.headerTitle} />}
+          />
+        </div>
+        <div className={classes.root}>
+          <Typography className={classes.followCaption}>
+            <FormattedMessage {...messages.followCaption} />{' '}
+            {followArray.length}
+          </Typography>
+          <List>{content}</List>
+        </div>
       </div>
     );
-
-    // return (
-    //   <div>
-    //     <div>
-    //       <p>콘텐츠보기</p>
-    //       {this.props.list.contents}
-    //     </div>
-    //     <FormattedMessage {...messages.header} />
-    //     <FollowCtrl followid={this.props.contents[0]} />
-    //     <FollowCtrl followid={this.props.contents[1]} />
-
-    //     <div>
-
-    //     </div>
-
-    //   </div>
-    // );
   }
 }
 
@@ -163,6 +199,8 @@ ActionListContainer.propTypes = {
   contents: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   onLoadList: PropTypes.func,
   userid: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  onSetFollow: PropTypes.func,
+  type: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -171,6 +209,7 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
   error: makeSelectError(),
   userid: makeSelectUserID(),
+  type: makeSelectPageType(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -178,6 +217,9 @@ function mapDispatchToProps(dispatch) {
     onLoadList: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       dispatch(loadList());
+    },
+    onSetFollow: followid => {
+      dispatch(setFollow(followid));
     },
   };
 }

@@ -21,6 +21,7 @@ import ReviewForm from 'containers/ReviewForm/Loadable';
 import SlideTest from 'containers/SlideTest/Loadable';
 
 import FollowActionPage from 'containers/FollowActionPage/Loadable';
+import FollowingActionPage from 'containers/FollowingActionPage/Loadable';
 
 // import Header from 'components/Header';
 // import Footer from 'components/Footer';
@@ -67,6 +68,7 @@ function App(props) {
         <Route path="/signin" component={SignIn} />
         <Route path="/mypage" component={MyPage} />
         <Route path="/follow" component={FollowActionPage} />
+        <Route path="/following" component={FollowingActionPage} />
         <Route path="/review/write" component={ReviewForm} />
         <Route path="/slide" component={SlideTest} />
         <Route path="" component={NotFoundPage} />

@@ -9,8 +9,8 @@ const makeSelectList = () =>
   );
 
 const makeSelectListContents = () =>
-  createSelector(actionListDomain, actionListDomain =>
-    actionListDomain.getIn(['list', 'contents']),
+  createSelector(actionListDomain, contentState =>
+    contentState.getIn(['list', 'contents']),
   );
 
 const makeSelectUserID = () =>

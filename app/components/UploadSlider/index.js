@@ -10,6 +10,7 @@ import { withStyles } from '@material-ui/core/styles';
 import ImagePreview from 'components/ImagePreview';
 import Slider from 'react-slick';
 import Grid from '@material-ui/core/Grid';
+// import LinearProgress from '@material-ui/core/LinearProgress';
 
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
@@ -91,9 +92,11 @@ class UploadSlider extends React.PureComponent {
     super(props);
     this.handleRemove = this.handleRemove.bind(this);
   }
+
   handleRemove(name) {
     this.props.handleImageRemove(name);
   }
+
   render() {
     const { classes } = this.props;
     // console.log(imageComponent);
@@ -105,11 +108,22 @@ class UploadSlider extends React.PureComponent {
       slidesToScroll: 1,
       swipeToSlide: true,
     };
+    // const settings = {
+    //   dots: false,
+    //   infinite: true,
+    //   speed: 500,
+    //   slidesToShow: 1,
+    //   slidesToScroll: 1,
+    //   afterChange: () =>
+    //     this.setState(state => ({ updateCount: state.updateCount + 1 })),
+    //   beforeChange: (current, next) => this.setState({ slideIndex: next }),
+    // };
     return (
       <div>
         <Grid item xs={12}>
           {this.props.imageComponent && (
             <Slider {...settings}>
+              {/* <Slider ref={slider => (this.slider = slider)} {...settings}> */}
               {this.props.imageComponent.map(movie => (
                 <div key={movie.toString()}>
                   <ImagePreview
@@ -124,6 +138,15 @@ class UploadSlider extends React.PureComponent {
             </Slider>
           )}
         </Grid>
+        {/* <LinearProgress variant="determinate" value={this.state.completed} />
+        <input
+          onChange={e => this.slider.slickGoTo(e.target.value)}
+          value={this.state.slideIndex}
+          type="range"
+          min={0}
+          max={3}
+        />
+        <p>Total updates: {this.state.updateCount} </p> */}
       </div>
     );
   }

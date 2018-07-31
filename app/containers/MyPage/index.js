@@ -24,7 +24,7 @@ import Header from 'components/Header';
 import Tabs from 'components/Tabs';
 import messages from './messages';
 
-import { mypageAction } from './actions';
+import { myPageAction } from './actions';
 import { makeSelectMyPage } from './selectors';
 
 import reducer from './reducer';
@@ -187,6 +187,12 @@ export class MyPage extends React.PureComponent {
       // userId: '',
     });
   };
+
+  componentDidMount() {
+    const { selectMyReview, signinSuccess } = this.props;
+    selectMyReview(signinSuccess);
+  }
+
   render() {
     const { classes, signinSuccess } = this.props;
     const { userData } = this.state;
@@ -207,11 +213,7 @@ export class MyPage extends React.PureComponent {
               <span className={classes.levelTagInner}>Lv 1</span>
             </div>
           </div>
-          <div className={classes.row}>
-            <button onClick={this.props.selectMyReview}>
-              {signinSuccess.username}
-            </button>
-          </div>
+          <div className={classes.row}>{signinSuccess.username}</div>
           <div className={classes.row}>
             <Typography variant="headline" className={classes.userCoin}>
               <svg
@@ -276,8 +278,8 @@ function mapDispatchToProps(dispatch) {
   console.log('mapDispatch');
   return {
     selectMyReview: data => {
-      console.log('select My Review call!!!');
-      dispatch(mypageAction(data));
+      console.log(`select My Review call!!!${data.username}`);
+      dispatch(myPageAction(data));
     },
   };
 }

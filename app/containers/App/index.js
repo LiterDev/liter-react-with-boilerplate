@@ -26,6 +26,7 @@ import FollowActionPage from 'containers/FollowActionPage/Loadable';
 // import Footer from 'components/Footer';
 import { PrivateRoute } from 'containers/Auth';
 import SignUp from 'containers/SignUp/Loadable';
+import SignIn from 'containers/SignIn/Loadable';
 import { withStyles } from '@material-ui/core/styles';
 import withRoot from 'withRoot';
 
@@ -63,6 +64,7 @@ function App(props) {
         <Route exact path="/" component={HomePage} />
         <PrivateRoute path="/features" component={FeaturePage} />
         <Route path="/signup" component={SignUp} />
+        <Route path="/signin" component={SignIn} />
         <Route path="/mypage" component={MyPage} />
         <Route path="/follow" component={FollowActionPage} />
         <Route path="/review/write" component={ReviewForm} />

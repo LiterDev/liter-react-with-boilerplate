@@ -120,8 +120,11 @@ export class SignUp extends React.PureComponent {
 
   onSubmitFormInit(event) {
     event.preventDefault();
+    // if (!this.state.complete) {
+    //   return false;
+    // }
     // console.log(event);
-    console.log(event.target.email.value);
+    // console.log(event.target.email.value);
     const email = event.target.email.value;
     const username = event.target.username.value;
     const password = event.target.password.value;
@@ -129,15 +132,31 @@ export class SignUp extends React.PureComponent {
     const errors = [];
     if (!email) {
       errors.push(500108);
+    } else {
+      this.setState({
+        emailError: false,
+      });
     }
     if (!username) {
       errors.push(500106);
+    } else {
+      this.setState({
+        usernameError: false,
+      });
     }
     if (!password) {
       errors.push(500100);
+    } else {
+      this.setState({
+        passwordError: false,
+      });
     }
     if (!passwordRepeat) {
       errors.push(500103);
+    } else {
+      this.setState({
+        passwordRepeatError: false,
+      });
     }
 
     if (errors.length > 0) {
@@ -147,13 +166,12 @@ export class SignUp extends React.PureComponent {
       return false;
     }
 
+    this.setState({
+      complete: true,
+    });
     const data = new FormData(event.target);
     this.props.signupForm(data);
     return true;
-
-    // this.setState({
-    //   complete: true,
-    // });
   }
 
   validationResult(errorCode) {
@@ -223,7 +241,7 @@ export class SignUp extends React.PureComponent {
       return (
         <Redirect
           to={{
-            pathname: '/login',
+            pathname: '/signin',
             // state: { from: props.location },
           }}
         />
@@ -292,8 +310,9 @@ export class SignUp extends React.PureComponent {
         </div>
 
         <footer className={classes.footer}>
-          <FormattedMessage {...messages.next} />
-          <FormattedMessage {...messages.next} />
+          {/* <FormattedMessage {...messages.next} />
+          <FormattedMessage {...messages.next} /> */}
+          로그인
         </footer>
       </div>
     );

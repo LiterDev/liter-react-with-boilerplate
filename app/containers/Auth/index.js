@@ -25,35 +25,62 @@ import reducer from './reducer';
 import saga from './saga';
 // import messages from './messages';
 
-const fakeAuth = {
-  isAuthenticated: false,
-  authenticate(cb) {
-    this.isAuthenticated = true;
-    setTimeout(cb, 100); // fake async
-  },
-  signout(cb) {
-    this.isAuthenticated = false;
-    setTimeout(cb, 100);
-  },
-};
+// const fakeAuth = {
+//   isAuthenticated: false,
+//   authenticate(cb) {
+//     this.isAuthenticated = true;
+//     setTimeout(cb, 100); // fake async
+//   },
+//   signout(cb) {
+//     this.isAuthenticated = false;
+//     setTimeout(cb, 100);
+//   },
+// };
 
 export const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      fakeAuth.isAuthenticated ? (
+      localStorage.getItem('username') ? (
         <Component {...props} />
       ) : (
         <Redirect
-          to={{
-            pathname: '/login',
-            state: { from: props.location },
-          }}
+          to={{ pathname: '/signin', state: { from: props.location } }}
         />
       )
     }
   />
 );
+
+// const validAuth = {
+//   isAuthenticated: false,
+//   authenticate(cb) {
+//     this.isAuthenticated = true;
+//     setTimeout(cb, 100); // fake async
+//   },
+//   signout(cb) {
+//     this.isAuthenticated = false;
+//     setTimeout(cb, 100);
+//   },
+// };
+
+// export const PrivateRoute = ({ component: Component, ...rest }) => (
+//   <Route
+//     {...rest}
+//     render={props =>
+//       validAuth.isAuthenticated ? (
+//         <Component {...props} />
+//       ) : (
+//         <Redirect
+//           to={{
+//             pathname: '/login',
+//             state: { from: props.location },
+//           }}
+//         />
+//       )
+//     }
+//   />
+// );
 
 function Auth() {
   return <div>{/* <FormattedMessage {...messages.header} /> */}</div>;

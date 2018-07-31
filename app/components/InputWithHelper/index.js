@@ -110,7 +110,7 @@ class InputWithHelper extends React.PureComponent {
 
 InputWithHelper.propTypes = {
   placeholder: PropTypes.object.isRequired,
-  error: PropTypes.object,
+  error: PropTypes.any,
   type: PropTypes.string.isRequired,
   inputName: PropTypes.string.isRequired,
 };

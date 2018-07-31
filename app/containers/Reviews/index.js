@@ -24,6 +24,8 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 
+import { loadList } from './actions';
+
 const styles = theme => ({
   root: {
     paddingTop: theme.spacing.unit * 0,
@@ -31,20 +33,27 @@ const styles = theme => ({
 });
 /* eslint-disable react/prefer-stateless-function */
 export class Reviews extends React.PureComponent {
+
+  componentDidMount() {
+    const { loadReviewList } = this.props;
+    loadReviewList();
+  }
+
   render() {
     // const { classes } = this.props;
-
+    const { reviews } = this.props;
     return (
       <div>
         <Header headerTitle={<FormattedMessage {...messages.header} />} />
-        <ReviewList />
+        <ReviewList reviews={ reviews }/>
       </div>
     );
   }
 }
 
 Reviews.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  loadReviewList: PropTypes.func,
+  reviews: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -53,7 +62,11 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    loadReviewList: evt => {
+      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+      console.log("initialize review list");
+      dispatch(loadList());
+    },
   };
 }
 

@@ -159,8 +159,8 @@ export class SignIn extends React.PureComponent {
     // console.log(signinError);
 
     if (signinSuccess) {
-      console.log(signinSuccess);
-      console.log(signinSuccess.accessToken);
+      // console.log(signinSuccess);
+      // console.log(signinSuccess.accessToken);
       localStorage.setItem('accessToken', signinSuccess.accessToken);
       localStorage.setItem('refreshToken', signinSuccess.refreshToken);
       localStorage.setItem('username', signinSuccess.username);

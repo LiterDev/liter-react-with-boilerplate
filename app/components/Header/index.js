@@ -117,6 +117,13 @@ class Header extends React.Component {
     // return <Redirect to="/login" />;
     this.props.history.push('/');
   };
+  logout = () => {
+    // TODO : auth로 옮길것
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('username');
+    this.props.history.push('/');
+  };
   render() {
     const { classes, headerTitle } = this.props;
     return (
@@ -160,6 +167,7 @@ class Header extends React.Component {
           onClose={this.handleDrawerClose}
           onOpen={this.handleDrawerOpen}
           mobileOpen={this.state.mobileOpen}
+          logout={this.logout}
         />
         {/* <A href="https://twitter.com/mxstbr">
           <Img src={Banner} alt="react-boilerplate - Logo" />

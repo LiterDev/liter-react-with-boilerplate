@@ -7,6 +7,7 @@
 import React from 'react';
 // import Input from '@material-ui/core/Input';
 // import Button from '@material-ui/core/Button';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import { Helmet } from 'react-helmet';
@@ -27,12 +28,8 @@ import Divider from '@material-ui/core/Divider';
 // import BottomNavigation from '@material-ui/core/BottomNavigation';
 
 // import Typography from '@material-ui/core/Typography';
-import {
-  makeSelectRepos,
-  makeSelectLoading,
-  makeSelectError,
-} from 'containers/App/selectors';
-import { makeSelectSignUp } from './selectors';
+import { makeSelectLoading } from 'containers/App/selectors';
+import { makeSelectSignUpRes, makeSelectSignUpError } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -113,7 +110,10 @@ export class SignUp extends React.PureComponent {
     super(props);
     this.state = {
       complete: false,
-      emailError: '',
+      emailError: false,
+      usernameError: false,
+      passwordError: false,
+      passwordRepeatError: false,
     };
     this.onSubmitFormInit = this.onSubmitFormInit.bind(this);
   }
@@ -121,37 +121,113 @@ export class SignUp extends React.PureComponent {
   onSubmitFormInit(event) {
     event.preventDefault();
     // console.log(event);
-    const data = new FormData(event.target);
-    // console.log(data);
-    console.log(data.get('username'));
-    console.log(data.get('email'));
-    this.props.signupForm(data);
+    console.log(event.target.email.value);
+    const email = event.target.email.value;
+    const username = event.target.username.value;
+    const password = event.target.password.value;
+    const passwordRepeat = event.target.passwordRepeat.value;
+    const errors = [];
+    if (!email) {
+      errors.push(500108);
+    }
+    if (!username) {
+      errors.push(500106);
+    }
+    if (!password) {
+      errors.push(500100);
+    }
+    if (!passwordRepeat) {
+      errors.push(500103);
+    }
 
-    this.setState({
-      complete: true,
-    });
+    if (errors.length > 0) {
+      for (let i = 0; i < errors.length; i += 1) {
+        this.validationResult(errors[i]);
+      }
+      return false;
+    }
+
+    const data = new FormData(event.target);
+    this.props.signupForm(data);
+    return true;
+
+    // this.setState({
+    //   complete: true,
+    // });
+  }
+
+  validationResult(errorCode) {
+    // USER_PASSWORD_IS_NOT_ALLOWED(500100, "Password is not valid"),
+    // USER_PASSWORD_IS_EMPTY(500101, "Password is empty"),
+    // USER_PASSWORD_PATTERN_IS_NOT_ALLOWED(500102, "Password pattern is not allowed."),
+    // USER_PASSWORD_REPEAT_IS_EMPTY(500103, "Password is not valid"),
+    // USER_PASSWORD_REPEAT_PATTERN_IS_NOT_ALLOWED(500104, "PasswordRepeat pattern is not allowed."),
+    // USER_PASSWORD_IS_NOT_EQUALS(500105, "Password is not equals."),
+    // USER_NAME_IS_EMPTY(500106, "Username is empty"),
+    // USER_NAME_IS_ALREADY_EXISTS(500107, "Username is already exists"),
+    // USER_EMAIL_IS_EMPTY(500108, "Email is empty"),
+    // USER_EMAIL_IS_ALREADY_EXISTS(500109, "Email is already exists"),
+    if (errorCode === 500108 || errorCode === 500109) {
+      this.setState({
+        emailError: <FormattedMessage {...messages.email} />,
+      });
+    }
+    if (errorCode === 500106) {
+      this.setState({
+        usernameError: <FormattedMessage {...messages.username} />,
+      });
+    }
+    if (
+      errorCode === 500100 ||
+      errorCode === 500101 ||
+      errorCode === 500102 ||
+      errorCode === 500105
+    ) {
+      this.setState({
+        passwordError: <FormattedMessage {...messages.password} />,
+      });
+    }
+    if (errorCode === 500103 || errorCode === 500104 || errorCode === 500105) {
+      this.setState({
+        passwordRepeatError: <FormattedMessage {...messages.passwordRepeat} />,
+      });
+    }
   }
 
   render() {
-    const { classes, loading, error } = this.props;
+    const { classes, error, signupRes } = this.props;
     // const reposListProps = {
     //   loading,
     //   error,
     //   repos,
     // };
-    console.log(loading);
+    // console.log(signupRes);
+    // console.log(loading);
     // console.log(error);
     if (error) {
-      error.response.json().then(data => {
-        console.log(data);
-        console.log(data.code);
-        if (data.code === 500106) {
-          this.setState({
-            emailError: data.message,
+      // console.log(error);
+
+      if (error.response) {
+        error.response
+          .json()
+          .then(data => {
+            // console.log(data);
+            this.validationResult(data.code);
+          })
+          .catch(err => {
+            console.log(err);
           });
-        }
-        // return data;
-      });
+      }
+    }
+    if (signupRes) {
+      return (
+        <Redirect
+          to={{
+            pathname: '/login',
+            // state: { from: props.location },
+          }}
+        />
+      );
     }
     return (
       <div>
@@ -174,6 +250,7 @@ export class SignUp extends React.PureComponent {
               />
               <InputWithHelper
                 placeholder={<FormattedMessage {...messages.username} />}
+                error={this.state.usernameError}
                 type="text"
                 inputName="username"
               />
@@ -184,12 +261,12 @@ export class SignUp extends React.PureComponent {
               <InputWithHelper
                 placeholder={<FormattedMessage {...messages.password} />}
                 type="password"
-                // error="test"
+                error={this.state.passwordError}
                 inputName="password"
               />
               <InputWithHelper
                 placeholder={<FormattedMessage {...messages.passwordRepeat} />}
-                // error="test"
+                error={this.state.passwordRepeatError}
                 type="password"
                 inputName="passwordRepeat"
               />
@@ -225,6 +302,8 @@ export class SignUp extends React.PureComponent {
 
 SignUp.propTypes = {
   signupForm: PropTypes.func.isRequired,
+  error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  repos: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   // dispatch: PropTypes.func.isRequired,
   // onSubmitForm: PropTypes.func.isRequired,
   // username: PropTypes.string,
@@ -232,10 +311,10 @@ SignUp.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  signup: makeSelectSignUp(),
-  repos: makeSelectRepos(),
+  signupRes: makeSelectSignUpRes(),
+  // repos: makeSelectRepos(),
   loading: makeSelectLoading(),
-  error: makeSelectError(),
+  error: makeSelectSignUpError(),
 });
 
 function mapDispatchToProps(dispatch) {

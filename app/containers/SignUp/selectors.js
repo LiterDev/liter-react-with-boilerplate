@@ -18,5 +18,19 @@ const selectSignUpDomain = state => state.get('signUp', initialState);
 const makeSelectSignUp = () =>
   createSelector(selectSignUpDomain, substate => substate.toJS());
 
+const makeSelectSignUpRes = () =>
+  createSelector(selectSignUpDomain, signupState =>
+    signupState.get('signupRes'),
+  );
+const makeSelectSignUpError = () =>
+  createSelector(selectSignUpDomain, signupState =>
+    signupState.get('signupError'),
+  );
+
 // export default makeSelectSignUp;
-export { selectSignUpDomain, makeSelectSignUp };
+export {
+  selectSignUpDomain,
+  makeSelectSignUp,
+  makeSelectSignUpRes,
+  makeSelectSignUpError,
+};

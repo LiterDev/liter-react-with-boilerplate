@@ -1,6 +1,8 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { reposLoaded, repoLoadingError } from 'containers/App/actions';
+// import { repoLoadingError } from 'containers/App/actions';
+
 import request from 'utils/request';
+import { signupLoaded, signupError } from './actions';
 import { SIGNUP_ACTION } from './constants';
 // import { makeSelectSignUp } from './selectors';
 
@@ -52,9 +54,9 @@ export function* signup(signData) {
     };
 
     // const req = request(request, requestURL, options);
-    const repos = yield call(request, requestURL, options);
+    const signupRes = yield call(request, requestURL, options);
     // console.log(repos);
-    yield put(reposLoaded(repos, repos));
+    yield put(signupLoaded(signupRes));
 
     // const { response, error } = yield call(fetchProductsApi);
     // if (response) yield put({ type: 'PRODUCTS_RECEIVED', products: response });
@@ -63,7 +65,8 @@ export function* signup(signData) {
     // console.log(err);
     // console.log(err.response);
     // console.log(err.response.body.code);
-    yield put(repoLoadingError(err));
+    // yield put(repoLoadingError(err));
+    yield put(signupError(err));
   }
 }
 

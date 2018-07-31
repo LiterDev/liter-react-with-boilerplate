@@ -4,18 +4,28 @@
  *
  */
 
-import { DEFAULT_ACTION, MYPAGE_ACTION } from './constants';
+import { MYPAGE_ACTION, MYPAGE_SUCCESS, MYPAGE_FAILURE } from './constants';
 
-export function defaultAction() {
-  return {
-    type: DEFAULT_ACTION,
-  };
-}
-
-export function mypageAction(data) {
-  // console.log('mypageAction');
+export function myPageAction(data) {
+  console.log('myPageAction');
   return {
     type: MYPAGE_ACTION,
     data,
+  };
+}
+
+export function myPageSuccess(result) {
+  console.log('myPageSuccess');
+  return {
+    type: MYPAGE_SUCCESS,
+    result,
+  };
+}
+
+export function myPageFailure(error) {
+  console.log('myPageFailure');
+  return {
+    type: MYPAGE_FAILURE,
+    error,
   };
 }

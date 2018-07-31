@@ -2,31 +2,21 @@
  * Gets the repositories of the user from Github
  */
 
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { reposLoaded, repoLoadingError } from 'containers/App/actions';
-
+import { select, call, put, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
 import { MYPAGE_ACTION } from './constants';
+import * as actions from './actions';
+import { makeSelectMyPage } from './selectors';
 
-export function* mypage(pageData) {
-  // Select username from store
-  // const data = yield select(makeSelectSignUp());
-  // const data = new FormData(event.target);
-  // console.log(pageData.data);
-  // console.log(pageData.data.get('id'));
-  console.log(pageData.data.get('userId'));
-  const userId = pageData.data.get('userId');
-  const requestURL = `http://localhost:8080/user/detail/${userId}`;
+export function* mypage(data) {
+  const selectid = yield select(makeSelectMyPage());
+
+  console.log(selectid);
+  console.log(data);
+
+  const requestURL = `http://localhost:8080/review/latestList`;
 
   try {
-    // Call our request helper (see 'utils/request')
-
-    // const options = {
-    //   body: JSON.stringify({ login, password }),
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' }
-    // };
-
     const options = {
       method: 'GET',
       headers: {
@@ -34,17 +24,15 @@ export function* mypage(pageData) {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       },
-      body: JSON.stringify({
-        data: pageData.data,
-      }),
+      body: data,
     };
 
     // const req = request(request, requestURL, options);
     const repos = yield call(request, requestURL, options);
     console.log(repos);
-    yield put(reposLoaded(repos, repos));
+    yield put(actions.myPageSuccess(repos));
   } catch (err) {
-    yield put(repoLoadingError(err));
+    yield put(actions.myPageFailure(err));
   }
 }
 

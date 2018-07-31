@@ -88,6 +88,7 @@ function AppDrawer(props) {
     onOpen,
     // onClick,
     // href,
+    logout,
   } = props;
   // const style = {
   //   paddingLeft: 8 * (3 + 2 * 0),
@@ -112,7 +113,15 @@ function AppDrawer(props) {
             // eslint-disable-next-line anchor-is-valid
           }
           <Link to="/signup" onClick={onClose} role="button">
-            <Button>signup</Button>
+            <Button>signUp</Button>
+          </Link>
+        </ListItem>
+        <ListItem className={classes.itemLeaf}>
+          {
+            // eslint-disable-next-line anchor-is-valid
+          }
+          <Link to="/signin" onClick={onClose} role="button">
+            <Button>signIn</Button>
           </Link>
         </ListItem>
         <ListItem className={classes.itemLeaf}>
@@ -138,6 +147,9 @@ function AppDrawer(props) {
           <Link to="/slide" onClick={onClose} role="button">
             <Button>slide</Button>
           </Link>
+        </ListItem>
+        <ListItem className={classes.itemLeaf}>
+          <Button onClick={logout}>logout</Button>
         </ListItem>
       </List>
     </div>
@@ -173,6 +185,7 @@ AppDrawer.propTypes = {
   mobileOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onOpen: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 AppDrawer.contextTypes = {

@@ -35,6 +35,7 @@ function checkStatus(response) {
   //   console.log(data.code);
   //   return data;
   // });
+
   error.response = response;
   throw error;
 }

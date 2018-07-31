@@ -7,11 +7,6 @@ import Tab from '@material-ui/core/Tab';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
-// import Table from '@material-ui/core/Table';
-// import TableHead from '@material-ui/core/TableHead';
-// import TableRow from '@material-ui/core/TableRow';
-// import TableCell from '@material-ui/core/TableCell';
-// import TableBody from '@material-ui/core/TableBody';
 
 import ReviewContainer from './ReviewContainer';
 import RewardContainer from './RewardContainer';
@@ -75,11 +70,13 @@ class SimpleTabs extends React.Component {
 
   renderTab() {
     const { tabData } = this.props;
-    return tabData.map(tab => <Tab label={tab.tabLabel} />);
+    return tabData.map(tab => <Tab label={tab.tabLabel} key={tab.tabLabel} />);
   }
 
   renderRow(data) {
-    return data.list.map(list => <RewardContainer data={list} />);
+    return data.list.map(row => (
+      <RewardContainer data={row} key={data.type.concat(row.index)} />
+    ));
   }
 
   renderContainer() {
@@ -88,27 +85,24 @@ class SimpleTabs extends React.Component {
     const { classes } = this.props;
 
     const result = [];
+    const data = tabData[value];
+
     if (tabData[value].type === 'REVIEW') {
       result.push(
-        <div className={classes.topLine}>
+        <div className={classes.topLine} key={data.type.concat('0')}>
           <span className={classes.reviewCount}>리뷰 11</span>
         </div>,
       );
       result.push(
-        tabData[value].list.map(list => (
-          <ReviewContainer
-            type={tabData[value].type}
-            data={list}
-            key={list.index}
-          />
+        data.list.map(row => (
+          <ReviewContainer data={row} key={data.type.concat(row.index)} />
         )),
       );
-    } else if (tabData[value].type === 'REWARD') {
-      const data = tabData[value];
+    } else if (data.type === 'REWARD') {
       result.push(
         <List>
           <ListItem>
-            <div className={classes.rewardTopLine}>
+            <div className={classes.rewardTopLine} key={data.type.concat(0)}>
               <span className={classes.rewardHeaderDate}>일시</span>
               <span className={classes.rewardHeaderReward}>보상액</span>
               <span className={classes.rewardHeaderTotal}>총액</span>

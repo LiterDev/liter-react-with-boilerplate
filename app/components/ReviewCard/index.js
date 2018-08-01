@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -13,22 +13,23 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
+// import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
+// import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 // import red from '@material-ui/core/colors/red';
 import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';
 import ShareIcon from '@material-ui/icons/Share';
 import GradeIcon from '@material-ui/icons/Grade';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+// import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Divider from '@material-ui/core/Divider';
-import classnames from 'classnames';
-import SvgIcon from '@material-ui/core/SvgIcon';
+// import classnames from 'classnames';
+// import SvgIcon from '@material-ui/core/SvgIcon';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+// import { prototype } from 'node-notifier/notifiers/balloon';
 
 const styles = theme => ({
   root: {
@@ -139,7 +140,7 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 class ReviewCard extends React.PureComponent {
-  state = { expanded: false };
+  // state = { expanded: false };
 
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
@@ -148,10 +149,9 @@ class ReviewCard extends React.PureComponent {
     const { classes } = this.props;
     const { review } = this.props;
 
-    console.log(review);
+    const mediaCollection = review ? review.mediaCollection : false;
 
-    const mediaCollection = review.mediaCollection;
-    const mainImageUrl = mediaCollection[0].name;
+    const mainImageUrl = mediaCollection > 0 ? mediaCollection[0].name : '';
 
     const avatarImageUrl = review.user.profileImageUrl;
     // temp date
@@ -215,7 +215,9 @@ class ReviewCard extends React.PureComponent {
   }
 }
 
-ReviewCard.propTypes = {};
+ReviewCard.propTypes = {
+  review: PropTypes.object.isRequired,
+};
 
 // export default ReviewCard;
 export default withStyles(styles)(ReviewCard);

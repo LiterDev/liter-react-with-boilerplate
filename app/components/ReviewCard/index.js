@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import { withStyles } from '@material-ui/core/styles';
@@ -30,6 +31,8 @@ import Divider from '@material-ui/core/Divider';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 // import { prototype } from 'node-notifier/notifiers/balloon';
+
+import StyledLink from './StyledLink';
 
 const styles = theme => ({
   root: {
@@ -184,9 +187,11 @@ class ReviewCard extends React.PureComponent {
             title={review.username}
           />
           <CardContent>
-            <Typography className={classes.reviewTitle} component="p">
-              {review.title}
-            </Typography>
+            <StyledLink to={`/review/${review.id}`}>
+              <Typography className={classes.reviewTitle} component="p">
+                {review.title}
+              </Typography>
+            </StyledLink>
           </CardContent>
           <div>
             <Divider className={classes.divider} light />

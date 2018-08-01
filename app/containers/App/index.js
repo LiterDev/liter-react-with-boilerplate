@@ -23,6 +23,7 @@ import SlideTest from 'containers/SlideTest/Loadable';
 import FollowActionPage from 'containers/FollowActionPage/Loadable';
 import FollowingActionPage from 'containers/FollowingActionPage/Loadable';
 import Reviews from 'containers/Reviews/Loadable';
+import ReviewDetailPage from 'containers/ReviewDetailPage/Loadable';
 
 // import Header from 'components/Header';
 // import Footer from 'components/Footer';
@@ -63,13 +64,14 @@ function App(props) {
       </Helmet>
       {/* <Header /> */}
       <Switch>
-        <Route exact path="/" component={Reviews} />
+        <Route exact path="/" component={Reviews} />        
         <PrivateRoute path="/features" component={FeaturePage} />
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />
         <Route path="/mypage" component={MyPage} />
         <Route path="/follow" component={FollowActionPage} />
-        <PrivateRoute path="/review/write" component={ReviewForm} />
+        <PrivateRoute exact path="/review/write" component={ReviewForm} />
+        <Route path="/review/:reviewId" component={ReviewDetailPage} />
         <Route path="/following" component={FollowingActionPage} />
         <Route path="/review/write" component={ReviewForm} />
         <Route path="/slide" component={SlideTest} />

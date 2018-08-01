@@ -13,6 +13,7 @@ import Divider from '@material-ui/core/Divider';
 import SearchIcon from '@material-ui/icons/Search';
 import Input from '@material-ui/core/Input';
 import TagInput from 'components/TagInput';
+import SurveyList from 'components/SurveyList';
 
 // import styled from 'styled-components';
 
@@ -20,6 +21,7 @@ import TagInput from 'components/TagInput';
 // import messages from './messages';
 import LinkIcon from '../../images/ic-link-on@3x.png';
 import WriteIcon from '../../images/ic-write@3x.png';
+import StartTitle from '../../images/ic-star@3x.png';
 
 // import RemoveIcon from '../../images/ic-close-photo@3x.png';
 
@@ -137,6 +139,41 @@ const styles = theme => ({
     paddingTop: 20,
   },
 });
+
+const surveyCate = [
+  {
+    surveyId: 1,
+    surveyName: '상품에 만족하시나요?',
+    sortPosition: 0,
+  },
+  {
+    surveyId: 2,
+    surveyName: '배송속도는 어땠나요?',
+    sortPosition: 1,
+  },
+  {
+    surveyId: 3,
+    surveyName: '문의 사항에 대해 신속하게 응답하나요?',
+    sortPosition: 2,
+  },
+];
+const surveyBuyType = [
+  {
+    surveyId: 4,
+    surveyName: '상품에 만족하시나요?',
+    sortPosition: 0,
+  },
+  {
+    surveyId: 5,
+    surveyName: '배송속도는 어땠나요?',
+    sortPosition: 1,
+  },
+  {
+    surveyId: 6,
+    surveyName: '문의 사항에 대해 신속하게 응답하나요?',
+    sortPosition: 2,
+  },
+];
 /* eslint-disable react/prefer-stateless-function */
 class ReviewFormTabOnline extends React.PureComponent {
   render() {
@@ -192,6 +229,14 @@ class ReviewFormTabOnline extends React.PureComponent {
           </div>
           {/* <Divider className={classes.divider} /> */}
           <TagInput />
+        </div>
+        <div className={classes.rowdivSec}>
+          <div className={classes.buyWrap}>
+            <img src={StartTitle} alt="write" className={classes.iconWrite} />
+            <span className={classes.cateText}>별평점</span>
+          </div>
+
+          <SurveyList surveyCate={surveyCate} surveyBuyType={surveyBuyType} />
         </div>
         <input name="totalScore" value="0" type="hidden" />
         <input name="recommend" value="YES" type="hidden" />

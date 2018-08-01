@@ -48,7 +48,6 @@
     "prettify": "prettier --write"
   },
   "lint-staged": {
-    
     "*.json": [
       "prettier --write",
       "git add --force"
@@ -141,6 +140,9 @@
     ]
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
+    "@fortawesome/free-solid-svg-icons": "^5.1.0-11",
+    "@fortawesome/react-fontawesome": "0.1.0-11",
     "@material-ui/core": "latest",
     "@material-ui/icons": "latest",
     "@material/react-text-field": "^0.3.0",
@@ -152,6 +154,7 @@
     "fontfaceobserver": "2.0.13",
     "history": "4.7.2",
     "hoist-non-react-statics": "2.5.5",
+    "i": "^0.3.6",
     "immutable": "3.8.2",
     "intl": "1.2.5",
     "invariant": "2.2.4",
@@ -160,6 +163,7 @@
     "jss": "latest",
     "lodash": "4.17.10",
     "minimist": "1.2.0",
+    "npm": "^6.2.0",
     "prop-types": "15.6.1",
     "react": "^16.4.1",
     "react-dom": "16.4.1",
@@ -171,6 +175,7 @@
     "react-router-dom": "4.3.1",
     "react-router-redux": "5.0.0-alpha.9",
     "react-slick": "^0.23.1",
+    "react-star-ratings": "^2.3.0",
     "redux": "4.0.0",
     "redux-immutable": "4.0.0",
     "redux-saga": "0.16.0",

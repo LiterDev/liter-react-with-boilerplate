@@ -560,9 +560,7 @@ class ReviewWrite extends React.PureComponent {
               </TabContainer>
             </TabContainer>
           )}
-          <div>
-            <ReviewCategory open={this.state.open} onClose={this.handleClose} />
-          </div>
+
           <Button
             variant="contained"
             component="button"
@@ -579,6 +577,9 @@ class ReviewWrite extends React.PureComponent {
           />
           <input type="hidden" name="store" value={this.state.storeValue} />
         </form>
+        <div>
+          <ReviewCategory open={this.state.open} onClose={this.handleClose} />
+        </div>
       </div>
     );
   }

@@ -354,7 +354,11 @@ class ReviewWrite extends React.PureComponent {
     // console.log(event.target);
     // console.log(this.state.files);
     const data = new FormData(event.target);
+
+    // const form = event.currentTarget;
     console.log(data.get('tags'));
+    // console.log(data.get('startRating[]'));
+
     if (this.state.imageComponent.length > 0) {
       for (let i = 0; i < this.state.imageComponent.length; i += 1) {
         data.append(`files[${i}]`, this.state.imageComponent[i].file);
@@ -560,9 +564,7 @@ class ReviewWrite extends React.PureComponent {
               </TabContainer>
             </TabContainer>
           )}
-          <div>
-            <ReviewCategory open={this.state.open} onClose={this.handleClose} />
-          </div>
+
           <Button
             variant="contained"
             component="button"
@@ -579,6 +581,9 @@ class ReviewWrite extends React.PureComponent {
           />
           <input type="hidden" name="store" value={this.state.storeValue} />
         </form>
+        <div>
+          <ReviewCategory open={this.state.open} onClose={this.handleClose} />
+        </div>
       </div>
     );
   }

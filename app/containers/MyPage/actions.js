@@ -14,11 +14,12 @@ export function myPageAction(data) {
   };
 }
 
-export function myPageSuccess(result) {
+export function myPageSuccess(data) {
   console.log('myPageSuccess');
+  console.log(data);
   return {
     type: MYPAGE_SUCCESS,
-    result,
+    data,
   };
 }
 

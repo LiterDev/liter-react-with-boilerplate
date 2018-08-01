@@ -8,16 +8,21 @@ import { fromJS } from 'immutable';
 import { MYPAGE_ACTION, MYPAGE_SUCCESS, MYPAGE_FAILURE } from './constants';
 
 export const initialState = fromJS({
-  userid: false,
+  myPages: false,
+  loading: false,
+  error: false,
 });
 
 function myPageReducer(state = initialState, action) {
   switch (action.type) {
     case MYPAGE_ACTION:
-      console.log(action.data.username);
-      return state;
+      return state.set('loading', true).set('error', false);
     case MYPAGE_SUCCESS:
-      return state;
+      console.log(action);
+      return state
+        .set('loading', false)
+        .set('error', false)
+        .set('myPages', action.data.content);
     case MYPAGE_FAILURE:
       return state;
     default:

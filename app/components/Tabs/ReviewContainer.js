@@ -6,6 +6,8 @@ import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Star from '@material-ui/icons/Star';
 
+import CardMedia from '@material-ui/core/CardMedia';
+
 const styles = {
   line: {
     display: 'flex',
@@ -40,9 +42,9 @@ const styles = {
     justifyContent: 'left',
   },
   reviewPhoto: {
-    width: '90px',
     height: '90px',
     borderRadius: '2px',
+    border: '1px solid #eeeeee',
   },
   left: {
     float: 'left',
@@ -120,10 +122,21 @@ const styles = {
 
 function ReviewContainer(props) {
   const { classes } = props;
+  const { review } = props;
+
+  const mediaCollection = review ? review.mediaCollection : false;
+  const mainImageUrl = mediaCollection > 0 ? mediaCollection[0].name : '';
+
+  const timeDiff = '방금전';
+
   return (
     <div className={classes.line}>
       <span className={classes.col1}>
-        <img alt="" className={classes.reviewPhoto} src={props.data.imgUrl} />
+        <CardMedia
+          className={classes.reviewPhoto}
+          image={mainImageUrl}
+          title={review.username}
+        />
       </span>
       <span className={classes.col3}>
         <div
@@ -134,10 +147,10 @@ function ReviewContainer(props) {
           )}
         >
           <span className={classNames(classes.left, classes.userName)}>
-            {props.data.userName}
+            {review.username}
           </span>
           <span className={classNames(classes.leftPadding10, classes.update)}>
-            {props.data.update}
+            {review.updateAt}
           </span>
           <span className={classNames(classes.follow)}>팔로우</span>
         </div>
@@ -149,13 +162,15 @@ function ReviewContainer(props) {
             classes.paddingBottom,
           )}
         >
-          {props.data.title}
+          {review.title}
         </div>
         <div className={classNames(classes.row, classes.fontSize13)}>
           <div className={classNames(classes.left, classes.col1)}>
             <span
               className={
-                props.data.ingBoolean ? classes.ingTrue : classes.ingFalse
+                review.rewardActive === 'DOING'
+                  ? classes.ingTrue
+                  : classes.ingFalse
               }
             >
               <CheckCircleOutline style={{ fontSize: 13 }} />
@@ -165,15 +180,13 @@ function ReviewContainer(props) {
           <div className={classNames(classes.right, classes.col3Non)}>
             <span className={classNames(classes.col1, classes.saveAlt)}>
               <SaveAlt style={{ fontSize: 13 }} />
-              <span className={classes.leftPadding6}>
-                {props.data.exportsCnt}
-              </span>
+              <span className={classes.leftPadding6}>{review.linkCount}</span>
             </span>
             <span
               className={(classes.col1, classes.star, classes.leftpadding16)}
             >
               <Star style={{ fontSize: 13 }} />
-              <span className={classes.leftPadding6}>{props.data.starAvg}</span>
+              <span className={classes.leftPadding6}>{review.totalScore}</span>
             </span>
           </div>
         </div>

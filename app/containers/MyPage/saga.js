@@ -10,20 +10,17 @@ import * as actions from './actions';
 
 export function* mypage(data) {
   console.log(data.data.username);
-
-  const requestURL = `http://localhost:8080/review/latestList`;
-
+  const requestURL = 'http://127.0.0.1:8080/review/myReviewList';
+  const accessToken = localStorage.getItem('accessToken');
+  const token = `Bearer ${accessToken}`;
   try {
     const options = {
       method: 'GET',
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
+        Authorization: token,
       },
-      body: JSON.stringify({
-        username: data.username,
-      }),
     };
 
     // const req = request(request, requestURL, options);

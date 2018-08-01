@@ -7,6 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 
 import ReviewContainer from './ReviewContainer';
 import RewardContainer from './RewardContainer';
@@ -69,52 +70,72 @@ class SimpleTabs extends React.Component {
   };
 
   renderTab() {
-    const { tabData } = this.props;
-    return tabData.map(tab => <Tab label={tab.tabLabel} key={tab.tabLabel} />);
-  }
-
-  renderRow(data) {
-    return data.list.map(row => (
-      <RewardContainer data={row} key={data.type.concat(row.index)} />
-    ));
+    const { tabs } = this.props;
+    return tabs.map(tab => <Tab label={tab.tabLabel} key={tab.tabLabel} />);
   }
 
   renderContainer() {
-    const { tabData } = this.props;
+    const { data, tabs } = this.props;
     const { value } = this.state;
     const { classes } = this.props;
 
     const result = [];
-    const data = tabData[value];
+    const tabItem = tabs[value];
 
-    if (tabData[value].type === 'REVIEW') {
+    console.log(data.myPages);
+    if (tabItem.type === 'REVIEW') {
       result.push(
-        <div className={classes.topLine} key={data.type.concat('0')}>
-          <span className={classes.reviewCount}>리뷰 11</span>
+        <div key={tabItem.type.concat('0')}>
+          <div className={classes.topLine}>
+            <span className={classes.reviewCount}>
+              리뷰 {Object.keys(data).length}
+            </span>
+          </div>
+          {this.renderReviewdRow(tabItem.type, data.myPages)}
         </div>,
       );
-      result.push(
-        data.list.map(row => (
-          <ReviewContainer data={row} key={data.type.concat(row.index)} />
-        )),
-      );
-    } else if (data.type === 'REWARD') {
+    } else if (tabItem.type === 'REWARD') {
       result.push(
         <List>
           <ListItem>
-            <div className={classes.rewardTopLine} key={data.type.concat(0)}>
+            <div className={classes.rewardTopLine} key={tabItem.type.concat(0)}>
               <span className={classes.rewardHeaderDate}>일시</span>
               <span className={classes.rewardHeaderReward}>보상액</span>
               <span className={classes.rewardHeaderTotal}>총액</span>
             </div>
           </ListItem>
           <Divider />
-          {this.renderRow(data)}
+          {this.renderRewordRow(tabItem.type, data.myPages)}
         </List>,
       );
     }
 
     return result;
+  }
+
+  renderReviewdRow(type, data) {
+    if (data !== false) {
+      const reviewArray = Object.values(data);
+      console.log(reviewArray);
+      return reviewArray.map(row => (
+        <ReviewContainer review={row} data={row} key={type.concat(row.id)} />
+      ));
+    }
+
+    return (
+      <div>
+        <Typography>페이지를 찾을 수 없습니다.</Typography>
+      </div>
+    );
+  }
+
+  renderRewordRow(type, data) {
+    console.log('####');
+    console.log(Object.values(data));
+    return <div>11</div>;
+    // return Object.values(data).map(row => (
+    //   <RewardContainer review={row} key={type.concat(row.index)} />
+    // ));
   }
 
   render() {
@@ -135,7 +156,9 @@ class SimpleTabs extends React.Component {
 
 SimpleTabs.propTypes = {
   classes: PropTypes.object.isRequired,
-  tabData: PropTypes.array,
+  data: PropTypes.array,
+  reviewArray: PropTypes.array,
+  tabs: PropTypes.array,
 };
 
 export default withStyles(styles)(SimpleTabs);

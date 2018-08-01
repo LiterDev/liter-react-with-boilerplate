@@ -132,6 +132,14 @@ const styles = {
   btnWrap: {
     paddingLeft: 16,
     paddingRight: 16,
+    // marginTop: 30,
+  },
+  avatarImg: {
+    width: 43,
+    height: 43,
+  },
+  selectBtn: {
+    Top: 30,
   },
 };
 
@@ -313,6 +321,9 @@ class ReviewCategory extends React.PureComponent {
                     className={classNames(classes.bigAvatar)}
                     onClick={() => this.cateSelect(cate)}
                     imgProps={{ category: 0 }}
+                    classes={{
+                      img: classes.avatarImg,
+                    }}
                   />
                 ) : (
                   <Avatar
@@ -321,6 +332,9 @@ class ReviewCategory extends React.PureComponent {
                     className={classNames(classes.selAvatar, classes.bigAvatar)}
                     onClick={() => this.cateSelect(cate)}
                     imgProps={{ category: 0 }}
+                    classes={{
+                      img: classes.avatarImg,
+                    }}
                   />
                 )}
                 <div className={classes.cateName}>{cate.name}</div>
@@ -332,6 +346,7 @@ class ReviewCategory extends React.PureComponent {
               onClickFunc={this.cateComplete}
               complete={this.state.complete}
               btnName="선택 완료"
+              className={classes.selectBtn}
             />
           </div>
         </div>

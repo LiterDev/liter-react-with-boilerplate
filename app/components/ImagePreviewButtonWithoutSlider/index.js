@@ -66,6 +66,7 @@ const styles = theme => ({
     // margin: theme.spacing.unit * 2,
     position: 'absolute',
     right: '24px',
+    color: '#1591ff',
   },
   buttonText: {
     width: '100%',
@@ -81,7 +82,8 @@ const styles = theme => ({
     lineHeight: 'normal',
     letterSpacing: 'normal',
     textAlign: 'center',
-    color: '#999999',
+    // color: '#999999',
+    color: '#1591ff',
   },
 });
 /* eslint-disable react/prefer-stateless-function */

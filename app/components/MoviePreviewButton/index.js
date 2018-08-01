@@ -70,6 +70,7 @@ const styles = theme => ({
     // margin: theme.spacing.unit * 2,
     position: 'absolute',
     right: '24px',
+    color: '#1591ff',
     // paddingRight: 12,
   },
   buttonText: {
@@ -86,11 +87,18 @@ const styles = theme => ({
     lineHeight: 'normal',
     letterSpacing: 'normal',
     textAlign: 'center',
-    color: '#999999',
+    color: '#1591ff',
   },
 });
 /* eslint-disable react/prefer-stateless-function */
 class MoviePreviewButton extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+    };
+  }
+
   render() {
     const { classes } = this.props;
     return (

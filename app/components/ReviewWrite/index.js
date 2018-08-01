@@ -16,6 +16,7 @@ import TabContainer from 'components/TabContainer';
 import ReviewFormTabOnline from 'components/ReviewFormTabOnline';
 import ReviewFormTabOffline from 'components/ReviewFormTabOffline';
 import ReviewFormTabEtc from 'components/ReviewFormTabEtc';
+import BlueButton from 'components/BlueButton';
 
 import Input from '@material-ui/core/Input';
 import Divider from '@material-ui/core/Divider';
@@ -208,6 +209,12 @@ const styles = theme => ({
     fontSize: 16,
     color: '#999999',
   },
+  submitBtnWrap: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 16,
+    paddingBottom: 16,
+  },
 });
 const cateList = [
   {
@@ -287,6 +294,7 @@ class ReviewWrite extends React.PureComponent {
       selectedValue: false,
       value: 0,
       storeValue: 'SHOP',
+      complete: false,
     };
     this.handleImageAppend = this.handleImageAppend.bind(this);
     this.handleImageRemove = this.handleImageRemove.bind(this);
@@ -565,7 +573,7 @@ class ReviewWrite extends React.PureComponent {
             </TabContainer>
           )}
 
-          <Button
+          {/* <Button
             variant="contained"
             component="button"
             className={classes.button}
@@ -573,12 +581,20 @@ class ReviewWrite extends React.PureComponent {
             type="submit"
           >
             작성 완료
-          </Button>
+          </Button> */}
           <input
             type="hidden"
             name="category"
             value={this.state.selectedValue}
           />
+          <div className={classes.submitBtnWrap}>
+            <BlueButton
+              btnType="submit"
+              onClickFunc={this.onSubmitFormInit}
+              complete={this.state.complete}
+              btnName="작성 완료"
+            />
+          </div>
           <input type="hidden" name="store" value={this.state.storeValue} />
         </form>
         <div>

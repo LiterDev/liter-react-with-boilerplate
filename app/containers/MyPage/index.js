@@ -24,11 +24,19 @@ import Header from 'components/Header';
 import Tabs from 'components/Tabs';
 import messages from './messages';
 
-import { myPageAction } from './actions';
-import { makeSelectMyPage } from './selectors';
+import {
+  myPageAction,
+  loadFollowerCountAction,
+  loadFollowingCountAction,
+} from './actions';
+import {
+  makeSelectMyPage,
+  makeSelectFollowerCount,
+  makeSelectFollowingCount,
+} from './selectors';
 
 import reducer from './reducer';
-import saga, { mypage } from './saga';
+import saga from './saga';
 
 import { makeSelectSignInSuccess } from '../SignIn/selectors';
 
@@ -98,79 +106,6 @@ export class MyPage extends React.PureComponent {
       { tabLabel: '리뷰', type: 'REVIEW' },
       { tabLabel: '보상 내역', type: 'REWARD' },
     ],
-    // data: [
-      // // {
-      //     {
-      //       index: 1,
-      //       imgUrl:
-      //         'https://i2.wp.com/beebom.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg?resize=640%2C426',
-      //       userName: 'test1',
-      //       update: '방금전',
-      //       title: '켬 김에 왕까지!! 플레이스테이션4 패드 놓을 수 없는 순간!',
-      //       ingBoolean: true,
-      //       exportsCnt: 22,
-      //       starAvg: '3.0',
-      //     },
-      //     {
-      //       index: 2,
-      //       imgUrl:
-      //         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxadr9ykSPoaet-5e7-_YZtueYaRJSvggWtEShh2EJyAjAf5-D',
-      //       userName: 'test1',
-      //       update: '5분전',
-      //       title:
-      //         'Test. 켬 김에 왕까지!! 플레이스테이션4 패드 놓을 수 없는 순간!',
-      //       ingBoolean: true,
-      //       exportsCnt: 22,
-      //       starAvg: '3.0',
-      //     },
-      //     {
-      //       index: 3,
-      //       imgUrl:
-      //         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ84hMKGYnLjbYASltpjWRIIumEGrwWPmkDFVkkr4hppCPekUIY',
-      //       userName: 'test2',
-      //       update: '2018-07-27',
-      //       title:
-      //         '초보 커플을 위한, 플레이스테이션4 PS4 2인용 게임 낵(KNACK) 1, 2 모든 연령을 위한 공략법',
-      //       ingBoolean: false,
-      //       exportsCnt: 433,
-      //       starAvg: '4.0',
-      //     },
-        // ],
-      // },
-      // {
-          // {
-          //   date: '2018-07-18 13:10:23',
-          //   coin: '12.00',
-          //   sum: '217.00',
-          // },
-          // {
-          //   date: '2018-07-18 13:10:23',
-          //   coin: '3.0',
-          //   sum: '205.0',
-          // },
-          // {
-          //   date: '2018-07-18 13:10:23',
-          //   coin: '100.0',
-          //   sum: '202.0',
-          // },
-          // {
-          //   date: '2018-07-18 13:10:23',
-          //   coin: '100.0',
-          //   sum: '102.0',
-          // },
-          // {
-          //   date: '2018-07-18 13:10:23',
-          //   coin: '1.00',
-          //   sum: '2.00',
-          // },
-          // {
-          //   date: '2018-07-18 13:10:23',
-          //   coin: '1.00',
-          //   sum: '1.00',
-          // },
-        // ],
-      // },
-    // ],
   };
   // handleChange = e => {
   //   this.setState({
@@ -185,11 +120,10 @@ export class MyPage extends React.PureComponent {
   };
 
   componentDidMount() {
-    const { selectMyReview, signinSuccess } = this.props;
+    const { selectMyReview, signinSuccess, myPages } = this.props;
     selectMyReview(signinSuccess);
-    // const newStateArray = { ...this.state.tabData };
-    // newStateArray.list = selectMyReview(signinSuccess);
-    // this.setState(newStateArray);
+    loadFollowerCountAction(myPages.user);
+    loadFollowingCountAction(myPages.user);
   }
 
   render() {
@@ -239,11 +173,11 @@ export class MyPage extends React.PureComponent {
           </div>
           <div className={classNames(classes.row, classes.panelInfo)}>
             <div className={classes.col}>
-              <div className={classes.row}>144</div>
+              <div className={classes.row}>0</div>
               <div className={classes.row}>팔로워</div>
             </div>
             <div className={classes.col}>
-              <div className={classes.row}>654</div>
+              <div className={classes.row}>0</div>
               <div className={classes.row}>팔로잉</div>
             </div>
           </div>
@@ -257,19 +191,17 @@ export class MyPage extends React.PureComponent {
 MyPage.propTypes = {
   id: PropTypes.string,
   classes: PropTypes.object.isRequired,
-  // loading: PropTypes.bool,
-  // error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  // repos: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
-  // rewardsReviews: PropTypes.oneOfType([PropTypes.array(), PropTypes.bool()]),
   selectMyReview: PropTypes.func,
   myPages: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  // username: PropTypes.string,
-  // onChangeUsername: PropTypes.func,
+  follwerCount: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  follwingCount: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({
   // repos: makeSelectRepos(),
   myPages: makeSelectMyPage(),
+  follwerCount: makeSelectFollowerCount(),
+  follwingCount: makeSelectFollowingCount(),
   signinSuccess: makeSelectSignInSuccess(),
   // username: makeSelectUsername(),
   // loading: makeSelectLoading(),
@@ -282,6 +214,14 @@ function mapDispatchToProps(dispatch) {
     selectMyReview: data => {
       console.log(`select My Review call!!!${data.username}`);
       dispatch(myPageAction(data));
+    },
+    loadFollowerCount: data => {
+      console.log(`load My Review - follower Count call!!!${data.userId}`);
+      dispatch(loadFollowerCountAction(data));
+    },
+    loadFollowingCount: data => {
+      console.log(`load My Review - following Count call!!!${data.userId}`);
+      dispatch(loadFollowingCountAction(data));
     },
   };
 }

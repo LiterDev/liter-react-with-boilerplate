@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
@@ -24,7 +24,7 @@ class ReviewList extends React.PureComponent {
   render() {
     const { reviews } = this.props;
     // const revies = [1, 2, 3, 4, 5, 6, 7, 8];
-    let reviewArray = null;
+    let reviewArray = false;
 
     if (reviews !== false) {
       console.log(']=====]review list[=====[');
@@ -53,6 +53,8 @@ class ReviewList extends React.PureComponent {
   }
 }
 
-ReviewList.propTypes = {};
+ReviewList.propTypes = {
+  reviewArray: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+};
 
 export default withStyles(styles)(ReviewList);

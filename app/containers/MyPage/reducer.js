@@ -14,9 +14,8 @@ export const initialState = fromJS({
 function myPageReducer(state = initialState, action) {
   switch (action.type) {
     case MYPAGE_ACTION:
-      console.log(state);
-      console.log(action);
-      return state.set('userid', action.userid);
+      console.log(action.data.username);
+      return state;
     case MYPAGE_SUCCESS:
       return state;
     case MYPAGE_FAILURE:

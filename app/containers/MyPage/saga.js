@@ -2,17 +2,14 @@
  * Gets the repositories of the user from Github
  */
 
-import { select, call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
 import { MYPAGE_ACTION } from './constants';
 import * as actions from './actions';
-import { makeSelectMyPage } from './selectors';
+// import { makeSelectMyPage } from './selectors';
 
 export function* mypage(data) {
-  const selectid = yield select(makeSelectMyPage());
-
-  console.log(selectid);
-  console.log(data);
+  console.log(data.data.username);
 
   const requestURL = `http://localhost:8080/review/latestList`;
 
@@ -24,13 +21,15 @@ export function* mypage(data) {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       },
-      body: data,
+      body: JSON.stringify({
+        username: data.username,
+      }),
     };
 
     // const req = request(request, requestURL, options);
-    const repos = yield call(request, requestURL, options);
-    console.log(repos);
-    yield put(actions.myPageSuccess(repos));
+    const reqContents = yield call(request, requestURL, options);
+    console.log(reqContents);
+    yield put(actions.myPageSuccess(reqContents));
   } catch (err) {
     yield put(actions.myPageFailure(err));
   }

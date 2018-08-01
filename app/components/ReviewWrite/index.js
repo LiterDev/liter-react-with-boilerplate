@@ -354,7 +354,11 @@ class ReviewWrite extends React.PureComponent {
     // console.log(event.target);
     // console.log(this.state.files);
     const data = new FormData(event.target);
+
+    // const form = event.currentTarget;
     console.log(data.get('tags'));
+    // console.log(data.get('startRating[]'));
+
     if (this.state.imageComponent.length > 0) {
       for (let i = 0; i < this.state.imageComponent.length; i += 1) {
         data.append(`files[${i}]`, this.state.imageComponent[i].file);

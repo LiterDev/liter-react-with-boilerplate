@@ -98,6 +98,8 @@ class SurveyList extends React.PureComponent {
                 starHoverColor="rgb(27, 220, 177)"
                 totalRate={this.totalRate}
                 surveyId={item.surveyId}
+                surveyType="CATEGORY"
+                surveyName={item.surveyName}
               />
             </div>
           ))}
@@ -112,6 +114,8 @@ class SurveyList extends React.PureComponent {
                 starHoverColor="rgb(255, 189, 96)"
                 totalRate={this.totalRate}
                 surveyId={item.surveyId}
+                surveyType="STORE"
+                surveyName={item.surveyName}
               />
             </div>
           ))}

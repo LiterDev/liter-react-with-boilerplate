@@ -31,14 +31,14 @@ class SurveyItemTotal extends React.PureComponent {
       totalRatingArry,
     } = this.props;
     // console.log(totalCount);
-    console.log(totalRatingArry);
+    // console.log(totalRatingArry);
     let ratePoint = 0;
     if (totalCount > 0) {
-      console.log(totalRatingArry.length);
+      // console.log(totalRatingArry.length);
       if (totalRatingArry.length > 0) {
         let totalpoint = 0;
         const totalRatingArryTmp = [...totalRatingArry];
-        console.log(totalRatingArryTmp);
+        // console.log(totalRatingArryTmp);
         for (let i = 0; i < totalRatingArryTmp.length; i += 1) {
           totalpoint += totalRatingArry[i].rating;
         }
@@ -47,7 +47,7 @@ class SurveyItemTotal extends React.PureComponent {
         // }
         ratePoint = totalpoint / totalCount;
         // ratePoint = parseInt(totalpoint / totalCount);
-        console.log(totalpoint);
+        // console.log(totalpoint);
       }
     }
     return (

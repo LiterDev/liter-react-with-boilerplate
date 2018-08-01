@@ -236,7 +236,11 @@ class ReviewFormTabOnline extends React.PureComponent {
             <span className={classes.cateText}>별평점</span>
           </div>
 
-          <SurveyList surveyCate={surveyCate} surveyBuyType={surveyBuyType} />
+          <SurveyList
+            surveyCate={surveyCate}
+            surveyBuyType={surveyBuyType}
+            // categoryId={this.state.categoryId}
+          />
         </div>
         <input name="totalScore" value="0" type="hidden" />
         <input name="recommend" value="YES" type="hidden" />

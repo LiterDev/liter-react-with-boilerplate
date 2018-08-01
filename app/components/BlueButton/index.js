@@ -65,6 +65,7 @@ class BlueButton extends React.PureComponent {
           <button
             type={btnType}
             className={complete ? classes.buttonComplete : classes.button}
+            onClick={complete ? onClickFunc : null}
           >
             <div className={classes.buttonText}>{btnName}</div>
           </button>
@@ -75,7 +76,7 @@ class BlueButton extends React.PureComponent {
 }
 
 BlueButton.propTypes = {
-  btnName: PropTypes.object.isRequired,
+  btnName: PropTypes.any.isRequired,
   onClickFunc: PropTypes.func,
   complete: PropTypes.bool.isRequired,
   btnType: PropTypes.string.isRequired,

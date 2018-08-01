@@ -29,12 +29,31 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
 // import Typography from '@material-ui/core/Typography';
 // import PhoneIcon from '@material-ui/icons/Phone';
 
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
 // const emails = ['username@gmail.com', 'user02@gmail.com'];
+
+import BueatySel from '../../images/ic-beauty-14@3x.png';
+
+import LifeSel from '../../images/ic-life-14@3x.png';
+
+import FoodSel from '../../images/ic-food-17@3x.png';
+
+import FashionSel from '../../images/ic-fashion-17@3x.png';
+
+import BabySel from '../../images/ic-baby-17@3x.png';
+
+import hobbySel from '../../images/ic-hobby-17@3x.png';
+
+import RestorantSel from '../../images/ic-restorant-17@3x.png';
+
+import PetSel from '../../images/ic-pet-17@3x.png';
+
+import EtcSel from '../../images/ic-etc-17@3x.png';
 
 const styles = theme => ({
   rowdiv: {
@@ -56,6 +75,7 @@ const styles = theme => ({
     paddingRight: 16,
     paddingTop: 10,
     paddingBottom: 10,
+    textAlign: 'center',
   },
   container: {
     paddingTop: theme.spacing.unit * 0,
@@ -163,7 +183,97 @@ const styles = theme => ({
   tabPaper: {
     heght: 20,
   },
+  selAvatar: {
+    width: 24,
+    height: 24,
+    backgroundColor: '#1591ff',
+    border: 'solid 1px #1591ff',
+    float: 'left',
+    marginRight: 16,
+    // marginLeft: 'auto',
+    // marginRight: 'auto',
+  },
+  imgAvatar: {
+    width: 14,
+    height: 14,
+  },
+  selectBtn: {
+    float: 'right',
+  },
+  selectBtnRoot: {
+    paddingTop: 0,
+    paddingBottom: 10,
+  },
+  cateModiText: {
+    fontSize: 16,
+    color: '#999999',
+  },
 });
+const cateList = [
+  {
+    cateIndex: 0,
+    selImg: BueatySel,
+
+    active: 0,
+    name: '뷰티',
+  },
+  {
+    cateIndex: 1,
+    selImg: LifeSel,
+
+    active: 0,
+    name: '라이프',
+  },
+  {
+    cateIndex: 2,
+    selImg: FoodSel,
+
+    active: 0,
+    name: '푸드',
+  },
+  {
+    cateIndex: 3,
+    selImg: FashionSel,
+
+    active: 0,
+    name: '패션',
+  },
+  {
+    cateIndex: 4,
+    selImg: BabySel,
+
+    active: 0,
+    name: '유아',
+  },
+  {
+    cateIndex: 5,
+    selImg: hobbySel,
+
+    active: 0,
+    name: '취미',
+  },
+  {
+    cateIndex: 6,
+    selImg: RestorantSel,
+
+    active: 0,
+    name: '맛집',
+  },
+  {
+    cateIndex: 7,
+    selImg: PetSel,
+
+    active: 0,
+    name: '펫',
+  },
+  {
+    cateIndex: 8,
+    selImg: EtcSel,
+
+    active: 0,
+    name: '그 외',
+  },
+];
 /* eslint-disable react/prefer-stateless-function */
 class ReviewWrite extends React.PureComponent {
   constructor(props) {
@@ -305,38 +415,63 @@ class ReviewWrite extends React.PureComponent {
                 />
               </FormControl>
             </div>
-            <div className={classes.cateWrap}>
-              <IconButton
-                color="primary"
-                // className={classes.buttonCate}
-                aria-label="Add to shopping cart"
-                onClick={this.handleClickOpen}
-                // className={classNames(classes.root)}
-                classes={{
-                  root: classes.iconBtn,
-                  // disabled: 'disabled',
-                }}
-              >
-                <Icon className={classes.icon} color="secondary">
-                  add_circle
-                </Icon>
-              </IconButton>
+            {this.state.selectedValue === false ? (
+              <div className={classes.cateWrap}>
+                <IconButton
+                  color="primary"
+                  // className={classes.buttonCate}
+                  aria-label="Add to shopping cart"
+                  onClick={this.handleClickOpen}
+                  // className={classNames(classes.root)}
+                  classes={{
+                    root: classes.iconBtn,
+                    // disabled: 'disabled',
+                  }}
+                >
+                  <Icon className={classes.icon} color="secondary">
+                    add_circle
+                  </Icon>
+                </IconButton>
 
-              <span className={classes.cateText}>카테고리를 선택해주세요.</span>
-              {/* <Button
-              variant="contained"
-              size="small"
-              className={classes.buttonCate}
-            >
-              <Icon
-                className={classNames(classes.leftIcon, classes.iconSmall)}
-                color="secondary"
-              >
-                add_circle
-              </Icon>
-              카테고리를 선택해주세요.
-            </Button> */}
-            </div>
+                <span className={classes.cateText}>
+                  카테고리를 선택해주세요.
+                </span>
+              </div>
+            ) : (
+              <div className={classes.cateWrap}>
+                <Avatar
+                  // alt={cateList[this.state.selectedValue].name}
+                  // src={cateList[this.state.selectedValue].selImg}
+                  className={classes.selAvatar}
+                  // onClick={() => this.cateSelect(cate)}
+                  // imgProps={{ category: 0 }}
+                >
+                  <img
+                    src={cateList[this.state.selectedValue].selImg}
+                    alt={cateList[this.state.selectedValue].name}
+                    className={classes.imgAvatar}
+                  />
+                </Avatar>
+                <span className={classes.cateText}>
+                  {cateList[this.state.selectedValue].name}
+                </span>
+
+                {/* <div className={classes.selectBtn}> */}
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.selectBtn}
+                  classes={{
+                    root: classes.selectBtnRoot,
+                  }}
+                  onClick={this.handleClickOpen}
+                >
+                  <span className={classes.cateModiText}>수정</span>
+                  <Icon className={classes.rightIcon}>chevron_right</Icon>
+                </Button>
+                {/* </div> */}
+              </div>
+            )}
           </div>
           <div className={classes.rowdivSec}>
             <div className={classes.imageBtn}>

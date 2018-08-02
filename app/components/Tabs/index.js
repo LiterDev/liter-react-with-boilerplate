@@ -83,31 +83,38 @@ class SimpleTabs extends React.Component {
     const tabItem = tabs[value];
 
     console.log(data.myPages);
-    if (tabItem.type === 'REVIEW') {
-      result.push(
-        <div key={tabItem.type.concat('0')}>
-          <div className={classes.topLine}>
-            <span className={classes.reviewCount}>
-              리뷰 {Object.keys(data).length}
-            </span>
-          </div>
-          {this.renderReviewdRow(tabItem.type, data.myPages)}
-        </div>,
-      );
-    } else if (tabItem.type === 'REWARD') {
-      result.push(
-        <List>
-          <ListItem>
-            <div className={classes.rewardTopLine} key={tabItem.type.concat(0)}>
-              <span className={classes.rewardHeaderDate}>일시</span>
-              <span className={classes.rewardHeaderReward}>보상액</span>
-              <span className={classes.rewardHeaderTotal}>총액</span>
+    if (data.myPages) {
+      if (tabItem.type === 'REVIEW') {
+        result.push(
+          <div key={tabItem.type.concat('0')}>
+            <div className={classes.topLine}>
+              <span className={classes.reviewCount}>
+                리뷰 {Object.keys(data.myPages).length}
+              </span>
             </div>
-          </ListItem>
-          <Divider />
-          {this.renderRewordRow(tabItem.type, data.myPages)}
-        </List>,
-      );
+            {this.renderReviewdRow(tabItem.type, data.myPages)}
+          </div>,
+        );
+      } else if (tabItem.type === 'REWARD') {
+        result.push(
+          <List>
+            <ListItem>
+              <div
+                className={classes.rewardTopLine}
+                key={tabItem.type.concat(0)}
+              >
+                <span className={classes.rewardHeaderDate}>일시</span>
+                <span className={classes.rewardHeaderReward}>보상액</span>
+                <span className={classes.rewardHeaderTotal}>총액</span>
+              </div>
+            </ListItem>
+            <Divider />
+            {this.renderRewordRow(tabItem.type, data.myPages)}
+          </List>,
+        );
+      }
+    } else {
+      result.push(<div>조회된 내용이 없습니다.</div>);
     }
 
     return result;
@@ -132,10 +139,10 @@ class SimpleTabs extends React.Component {
   renderRewordRow(type, data) {
     console.log('####');
     console.log(Object.values(data));
-    return <div>11</div>;
-    // return Object.values(data).map(row => (
-    //   <RewardContainer review={row} key={type.concat(row.index)} />
-    // ));
+    // return <div>11</div>;
+    return Object.values(data).map(row => (
+      <RewardContainer review={row} key={type.concat(row.index)} />
+    ));
   }
 
   render() {

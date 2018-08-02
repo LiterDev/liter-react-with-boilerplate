@@ -29,16 +29,13 @@ import {
   loadFollowerCountAction,
   loadFollowingCountAction,
 } from './actions';
-import {
-  makeSelectMyPage,
-  makeSelectFollowerCount,
-  makeSelectFollowingCount,
-} from './selectors';
+import * as selectors from './selectors';
+import { makeSelectSignInSuccess } from '../SignIn/selectors';
 
 import reducer from './reducer';
 import saga from './saga';
 
-import { makeSelectSignInSuccess } from '../SignIn/selectors';
+
 
 const styles = {
   container: {
@@ -73,7 +70,6 @@ const styles = {
   },
   levelTagInner: {
     position: 'absolute',
-    right: '0px',
     bottom: '10px',
     width: '34px',
     height: '18px',
@@ -84,11 +80,11 @@ const styles = {
     fontStretch: 'normal',
     lineHeight: '1.5',
     letterSpacing: '-0.3px',
-    textAlign: 'right',
+    textAlign: 'rigth',
     borderRadius: '10px',
     backgroundColor: '#6a88a5',
     color: '#ffffff',
-    paddingRight: '8px',
+    zIndex: '9999',
   },
   userCoin: {
     color: '#1591ff',
@@ -101,7 +97,7 @@ export class MyPage extends React.PureComponent {
     userData: {
       userId: '1',
       photoPath:
-        'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAH0AfQMBIgACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAAAQIEBQYDB//EACoQAAICAQIGAQMFAQAAAAAAAAABAhEDBCEFEjFBUXFhIjKhIzRCYoET/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/APtoIsWBIIsWBIIsWBIIsWBIIsWBIIsWBIIsWBIIsWBUEWLAkEWLAkEWYfENatLCo1LJLovHyBl5MkMcebJJRj5bMWXFdJF/fKXqJoc2bJnnzZZuT+ex5gdJj4lpMjpZeV/2VGUmmk07T7nImRpNZm0sv05XHvB9GB0wPLT54ajDHJB7Pt4PSwJBFiwJBFiwIBUAWBUAWOa1uV5tTkndq6XpHRSlywk/CbOW7AAAAAAGy4Jmcc08T6SVpfKN0c5w51rcXuvwdDYFgVAFgVAFbFlbFgWsWVsWBM/qhJLujmF0Oms53UQ/558kPEmB5gAAAAMnhyvW4vZv7NLwmHNqZS7RizcWBaxZWxYFrFlbFgVsWQAJsWQAJs1XFsVZY5V0kqftG0PLU4VnxOD79H4YGhBbJF45uEtmnRUAAe+kwPUZeX+K3kBseF4+TT876z3/AMMyyqpJJKkuhIE2LIAE2LIAFQVsWBYFbMfLrcWPZS534iBlFZzjBXOSS+TV5dflntCoL46mNKTk7k235bAvqpxyajJOLtN7HkAAM3huWGPJNTko8yVWYQA6BNNWt15JNDjyzxu4TcfTMvFxGa2yxUvlbAbMHhi1OLLtGe/h9T1sCwK2LArZjajWRxPlj9U/widZleLD9PV7I1QHrlz5M33y28LoeQAAAAAAAAAAAADIw6vLjpN80fDMcAbjBqIZl9Oz7pnrZpITcJKUXTXQ3GOanCMl3VgYnEfsh7MEzuIfZD2YIEAAAAAAAAAAAAAAAAG20n7fH6NSbXTft8foD//Z',
+        'http://www.bigjungbo.com/xe/files/attach/images/163/825/047/578a17e481940d85a81c5e3c7f184c80.jpg',
     },
     tabs: [
       { tabLabel: '리뷰', type: 'REVIEW' },
@@ -130,8 +126,6 @@ export class MyPage extends React.PureComponent {
   render() {
     const { classes, signinSuccess, myPages } = this.props;
     const { userData } = this.state;
-
-    // signIn.signinSuccess.username
 
     return (
       <div>
@@ -169,7 +163,7 @@ export class MyPage extends React.PureComponent {
                   />
                 </g>
               </svg>
-              0
+              662.11
             </Typography>
           </div>
           <div className={classNames(classes.row, classes.panelInfo)}>
@@ -200,7 +194,7 @@ MyPage.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   // repos: makeSelectRepos(),
-  myPages: makeSelectMyPage(),
+  myPages: selectors.makeSelectMyPage(),
   signinSuccess: makeSelectSignInSuccess(),
   // username: makeSelectUsername(),
   // loading: makeSelectLoading(),
@@ -215,11 +209,11 @@ function mapDispatchToProps(dispatch) {
       dispatch(myPageAction(data));
     },
     loadFollowerCount: data => {
-      console.log(`load My Review - follower Count call!!!${data.userId}`);
+      console.log(`load My Review - follower Count call!!!${data.username}`);
       dispatch(loadFollowerCountAction(data));
     },
     loadFollowingCount: data => {
-      console.log(`load My Review - following Count call!!!${data.userId}`);
+      console.log(`load My Review - following Count call!!!${data.username}`);
       dispatch(loadFollowingCountAction(data));
     },
   };

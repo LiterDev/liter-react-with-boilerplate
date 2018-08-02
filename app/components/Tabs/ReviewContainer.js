@@ -125,7 +125,10 @@ function ReviewContainer(props) {
   const { review } = props;
 
   const mediaCollection = review ? review.mediaCollection : false;
-  const mainImageUrl = mediaCollection > 0 ? mediaCollection[0].name : '';
+  const mainImageUrl =
+    mediaCollection > 0
+      ? mediaCollection[0].path + mediaCollection[0].uuid
+      : '';
 
   const timeDiff = '방금전';
 

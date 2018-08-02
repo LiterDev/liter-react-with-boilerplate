@@ -73,6 +73,7 @@ const styles = {
   },
   levelTagInner: {
     position: 'absolute',
+    right: '0px',
     bottom: '10px',
     width: '34px',
     height: '18px',
@@ -83,11 +84,11 @@ const styles = {
     fontStretch: 'normal',
     lineHeight: '1.5',
     letterSpacing: '-0.3px',
-    textAlign: 'rigth',
+    textAlign: 'right',
     borderRadius: '10px',
     backgroundColor: '#6a88a5',
     color: '#ffffff',
-    zIndex: '9999',
+    paddingRight: '8px',
   },
   userCoin: {
     color: '#1591ff',
@@ -100,7 +101,7 @@ export class MyPage extends React.PureComponent {
     userData: {
       userId: '1',
       photoPath:
-        'http://www.bigjungbo.com/xe/files/attach/images/163/825/047/578a17e481940d85a81c5e3c7f184c80.jpg',
+        'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAH0AfQMBIgACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAAAQIEBQYDB//EACoQAAICAQIGAQMFAQAAAAAAAAABAhEDBCEFEjFBUXFhIjKhIzRCYoET/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/APtoIsWBIIsWBIIsWBIIsWBIIsWBIIsWBIIsWBIIsWBUEWLAkEWLAkEWYfENatLCo1LJLovHyBl5MkMcebJJRj5bMWXFdJF/fKXqJoc2bJnnzZZuT+ex5gdJj4lpMjpZeV/2VGUmmk07T7nImRpNZm0sv05XHvB9GB0wPLT54ajDHJB7Pt4PSwJBFiwJBFiwIBUAWBUAWOa1uV5tTkndq6XpHRSlywk/CbOW7AAAAAAGy4Jmcc08T6SVpfKN0c5w51rcXuvwdDYFgVAFgVAFbFlbFgWsWVsWBM/qhJLujmF0Oms53UQ/558kPEmB5gAAAAMnhyvW4vZv7NLwmHNqZS7RizcWBaxZWxYFrFlbFgVsWQAJsWQAJs1XFsVZY5V0kqftG0PLU4VnxOD79H4YGhBbJF45uEtmnRUAAe+kwPUZeX+K3kBseF4+TT876z3/AMMyyqpJJKkuhIE2LIAE2LIAFQVsWBYFbMfLrcWPZS534iBlFZzjBXOSS+TV5dflntCoL46mNKTk7k235bAvqpxyajJOLtN7HkAAM3huWGPJNTko8yVWYQA6BNNWt15JNDjyzxu4TcfTMvFxGa2yxUvlbAbMHhi1OLLtGe/h9T1sCwK2LArZjajWRxPlj9U/widZleLD9PV7I1QHrlz5M33y28LoeQAAAAAAAAAAAADIw6vLjpN80fDMcAbjBqIZl9Oz7pnrZpITcJKUXTXQ3GOanCMl3VgYnEfsh7MEzuIfZD2YIEAAAAAAAAAAAAAAAAG20n7fH6NSbXTft8foD//Z',
     },
     tabs: [
       { tabLabel: '리뷰', type: 'REVIEW' },
@@ -120,10 +121,10 @@ export class MyPage extends React.PureComponent {
   };
 
   componentDidMount() {
-    const { selectMyReview, signinSuccess, myPages } = this.props;
+    const { selectMyReview, signinSuccess } = this.props;
     selectMyReview(signinSuccess);
-    loadFollowerCountAction(myPages.user);
-    loadFollowingCountAction(myPages.user);
+    loadFollowerCountAction(signinSuccess);
+    loadFollowingCountAction(signinSuccess);
   }
 
   render() {
@@ -168,16 +169,16 @@ export class MyPage extends React.PureComponent {
                   />
                 </g>
               </svg>
-              662.11
+              0
             </Typography>
           </div>
           <div className={classNames(classes.row, classes.panelInfo)}>
             <div className={classes.col}>
-              <div className={classes.row}>0</div>
+              <div className={classes.row}>{myPages.followerCount}</div>
               <div className={classes.row}>팔로워</div>
             </div>
             <div className={classes.col}>
-              <div className={classes.row}>0</div>
+              <div className={classes.row}>{myPages.followingCount}</div>
               <div className={classes.row}>팔로잉</div>
             </div>
           </div>
@@ -200,8 +201,6 @@ MyPage.propTypes = {
 const mapStateToProps = createStructuredSelector({
   // repos: makeSelectRepos(),
   myPages: makeSelectMyPage(),
-  follwerCount: makeSelectFollowerCount(),
-  follwingCount: makeSelectFollowingCount(),
   signinSuccess: makeSelectSignInSuccess(),
   // username: makeSelectUsername(),
   // loading: makeSelectLoading(),

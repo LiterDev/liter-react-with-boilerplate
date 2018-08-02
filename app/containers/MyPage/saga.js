@@ -34,14 +34,16 @@ export function* mypage(data) {
 
 export function* loadFollowerCnt(data) {
   console.log(data.data.id);
-  const userId = data.data.id;
-  const requestURL = `${process.env.API_URL}/follower/count/${userId}`;
+  const requestURL = `${process.env.API_URL}/follower/count`;
+  const accessToken = localStorage.getItem('accessToken');
+  const token = `Bearer ${accessToken}`;
   try {
     const options = {
       method: 'GET',
       headers: {
         Accept: 'application/json',
         'Access-Control-Allow-Origin': '*',
+        Authorization: token,
       },
     };
 
@@ -56,14 +58,16 @@ export function* loadFollowerCnt(data) {
 
 export function* loadFollowingCnt(data) {
   console.log(data.data.username);
-  const userId = data.data.id;
-  const requestURL = `${process.env.API_URL}/following/count/${userId}`;
+  const requestURL = `${process.env.API_URL}/following/count`;
+  const accessToken = localStorage.getItem('accessToken');
+  const token = `Bearer ${accessToken}`;
   try {
     const options = {
       method: 'GET',
       headers: {
         Accept: 'application/json',
         'Access-Control-Allow-Origin': '*',
+        Authorization: token,
       },
     };
 

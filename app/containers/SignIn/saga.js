@@ -5,7 +5,7 @@ import { signinSuccess, signinError } from './actions';
 import { SIGNIN_ACTION } from './constants';
 
 export function* signin(data) {
-  const requestURL = 'http://127.0.0.1:8080/auth/signIn';
+  const requestURL = 'http://api.getliter.io/auth/signIn';
   console.log(data);
   console.log(data.email);
   console.log(data.password);

@@ -22,7 +22,7 @@ export function* signup(signData) {
   // console.log(signData);
   // console.log(signData.data);
   // console.log(signData.data.get('username'));
-  const requestURL = 'http://127.0.0.1:8080/user/signUp';
+  const requestURL = 'http://api.getliter.io/user/signUp';
 
   try {
     // Call our request helper (see 'utils/request')

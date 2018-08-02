@@ -12,7 +12,7 @@ export function* post(postData) {
   // console.log(postData.data.mutifile.entries());
 
   // console.log(signData.data.get('username'));
-  const requestURL = `http://127.0.0.1:8080/review`;
+  const requestURL = `http://api.getliter.io/review`;
   const accessToken = localStorage.getItem('accessToken');
   const token = `Bearer ${accessToken}`;
   try {

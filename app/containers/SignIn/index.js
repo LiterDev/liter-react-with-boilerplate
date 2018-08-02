@@ -156,7 +156,7 @@ export class SignIn extends React.PureComponent {
   // }
   render() {
     const { classes, signinSuccess, signinError } = this.props;
-    // console.log(signinError);
+    console.log(signinSuccess);
 
     if (signinSuccess) {
       // console.log(signinSuccess);

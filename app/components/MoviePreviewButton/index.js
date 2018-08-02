@@ -95,7 +95,7 @@ class MoviePreviewButton extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
+      // open: false,
     };
   }
 

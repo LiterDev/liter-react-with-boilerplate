@@ -359,11 +359,12 @@ class ReviewWrite extends React.PureComponent {
   onSubmitFormInit(event) {
     event.preventDefault();
 
-    // console.log(event.target);
+    console.log(event.target);
     // console.log(this.state.files);
     const data = new FormData(event.target);
 
     // const form = event.currentTarget;
+    console.log('tags');
     console.log(data.get('tags'));
     // console.log(data.get('startRating[]'));
 
@@ -590,7 +591,7 @@ class ReviewWrite extends React.PureComponent {
           <div className={classes.submitBtnWrap}>
             <BlueButton
               btnType="submit"
-              onClickFunc={this.onSubmitFormInit}
+              // onClickFunc={this.onSubmitFormInit}
               complete={this.state.complete}
               btnName="작성 완료"
             />

@@ -18,6 +18,10 @@ import Header from 'components/Header';
 import ReviewWrite from 'components/ReviewWrite';
 
 import { withStyles } from '@material-ui/core/styles';
+// import dotenv from 'dotenv';
+
+// import dotenv from 'dotenv';
+
 // import SvgIcon from '@material-ui/core/SvgIcon';
 
 // import Button from '@material-ui/core/Button';
@@ -97,7 +101,9 @@ const styles = theme => ({
 export class ReviewForm extends React.PureComponent {
   render() {
     // const { classes } = this.props;
-
+    // dotenv.config();
+    // console.log(process.env.API_URL);
+    // console.log(process.env.NODE_ENV);
     return (
       <div>
         <Header headerTitle={<FormattedMessage {...messages.header} />} />

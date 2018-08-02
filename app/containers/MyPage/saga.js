@@ -10,7 +10,7 @@ import * as actions from './actions';
 
 export function* mypage(data) {
   console.log(data.data.username);
-  const requestURL = 'http://127.0.0.1:8080/review/myReviewList';
+  const requestURL = 'http://api.getliter.io/review/myReviewList';
   const accessToken = localStorage.getItem('accessToken');
   const token = `Bearer ${accessToken}`;
   try {
@@ -35,7 +35,7 @@ export function* mypage(data) {
 export function* loadFollowerCnt(data) {
   console.log(data.data.id);
   const userId = data.data.id;
-  const requestURL = `http://127.0.0.1:8080/follower/count/${userId}`;
+  const requestURL = `http://api.getliter.io/follower/count/${userId}`;
   try {
     const options = {
       method: 'GET',
@@ -57,7 +57,7 @@ export function* loadFollowerCnt(data) {
 export function* loadFollowingCnt(data) {
   console.log(data.data.username);
   const userId = data.data.id;
-  const requestURL = `http://127.0.0.1:8080/following/count/${userId}`;
+  const requestURL = `http://api.getliter.io/following/count/${userId}`;
   try {
     const options = {
       method: 'GET',

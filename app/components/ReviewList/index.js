@@ -19,6 +19,7 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 0,
   },
 });
+
 /* eslint-disable react/prefer-stateless-function */
 class ReviewList extends React.PureComponent {
   render() {

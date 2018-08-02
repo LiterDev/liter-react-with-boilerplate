@@ -95,14 +95,14 @@ class ImagePreviewButtonWithoutSlider extends React.PureComponent {
   }
 
   handleAppend(event) {
-    console.log(event.target.files);
+    // console.log(event.target.files);
     if (event.target.files) {
       if (event.target.files.length > 0) {
         // for (let i = 0; i < event.target.files.length; i += 1) {
 
         // }
-        console.log('event.target.files');
-        console.log(event.target.files);
+        // console.log('event.target.files');
+        // console.log(event.target.files);
         this.props.handleImageAppend(event.target.files);
       }
 

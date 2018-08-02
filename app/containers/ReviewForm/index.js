@@ -103,7 +103,7 @@ export class ReviewForm extends React.PureComponent {
     // const { classes } = this.props;
     // dotenv.config();
     // console.log(process.env.API_URL);
-    console.log(process.env.NODE_ENV);
+    // console.log(process.env.NODE_ENV);
     return (
       <div>
         <Header headerTitle={<FormattedMessage {...messages.header} />} />

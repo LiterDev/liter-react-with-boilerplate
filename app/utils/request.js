@@ -53,3 +53,7 @@ export default function request(url, options) {
     .then(checkStatus)
     .then(parseJSON);
 }
+
+export function requestRoot() {
+  return process.env.API_URL;
+}

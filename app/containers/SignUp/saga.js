@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 // import { repoLoadingError } from 'containers/App/actions';
 
-import request from 'utils/request';
+import { request, requestRoot } from 'utils/request';
 import { signupLoaded, signupError } from './actions';
 import { SIGNUP_ACTION } from './constants';
 // import { makeSelectSignUp } from './selectors';
@@ -22,7 +22,8 @@ export function* signup(signData) {
   // console.log(signData);
   // console.log(signData.data);
   // console.log(signData.data.get('username'));
-  const requestURL = 'http://api.getliter.io/user/signUp';
+  const requestURL = `${requestRoot()}/user/signUp`;
+  // const requestURL = 'http://api.getliter.io/user/signUp';
 
   try {
     // Call our request helper (see 'utils/request')

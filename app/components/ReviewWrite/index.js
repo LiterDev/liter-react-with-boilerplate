@@ -364,7 +364,7 @@ class ReviewWrite extends React.PureComponent {
     const data = new FormData(event.target);
 
     // const form = event.currentTarget;
-    console.log(data.get('tags'));
+    // console.log(data.get('tags'));
     // console.log(data.get('startRating[]'));
 
     if (this.state.imageComponent.length > 0) {

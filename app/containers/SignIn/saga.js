@@ -1,11 +1,11 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import { request, requestRoot } from 'utils/request';
+import request from 'utils/request';
 import { signinSuccess, signinError } from './actions';
 import { SIGNIN_ACTION } from './constants';
 
 export function* signin(data) {
-  const requestURL = `${requestRoot()}/auth/signIn`;
+  const requestURL = `${process.env.API_URL}/auth/signIn`;
   // const requestURL = 'http://api.getliter.io/auth/signIn';
   // console.log(data);
   // console.log(data.email);

@@ -9,7 +9,7 @@ import { LOAD_ACTION } from './constants';
 export function* getReview(data) {
   // const reviewId = yield select(makeSelectReviewId());
   const reviewId = data.reviewId;
-  const requestURL = `http://api.getliter.io/review/detail/${reviewId}`;
+  const requestURL = `${process.env.API_URL}/review/detail/${reviewId}`;
 
   try {
     // Call our request helper (see 'utils/request')

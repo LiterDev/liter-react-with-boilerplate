@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import { withStyles } from '@material-ui/core/styles';
+import Media from 'components/Media';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -151,14 +152,15 @@ class ReviewCard extends React.PureComponent {
   render() {
     const { classes } = this.props;
     const { review, viewType } = this.props;
-    const mediaCollection = review ? review.mediaCollection : false;
-    const mainImageUrl = mediaCollection.length > 0 ? '/' + mediaCollection[0].path + '/' + mediaCollection[0].uuid : '';
 
+    const mediaCollection = review ? review.mediaCollection : false;
+    const mediaItem = mediaCollection ? mediaCollection[0] : false;
+    // let mainImageUrl = mediaCollection.length > 0 ? '/' + mediaCollection[0].path + '/' + mediaCollection[0].uuid + mediaCollection[0].name : '';
     const avatarImageUrl = review.user.profileImageUrl;
     // temp date
     // call time-diff function (6 level)
     const timeDiff = '방금전';
-    
+
     return (
       <div>
         <Card className={classes.card}>
@@ -183,11 +185,15 @@ class ReviewCard extends React.PureComponent {
           ) : (
             <div></div>
           )}
-          <CardMedia
+
+          <Media fullPath={mediaItem.fullPath} mediaType={mediaItem.mediaType} description={mediaItem.name} />
+
+          {/* <CardMedia
             className={classes.media}
             image={mainImageUrl}
             title={review.username}
-          />
+          /> */}
+
           <CardContent>
             <StyledLink to={`/review/${review.id}`}>
               <Typography className={classes.reviewTitle} component="p">

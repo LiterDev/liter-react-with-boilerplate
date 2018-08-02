@@ -24,6 +24,7 @@ import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import ReviewCardSlider from 'containers/ReviewCardSlider';
+import MediaSlider from 'components/MediaSlider';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -291,10 +292,10 @@ class ReviewDetailCard extends React.PureComponent {
     // const avatarImageUrl = review.user.profileImageUrl;
     const totalNewReview = 1;
     const mediaCollection = review ? review.mediaCollection : false;
-    const mainImageUrl = mediaCollection.length > 0 ? '/' + mediaCollection[0].path + '/' + mediaCollection[0].uuid : '';
+    // const mainImageUrl = mediaCollection.length > 0 ? '/' + mediaCollection[0].path + '/' + mediaCollection[0].uuid : '';
     const avatarImageUrl = review.user.profileImageUrl;
     const timeDiff = '방금전';
-        
+    
     return (
       <div>
         <Card className={classes.card}>
@@ -323,11 +324,9 @@ class ReviewDetailCard extends React.PureComponent {
           <div>
             <Divider className={classes.divider} light />
           </div>
-          <CardMedia
-            className={classes.media}
-            image={mainImageUrl}
-            title={review.username}
-          />
+
+          <MediaSlider media={mediaCollection} />
+
           <CardContent>
             <Typography className={classes.reviewContent} component="p">
               {review.content}

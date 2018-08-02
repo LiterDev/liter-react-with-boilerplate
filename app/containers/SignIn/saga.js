@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import {request, requestRoot from 'utils/request';
+import { request, requestRoot } from 'utils/request';
 import { signinSuccess, signinError } from './actions';
 import { SIGNIN_ACTION } from './constants';
 

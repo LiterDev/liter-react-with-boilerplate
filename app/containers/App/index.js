@@ -65,7 +65,7 @@ function App(props) {
       </Helmet>
       {/* <Header /> */}
       <Switch>
-        <Route exact path="/" component={Reviews} />        
+        <Route exact path="/" component={Reviews} />
         <PrivateRoute path="/features" component={FeaturePage} />
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />

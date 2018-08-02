@@ -22,7 +22,8 @@ export function* signup(signData) {
   // console.log(signData);
   // console.log(signData.data);
   // console.log(signData.data.get('username'));
-  const requestURL = 'http://api.getliter.io/user/signUp';
+  const requestURL = `${process.env.API_URL}/user/signUp`;
+  // const requestURL = 'http://api.getliter.io/user/signUp';
 
   try {
     // Call our request helper (see 'utils/request')

@@ -5,7 +5,7 @@ import { reviewListLoaded, reviewListLoadingError } from './actions';
 import { LOAD_REVIEW_ACTION } from './constants';
 
 export function* getReviews() {
-  const requestURL = `http://api.getliter.io/review/latestList`;
+  const requestURL = `${process.env.API_URL}/review/latestList`;
 
   try {
     // Call our request helper (see 'utils/request')

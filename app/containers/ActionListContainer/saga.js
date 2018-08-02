@@ -14,8 +14,8 @@ export function* getContents() {
   const userid = yield select(makeSelectUserID());
   const followType = yield select(makeSelectPageType());
 
-  const requestFollowURL = `http://localhost:8080/follow/follower/${userid}`;
-  const requestFollowingURL = `http://localhost:8080/follow/following/${userid}`;
+  const requestFollowURL = `${process.env.API_URL}/follow/follower/${userid}`;
+  const requestFollowingURL = `${process.env.API_URL}/follow/following/${userid}`;
 
   const requestURL =
     followType == 'follow' ? requestFollowURL : requestFollowingURL;
@@ -44,7 +44,7 @@ export function* delFollowSaga(data) {
   console.log(data.followid);
   console.log(` << ${userid}`);
 
-  const requestURL = `http://localhost:8080/follow/${followid}`;
+  const requestURL = `${process.env.API_URL}/follow/${followid}`;
 
   const options = {
     method: 'DELETE',
@@ -71,7 +71,7 @@ export function* setFollowSaga(data) {
   console.log(data.followid);
   console.log(` << ${userid}`);
 
-  const requestURL = `http://localhost:8080/follow/`;
+  const requestURL = `${process.env.API_URL}/follow/`;
 
   const options = {
     method: 'POST',

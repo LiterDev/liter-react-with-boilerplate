@@ -7,6 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
+import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -18,9 +19,11 @@ import Typography from '@material-ui/core/Typography';
 import SmsIcon from '@material-ui/icons/Sms';
 import ShareIcon from '@material-ui/icons/Share';
 import GradeIcon from '@material-ui/icons/Grade';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import ReviewCardSlider from 'containers/ReviewCardSlider';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -32,7 +35,6 @@ const styles = theme => ({
   card: {
     // maxWidth: 400,
     marginTop: 12,
-    marginBottom: 60,
   },
   media: {
     height: 0,
@@ -179,7 +181,7 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit * 2,
     boxShadow: `0 2px 4px 0 rgba(0, 0, 0, 0.15)`,
     border: 'solid 0.5px rgba(0, 0, 0, 0.05)',
-    marginBottom: '30px',
+    marginBottom: '20px',
   },
   paperSheetHead: {
     width: '100%',
@@ -233,6 +235,7 @@ const styles = theme => ({
     width: '100%',
     margin: 'auto',
     height: '69px',
+    marginBottom: '20px',
   },
   scoreItem: {
     width: '33%',
@@ -254,6 +257,28 @@ const styles = theme => ({
   scoreGradeBox: {
     marginTop: '12px',
     textAlign: 'center',
+  },
+  // 임시 css - 수정해야함
+  fullDivider: {    
+    width: 'calc(100% + 32px)',
+    marginLeft: '-16px',
+  },
+  newReview: {
+    width: '100%',
+    marginTop: '15px',
+    lineHeight: '20px',
+    textAlign: 'center',
+  },
+  newFont: {
+    fontFamily: 'AppleSDGothicNeo',
+    fontSize: '14px',
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: '1.43',
+    letterSpacing: 'normal',
+    textAlign: 'center',
+    color: '#333333',
   }
 });
 
@@ -271,6 +296,7 @@ class ReviewDetailCard extends React.PureComponent {
       productName: '플레이스테이션4',
       buyLink: 'http://aisa.playstation.com/ko-kr/',
       user: {
+        userid: '1',
         username: 'Jimmy',
       }
     },
@@ -278,6 +304,7 @@ class ReviewDetailCard extends React.PureComponent {
 
   render() {
     // const avatarImageUrl = review.user.profileImageUrl;
+    const totalNewReview = 541;
     const avatarImageUrl = 'https://cdn-images-1.medium.com/fit/c/32/32/1*lMyRgLJZ3yjlklS1zzEcgg.jpeg';
     const timeDiff = '방금전';
     const mainImageUrl = 'http://cfile217.uf.daum.net/image/27458C4B5427B61919A21A';
@@ -359,13 +386,18 @@ class ReviewDetailCard extends React.PureComponent {
                 </div>
               </div>
 
+              <Divider className={classes.fullDivider} light />
+
+              <div className={classes.newReview}>
+                <span className={classes.newFont}>{ totalNewReview }개의 최신리뷰 보기</span>
+                <KeyboardArrowRightIcon />
+              </div>
             </Paper>
           </div>
 
         </Card>
 
-        {/* <div>
-        </div> */}
+        <ReviewCardSlider user={review.user}/>
 
         <div className={classes.floatBottom}>
           <CardActions className={classes.actions} disableActionSpacing>

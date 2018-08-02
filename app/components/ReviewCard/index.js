@@ -150,12 +150,9 @@ class ReviewCard extends React.PureComponent {
   };
   render() {
     const { classes } = this.props;
-    const { review } = this.props;
-
+    const { review, viewType } = this.props;
     const mediaCollection = review ? review.mediaCollection : false;
-
     const mainImageUrl = mediaCollection > 0 ? mediaCollection[0].name : '';
-
     const avatarImageUrl = review.user.profileImageUrl;
     // temp date
     // call time-diff function (6 level)
@@ -164,6 +161,7 @@ class ReviewCard extends React.PureComponent {
     return (
       <div>
         <Card className={classes.card}>
+          { viewType ? (      
           <CardHeader
             className={classes.cardHeader}
             avatar={
@@ -181,6 +179,9 @@ class ReviewCard extends React.PureComponent {
             title={review.user.username}
             subheader={timeDiff}
           />
+          ) : (
+            <div></div>
+          )}
           <CardMedia
             className={classes.media}
             image={mainImageUrl}
@@ -223,6 +224,10 @@ class ReviewCard extends React.PureComponent {
 ReviewCard.propTypes = {
   review: PropTypes.object.isRequired,
 };
+
+ReviewCard.defaultProps = {
+  viewType: true,
+}
 
 // export default ReviewCard;
 export default withStyles(styles)(ReviewCard);

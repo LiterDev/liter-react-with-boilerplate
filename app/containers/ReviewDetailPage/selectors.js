@@ -15,9 +15,10 @@ const selectReviewDetailPageDomain = state =>
 /**
  * Default selector used by ReviewDetailPage
  */
+const makeSelectReviews = () =>
+  createSelector(selectReviewDetailPageDomain, substate => substate.get('reviews'));
 
-const makeSelectReviewDetailPage = () =>
-  createSelector(selectReviewDetailPageDomain, substate => substate.toJS());
+const makeSelectReviewId = () =>
+  createSelector(selectReviewDetailPageDomain, substate => substate.get('reviewId'));
 
-export default makeSelectReviewDetailPage;
-export { selectReviewDetailPageDomain };
+export { selectReviewDetailPageDomain, makeSelectReviewId, makeSelectReviews };

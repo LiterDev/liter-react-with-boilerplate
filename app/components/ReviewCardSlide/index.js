@@ -74,8 +74,6 @@ class ReviewCardSlide extends React.PureComponent {
     let reviewArray = false;
     
     if (reviews !== false) {
-      console.log(']=====]review list[=====[');
-      console.log(reviews.reviews);
       reviewArray = reviews.reviews;
     }
     

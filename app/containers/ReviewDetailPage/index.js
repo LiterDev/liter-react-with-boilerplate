@@ -17,34 +17,57 @@ import injectReducer from 'utils/injectReducer';
 import Header from 'components/Header';
 import ReviewDetailCard from 'components/ReviewDetailCard';
 
-import makeSelectReviewDetailPage from './selectors';
+import { makeSelectReviews, makeSelectReviewId } from './selectors';
+
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+import { loadAction  } from './actions';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ReviewDetailPage extends React.PureComponent {
+  componentDidMount() {
+    const { loadReview, reviewId } = this.props;
+    loadReview(reviewId);
+  }
+
   render() {
+    // reviewId - detail index
+    const { reviews, reviewId } = this.props;
+
+    console.log("]----detail page render ----[");
+    if(reviews !== false) {
+      return (
+        <div>
+          <Header headerTitle='' />
+          <ReviewDetailCard reviews={reviews}/>
+        </div>
+      );
+    }
+
     return (
       <div>
-        <Header headerTitle='' />
-        <ReviewDetailCard />
       </div>
-    );
+    );    
   }
 }
 
 ReviewDetailPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  reviews: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  // reviewId: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  loadReview: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
-  reviewdetailpage: makeSelectReviewDetailPage(),
+  reviews: makeSelectReviews(),
+  // reviewId: makeSelectReviewId(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    loadReview: (reviewId) => {
+      dispatch(loadAction(reviewId));
+    },
   };
 }
 

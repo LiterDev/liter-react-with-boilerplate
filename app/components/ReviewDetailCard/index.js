@@ -284,35 +284,17 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 class ReviewDetailCard extends React.PureComponent {
-  state = {
-    review: {
-      id: '1',
-      username: 'Jimmy',
-      title: '여름철 보양식으로 손꼽히는 투뿔등심에 대해 소개하도록 한다.',
-      content: '애플이 글로벌 스마트폰 시장 침체를 딛고 2분기 어닝 서프라이즈를 기록했다 애플은 2분기 매출 533억 달러(약 59조6000억원), 영업이익 126억1200만 달러(약 14조1300억원)를 기록했다고 지난달 31일(현지시간) 밝혔다. \
-                이는 지난해 같은 기간 대비 각각 17.4%, 17.1% 증가한 수치다. 매출의 경우 월스트리트 예상치(523억 달러)보다 10억 달러 높았다. \
-                팀 쿡 애플 최고경영자(CEO)는 역대 최상의 2분기 실적을 보고하게 돼 흥분된다며 4분기 연속 두자릿수 매출 증가를 이뤄냈다고 말했다. ',
-      totalScore: '4.0',
-      productName: '플레이스테이션4',
-      buyLink: 'http://aisa.playstation.com/ko-kr/',
-      user: {
-        userid: '1',
-        username: 'Jimmy',
-      }
-    },
-  }
-
   render() {
+    const { classes, reviews } = this.props;
+    const review = reviews;
+    console.log(reviews);
     // const avatarImageUrl = review.user.profileImageUrl;
-    const totalNewReview = 541;
-    const avatarImageUrl = 'https://cdn-images-1.medium.com/fit/c/32/32/1*lMyRgLJZ3yjlklS1zzEcgg.jpeg';
+    const totalNewReview = 1;
+    const mediaCollection = review ? review.mediaCollection : false;
+    const mainImageUrl = mediaCollection.length > 0 ? '/' + mediaCollection[0].path + '/' + mediaCollection[0].uuid : '';
+    const avatarImageUrl = review.user.profileImageUrl;
     const timeDiff = '방금전';
-    const mainImageUrl = 'http://cfile217.uf.daum.net/image/27458C4B5427B61919A21A';
-
-    const { classes } = this.props;
-    // const { review } = this.props;
-    const { review } = this.state;
-
+        
     return (
       <div>
         <Card className={classes.card}>

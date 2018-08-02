@@ -152,12 +152,13 @@ class ReviewCard extends React.PureComponent {
     const { classes } = this.props;
     const { review, viewType } = this.props;
     const mediaCollection = review ? review.mediaCollection : false;
-    const mainImageUrl = mediaCollection > 0 ? mediaCollection[0].name : '';
+    const mainImageUrl = mediaCollection.length > 0 ? '/' + mediaCollection[0].path + '/' + mediaCollection[0].uuid : '';
+
     const avatarImageUrl = review.user.profileImageUrl;
     // temp date
     // call time-diff function (6 level)
     const timeDiff = '방금전';
-
+    
     return (
       <div>
         <Card className={classes.card}>

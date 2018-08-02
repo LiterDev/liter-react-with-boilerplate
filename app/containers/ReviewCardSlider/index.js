@@ -56,7 +56,6 @@ function mapDispatchToProps(dispatch) {
   return {
     loadReviewList: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      console.log('initialize review list');
       dispatch(loadList());
     },
   };

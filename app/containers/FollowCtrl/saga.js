@@ -11,7 +11,7 @@ export function* setFollowSagaData(userid) {
   if (false) {
     if (selectid === userid) {
       console.log(selectid);
-      const requestURL = `http://localhost:8080/user/follow`;
+      const requestURL = `${process.env.API_URL}/user/follow`;
       try {
         const options = {
           method: 'GET',

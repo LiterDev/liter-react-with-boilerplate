@@ -309,7 +309,7 @@ class ReviewWrite extends React.PureComponent {
         for (let i = 0; i < fileList.length; i += 1) {
           this.state.files.append(
             `imgnames[${this.state.imageCount}]`,
-            fileList[i],
+            Blob(fileList[i]),
           );
 
           imageComponentTmp.push({

@@ -186,7 +186,10 @@ class ReviewCard extends React.PureComponent {
             <div></div>
           )}
 
-          <Media fullPath={mediaItem.fullPath} mediaType={mediaItem.mediaType} description={mediaItem.name} />
+          { mediaItem ? ( <Media fullPath={mediaItem.fullPath} mediaType={mediaItem.mediaType} description={mediaItem.name} /> ):
+            <div></div>
+          }
+          
 
           {/* <CardMedia
             className={classes.media}

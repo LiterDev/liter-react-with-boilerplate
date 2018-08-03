@@ -19,6 +19,7 @@ const styles = theme => ({
   iMediaSize: {
     width: '100%',
     height: '100%',
+    maxHeight: '280px',
   },
   vContainer: {
     position: 'relative',
@@ -39,7 +40,7 @@ function Media(props) {
   const { classes } = props;
 
   switch(props.mediaType) {
-    case '"IMAGE"':
+    case 'IMAGE':
         return (
           <div className={classes.iContainer}>
             <img className={classes.iMediaSize} src={props.fullPath} alt={props.description}/>

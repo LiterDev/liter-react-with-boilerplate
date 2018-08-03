@@ -10,9 +10,10 @@ import {
   LOAD_REVIEW_ERROR,
 } from './constants';
 
-export function loadList() {
+export function loadList(userid) {
   return {
     type: LOAD_REVIEW_ACTION,
+    userid,
   };
 }
 

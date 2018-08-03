@@ -40,8 +40,6 @@ class MediaSlider extends React.PureComponent {
     const { classes } = this.props;
     const { media, user } = this.props;
 
-    console.log(media);
-
     const settings = {
       dots: false,
       infinite: false,

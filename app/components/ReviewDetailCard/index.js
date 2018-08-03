@@ -204,7 +204,11 @@ const styles = theme => ({
     color: '#1591ff',
   },
   paperSheet: {
-    margin: '0 0px 5px 0px',
+    margin: '0 0px 5px 0px',    
+  },
+  paperWordWrap: {
+    wordWrap: 'break-word', 
+    whiteSpace: 'normal',
   },
   paperItem: {
     width: '57px',
@@ -343,9 +347,9 @@ class ReviewDetailCard extends React.PureComponent {
                 <span className={classes.paperItem}>제품</span>
                 <span className={classes.paperDetail}>{review.productName}</span>
               </div>
-              <div className={classes.paperSheet}>
+              <div className={classNames(classes.paperSheet, classes.paperWordWrap)}>
                 <span className={classes.paperItem}>구매처</span>
-                <span className={classes.paperDetail}>{review.buyLink}</span>
+                <span className={classes.paperDetail} >{review.buyLink}</span>
               </div>
               <div className={classes.paperSheet}>
                 <span className={classes.paperItem}>총평가</span>
@@ -370,15 +374,16 @@ class ReviewDetailCard extends React.PureComponent {
               <Divider className={classes.fullDivider} light />
 
               <div className={classes.newReview}>
-                <span className={classes.newFont}>{ totalNewReview }개의 최신리뷰 보기</span>
-                <KeyboardArrowRightIcon />
+                {/* <span className={classes.newFont}>{ totalNewReview }개의 최신리뷰 보기</span>
+                <KeyboardArrowRightIcon /> */}
+                <div style={{'paddingBottom':'5px'}}></div>
               </div>
             </Paper>
           </div>
 
         </Card>
 
-        <ReviewCardSlider user={review.user}/>
+        {/* <ReviewCardSlider user={review.user}/> */}
 
         <div className={classes.floatBottom}>
           <CardActions className={classes.actions} disableActionSpacing>

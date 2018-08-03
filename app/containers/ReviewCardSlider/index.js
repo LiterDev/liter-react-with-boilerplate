@@ -27,8 +27,8 @@ import { loadList } from './actions';
 /* eslint-disable react/prefer-stateless-function */
 export class ReviewCardSlider extends React.PureComponent {
   componentDidMount() {
-    const { loadReviewList } = this.props;
-    loadReviewList();
+    const { loadReviewList, user } = this.props;
+    loadReviewList(user.id);
   }
 
   render() {
@@ -54,9 +54,8 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    loadReviewList: evt => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(loadList());
+    loadReviewList: userid => {
+      dispatch(loadList(userid));
     },
   };
 }

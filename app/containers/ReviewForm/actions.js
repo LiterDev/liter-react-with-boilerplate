@@ -4,7 +4,7 @@
  *
  */
 
-import { DEFAULT_ACTION, POST_ACTION } from './constants';
+import { DEFAULT_ACTION, POST_ACTION, POST_SEND, POST_SUCCESS, POST_ERROR } from './constants';
 
 export function defaultAction() {
   return {
@@ -17,5 +17,23 @@ export function postAction(data) {
   return {
     type: POST_ACTION,
     data,
+  };
+}
+
+export function postSendAction() {
+  return {
+    type: POST_SEND,
+  };
+}
+export function postSuccess(data) {
+  return {
+    type: POST_SUCCESS,
+    data,
+  };
+}
+export function postError(error) {
+  return {
+    type: POST_ERROR,
+    error,
   };
 }

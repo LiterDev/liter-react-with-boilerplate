@@ -62,8 +62,8 @@ function App(props) {
   return (
     <div className={classes.root}>
       <Helmet
-        titleTemplate="%s - React.js Boilerplate"
-        defaultTitle="React.js Boilerplate"
+        titleTemplate="%s - 세상의 모든 리뷰, LITER"
+        defaultTitle="세상의 모든 리뷰, LITER"
       >
         {/* <meta name="description" content="A React.js Boilerplate application" />
         <script type="text/javascript" src={naverMapUrl} /> */}

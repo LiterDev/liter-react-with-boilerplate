@@ -18,6 +18,7 @@ import Header from 'components/Header';
 import ReviewWrite from 'components/ReviewWrite';
 
 import { withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 // import dotenv from 'dotenv';
 
 // import dotenv from 'dotenv';
@@ -95,19 +96,40 @@ const styles = theme => ({
   icon: {
     margin: theme.spacing.unit * 2,
   },
+  dimmed: {
+    background: '#000',
+    opacity: 0.5,
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    zIndex: 9999,
+    textAlign: 'center',
+  },
+  progress: {
+    position: 'absolute',
+    left: 'calc(50% - 20px)',
+    top: 'calc(50% - 20px)',
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
 export class ReviewForm extends React.PureComponent {
   render() {
-    // const { classes } = this.props;
+    const { classes } = this.props;
+    const { reviewform } = this.props;
+    const { loading, error, result } = reviewform;
+
+    // console.log(reviewform);
     // dotenv.config();
     // console.log(process.env.API_URL);
     // console.log(process.env.NODE_ENV);
     return (
       <div>
         <Header headerTitle={<FormattedMessage {...messages.header} />} />
-        <ReviewWrite onSubmitForm={this.props.onSubmitForm} />
+        { loading ? ( <div className={classes.dimmed}><CircularProgress className={classes.progress} /></div> ) : ( <div></div> ) }
+        <ReviewWrite onSubmitForm={this.props.onSubmitForm} style={{}} />
       </div>
     );
   }

@@ -6,7 +6,10 @@
   <meta charset="utf-8">
 
   <!-- Make the page mobile compatible -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+
 
   <!-- Allow installing the app to the homescreen -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -20,16 +23,6 @@
 
   <link rel="icon" href="/favicon.ico" />
   <title>React.js Boilerplate</title>
-</head>
-
-<body>
-  <!-- Display a message if JS has been disabled on the browser. -->
-  <noscript>If you're seeing this message, that means
-    <strong>JavaScript has been disabled on your browser</strong>, please
-    <strong>enable JS</strong> to make this app work.</noscript>
-
-  <!-- The app hooks into this div -->
-  <div id="app"></div>
   <!-- Open Sans Font -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
   <!-- A lot of magic happens in this file. HtmlWebpackPlugin automatically includes all assets (e.g. bundle.js, main.css) with the correct HTML tags, which is why they are missing in this HTML file. Don't add any assets here! (Check out the webpack config files in internals/webpack for details) -->
@@ -40,8 +33,19 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
   <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
-  <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=lZbCLCKgZlikwJANjr7_&submodules=geocoder"></script>
 
+
+</head>
+
+<body>
+  <!-- Display a message if JS has been disabled on the browser. -->
+  <noscript>If you're seeing this message, that means
+    <strong>JavaScript has been disabled on your browser</strong>, please
+    <strong>enable JS</strong> to make this app work.</noscript>
+
+  <!-- The app hooks into this div -->
+  <div id="app"></div>
+  
 
 </body>
 

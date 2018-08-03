@@ -55,13 +55,18 @@ const styles = theme => ({
 
 function App(props) {
   const { classes } = props;
+  // const clientId = 'rMSQYs31Pd_BGO8gC5bA';
+  // const naverMapUrl = `https://openapi.map.naver.com/openapi/v3/maps.js?clientId=${
+  //   process.env.NAVER_MAP_CLIENTID
+  // }}&submodules=geocoder`;
   return (
     <div className={classes.root}>
       <Helmet
         titleTemplate="%s - React.js Boilerplate"
         defaultTitle="React.js Boilerplate"
       >
-        <meta name="description" content="A React.js Boilerplate application" />
+        {/* <meta name="description" content="A React.js Boilerplate application" />
+        <script type="text/javascript" src={naverMapUrl} /> */}
       </Helmet>
       {/* <Header /> */}
       <Switch>

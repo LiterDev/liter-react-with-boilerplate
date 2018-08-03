@@ -155,7 +155,6 @@ export class SignIn extends React.PureComponent {
   //   this.props.defaultAction();
   // }
   render() {
-    console.log('render SignIn!!!');
     const { classes, signinSuccess, signinError } = this.props;
     console.log(signinSuccess);
     // console.log(signinEnd);
@@ -165,7 +164,7 @@ export class SignIn extends React.PureComponent {
       localStorage.setItem('accessToken', signinSuccess.accessToken);
       localStorage.setItem('refreshToken', signinSuccess.refreshToken);
       localStorage.setItem('username', signinSuccess.username);
-      // this.props.signinEnd();
+      this.props.signinEnd();
       return (
         <Redirect
           to={{ pathname: '/', state: { from: this.props.location } }}

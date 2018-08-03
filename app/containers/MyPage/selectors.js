@@ -6,7 +6,7 @@ import { initialState } from './reducer';
  */
 
 const selectMyPageDomain = state => state.get('myPage', initialState);
-
+const selectGlobal = state => state.get('global', initialState);
 /**
  * Default selector used by MyPage
  */

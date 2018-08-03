@@ -126,6 +126,7 @@ export class MyPage extends React.PureComponent {
     const { classes, signinSuccess, myPages } = this.props;
     const { userData } = this.state;
 
+    console.log(selectors.selectGlobal.userData);
     // signIn.signinSuccess.username
 
     return (
@@ -189,6 +190,7 @@ MyPage.propTypes = {
   classes: PropTypes.object.isRequired,
   selectMyReview: PropTypes.func,
   myPages: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  global: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   follwerCount: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   follwingCount: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };

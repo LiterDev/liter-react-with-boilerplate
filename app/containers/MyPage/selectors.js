@@ -14,14 +14,9 @@ const selectGlobal = state => state.get('global', initialState);
 const makeSelectMyPage = () =>
   createSelector(selectMyPageDomain, substate => substate.toJS());
 
-const makeSelectUserData = () =>
+const makeSelectGlobal = () =>
   createSelector(selectGlobal, substate => substate.toJS());
 // const makeSelectUsername = () =>
 //   createSelector(selectMyPageDomain, substate => substate.get('username'));
 
-export {
-  selectGlobal,
-  selectMyPageDomain,
-  makeSelectMyPage,
-  makeSelectUserData,
-};
+export { selectGlobal, selectMyPageDomain, makeSelectMyPage, makeSelectGlobal };

@@ -23,7 +23,8 @@ import InputWithHelper from 'components/InputWithHelper';
 import BlueButton from 'components/BlueButton';
 import { Redirect } from 'react-router-dom';
 // import ErrorPop from 'components/ErrorPop';
-
+import { makeSelectUserData } from 'containers/App/selectors';
+import { loadUserData } from 'containers/App/actions';
 import {
   makeSelectSignIn,
   makeSelectSignInSuccess,
@@ -164,6 +165,7 @@ export class SignIn extends React.PureComponent {
       localStorage.setItem('accessToken', signinSuccess.accessToken);
       localStorage.setItem('refreshToken', signinSuccess.refreshToken);
       localStorage.setItem('username', signinSuccess.username);
+      this.props.loadUserData(signinSuccess.username);
       this.props.signinEnd();
       return (
         <Redirect
@@ -251,6 +253,7 @@ const mapStateToProps = createStructuredSelector({
   signin: makeSelectSignIn(),
   signinSuccess: makeSelectSignInSuccess(),
   signinError: makeSelectSignInError(),
+  userData: makeSelectUserData(),
   // signinEnd: makeSelectSignInEnd(),
 });
 
@@ -263,10 +266,13 @@ function mapDispatchToProps(dispatch) {
       console.log('call SignInEnd');
       dispatch(signinInit());
     },
+    loadUserData: data => {
+      console.log('call loadUserData');
+      dispatch(loadUserData(data));
+    },
     // defaultAction: () => {
     //   dispatch(defaultAction());
     // },
-    dispatch,
   };
 }
 

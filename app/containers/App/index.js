@@ -61,7 +61,7 @@ function App(props) {
         titleTemplate="%s - 세상의 모든 리뷰, LITER"
         defaultTitle="세상의 모든 리뷰, LITER"
       >
-        <meta name="description" content="A React.js Boilerplate application" />
+        <meta name="description" content="LITER application" />
       </Helmet>
       {/* <Header /> */}
       <Switch>

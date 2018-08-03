@@ -30,7 +30,6 @@ import {
   loadFollowingCountAction,
 } from './actions';
 import * as selectors from './selectors';
-import { makeSelectSignInSuccess } from '../SignIn/selectors';
 
 import reducer from './reducer';
 import saga from './saga';
@@ -93,7 +92,7 @@ const styles = {
 /* eslint-disable react/prefer-stateless-function */
 export class MyPage extends React.PureComponent {
   state = {
-    user: {
+    userData: {
       userId: '1',
       photoPath:
         'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAH0AfQMBIgACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAAAQIEBQYDB//EACoQAAICAQIGAQMFAQAAAAAAAAABAhEDBCEFEjFBUXFhIjKhIzRCYoET/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/APtoIsWBIIsWBIIsWBIIsWBIIsWBIIsWBIIsWBIIsWBUEWLAkEWLAkEWYfENatLCo1LJLovHyBl5MkMcebJJRj5bMWXFdJF/fKXqJoc2bJnnzZZuT+ex5gdJj4lpMjpZeV/2VGUmmk07T7nImRpNZm0sv05XHvB9GB0wPLT54ajDHJB7Pt4PSwJBFiwJBFiwIBUAWBUAWOa1uV5tTkndq6XpHRSlywk/CbOW7AAAAAAGy4Jmcc08T6SVpfKN0c5w51rcXuvwdDYFgVAFgVAFbFlbFgWsWVsWBM/qhJLujmF0Oms53UQ/558kPEmB5gAAAAMnhyvW4vZv7NLwmHNqZS7RizcWBaxZWxYFrFlbFgVsWQAJsWQAJs1XFsVZY5V0kqftG0PLU4VnxOD79H4YGhBbJF45uEtmnRUAAe+kwPUZeX+K3kBseF4+TT876z3/AMMyyqpJJKkuhIE2LIAE2LIAFQVsWBYFbMfLrcWPZS534iBlFZzjBXOSS+TV5dflntCoL46mNKTk7k235bAvqpxyajJOLtN7HkAAM3huWGPJNTko8yVWYQA6BNNWt15JNDjyzxu4TcfTMvFxGa2yxUvlbAbMHhi1OLLtGe/h9T1sCwK2LArZjajWRxPlj9U/widZleLD9PV7I1QHrlz5M33y28LoeQAAAAAAAAAAAADIw6vLjpN80fDMcAbjBqIZl9Oz7pnrZpITcJKUXTXQ3GOanCMl3VgYnEfsh7MEzuIfZD2YIEAAAAAAAAAAAAAAAAG20n7fH6NSbXTft8foD//Z',
@@ -116,18 +115,17 @@ export class MyPage extends React.PureComponent {
   };
 
   componentDidMount() {
-    const { selectMyReview, signinSuccess } = this.props;
-    selectMyReview(signinSuccess);
-    loadFollowerCountAction(signinSuccess);
-    loadFollowingCountAction(signinSuccess);
+    const { selectMyReview, global } = this.props;
+
+    selectMyReview(global.userData);
+    loadFollowerCountAction(global.userData);
+    loadFollowingCountAction(global.userData);
   }
 
   render() {
-    const { classes, signinSuccess, myPages, userData } = this.props;
-    const { user } = this.state;
-
-    console.log(userData);
-    // signIn.signinSuccess.username
+    const { classes, myPages, global } = this.props;
+    const { userData } = this.state;
+    console.log(global.userData.username);
 
     return (
       <div>
@@ -139,13 +137,13 @@ export class MyPage extends React.PureComponent {
             <div className={classes.avatarDiv}>
               <Avatar
                 alt=""
-                src={user.photoPath}
+                src={userData.photoPath}
                 className={classNames(classes.avatar, classes.bigAvatar)}
               />
               <span className={classes.levelTagInner}>Lv 1</span>
             </div>
           </div>
-          <div className={classes.row}>{signinSuccess.username}</div>
+          <div className={classes.row}>{global.userData.username}</div>
           <div className={classes.row}>
             <Typography variant="headline" className={classes.userCoin}>
               <svg
@@ -190,7 +188,7 @@ MyPage.propTypes = {
   classes: PropTypes.object.isRequired,
   selectMyReview: PropTypes.func,
   myPages: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  userData: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  global: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   follwerCount: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   follwingCount: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
@@ -198,8 +196,7 @@ MyPage.propTypes = {
 const mapStateToProps = createStructuredSelector({
   // repos: makeSelectRepos(),
   myPages: selectors.makeSelectMyPage(),
-  userData: selectors.makeSelectUserData(),
-  signinSuccess: makeSelectSignInSuccess(),
+  global: selectors.makeSelectGlobal(),
   // username: makeSelectUsername(),
   // loading: makeSelectLoading(),
   // error: makeSelectError(),

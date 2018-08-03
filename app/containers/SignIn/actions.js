@@ -9,6 +9,7 @@ import {
   SIGNIN_ACTION,
   SIGNIN_SUCCESS,
   SIGNIN_ERROR,
+  SIGNIN_INIT,
 } from './constants';
 
 export function defaultAction() {
@@ -35,5 +36,10 @@ export function signinError(data) {
   return {
     type: SIGNIN_ERROR,
     data,
+  };
+}
+export function signinInit() {
+  return {
+    type: SIGNIN_INIT,
   };
 }

@@ -32,7 +32,7 @@ import {
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import { signinAction } from './actions';
+import { signinAction, signinInit } from './actions';
 import signUpmessages from '../SignUp/messages';
 import LiterLogo from '../../images/liter-logo@3x.png';
 
@@ -157,13 +157,14 @@ export class SignIn extends React.PureComponent {
   render() {
     const { classes, signinSuccess, signinError } = this.props;
     console.log(signinSuccess);
-
+    // console.log(signinEnd);
     if (signinSuccess) {
       // console.log(signinSuccess);
       // console.log(signinSuccess.accessToken);
       localStorage.setItem('accessToken', signinSuccess.accessToken);
       localStorage.setItem('refreshToken', signinSuccess.refreshToken);
       localStorage.setItem('username', signinSuccess.username);
+      this.props.signinEnd();
       return (
         <Redirect
           to={{ pathname: '/', state: { from: this.props.location } }}
@@ -250,12 +251,16 @@ const mapStateToProps = createStructuredSelector({
   signin: makeSelectSignIn(),
   signinSuccess: makeSelectSignInSuccess(),
   signinError: makeSelectSignInError(),
+  // signinEnd: makeSelectSignInEnd(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     signinForm: (email, password) => {
       dispatch(signinAction(email, password));
+    },
+    signinEnd: () => {
+      dispatch(signinInit());
     },
     // defaultAction: () => {
     //   dispatch(defaultAction());

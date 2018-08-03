@@ -239,6 +239,7 @@ class ReviewFormTabEtc extends React.PureComponent {
             // categoryId={this.state.categoryId}
           />
         </div>
+        <input type="hidden" name="store" value="ETC" />
       </div>
     );
   }

@@ -122,6 +122,7 @@ class ImagePreviewButtonWithoutSlider extends React.PureComponent {
             id="raised-button-file"
             multiple
             type="file"
+            name="media"
             // onInput={this.handleAppend}
             onChange={this.handleAppend}
           />

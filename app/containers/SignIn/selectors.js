@@ -19,6 +19,13 @@ const makeSelectSignInError = () =>
   createSelector(selectSignInDomain, signupState =>
     signupState.get('signinError'),
   );
+const makeSelectSignInEnd = () =>
+  createSelector(selectSignInDomain, signupState =>
+    signupState.set({
+      signinSuccess: false,
+      signinError: false,
+    }),
+  );
 
 /**
  * Default selector used by SignIn
@@ -33,4 +40,5 @@ export {
   makeSelectSignIn,
   makeSelectSignInSuccess,
   makeSelectSignInError,
+  makeSelectSignInEnd,
 };

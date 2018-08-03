@@ -58,6 +58,9 @@ class TagInput extends React.PureComponent {
     const val = e.target.value;
     const lastChar = val[val.length - 1];
     const tagVal = replaceAll(val, ',', '');
+    if (!tagVal.trim()) {
+      return false;
+    }
     if (lastChar === ' ') {
       this.setState({
         value: '',
@@ -71,7 +74,7 @@ class TagInput extends React.PureComponent {
     } else {
       this.setState({ value: tagVal });
     }
-    console.log(this.state.tagList);
+    // console.log(this.state.tagList);
     return true;
     // this.props.inputHandler && this.props.inputHandler(e);
   }
@@ -96,11 +99,12 @@ class TagInput extends React.PureComponent {
           onKeyDown={this.detectSpacePresent}
         />
         <Paper className={classes.root}>
-          {this.state.tagList.map(data => {
-            console.log(data);
+          {this.state.tagList.map((data, index) => {
+            // console.log(data.index);
+            console.log(index);
             return (
               <Chip
-                key={data.toString}
+                key={data}
                 label={data}
                 onDelete={this.handleDelete(data)}
                 className={classes.chip}

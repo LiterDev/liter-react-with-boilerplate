@@ -293,7 +293,7 @@ class ReviewWrite extends React.PureComponent {
       open: false,
       selectedValue: false,
       value: 0,
-      storeValue: 'SHOP',
+      // storeValue: 'ONLINE',
       complete: false,
     };
     this.handleImageAppend = this.handleImageAppend.bind(this);
@@ -359,18 +359,19 @@ class ReviewWrite extends React.PureComponent {
   onSubmitFormInit(event) {
     event.preventDefault();
 
-    console.log(event.target);
+    // console.log(event.target);
     // console.log(this.state.files);
     const data = new FormData(event.target);
 
     // const form = event.currentTarget;
-    console.log('tags');
-    console.log(data.get('tags'));
+    // console.log('tags');
+    // console.log(data.get('tags'));
     // console.log(data.get('startRating[]'));
 
     if (this.state.imageComponent.length > 0) {
       for (let i = 0; i < this.state.imageComponent.length; i += 1) {
-        data.append(`files[${i}]`, this.state.imageComponent[i].file);
+        // data.append(`media[${i}]`, this.state.imageComponent[i].file);
+        data.append(`media`, this.state.imageComponent[i].file);
       }
     }
     this.props.onSubmitForm(data);
@@ -388,15 +389,15 @@ class ReviewWrite extends React.PureComponent {
   };
 
   handleChange = (event, value) => {
-    let storeVal = 'SHOP';
-    if (value === 1) {
-      storeVal = 'PRODUCT';
-    } else if (value === 2) {
-      storeVal = 'ETC';
-    }
+    // let storeVal = 'SHOP';
+    // if (value === 1) {
+    //   storeVal = 'PRODUCT';
+    // } else if (value === 2) {
+    //   storeVal = 'ETC';
+    // }
     this.setState({
       value,
-      storeValue: storeVal,
+      // storeValue: storeVal,
     });
   };
   render() {
@@ -596,7 +597,7 @@ class ReviewWrite extends React.PureComponent {
               btnName="작성 완료"
             />
           </div>
-          <input type="hidden" name="store" value={this.state.storeValue} />
+          {/* <input type="hidden" name="store" value={this.state.storeValue} /> */}
         </form>
         <div>
           <ReviewCategory open={this.state.open} onClose={this.handleClose} />

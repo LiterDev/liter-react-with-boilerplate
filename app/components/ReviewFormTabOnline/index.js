@@ -244,6 +244,7 @@ class ReviewFormTabOnline extends React.PureComponent {
         </div>
         <input name="totalScore" value="0" type="hidden" />
         <input name="recommend" value="YES" type="hidden" />
+        <input type="hidden" name="store" value="ONLINE" />
       </div>
     );
   }

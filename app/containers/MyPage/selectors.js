@@ -17,4 +17,4 @@ const makeSelectMyPage = () =>
 // const makeSelectUsername = () =>
 //   createSelector(selectMyPageDomain, substate => substate.get('username'));
 
-export { selectMyPageDomain, makeSelectMyPage };
+export { selectGlobal, selectMyPageDomain, makeSelectMyPage };

@@ -23,7 +23,7 @@ import SlideTest from 'containers/SlideTest/Loadable';
 import FollowActionPage from 'containers/FollowActionPage/Loadable';
 import FollowingActionPage from 'containers/FollowingActionPage/Loadable';
 import Reviews from 'containers/Reviews/Loadable';
-import ReviewDetailPage from 'containers/ReviewDetailPage/Loadable';
+// import ReviewDetailPage from 'containers/ReviewDetailPage/Loadable';
 import ReviewDetailResolver from 'containers/ReviewDetailResolver/Loadable';
 
 // import Header from 'components/Header';
@@ -69,12 +69,11 @@ function App(props) {
         <PrivateRoute path="/features" component={FeaturePage} />
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />
-        <Route path="/mypage" component={MyPage} />
+        <PrivateRoute path="/mypage" component={MyPage} />
         <Route path="/follow" component={FollowActionPage} />
         <PrivateRoute exact path="/review/write" component={ReviewForm} />
         <Route path="/review/:reviewId" component={ReviewDetailResolver} />
         <Route path="/following" component={FollowingActionPage} />
-        <Route path="/review/write" component={ReviewForm} />
         <Route path="/slide" component={SlideTest} />
         <Route path="" component={NotFoundPage} />
       </Switch>

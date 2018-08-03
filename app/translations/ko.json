@@ -59,5 +59,9 @@
 
   "app.containers.SignIn.bodytext": "경험을 나누고 보상을 받으세요",
   "app.containers.SignIn.login": "로그인",
-  "app.containers.Reviews.header": "리뷰"
+  "app.containers.Reviews.header": "리뷰",
+
+  "app.components.ReviewCard.followText": "팔로우",
+  "app.components.ReviewCard.rewardActive": "진행중",
+  "app.components.ReviewCard.sharing": "공유하기"
 }

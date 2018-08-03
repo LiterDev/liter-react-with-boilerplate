@@ -6,7 +6,7 @@ import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Star from '@material-ui/icons/Star';
 
-import CardMedia from '@material-ui/core/CardMedia';
+import Media from 'components/Media';
 
 const styles = {
   line: {
@@ -125,21 +125,23 @@ function ReviewContainer(props) {
   const { review } = props;
 
   const mediaCollection = review ? review.mediaCollection : false;
-  const mainImageUrl =
-    mediaCollection > 0
-      ? mediaCollection[0].path + mediaCollection[0].uuid
-      : '';
+  const mediaItem = mediaCollection ? mediaCollection[0] : false;
 
   const timeDiff = '방금전';
 
   return (
     <div className={classes.line}>
       <span className={classes.col1}>
-        <CardMedia
-          className={classes.reviewPhoto}
-          image={mainImageUrl}
-          title={review.username}
-        />
+        {mediaItem ? (
+          <Media
+            fullPath={mediaItem.fullPath}
+            mediaType={mediaItem.mediaType}
+            description={mediaItem.name}
+            className={classes.reviewPhoto}
+          />
+        ) : (
+          <div />
+        )}
       </span>
       <span className={classes.col3}>
         <div

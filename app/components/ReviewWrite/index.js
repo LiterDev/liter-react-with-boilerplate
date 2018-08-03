@@ -374,6 +374,8 @@ class ReviewWrite extends React.PureComponent {
         data.append(`media`, this.state.imageComponent[i].file);
       }
     }
+    // alert('on');
+    // console.log('====on');
     this.props.onSubmitForm(data);
   }
 

@@ -217,10 +217,10 @@ class ReviewCard extends React.PureComponent {
                 <FormattedMessage {...messages.sharingText} />
               </span>
             </div>
-            <div className={classes.activeRStatus}>
+            {/* <div className={classes.activeRStatus}>
               <GradeIcon className={classes.gradeicons} />
               <span className={classes.gradeText}>{review.totalScore}</span>
-            </div>
+            </div> */}
           </CardActions>
         </Card>
       </div>

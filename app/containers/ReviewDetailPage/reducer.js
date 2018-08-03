@@ -5,11 +5,12 @@
  */
 
 import { fromJS } from 'immutable';
-import { DEFAULT_ACTION, LOAD_ACTION, LOAD_SUCCESS, LOAD_FAILURE } from './constants';
+import { DEFAULT_ACTION, LOAD_ACTION, LOAD_SUCCESS, LOAD_SURVEY_SUCCESS, LOAD_FAILURE } from './constants';
 
 export const initialState = fromJS({
   // reviewId: false,
   reviews: false,
+  surveys: false,
 });
 
 function reviewDetailPageReducer(state = initialState, action) {
@@ -19,6 +20,9 @@ function reviewDetailPageReducer(state = initialState, action) {
     case LOAD_SUCCESS:
       return state
             .set('reviews', action.data);
+    case LOAD_SURVEY_SUCCESS:
+      return state
+            .set('surveys', action.data);
     case LOAD_FAILURE:
       return state;
     default:

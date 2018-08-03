@@ -4,7 +4,7 @@
  *
  */
 
-import { DEFAULT_ACTION, LOAD_ACTION, LOAD_SUCCESS, LOAD_FAILURE } from './constants';
+import { DEFAULT_ACTION, LOAD_ACTION, LOAD_SUCCESS, LOAD_SURVEY_SUCCESS, LOAD_FAILURE } from './constants';
 
 export function defaultAction() {
   return {
@@ -22,6 +22,13 @@ export function loadAction(reviewId) {
 export function loadedSuccess(data) {
   return {
     type: LOAD_SUCCESS,
+    data,
+  };
+}
+
+export function loadedSurvey(data) {
+  return {
+    type: LOAD_SURVEY_SUCCESS,
     data,
   };
 }

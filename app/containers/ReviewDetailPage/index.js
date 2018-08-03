@@ -17,7 +17,7 @@ import injectReducer from 'utils/injectReducer';
 import Header from 'components/Header';
 import ReviewDetailCard from 'components/ReviewDetailCard';
 
-import { makeSelectReviews, makeSelectReviewId } from './selectors';
+import { makeSelectReviews, makeSelectReviewId, makeSelectSurveys } from './selectors';
 
 import reducer from './reducer';
 import saga from './saga';
@@ -33,14 +33,15 @@ export class ReviewDetailPage extends React.PureComponent {
 
   render() {
     // reviewId - detail index
-    const { reviews, reviewId } = this.props;
+    const { reviews, reviewId, surveys } = this.props;
 
     console.log("]----detail page render ----[");
+    // console.log(surveys);
     if(reviews !== false) {
       return (
         <div>
           <Header headerTitle='' />
-          <ReviewDetailCard reviews={reviews}/>
+          <ReviewDetailCard reviews={reviews} surveys={surveys}/>
         </div>
       );
     }
@@ -60,6 +61,7 @@ ReviewDetailPage.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   reviews: makeSelectReviews(),
+  surveys: makeSelectSurveys(),
   // reviewId: makeSelectReviewId(),
 });
 

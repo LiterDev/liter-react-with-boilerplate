@@ -1,7 +1,9 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { push } from 'react-router-redux';
+import { postSendAction, postSuccess, postError} from './actions';
 import { reposLoaded, repoLoadingError } from 'containers/App/actions';
 import request from 'utils/request';
-import { POST_ACTION } from './constants';
+import { DEFAULT_ACTION, POST_ACTION, POST_SEND, POST_SUCCESS, POST_ERROR } from './constants';
 
 // Individual exports for testing
 export function* post(postData) {
@@ -16,7 +18,9 @@ export function* post(postData) {
   // console.log(signData.data.get('username'));
   // const requestURL = `http://api.getliter.io/review`;
   const requestURL = `${process.env.API_URL}/review`;
-  console.log(requestURL);
+  // const requestURL = `http://localhost:8080/review`;
+
+  // console.log(requestURL);
   // const requestURL = `${process.env.API_URL}/review`;
   const accessToken = localStorage.getItem('accessToken');
   const token = `Bearer ${accessToken}`;
@@ -33,9 +37,26 @@ export function* post(postData) {
     };
 
     // const req = request(request, requestURL, options);
+    // prevent UI
+    yield put(postSendAction());
+
     const repos = yield call(request, requestURL, options);
+
+    // release UI
+    yield put(postSuccess(repos));
     yield put(reposLoaded(repos, repos));
+    
+    // console.log(repos);
+
+    if(repos && repos.id > 0) {
+      console.log("redirect");
+      const reviewDetailUrl = "/review/" + repos.id;
+      // yield put(NavigationActions.navigate({ routeName: reviewDetailUrl }));
+      // console.log(reviewDetailUrl);
+      yield put(push(reviewDetailUrl));
+    }
   } catch (err) {
+    yield put(postError(err));
     yield put(repoLoadingError(err));
   }
 }

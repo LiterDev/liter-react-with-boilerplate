@@ -371,7 +371,9 @@ class ReviewWrite extends React.PureComponent {
     if (this.state.imageComponent.length > 0) {
       for (let i = 0; i < this.state.imageComponent.length; i += 1) {
         // data.append(`media[${i}]`, this.state.imageComponent[i].file);
-        data.append(`media`, this.state.imageComponent[i].file);
+        // formData.append('myFile', this.state.selectedFile, this.state.selectedFile.name)
+
+        data.append(`media`, Blob[this.state.imageComponent[i].file]);
       }
     }
     // alert('on');

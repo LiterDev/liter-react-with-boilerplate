@@ -52,7 +52,7 @@ class MediaSlider extends React.PureComponent {
 
     let mediaArray = false;
 
-    if (media !== undefined) {
+    if (media !== false) {
       mediaArray = Object.values(media);
 
       return (
@@ -68,7 +68,7 @@ class MediaSlider extends React.PureComponent {
         </div>
       );
     }
-    
+
     return (
       <div></div>
     );    

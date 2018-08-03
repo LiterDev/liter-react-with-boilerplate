@@ -36,17 +36,16 @@ const styles = theme => ({
 
 function Media(props) {
 
-  console.log(props.fullPath);
   const { classes } = props;
 
   switch(props.mediaType) {
-    case '0':
+    case '"IMAGE"':
         return (
           <div className={classes.iContainer}>
             <img className={classes.iMediaSize} src={props.fullPath} alt={props.description}/>
           </div>
         );
-    case '1':
+    case 'YOUTUBE':
         return (
           <div className={classes.vContainer}>
               <iframe id="player" type="text/html" className={classes.vMediaSize} src={props.fullPath} frameBorder="0" />

@@ -290,16 +290,57 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 class ReviewDetailCard extends React.PureComponent {
   render() {
-    const { classes, reviews } = this.props;
+    const { classes, reviews, surveys } = this.props;
     const review = reviews;
     console.log(reviews);
+    console.log(surveys);
     // const avatarImageUrl = review.user.profileImageUrl;
     const totalNewReview = 1;
     const mediaCollection = review ? review.mediaCollection : false;
     // const mainImageUrl = mediaCollection.length > 0 ? '/' + mediaCollection[0].path + '/' + mediaCollection[0].uuid : '';
     const avatarImageUrl = review.user.profileImageUrl;
     const timeDiff = '방금전';
-    
+
+    let surveyArr = false;
+    let categorySurvey = false;
+    let storeSurvey = false;
+    let svPrd = 0, prdCount = 0;
+    let svDrv = 0, drvCount = 0;
+    let svAs = 0, asCount = 0;
+
+    if(surveys != false) {
+      surveyArr = Object.values(surveys);
+      categorySurvey = surveyArr.filter(function(item) {
+        return item.reviewSurveyType == "CATEGORY";
+      });
+
+      surveyArr = Object.values(surveys);
+      storeSurvey = surveyArr.filter(function(item) {
+        return item.reviewSurveyType == "STORE";
+      });
+
+      const svPro = surveyArr.map(function(item) {
+        switch(item.sortPosition) {
+          case 0:
+            svPrd += item.score;
+            prdCount++;
+            break;
+          case 1:
+            svDrv += item.score;
+            drvCount++;
+            break;
+          case 2:
+            svAs += item.score;
+            asCount++;
+            break;
+        }
+      });
+    }
+
+    svPrd = prdCount != 0 ? svPrd / prdCount : 0;
+    svDrv = drvCount != 0 ? svDrv / drvCount : 0;
+    svAs = asCount != 0 ? svAs / asCount : 0;
+
     return (
       <div>
         <Card className={classes.card}>
@@ -358,15 +399,15 @@ class ReviewDetailCard extends React.PureComponent {
 
               <div className={classes.scoreBox}>
                 <div className={classes.scoreItem} >
-                  <div className={classes.scoreGradeBox}><GradeIcon className={classes.gradeicons} /><span>{review.totalScore}</span></div>
+                  <div className={classes.scoreGradeBox}><GradeIcon className={classes.gradeicons} /><span>{svPrd}</span></div>
                   <p className={classes.scoreText}>상품 만족</p>
                 </div>
                 <div className={classes.scoreItem} >
-                  <div className={classes.scoreGradeBox}><GradeIcon className={classes.gradeicons} /><span>{review.totalScore}</span></div>
+                  <div className={classes.scoreGradeBox}><GradeIcon className={classes.gradeicons} /><span>{svDrv}</span></div>
                   <p className={classes.scoreText}>배송 속도</p>
                 </div>
                 <div className={classes.scoreItem} >
-                  <div className={classes.scoreGradeBox}><GradeIcon className={classes.gradeicons} /><span>{review.totalScore}</span></div>
+                  <div className={classes.scoreGradeBox}><GradeIcon className={classes.gradeicons} /><span>{svAs}</span></div>
                   <p className={classes.scoreText}>문의 응대</p>
                 </div>
               </div>
@@ -399,10 +440,10 @@ class ReviewDetailCard extends React.PureComponent {
                 <FormattedMessage {...messages.sharingText} />
               </span>
             </div>
-            <div className={classes.activeRStatus}>
+            {/* <div className={classes.activeRStatus}>
               <GradeIcon className={classes.gradeicons} />
               <span className={classes.gradeText}>{review.totalScore}</span>
-            </div>            
+            </div>             */}
           </CardActions>
         </div>
 

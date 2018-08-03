@@ -89,7 +89,7 @@ class SurveyList extends React.PureComponent {
       <div className={classes.root}>
         {/* <FormattedMessage {...messages.header} /> */}
         {surveyCate &&
-          surveyCate.map(item => (
+          surveyCate.map((item, index) => (
             <div key={item.surveyId} className={classes.surveyWrap}>
               <div className={classes.surveyTitle}>{item.surveyName}</div>
               <SurveyItem
@@ -100,12 +100,13 @@ class SurveyList extends React.PureComponent {
                 surveyId={item.surveyId}
                 surveyType="CATEGORY"
                 surveyName={item.surveyName}
+                sortPosition={index}
               />
             </div>
           ))}
         <Divider className={classes.divider} />
         {surveyBuyType &&
-          surveyBuyType.map(item => (
+          surveyBuyType.map((item, index) => (
             <div key={item.surveyId} className={classes.surveyWrap}>
               <div className={classes.surveyTitle}>{item.surveyName}</div>
               <SurveyItem
@@ -116,6 +117,7 @@ class SurveyList extends React.PureComponent {
                 surveyId={item.surveyId}
                 surveyType="STORE"
                 surveyName={item.surveyName}
+                sortPosition={index}
               />
             </div>
           ))}

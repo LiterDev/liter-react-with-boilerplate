@@ -46,6 +46,7 @@ class SurveyItem extends React.PureComponent {
       surveyId,
       surveyType,
       surveyName,
+      sortPosition,
     } = this.props;
 
     return (
@@ -63,7 +64,9 @@ class SurveyItem extends React.PureComponent {
         />
         <input
           type="hidden"
-          value={`${surveyId}|${surveyType}|${this.state.rating}|${surveyName}`}
+          value={`${surveyId}|${surveyType}|${
+            this.state.rating
+          }|${sortPosition}|${surveyName}`}
           // name={`startRating[${surveyId}].rating`}
           name="surveyRating"
         />
@@ -102,6 +105,7 @@ SurveyItem.propTypes = {
   surveyId: PropTypes.number.isRequired,
   surveyType: PropTypes.string.isRequired,
   surveyName: PropTypes.string.isRequired,
+  sortPosition: PropTypes.number.isRequired,
 };
 
 // export default SurveyItem;

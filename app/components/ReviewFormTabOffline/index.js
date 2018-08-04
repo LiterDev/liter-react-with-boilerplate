@@ -10,9 +10,13 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import SearchIcon from '@material-ui/icons/Search';
+import { compose } from 'redux';
+// import { Helmet } from 'react-helmet';
+import SearchBarMap from 'components/SearchBarMap';
+// import GoogleMapReact from 'google-map-react';
+// import { GoogleApiWrapper } from 'google-maps-react';
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 
-import { Map as NaverMap, loadNavermapsScript, Marker } from 'react-naver-maps';
-import Loadable from 'react-loadable';
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
 
@@ -120,9 +124,15 @@ const styles = theme => ({
     maxWidth: '100%',
     paddingTop: 20,
   },
+  googleMap: {
+    width: '100%',
+    position: 'relative',
+    height: 400,
+  },
 });
 
-const CLIENT_ID = process.env.NAVER_MAP_CLIENTID;
+const AnyReactComponent = ({ text }) => <div>{text}</div>;
+
 /* eslint-disable react/prefer-stateless-function */
 class ReviewFormTabOffline extends React.PureComponent {
   constructor(props) {
@@ -130,53 +140,56 @@ class ReviewFormTabOffline extends React.PureComponent {
     // const navermaps = window.naver.maps;
     this.state = {
       loaded: false,
-      zoom: 12,
-      center: false,
+      address: '',
+      centerMove: {
+        lat: 37.5103487,
+        lng: 127.06104640000001,
+      },
+      // zoom: 17,
     };
   }
 
-  componentDidMount() {
-    loadNavermapsScript({
-      clientId: CLIENT_ID, // required
-      submodules: ['geocoder'], // default: []
-    }).then(navermaps => {
-      // return navermaps === window.naver.maps; // true
-      this.navermaps = navermaps;
-      this.setState({
-        loaded: true,
-        zoom: 12,
-        center: new navermaps.LatLng(37.3595704, 127.105399),
-      });
+  static defaultProps = {
+    center: {
+      lat: 37.5103487,
+      lng: 127.06104640000001,
+    },
+    zoom: 15,
+  };
 
-      if (navermaps === window.naver.maps) {
-        // console.log('aaaa');
-      }
-      navermaps.Service.geocode({ address: '강남구' }, function(
-        status,
-        response,
-      ) {
-        // if (status === navermaps.Service.Status.ERROR) {
-        //   return alert('Something wrong!');
-        // }
-        const result = response.result; // 검색 결과의 컨테이너
-        const items = result.items; // 검색 결과의 배열
-        console.log(items);
-        // 성공시의 response 처리
-      });
+  centerMoveFunc = (latS, lngS) => {
+    this.setState({
+      centerMove: {
+        lat: latS,
+        lng: lngS,
+      },
     });
-  }
+    // this.state.setState({
+    //   centerMove: {
+    //     lat: latS,
+    //     lng: lngS,
+    //   },
+    // });
+  };
   render() {
     const { classes } = this.props;
     const { loaded } = this.state;
     // console.log(process.env.NAVER_MAP_CLIENTID);
     // console.log(process.env.API_URL);
-    if (!loaded) {
-      return <div>Loading</div>;
-    }
+    // if (!loaded) {
+    //   return <div>Loading</div>;
+    // }
     return (
       <div>
         {/* <FormattedMessage {...messages.header} /> */}
         {/* <div className={classes.rowdiv}>서비스 준비중 입니다.</div> */}
+        {/* <Helmet>
+          <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8E2pXbUN9C_oDzn8rMH9FXnK76brBSw4&libraries=places&callback=initAutocomplete"
+            async
+            defer
+          />
+        </Helmet> */}
         <div className={classes.rowdiv}>
           <Divider className={classes.divider} />
           <div className={classes.inputLabel}>매장 이름</div>
@@ -191,30 +204,49 @@ class ReviewFormTabOffline extends React.PureComponent {
             />
           </div>
           <Divider className={classes.divider} />
-          <div className={classes.inputLabel}>구매 정보 (매장 위치)</div>
-          <div className={classes.inputWrap}>
-            <div className={classes.search}>
-              {/* <img src={LinkIcon} alt="link" className={classes.linkIcon} /> */}
-              <SearchIcon />
-            </div>
-            <input
-              className={classes.input}
-              placeholder="구매처를 입력해 주세요"
-              name="buyLink"
-            />
+          <div className={classes.inputLabel}>구매처</div>
+          <SearchBarMap centerMoveFunc={this.centerMoveFunc} />
+          <div className={classes.googleMap}>
+            <Map
+              google={this.props.google}
+              zoom={15}
+              initialCenter={{
+                lat: this.props.center.lat,
+                lng: this.props.center.lng,
+              }}
+              center={{
+                lat: this.state.centerMove.lat,
+                lng: this.state.centerMove.lng,
+              }}
+              className={classes.googleMap}
+            >
+              <Marker
+                onClick={this.onMarkerClick}
+                position={{
+                  lat: this.state.centerMove.lat,
+                  lng: this.state.centerMove.lng,
+                }}
+              />
+
+              {/* <InfoWindow onClose={this.onInfoWindowClose}>
+              <div>
+                <h1>{this.state.selectedPlace.name}</h1>
+              </div>
+            </InfoWindow> */}
+            </Map>
           </div>
-          <NaverMap
-            style={{ width: '100%', height: '400px' }}
-            zoom={this.state.zoom}
-            onZoomChanged={zoom => {
-              this.setState({ zoom });
-            }}
-            center={this.state.center}
-            onCenterChanged={center => {
-              this.setState({ center });
-            }}
-          />
-          <Marker />
+          {/* <div style={{ height: '400px', width: '100%' }}>
+            <GoogleMapReact
+              bootstrapURLKeys={{
+                key: 'AIzaSyC8E2pXbUN9C_oDzn8rMH9FXnK76brBSw4',
+              }}
+              defaultCenter={this.props.center}
+              defaultZoom={this.props.zoom}
+              center={this.state.centerMove}
+            >
+              
+            </GoogleMapReact>
+          </div> */}
         </div>
       </div>
     );
@@ -224,4 +256,12 @@ class ReviewFormTabOffline extends React.PureComponent {
 ReviewFormTabOffline.propTypes = {};
 
 // export default ReviewFormTabOffline;
-export default withStyles(styles)(ReviewFormTabOffline);
+// export default withStyles(styles)(ReviewFormTabOffline);
+
+export default compose(
+  GoogleApiWrapper({
+    apiKey: 'AIzaSyC8E2pXbUN9C_oDzn8rMH9FXnK76brBSw4',
+    language: 'ko',
+  }),
+  withStyles(styles),
+)(ReviewFormTabOffline);

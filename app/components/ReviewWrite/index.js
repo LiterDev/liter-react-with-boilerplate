@@ -120,8 +120,8 @@ const styles = theme => ({
   },
   icon: {
     color: '#1591ff',
-    lineHeight: 0,
-    fontSize: 14,
+    // lineHeight: 0,
+    // fontSize: 14,
     // width:
   },
   buttonCate: {
@@ -163,8 +163,8 @@ const styles = theme => ({
   },
   iconShopping: {
     color: '#7c7c7c',
-    lineHeight: 0,
-    fontSize: 14,
+    // lineHeight: 0,
+    // fontSize: 14,
   },
   dvideSec: {
     marginTop: 16,

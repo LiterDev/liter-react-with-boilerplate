@@ -144,9 +144,13 @@ const styles = theme => ({
     // lineHeight: 1,
   },
   imageBtn: {
-    float: 'left',
+    width: '100%',
+    // float: 'left',
+    // width: '40%',
   },
   movieBtn: {
+    // width: '40%',
+    // float: 'left',
     // display: 'block',
     // float: 'right',
   },
@@ -167,8 +171,9 @@ const styles = theme => ({
   },
   tabRoot: {
     minHeight: 60,
-    maxWidth: 264,
-    // width: 120,
+    // maxWidth: 264,
+    // width: '33%',
+    fontSize: '1.5rem',
   },
   tabIcon: {
     flaot: 'left',
@@ -495,10 +500,11 @@ class ReviewWrite extends React.PureComponent {
               <ImagePreviewButtonWithoutSlider
                 handleImageAppend={this.handleImageAppend}
               />
-            </div>
-            <div className={classes.movieBtn}>
               <MoviePreviewButton handleImageAppend={this.handleImageAppend} />
             </div>
+            {/* <div className={classes.movieBtn}>
+              
+            </div> */}
             <Divider className={classes.propsdivader} />
             <div className={classes.uploadSlider}>
               <UploadSlider

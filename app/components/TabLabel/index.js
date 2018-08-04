@@ -20,7 +20,7 @@ const styles = theme => ({
   },
   text: {
     verticalAlign: 'middle',
-    fontSize: 17,
+    fontSize: '1.4em',
     float: 'right',
     display: 'table-cel',
     marginTop: 2,

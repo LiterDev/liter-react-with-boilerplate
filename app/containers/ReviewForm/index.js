@@ -119,7 +119,7 @@ export class ReviewForm extends React.PureComponent {
   render() {
     const { classes } = this.props;
     const { reviewform } = this.props;
-    const { loading, error, result } = reviewform;
+    const { loading } = reviewform;
 
     // console.log(reviewform);
     // dotenv.config();
@@ -128,7 +128,13 @@ export class ReviewForm extends React.PureComponent {
     return (
       <div>
         <Header headerTitle={<FormattedMessage {...messages.header} />} />
-        { loading ? ( <div className={classes.dimmed}><CircularProgress className={classes.progress} /></div> ) : ( <div></div> ) }
+        {loading ? (
+          <div className={classes.dimmed}>
+            <CircularProgress className={classes.progress} />
+          </div>
+        ) : (
+          <div />
+        )}
         <ReviewWrite onSubmitForm={this.props.onSubmitForm} style={{}} />
       </div>
     );

@@ -15,6 +15,13 @@ import Icon from '@material-ui/core/Icon';
 // import messages from './messages';
 
 const styles = theme => ({
+  root: {
+    display: 'inline-block',
+    width: '45%',
+    // textAlign: 'center',
+    // marginRight: 10,
+    // float: 'right',
+  },
   container: {
     // display: 'flex',
     // flexWrap: 'wrap',
@@ -44,10 +51,11 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
     color: '#99999',
-    width: 160,
+    width: '100%',
     height: 40,
     backgroundColor: '#f4f4f4',
     // textAlign: 'left',
+    // float: 'letf',
   },
   leftIcon: {
     marginRight: theme.spacing.unit,
@@ -102,7 +110,7 @@ class MoviePreviewButton extends React.PureComponent {
   render() {
     const { classes } = this.props;
     return (
-      <div>
+      <div className={classes.root}>
         <div>
           <input
             accept="image/*"

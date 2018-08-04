@@ -43,7 +43,10 @@ export class Reviews extends React.PureComponent {
     const { reviews } = this.props;
     return (
       <div>
-        <Header headerTitle={<FormattedMessage {...messages.header} />} />
+        <Header
+          headerTitle={<FormattedMessage {...messages.header} />}
+          searchBar="true"
+        />
         <ReviewList reviews={reviews} />
       </div>
     );

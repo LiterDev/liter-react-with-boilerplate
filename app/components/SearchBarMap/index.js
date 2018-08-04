@@ -6,17 +6,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 
-import Select from 'react-select';
-import Typography from '@material-ui/core/Typography';
-import NoSsr from '@material-ui/core/NoSsr';
-import TextField from '@material-ui/core/TextField';
-import Chip from '@material-ui/core/Chip';
-import MenuItem from '@material-ui/core/MenuItem';
-import { emphasize } from '@material-ui/core/styles/colorManipulator';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 // import {
@@ -185,7 +177,7 @@ class SearchBarMap extends React.PureComponent {
     //   longitude,
     //   isGeocoding,
     // } = this.state;
-    const suggestionsOption = this.state.suggestions;
+    // const suggestionsOption = this.state.suggestions;
     // console.log(suggestionsOption);
     return (
       <div className="container">

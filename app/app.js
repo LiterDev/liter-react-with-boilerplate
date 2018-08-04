@@ -50,8 +50,6 @@ const history = createHistory();
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 
-
-
 const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
@@ -95,6 +93,7 @@ if (!window.Intl) {
   render(translationMessages);
 }
 
+require('formdata-polyfill');
 // Install ServiceWorker and AppCache in the end since
 // it's not most important operation and if main code fails,
 // we do not want it installed

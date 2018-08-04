@@ -16,6 +16,13 @@ import SearchBarMap from 'components/SearchBarMap';
 // import GoogleMapReact from 'google-map-react';
 // import { GoogleApiWrapper } from 'google-maps-react';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
+import Input from '@material-ui/core/Input';
+import TagInput from 'components/TagInput';
+import SurveyList from 'components/SurveyList';
+
+import LinkIcon from '../../images/ic-link-on@3x.png';
+import WriteIcon from '../../images/ic-write@3x.png';
+import StartTitle from '../../images/ic-star@3x.png';
 
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
@@ -32,6 +39,15 @@ const styles = theme => ({
     paddingRight: 16,
     // paddingTop: 10,
     textAlign: 'center',
+  },
+  rowdivSec: {
+    width: '100%',
+    backgroundColor: '#ffffff',
+    paddingBottom: 16,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 20,
+    marginTop: 12,
   },
   inputWrap: {
     backgroundColor: '#f4f4f4',
@@ -127,11 +143,9 @@ const styles = theme => ({
   googleMap: {
     width: '100%',
     position: 'relative',
-    height: 400,
+    height: 200,
   },
 });
-
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 /* eslint-disable react/prefer-stateless-function */
 class ReviewFormTabOffline extends React.PureComponent {
@@ -173,7 +187,7 @@ class ReviewFormTabOffline extends React.PureComponent {
   };
   render() {
     const { classes } = this.props;
-    const { loaded } = this.state;
+    // const { loaded } = this.state;
     // console.log(process.env.NAVER_MAP_CLIENTID);
     // console.log(process.env.API_URL);
     // if (!loaded) {
@@ -181,30 +195,21 @@ class ReviewFormTabOffline extends React.PureComponent {
     // }
     return (
       <div>
-        {/* <FormattedMessage {...messages.header} /> */}
-        {/* <div className={classes.rowdiv}>서비스 준비중 입니다.</div> */}
-        {/* <Helmet>
-          <script
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8E2pXbUN9C_oDzn8rMH9FXnK76brBSw4&libraries=places&callback=initAutocomplete"
-            async
-            defer
-          />
-        </Helmet> */}
         <div className={classes.rowdiv}>
           <Divider className={classes.divider} />
-          <div className={classes.inputLabel}>매장 이름</div>
+          <div className={classes.inputLabel}>장소</div>
           <div className={classes.inputWrap}>
             <div className={classes.search}>
               <SearchIcon />
             </div>
             <input
               className={classes.input}
-              placeholder="상품명을 입력해 주세요"
+              placeholder="방문한 곳을 입력해 주세요"
               name="productName"
             />
           </div>
           <Divider className={classes.divider} />
-          <div className={classes.inputLabel}>구매처</div>
+          <div className={classes.inputLabel}>주소</div>
           <SearchBarMap centerMoveFunc={this.centerMoveFunc} />
           <div className={classes.googleMap}>
             <Map
@@ -235,25 +240,88 @@ class ReviewFormTabOffline extends React.PureComponent {
             </InfoWindow> */}
             </Map>
           </div>
-          {/* <div style={{ height: '400px', width: '100%' }}>
-            <GoogleMapReact
-              bootstrapURLKeys={{
-                key: 'AIzaSyC8E2pXbUN9C_oDzn8rMH9FXnK76brBSw4',
-              }}
-              defaultCenter={this.props.center}
-              defaultZoom={this.props.zoom}
-              center={this.state.centerMove}
-            >
-              
-            </GoogleMapReact>
-          </div> */}
         </div>
+        <div className={classes.rowdivSec}>
+          <div className={classes.buyWrap}>
+            <img src={WriteIcon} alt="write" className={classes.iconWrite} />
+            <span className={classes.cateText}>리뷰를 작성하세요.</span>
+          </div>
+          <Divider className={classes.divider} />
+          <Input
+            className={classes.inputReview}
+            placeholder="사용 및 이용 후기 또는 도움이 되는 정보를 남겨주세요."
+            disableUnderline="true"
+            multiline
+            name="content"
+          />
+        </div>
+        <div className={classes.rowdivSec}>
+          <div className={classes.buyWrap}>
+            <img src={WriteIcon} alt="write" className={classes.iconWrite} />
+            <span className={classes.cateText}>태그</span>
+          </div>
+          {/* <Divider className={classes.divider} /> */}
+          <TagInput />
+        </div>
+        <div className={classes.rowdivSec}>
+          <div className={classes.buyWrap}>
+            <img src={StartTitle} alt="write" className={classes.iconWrite} />
+            <span className={classes.cateText}>별평점</span>
+          </div>
+
+          <SurveyList
+            surveyCate={surveyCate}
+            surveyBuyType={surveyBuyType}
+            // categoryId={this.state.categoryId}
+          />
+        </div>
+        <input name="recommend" value="YES" type="hidden" />
+        <input type="hidden" name="store" value="OFFLINE" />
       </div>
     );
   }
 }
 
 ReviewFormTabOffline.propTypes = {};
+const surveyCate = [
+  {
+    surveyId: 7,
+    surveyName: '주차하기가 쉬운가요?',
+    sortPosition: 0,
+  },
+  {
+    surveyId: 8,
+    surveyName: '맛은 어떤가요?',
+    sortPosition: 1,
+  },
+  {
+    surveyId: 9,
+    surveyName: '양은 적당한가요?',
+    sortPosition: 2,
+  },
+];
+const surveyBuyType = [
+  {
+    surveyId: 10,
+    surveyName: '종업원들은 친절했나요?',
+    sortPosition: 0,
+  },
+  {
+    surveyId: 11,
+    surveyName: '매장의 분위기는 어땠나요?',
+    sortPosition: 1,
+  },
+  {
+    surveyId: 12,
+    surveyName: '화장실 등 부대시설이 청결하고 사용하기 쉬운가요?',
+    sortPosition: 2,
+  },
+  {
+    surveyId: 13,
+    surveyName: '주차하기가 쉬운가요?',
+    sortPosition: 3,
+  },
+];
 
 // export default ReviewFormTabOffline;
 // export default withStyles(styles)(ReviewFormTabOffline);

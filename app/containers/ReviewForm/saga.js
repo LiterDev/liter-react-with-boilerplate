@@ -18,6 +18,7 @@ export function* post(postData) {
   // console.log(signData.data.get('username'));
   // const requestURL = `http://api.getliter.io/review`;
   const requestURL = `${process.env.API_URL}/review`;
+  // const requestURL = 'http://127.0.0.1:8080/hello/review';
   // const requestURL = `http://localhost:8080/review`;
 
   // console.log(requestURL);

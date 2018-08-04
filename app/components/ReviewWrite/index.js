@@ -309,7 +309,7 @@ class ReviewWrite extends React.PureComponent {
         for (let i = 0; i < fileList.length; i += 1) {
           this.state.files.append(
             `imgnames[${this.state.imageCount}]`,
-            Blob(fileList[i]),
+            fileList[i],
           );
 
           imageComponentTmp.push({
@@ -372,8 +372,7 @@ class ReviewWrite extends React.PureComponent {
       for (let i = 0; i < this.state.imageComponent.length; i += 1) {
         // data.append(`media[${i}]`, this.state.imageComponent[i].file);
         // formData.append('myFile', this.state.selectedFile, this.state.selectedFile.name)
-
-        data.append(`media`, Blob[this.state.imageComponent[i].file]);
+        data.append(`media`, this.state.imageComponent[i].file);
       }
     }
     // alert('on');

@@ -21,13 +21,13 @@ export function* authAcessValid() {
 
     // const req = request(request, requestURL, options);
     const res = yield call(request, requestURL, options);
-    console.log(res);
+    // console.log(res);
     yield put(
       actions.authAcessValid(res.accessToken, res.refreshToken, res.status),
     );
   } catch (err) {
-    console.log(err);
-    // yield put(actions.myPageFailure(err));
+    // console.log(err);
+    yield put(actions.myPageFailure(err));
   }
 }
 // Individual exports for testing

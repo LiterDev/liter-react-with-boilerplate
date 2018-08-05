@@ -54,49 +54,6 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
   />
 );
 
-// export const PrivateRoute = ({ component: Component, ...rest }) => ({
-//   render() {
-//     // const { authAcessValid } = this.props;
-//     // // const { userData } = this.state;
-
-//     // console.log(authAcessValid);
-//     // console.log(this.state.makeAuthAcessValid());
-//     // console.log(localStorage.getItem('username'));
-//     return (
-//       <Route
-//         {...rest}
-//         render={props =>
-//           localStorage.getItem('username') ? (
-//             <Component {...props} />
-//           ) : (
-//             <Redirect
-//               to={{ pathname: '/signin', state: { from: props.location } }}
-//             />
-//           )
-//         }
-//       />
-//     );
-//   },
-// });
-
-// export const PrivateRoute = ({ component: Component, ...rest }) => (
-//   <Route
-//     {...rest}
-//     render={props =>
-//       validAuth.isAuthenticated ? (
-//         <Component {...props} />
-//       ) : (
-//         <Redirect
-//           to={{
-//             pathname: '/login',
-//             state: { from: props.location },
-//           }}
-//         />
-//       )
-//     }
-//   />
-// );
-
 function Auth() {
   return <div>{/* <FormattedMessage {...messages.header} /> */}</div>;
 }

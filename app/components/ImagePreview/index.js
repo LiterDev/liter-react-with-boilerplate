@@ -64,12 +64,27 @@ const styles = theme => ({
     right: 6,
     width: 20,
     height: 20,
+    zIndex: 10,
     // right: 0,
   },
   ic_close_photo: {
     width: 20,
     height: 20,
     objectFit: 'contain',
+  },
+  video: {
+    overflow: 'hidden',
+    paddingBottom: '56.25%',
+    position: 'relative',
+    height: 0,
+  },
+  iframe: {
+    left: 0,
+    top: 0,
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+    zIndex: 5,
   },
 });
 
@@ -106,6 +121,22 @@ function ImagePreview(props) {
         </div>
 
         <img className={classes.previewimg} src={props.src} alt={props.alt} />
+
+        {/* {props.alt === 'mov' ? (
+          <div className={classes.video}>
+            <iframe
+              width="420"
+              height="315"
+              src={props.src}
+              frameBorder="0"
+              allowFullscreen
+              title="test"
+              className={classes.iframe}
+            />
+          </div>
+        ) : (
+          <img className={classes.previewimg} src={props.src} alt={props.alt} />
+        )} */}
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
+import MovieInputPop from 'components/MovieInputPop';
 
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
@@ -103,9 +104,28 @@ class MoviePreviewButton extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      // open: false,
+      open: false,
+      selectedLnk: false,
     };
+
+    this.handleClickOpen = this.handleClickOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
+  handleClickOpen = () => {
+    this.setState({
+      open: true,
+    });
+  };
+  // 카테고리팝업 핸들러
+  handleClose = value => {
+    if (value) {
+      this.setState({ selectedLnk: value, open: false });
+      this.props.handleImageAppend(value, 'mov');
+    } else {
+      this.setState({ open: false });
+    }
+    // console.log(value);
+  };
 
   render() {
     const { classes } = this.props;
@@ -113,14 +133,15 @@ class MoviePreviewButton extends React.PureComponent {
       <div className={classes.root}>
         <div>
           <input
-            accept="image/*"
+            // accept="image/*"
             className={classes.inputfile}
-            id="raised-button-file"
-            multiple
-            type="file"
-            onInput={this.handleAppend}
+            id="raised-movie-file"
+            // multiple
+            type="button"
+            // onInput={this.handleAppend}
+            onClick={this.handleClickOpen}
           />
-          <label htmlFor="raised-button-file">
+          <label htmlFor="raised-movie-file">
             <Button
               variant="raised"
               color="default"
@@ -140,6 +161,9 @@ class MoviePreviewButton extends React.PureComponent {
             </Button>
           </label>
         </div>
+        <div>
+          <MovieInputPop open={this.state.open} onClose={this.handleClose} />
+        </div>
       </div>
     );
   }
@@ -147,7 +171,7 @@ class MoviePreviewButton extends React.PureComponent {
 
 MoviePreviewButton.propTypes = {
   classes: PropTypes.object.isRequired,
-  // handleImageAppend: PropTypes.func.isRequired,
+  handleImageAppend: PropTypes.func.isRequired,
 };
 
 // export default MoviePreviewButton;

@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -24,7 +25,9 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 
-import { loadList } from './actions';
+import { loadList, loadListMore } from './actions';
+import jQuery from "jquery";
+window.$ = window.jQuery = jQuery;
 
 const styles = theme => ({
   root: {
@@ -34,13 +37,20 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 export class Reviews extends React.PureComponent {
   componentDidMount() {
-    const { loadReviewList } = this.props;
+    const { loadReviewList, loadReviewListMore, loadMore } = this.props;
     loadReviewList();
+
+    $(window).scroll(() => {
+      if ($(document).height() - $(window).height() - $(window).scrollTop() < 250) {
+        loadReviewListMore(this.props.reviews.loadMore);
+      }
+    });
   }
 
   render() {
     // const { classes } = this.props;
     const { reviews } = this.props;
+
     return (
       <div>
         <Header
@@ -55,6 +65,7 @@ export class Reviews extends React.PureComponent {
 
 Reviews.propTypes = {
   loadReviewList: PropTypes.func,
+  loadReviewListMore: PropTypes.func,
   reviews: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
 
@@ -66,8 +77,12 @@ function mapDispatchToProps(dispatch) {
   return {
     loadReviewList: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      console.log('initialize review list');
       dispatch(loadList());
+    },
+    loadReviewListMore: (loadMore) => {
+      if(!loadMore) {
+        dispatch(loadListMore());
+      }
     },
   };
 }

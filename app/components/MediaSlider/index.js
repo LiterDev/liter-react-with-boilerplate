@@ -53,13 +53,16 @@ class MediaSlider extends React.PureComponent {
     if (media !== false) {
       mediaArray = Object.values(media);
 
+    // console.log(']---------slider--------[');
+    // console.log(this.props);
+
       return (
         <div className={classes.root}>
           <Slider {...settings}>
               {
                 mediaArray &&
-                mediaArray.map(review => (
-                  <Media key={review.id} fullPath={review.fullPath} mediaType={review.mediaType} description={review.name} />
+                mediaArray.map((review, idx) => (
+                  <Media key={review.id} fullPath={review.fullPath} mediaType={review.mediaType} description={review.name} idx={idx} />
                 ))
               }
           </Slider>

@@ -49,7 +49,8 @@ function Media(props) {
     case 'YOUTUBE':
         return (
           <div className={classes.vContainer}>
-              <iframe id="player" type="text/html" className={classes.vMediaSize} src={props.fullPath} frameBorder="0" />
+              {/* <iframe id="player" type="text/html" className={classes.vMediaSize} src={props.fullPath} frameBorder="0" /> */}
+              <iframe id="player" className={classes.vMediaSize} src={`https://www.youtube.com/embed/${props.movieKey}`} frameborder="0" />
           </div>
         );
     default:

@@ -39,6 +39,8 @@ function Media(props) {
 
   const { classes } = props;
 
+  console.log(props.movieKey);
+
   switch(props.mediaType) {
     case 'IMAGE':
         return (

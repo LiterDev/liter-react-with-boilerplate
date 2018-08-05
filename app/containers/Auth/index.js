@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
@@ -20,9 +20,10 @@ import {
   Redirect,
   // withRouter,
 } from 'react-router-dom';
-import makeSelectAuth from './selectors';
+import { makeSelectAuth, makeAuthAcessValid } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import { authAcessValid } from './actions';
 // import messages from './messages';
 
 // const fakeAuth = {
@@ -36,6 +37,7 @@ import saga from './saga';
 //     setTimeout(cb, 100);
 //   },
 // };
+// console.log(props.makeSelectAuth)
 
 export const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -52,17 +54,30 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
   />
 );
 
-// const validAuth = {
-//   isAuthenticated: false,
-//   authenticate(cb) {
-//     this.isAuthenticated = true;
-//     setTimeout(cb, 100); // fake async
+// export const PrivateRoute = ({ component: Component, ...rest }) => ({
+//   render() {
+//     // const { authAcessValid } = this.props;
+//     // // const { userData } = this.state;
+
+//     // console.log(authAcessValid);
+//     // console.log(this.state.makeAuthAcessValid());
+//     // console.log(localStorage.getItem('username'));
+//     return (
+//       <Route
+//         {...rest}
+//         render={props =>
+//           localStorage.getItem('username') ? (
+//             <Component {...props} />
+//           ) : (
+//             <Redirect
+//               to={{ pathname: '/signin', state: { from: props.location } }}
+//             />
+//           )
+//         }
+//       />
+//     );
 //   },
-//   signout(cb) {
-//     this.isAuthenticated = false;
-//     setTimeout(cb, 100);
-//   },
-// };
+// });
 
 // export const PrivateRoute = ({ component: Component, ...rest }) => (
 //   <Route
@@ -88,14 +103,18 @@ function Auth() {
 
 Auth.propTypes = {
   // dispatch: PropTypes.func.isRequired,
+  // authAcessValid: PropTypes.func,
+  // auth: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   auth: makeSelectAuth(),
+  authAcessValid: makeAuthAcessValid(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
+    authAcessValid: dispatch(authAcessValid()),
     dispatch,
   };
 }

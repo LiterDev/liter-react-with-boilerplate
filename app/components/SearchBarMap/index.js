@@ -199,7 +199,7 @@ class SearchBarMap extends React.PureComponent {
                 </div>
                 <input
                   className={classes.input}
-                  placeholder="구매처를 입력해 주세요"
+                  placeholder="방문한 곳의 주소를 입력해 주세요"
                   name="storeAddress"
                   {...getInputProps({
                     //   placeholder: 'Search Places ...',

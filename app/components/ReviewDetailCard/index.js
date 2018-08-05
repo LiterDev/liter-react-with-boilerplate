@@ -29,6 +29,8 @@ import MediaSlider from 'components/MediaSlider';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
+import avatarDefault from '../../images/ic-avatar.png';
+
 const styles = theme => ({
   root: {
     paddingTop: theme.spacing.unit * 0,
@@ -301,6 +303,9 @@ class ReviewDetailCard extends React.PureComponent {
     const avatarImageUrl = review.user.profileImageUrl;
     const timeDiff = '방금전';
 
+    const elAvatar = (avatarImageUrl != null) ? <Avatar aria-label="Recipe" className={classes.avatar} src={avatarImageUrl}/>
+      : <img aria-label="Recipe" className={classes.avatar} src={avatarDefault} />
+
     let surveyArr = false;
     let categorySurvey = false;
     let storeSurvey = false;
@@ -347,11 +352,7 @@ class ReviewDetailCard extends React.PureComponent {
           <CardHeader
             className={classes.cardHeader}
             avatar={
-              <Avatar
-                aria-label="Recipe"
-                className={classes.avatar}
-                src={avatarImageUrl}
-              />
+              elAvatar
             }
             action={
               <Typography>

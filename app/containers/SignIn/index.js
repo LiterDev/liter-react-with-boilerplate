@@ -167,10 +167,16 @@ export class SignIn extends React.PureComponent {
       localStorage.setItem('username', signinSuccess.username);
       // this.props.loadUserData(signinSuccess.username);
       this.props.signinEnd();
+      let pathLink = '/';
+      // console.log(this.props.location);
+      // console.log(this.props.location.state);
+      if (this.props.location.state) {
+        pathLink = this.props.location.state.from.pathname;
+      }
       return (
         <Redirect
           to={{
-            pathname: this.props.location.state.from.pathname,
+            pathname: pathLink,
             // state: { from: this.props.location },
           }}
         />

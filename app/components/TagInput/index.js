@@ -58,10 +58,12 @@ class TagInput extends React.PureComponent {
     const val = e.target.value;
     const lastChar = val[val.length - 1];
     const tagVal = replaceAll(val, ',', '');
-    if (!tagVal.trim()) {
-      return false;
-    }
+    // console.log(tagVal);
+
     if (lastChar === ' ') {
+      if (!tagVal.trim()) {
+        return false;
+      }
       this.setState({
         value: '',
         // tagList: this.state.tagList.concat(val),
@@ -74,7 +76,7 @@ class TagInput extends React.PureComponent {
     } else {
       this.setState({ value: tagVal });
     }
-    // console.log(this.state.tagList);
+
     return true;
     // this.props.inputHandler && this.props.inputHandler(e);
   }

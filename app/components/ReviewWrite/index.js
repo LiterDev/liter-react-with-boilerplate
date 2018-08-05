@@ -120,8 +120,8 @@ const styles = theme => ({
   },
   icon: {
     color: '#1591ff',
-    lineHeight: 0,
-    fontSize: 14,
+    // lineHeight: 0,
+    // fontSize: 14,
     // width:
   },
   buttonCate: {
@@ -144,9 +144,13 @@ const styles = theme => ({
     // lineHeight: 1,
   },
   imageBtn: {
-    float: 'left',
+    width: '100%',
+    // float: 'left',
+    // width: '40%',
   },
   movieBtn: {
+    // width: '40%',
+    // float: 'left',
     // display: 'block',
     // float: 'right',
   },
@@ -159,16 +163,17 @@ const styles = theme => ({
   },
   iconShopping: {
     color: '#7c7c7c',
-    lineHeight: 0,
-    fontSize: 14,
+    // lineHeight: 0,
+    // fontSize: 14,
   },
   dvideSec: {
     marginTop: 16,
   },
   tabRoot: {
     minHeight: 60,
-    maxWidth: 264,
-    // width: 120,
+    // maxWidth: 264,
+    // width: '33%',
+    fontSize: '1.5rem',
   },
   tabIcon: {
     flaot: 'left',
@@ -301,32 +306,70 @@ class ReviewWrite extends React.PureComponent {
     this.onSubmitFormInit = this.onSubmitFormInit.bind(this);
   }
 
-  handleImageAppend = fileList => {
-    if (fileList) {
-      if (fileList.length > 0) {
-        const imageComponentTmp = [];
-        // const filesArrayTmp = [];
-        for (let i = 0; i < fileList.length; i += 1) {
-          this.state.files.append(
-            `imgnames[${this.state.imageCount}]`,
-            fileList[i],
-          );
+  handleImageAppend = (fileList, type) => {
+    // console.log(type);
+    if (type === 'mov') {
+      // console.log(type);
+      let srcStr = '';
+      let movKey = '';
+      let movType = '';
+      const nt = fileList.length;
+      if (fileList.includes('youtube') || fileList.includes('youtu.be')) {
+        movType = 'YOUTUBE';
+        if (fileList.includes('embed')) {
+          // TODO
+        } else if (fileList.includes('watch')) {
+          const n = fileList.lastIndexOf('v');
 
-          console.log(this.state.files);
-
-          imageComponentTmp.push({
-            id: this.state.imageCount,
-            name: `imgnames[${this.state.imageCount}]`,
-            src: URL.createObjectURL(fileList[i]),
-            alt: fileList[i].name,
-            file: fileList[i],
-          });
-
-          this.state.imageCount += 1;
+          movKey = fileList.substring(n + 2, nt);
+        } else {
+          //
+          const n = fileList.lastIndexOf('/');
+          movKey = fileList.substring(n + 1, nt);
         }
-        this.setState({
-          imageComponent: this.state.imageComponent.concat(imageComponentTmp),
-        });
+        srcStr = `http://img.youtube.com/vi/${movKey}/1.jpg`;
+      } else if (fileList.includes('vimeo')) {
+        console.log(type);
+      }
+      // console.log(srcStr);
+      const imageComponentTmp = [];
+      imageComponentTmp.push({
+        id: this.state.imageCount,
+        name: `imgnames[${this.state.imageCount}]`,
+        src: srcStr,
+        alt: 'mov',
+        file: `${movType}|${movKey}|${fileList}`,
+        movieLink: fileList,
+      });
+      this.state.imageCount += 1;
+      this.setState({
+        imageComponent: this.state.imageComponent.concat(imageComponentTmp),
+      });
+    } else {
+      if (fileList && type !== 'mov') {
+        if (fileList.length > 0) {
+          const imageComponentTmp = [];
+          // const filesArrayTmp = [];
+          for (let i = 0; i < fileList.length; i += 1) {
+            this.state.files.append(
+              `imgnames[${this.state.imageCount}]`,
+              fileList[i],
+            );
+
+            imageComponentTmp.push({
+              id: this.state.imageCount,
+              name: `imgnames[${this.state.imageCount}]`,
+              src: URL.createObjectURL(fileList[i]),
+              alt: fileList[i].name,
+              file: fileList[i],
+            });
+
+            this.state.imageCount += 1;
+          }
+          this.setState({
+            imageComponent: this.state.imageComponent.concat(imageComponentTmp),
+          });
+        }
       }
     }
 
@@ -497,10 +540,11 @@ class ReviewWrite extends React.PureComponent {
               <ImagePreviewButtonWithoutSlider
                 handleImageAppend={this.handleImageAppend}
               />
-            </div>
-            <div className={classes.movieBtn}>
               <MoviePreviewButton handleImageAppend={this.handleImageAppend} />
             </div>
+            {/* <div className={classes.movieBtn}>
+              
+            </div> */}
             <Divider className={classes.propsdivader} />
             <div className={classes.uploadSlider}>
               <UploadSlider

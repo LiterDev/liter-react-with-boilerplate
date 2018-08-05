@@ -12,6 +12,11 @@ import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
 
 const styles = theme => ({
+  root: {
+    width: '45%',
+    display: 'inline-block',
+    float: 'left',
+  },
   container: {
     // display: 'flex',
     // flexWrap: 'wrap',
@@ -41,7 +46,7 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
     color: '#99999',
-    width: 160,
+    width: '100%',
     height: 40,
     backgroundColor: '#f4f4f4',
   },
@@ -114,7 +119,7 @@ class ImagePreviewButtonWithoutSlider extends React.PureComponent {
   render() {
     const { classes } = this.props;
     return (
-      <div>
+      <div className={classes.root}>
         <div>
           <input
             accept="image/*"

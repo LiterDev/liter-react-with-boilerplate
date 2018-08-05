@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 // import MenuIcon from '@material-ui/icons/Menu';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SvgIcon from '@material-ui/core/SvgIcon';
+import SearchIcon from '@material-ui/icons/Search';
 // import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
@@ -88,6 +89,66 @@ const styles = theme => ({
     // margin: theme.spacing.unit * 2,
     color: 'black',
   },
+  inputWrap: {
+    backgroundColor: '#f4f4f4',
+    // marginTop: 20,
+    fontFamily: theme.typography.fontFamily,
+    position: 'relative',
+    // marginRight: theme.spacing.unit * 2,
+    // marginLeft: theme.spacing.unit,
+    borderRadius: 5,
+    // background: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      // background: fade(theme.palette.common.white, 0.25),
+    },
+    '& $input': {
+      // transition: theme.transitions.create('width'),
+      // width: 200,
+      '&:focus': {
+        // width: 250,
+      },
+    },
+    minHeight: 40,
+    // marginBottom: 16,
+  },
+  search: {
+    width: theme.spacing.unit * 6,
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#acacac',
+  },
+  input: {
+    font: 'inherit',
+    padding: `${theme.spacing.unit}px ${theme.spacing.unit}px ${
+      theme.spacing.unit
+    }px ${theme.spacing.unit * 6}px`,
+    border: 0,
+    display: 'block',
+    verticalAlign: 'middle',
+    whiteSpace: 'normal',
+    background: 'none',
+    margin: 0, // Reset for Safari
+    color: 'inherit',
+    width: '100%',
+    '&:focus': {
+      outline: 0,
+    },
+    height: 40,
+  },
+  rowdiv: {
+    width: '70%',
+    backgroundColor: '#ffffff',
+    // paddingBottom: 16,
+    // paddingLeft: 16,
+    // paddingRight: 16,
+    // paddingTop: 1,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
 });
 
 function HomeIcon(props) {
@@ -114,7 +175,7 @@ class Header extends React.Component {
   };
 
   moveHome = () => {
-    console.log('home');
+    // console.log('home');
     // return <Redirect to="/login" />;
     this.props.history.push('/');
   };
@@ -126,7 +187,8 @@ class Header extends React.Component {
     this.props.history.push('/');
   };
   render() {
-    const { classes, headerTitle } = this.props;
+    const { classes, headerTitle, searchBar } = this.props;
+    // console.log(searchBar);
     return (
       <div>
         <AppBar position="fixed" className={classes.top_box}>
@@ -143,13 +205,29 @@ class Header extends React.Component {
 
               {/* </Link> */}
             </IconButton>
-            <Typography
-              variant="title"
-              color="inherit"
-              className={classes.flex}
-            >
-              {headerTitle}
-            </Typography>
+            {searchBar === 'true' ? (
+              <div className={classes.rowdiv}>
+                <div className={classes.inputWrap}>
+                  <div className={classes.search}>
+                    <SearchIcon />
+                  </div>
+                  <input
+                    className={classes.input}
+                    placeholder="검색"
+                    name="searchValue"
+                  />
+                </div>
+              </div>
+            ) : (
+              <Typography
+                variant="title"
+                color="inherit"
+                className={classes.flex}
+              >
+                {headerTitle}
+              </Typography>
+            )}
+
             {/* <Button color="inherit">Login</Button> */}
             <IconButton
               className={classes.ic_round_menu}
@@ -189,6 +267,7 @@ class Header extends React.Component {
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
   headerTitle: PropTypes.any.isRequired,
+  searchBar: PropTypes.any,
 };
 
 // export default Header;

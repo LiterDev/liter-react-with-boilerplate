@@ -54,6 +54,19 @@ const styles = theme => ({
   iconBtn: {
     margin: 0,
   },
+  video: {
+    overflow: 'hidden',
+    paddingBottom: '56.25%',
+    position: 'relative',
+    height: 0,
+  },
+  iframe: {
+    left: 0,
+    top: 0,
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -85,12 +98,25 @@ class ImagePreviews extends React.PureComponent {
             </IconButton>
             <button onClick={() => this.remove('test')}>TEST</button>
           </div>
-
-          <img
-            className={classes.previewimg}
-            src={this.props.src}
-            alt={this.props.alt}
-          />
+          {this.props.alt === 'mov' ? (
+            <img
+              className={classes.previewimg}
+              src={this.props.src}
+              alt={this.props.alt}
+            />
+          ) : (
+            <div className={classes.video}>
+              <iframe
+                width="420"
+                height="315"
+                src={this.props.src}
+                frameBorder="0"
+                allowFullscreen
+                title="test"
+                className={classes.iframe}
+              />
+            </div>
+          )}
         </div>
       </div>
     );

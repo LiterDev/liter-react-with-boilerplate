@@ -1,9 +1,15 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
-import { postSendAction, postSuccess, postError} from './actions';
+import { postSendAction, postSuccess, postError } from './actions';
 import { reposLoaded, repoLoadingError } from 'containers/App/actions';
 import request from 'utils/request';
-import { DEFAULT_ACTION, POST_ACTION, POST_SEND, POST_SUCCESS, POST_ERROR } from './constants';
+import {
+  DEFAULT_ACTION,
+  POST_ACTION,
+  POST_SEND,
+  POST_SUCCESS,
+  POST_ERROR,
+} from './constants';
 
 // Individual exports for testing
 export function* post(postData) {
@@ -46,12 +52,12 @@ export function* post(postData) {
     // release UI
     yield put(postSuccess(repos));
     yield put(reposLoaded(repos, repos));
-    
+
     // console.log(repos);
 
-    if(repos && repos.id > 0) {
-      console.log("redirect");
-      const reviewDetailUrl = "/review/" + repos.id;
+    if (repos && repos.id > 0) {
+      console.log('redirect');
+      const reviewDetailUrl = '/review/' + repos.id;
       // yield put(NavigationActions.navigate({ routeName: reviewDetailUrl }));
       // console.log(reviewDetailUrl);
       yield put(push(reviewDetailUrl));

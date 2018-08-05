@@ -140,40 +140,6 @@ const styles = theme => ({
   },
 });
 
-const surveyCate = [
-  {
-    surveyId: 1,
-    surveyName: '상품에 만족하시나요?',
-    sortPosition: 0,
-  },
-  {
-    surveyId: 2,
-    surveyName: '배송속도는 어땠나요?',
-    sortPosition: 1,
-  },
-  {
-    surveyId: 3,
-    surveyName: '문의 사항에 대해 신속하게 응답하나요?',
-    sortPosition: 2,
-  },
-];
-const surveyBuyType = [
-  {
-    surveyId: 4,
-    surveyName: '상품에 만족하시나요?',
-    sortPosition: 0,
-  },
-  {
-    surveyId: 5,
-    surveyName: '배송속도는 어땠나요?',
-    sortPosition: 1,
-  },
-  {
-    surveyId: 6,
-    surveyName: '문의 사항에 대해 신속하게 응답하나요?',
-    sortPosition: 2,
-  },
-];
 /* eslint-disable react/prefer-stateless-function */
 class ReviewFormTabOnline extends React.PureComponent {
   render() {
@@ -249,6 +215,41 @@ class ReviewFormTabOnline extends React.PureComponent {
     );
   }
 }
+
+const surveyCate = [
+  {
+    surveyId: 1,
+    surveyName: '가격은 적절한가요?',
+    sortPosition: 0,
+  },
+  {
+    surveyId: 2,
+    surveyName: '제품의 내구성은 어떤가요?',
+    sortPosition: 1,
+  },
+  {
+    surveyId: 3,
+    surveyName: '사용하기 편리한가요?',
+    sortPosition: 2,
+  },
+];
+const surveyBuyType = [
+  {
+    surveyId: 4,
+    surveyName: '상품에 만족하시나요?',
+    sortPosition: 0,
+  },
+  {
+    surveyId: 5,
+    surveyName: '배송속도는 어땠나요?',
+    sortPosition: 1,
+  },
+  {
+    surveyId: 6,
+    surveyName: '문의 사항에 대해 신속하게 응답하나요?',
+    sortPosition: 2,
+  },
+];
 
 ReviewFormTabOnline.propTypes = {};
 

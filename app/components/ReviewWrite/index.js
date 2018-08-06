@@ -175,8 +175,6 @@ const styles = theme => ({
   },
   tabRoot: {
     minHeight: 60,
-    // maxWidth: 264,
-    // width: '33%',
     fontSize: '1.5rem',
   },
   tabIcon: {
@@ -779,20 +777,20 @@ class ReviewWrite extends React.PureComponent {
           </div>
           {this.state.value === 0 && (
             <TabContainer>
-              <ReviewFormTabOnline />
+              <ReviewFormTabOnline category={this.state.selectedValue} />
             </TabContainer>
           )}
           {this.state.value === 1 && (
             <TabContainer>
               <TabContainer>
-                <ReviewFormTabOffline />
+                <ReviewFormTabOffline category={this.state.selectedValue} />
               </TabContainer>
             </TabContainer>
           )}
           {this.state.value === 2 && (
             <TabContainer>
               <TabContainer>
-                <ReviewFormTabEtc />
+                <ReviewFormTabEtc category={this.state.selectedValue} />
               </TabContainer>
             </TabContainer>
           )}

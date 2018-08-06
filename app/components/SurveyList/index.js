@@ -40,16 +40,21 @@ class SurveyList extends React.PureComponent {
     this.state = {
       // totalRating: 0,
       totalRatingArry: [],
-      totalCount:
-        this.props.surveyCate.length + this.props.surveyBuyType.length,
+      totalCount: 0,
+      // this.props.surveyCate.length + this.props.surveyBuyType.length,
     };
     this.totalRate = this.totalRate.bind(this);
   }
   totalRate = (rating, surveyId) => {
     // console.log(rating);
     // console.log(surveyId);
-    // const totalCount =
-    //   this.props.surveyCate.length + this.props.surveyBuyType.length;
+    let totalCount = 0;
+    if (this.props.surveyCate) {
+      totalCount =
+        this.props.surveyCate.length + this.props.surveyBuyType.length;
+    } else {
+      totalCount = this.props.surveyBuyType.length;
+    }
 
     const totalRatingArryTmp = [...this.state.totalRatingArry];
     // console.log(totalRatingArryTmp.includes(surveyId));
@@ -77,10 +82,10 @@ class SurveyList extends React.PureComponent {
     // console.log(totalRatingArryTmp);
     // console.log(totalCount);
     this.setState({
-      // totalRating: totalCount,
+      totalCount: totalCount,
       totalRatingArry: totalRatingArryTmp,
     });
-    console.log(this.state.totalRatingArry);
+    // console.log(this.state.totalRatingArry);
   };
 
   render() {
@@ -104,7 +109,7 @@ class SurveyList extends React.PureComponent {
               />
             </div>
           ))}
-        <Divider className={classes.divider} />
+        {surveyBuyType && <Divider className={classes.divider} />}
         {surveyBuyType &&
           surveyBuyType.map((item, index) => (
             <div key={item.surveyId} className={classes.surveyWrap}>

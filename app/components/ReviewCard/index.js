@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Media from 'components/Media';
 import MediaSlider from 'components/MediaSlider';
+import TimeAt from 'components/TimeAt';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -164,32 +165,42 @@ class ReviewCard extends React.PureComponent {
     // call time-diff function (6 level)
     const timeDiff = '방금전';
 
-    const elAvatar = (avatarImageUrl != null) ? <Avatar aria-label="Recipe" className={classes.avatar} src={avatarImageUrl}/>
-              : <img aria-label="Recipe" className={classes.avatar} src={avatarDefault} />
+    const elAvatar =
+      avatarImageUrl != null ? (
+        <Avatar
+          aria-label="Recipe"
+          className={classes.avatar}
+          src={avatarImageUrl}
+        />
+      ) : (
+        <img
+          aria-label="Recipe"
+          className={classes.avatar}
+          src={avatarDefault}
+        />
+      );
 
     return (
       <div>
         <Card className={classes.card}>
-          { viewType ? (      
-          <CardHeader
-            className={classes.cardHeader}
-            avatar={
-              elAvatar
-            }
-            action={
-              <Typography>
-                <FormattedMessage {...messages.followText} />
-              </Typography>
-            }
-            title={review.user.username}
-            subheader={timeDiff}
-          />
+          {viewType ? (
+            <CardHeader
+              className={classes.cardHeader}
+              avatar={elAvatar}
+              action={
+                <Typography>
+                  <FormattedMessage {...messages.followText} />
+                </Typography>
+              }
+              title={review.user.username}
+              subheader={<TimeAt date={review.updateAt} />}
+            />
           ) : (
-            <div></div>
+            <div />
           )}
 
           {/* { mediaItem ? ( <Media fullPath={mediaItem.fullPath} mediaType={mediaItem.mediaType} description={mediaItem.name} /> ) : ( <div></div> ) } */}
-          
+
           <MediaSlider media={mediaCollection} />
 
           {/* <CardMedia
@@ -238,7 +249,7 @@ ReviewCard.propTypes = {
 
 ReviewCard.defaultProps = {
   viewType: true,
-}
+};
 
 // export default ReviewCard;
 export default withStyles(styles)(ReviewCard);

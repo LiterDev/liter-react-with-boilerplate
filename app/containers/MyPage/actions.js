@@ -16,11 +16,10 @@ import {
   FOLLOWING_COUNT_FAILURE,
 } from './constants';
 
-export function myPageAction(data) {
+export function myPageAction() {
   console.log('myPageAction');
   return {
     type: MYPAGE_ACTION,
-    data,
   };
 }
 
@@ -41,11 +40,10 @@ export function myPageFailure(error) {
   };
 }
 
-export function loadFollowerCountAction(data) {
+export function loadFollowerCountAction() {
   console.log('loadFollowerCountAction');
   return {
     type: FOLLOWER_COUNT_ACTION,
-    data,
   };
 }
 
@@ -66,11 +64,10 @@ export function loadFollowerCountFailure(error) {
   };
 }
 
-export function loadFollowingCountAction(data) {
+export function loadFollowingCountAction() {
   console.log('loadFollowingCountAction');
   return {
     type: FOLLOWING_COUNT_ACTION,
-    data,
   };
 }
 

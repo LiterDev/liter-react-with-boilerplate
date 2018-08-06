@@ -22,7 +22,7 @@ import SurveyList from 'components/SurveyList';
 import LinkIcon from '../../images/ic-link-on@3x.png';
 import WriteIcon from '../../images/ic-write@3x.png';
 import StartTitle from '../../images/ic-star@3x.png';
-
+import SurveyData from '../../survey.json';
 // import RemoveIcon from '../../images/ic-close-photo@3x.png';
 
 const styles = theme => ({
@@ -183,7 +183,7 @@ class ReviewFormTabOnline extends React.PureComponent {
           <Input
             className={classes.inputReview}
             placeholder="사용 및 이용 후기 또는 도움이 되는 정보를 남겨주세요."
-            disableUnderline="true"
+            disableUnderline
             multiline
             name="content"
           />
@@ -202,11 +202,22 @@ class ReviewFormTabOnline extends React.PureComponent {
             <span className={classes.cateText}>별평점</span>
           </div>
 
-          <SurveyList
+          {this.props.category > 0 ? (
+            <SurveyList
+              surveyCate={SurveyData.surveyCate[this.props.category]}
+              surveyBuyType={SurveyData.surveyBuyType[1]}
+            />
+          ) : (
+            <SurveyList
+              surveyCate={SurveyData.surveyCate[99999]}
+              surveyBuyType={SurveyData.surveyBuyType[1]}
+            />
+          )}
+          {/* <SurveyList
             surveyCate={surveyCate}
             surveyBuyType={surveyBuyType}
             // categoryId={this.state.categoryId}
-          />
+          /> */}
         </div>
         {/* <input name="totalScore" value="0" type="hidden" /> */}
         <input name="recommend" value="YES" type="hidden" />

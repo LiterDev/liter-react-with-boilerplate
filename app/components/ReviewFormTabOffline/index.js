@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import { withStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
@@ -23,6 +23,7 @@ import SurveyList from 'components/SurveyList';
 import LinkIcon from '../../images/ic-link-on@3x.png';
 import WriteIcon from '../../images/ic-write@3x.png';
 import StartTitle from '../../images/ic-star@3x.png';
+import SurveyData from '../../survey.json';
 
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
@@ -250,7 +251,7 @@ class ReviewFormTabOffline extends React.PureComponent {
           <Input
             className={classes.inputReview}
             placeholder="사용 및 이용 후기 또는 도움이 되는 정보를 남겨주세요."
-            disableUnderline="true"
+            disableUnderline
             multiline
             name="content"
           />
@@ -268,12 +269,21 @@ class ReviewFormTabOffline extends React.PureComponent {
             <img src={StartTitle} alt="write" className={classes.iconWrite} />
             <span className={classes.cateText}>별평점</span>
           </div>
-
-          <SurveyList
-            surveyCate={surveyCate}
-            surveyBuyType={surveyBuyType}
-            // categoryId={this.state.categoryId}
-          />
+          {this.props.category > 0 ? (
+            <SurveyList
+              surveyCate={SurveyData.surveyCate[this.props.category]}
+              surveyBuyType={SurveyData.surveyBuyType[0]}
+            />
+          ) : (
+            <SurveyList
+              surveyCate={SurveyData.surveyCate[99999]}
+              surveyBuyType={SurveyData.surveyBuyType[0]}
+            />
+          )}
+          {/* <SurveyList
+            surveyCate={SurveyData.surveyCate[this.props.category]}
+            surveyBuyType={SurveyData.surveyBuyType[0]}
+          /> */}
         </div>
         <input name="recommend" value="YES" type="hidden" />
         <input type="hidden" name="store" value="OFFLINE" />
@@ -282,7 +292,9 @@ class ReviewFormTabOffline extends React.PureComponent {
   }
 }
 
-ReviewFormTabOffline.propTypes = {};
+ReviewFormTabOffline.propTypes = {
+  category: PropTypes.number.isRequired,
+};
 const surveyCate = [
   {
     surveyId: 7,

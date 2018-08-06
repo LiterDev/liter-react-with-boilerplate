@@ -27,7 +27,7 @@ export function* authAcessValid() {
     );
   } catch (err) {
     // console.log(err);
-    yield put(actions.myPageFailure(err));
+    // yield put(actions.myPageFailure(err));
   }
 }
 // Individual exports for testing

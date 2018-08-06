@@ -44,11 +44,11 @@ function reviewsReducer(state = initialState, action) {
         const curPage = state.get('page') + 1;
         const reviews = list.concat(action.data.content);
         console.log("]]]] >>>>>>>>>> LOAD SUCCESS");
-        console.log(action.data);
       return state
         .set('page', curPage)
         .set('loadMore', false)
-        .set('reviews', reviews);
+        .set('reviews', reviews)
+        .set('last', action.data.last);
     case LOAD_REVIEW_MORE_ERROR:
       return state
         .set('loadMore', false)

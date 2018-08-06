@@ -37,12 +37,12 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 export class Reviews extends React.PureComponent {
   componentDidMount() {
-    const { loadReviewList, loadReviewListMore, loadMore } = this.props;
+    const { loadReviewList, loadReviewListMore, loadMore, last } = this.props;
     loadReviewList();
 
     $(window).scroll(() => {
       if ($(document).height() - $(window).height() - $(window).scrollTop() < 250) {
-        loadReviewListMore(this.props.reviews.loadMore);
+        loadReviewListMore(this.props.reviews.loadMore, this.props.reviews.last);
       }
     });
   }
@@ -79,8 +79,8 @@ function mapDispatchToProps(dispatch) {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       dispatch(loadList());
     },
-    loadReviewListMore: (loadMore) => {
-      if(!loadMore) {
+    loadReviewListMore: (loadMore, last) => {
+      if(!loadMore && !last) {
         dispatch(loadListMore());
       }
     },

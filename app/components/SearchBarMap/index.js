@@ -245,7 +245,7 @@ class SearchBarMap extends React.PureComponent {
             </div>
           )}
         </PlacesAutocomplete>
-        <input type="hidden" name="storeLat" value={this.state.latitudet} />
+        <input type="hidden" name="storeLat" value={this.state.latitude} />
         <input type="hidden" name="storeLng" value={this.state.longitude} />
         {/* <Select
           classes={classes}

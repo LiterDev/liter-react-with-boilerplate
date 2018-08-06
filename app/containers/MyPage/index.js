@@ -87,6 +87,24 @@ const styles = {
   userCoin: {
     color: '#1591ff',
   },
+  makeWalletLink: {
+    marginTop: '10px',
+    padding: '8px 45px 8px 45px',
+    border: 'solid 1px #8fa6bb',
+    color: '#8fa6bb',
+    fontSize: '13px',
+    lineHeight: '1.8em',
+    textAlign: 'center',
+  },
+  verticalCol: {
+    height: '100%',
+    paddingTop: '15px',
+  },
+  verticalDivider: {
+    backgroundColor: '#aaaaaa',
+    width: '1px',
+    height: '35%',
+  },
 };
 
 /* eslint-disable react/prefer-stateless-function */
@@ -114,6 +132,10 @@ export class MyPage extends React.PureComponent {
     });
   };
 
+  checkWallet() {
+    //
+  }
+
   componentDidMount() {
     const {
       selectMyReview,
@@ -131,6 +153,8 @@ export class MyPage extends React.PureComponent {
     const { userData } = this.state;
     console.log(global.userData.username);
 
+    // 임시코드
+    const havingWallet = false;
     return (
       <div>
         <div className={classes.container}>
@@ -149,31 +173,41 @@ export class MyPage extends React.PureComponent {
           </div>
           <div className={classes.row}>{localStorage.getItem('username')}</div>
           <div className={classes.row}>
-            <Typography variant="headline" className={classes.userCoin}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="10"
-                height="21"
-                viewBox="0 0 10 21"
-              >
-                <g fill="none" fillRule="evenodd">
-                  <path fill="#FFF" d="M-155-201h375v667h-375z" />
-                  <path
-                    fill="#1591FF"
-                    fillRule="nonzero"
-                    stroke="#1591FF"
-                    strokeWidth=".2"
-                    d="M7.886 6.502l.114.1v.972l-.034.072-.142.08A3.67 3.67 0 0 0 4.776 9.37l3.108.048.116.106-.059 1.022-.12.096-3.388-.042c-.018.139-.027.26-.027.376l.001.075v.028c.003.104.003.174-.002.233l3.48.05.115.105-.059 1.023-.12.096-3-.067c.596 1.045 1.747 1.71 3.066 1.757l.113.107-.059 1.022-.117.096c-2.01 0-3.798-1.186-4.44-2.918l-1.272-.048L2 12.428l.059-1.022.125-.096.861.048a4.1 4.1 0 0 1-.018-.383c0-.14.01-.25.037-.341l-.953-.043L2 10.485l.059-1.023.121-.096 1.153.033c.704-1.78 2.504-2.948 4.553-2.897z"
-                  />
-                </g>
-              </svg>
-              0
-            </Typography>
+            {havingWallet ? (
+              <Typography variant="headline" className={classes.userCoin}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  height="21"
+                  viewBox="0 0 10 21"
+                >
+                  <g fill="none" fillRule="evenodd">
+                    <path fill="#FFF" d="M-155-201h375v667h-375z" />
+                    <path
+                      fill="#1591FF"
+                      fillRule="nonzero"
+                      stroke="#1591FF"
+                      strokeWidth=".2"
+                      d="M7.886 6.502l.114.1v.972l-.034.072-.142.08A3.67 3.67 0 0 0 4.776 9.37l3.108.048.116.106-.059 1.022-.12.096-3.388-.042c-.018.139-.027.26-.027.376l.001.075v.028c.003.104.003.174-.002.233l3.48.05.115.105-.059 1.023-.12.096-3-.067c.596 1.045 1.747 1.71 3.066 1.757l.113.107-.059 1.022-.117.096c-2.01 0-3.798-1.186-4.44-2.918l-1.272-.048L2 12.428l.059-1.022.125-.096.861.048a4.1 4.1 0 0 1-.018-.383c0-.14.01-.25.037-.341l-.953-.043L2 10.485l.059-1.023.121-.096 1.153.033c.704-1.78 2.504-2.948 4.553-2.897z"
+                    />
+                  </g>
+                </svg>
+                0
+              </Typography>
+            ) : (
+              <div className={classes.makeWalletLink}>
+                지갑 생성하기<br />
+                이메일 인증으로 지갑을 생성하십하세요.
+              </div>
+            )}
           </div>
           <div className={classNames(classes.row, classes.panelInfo)}>
             <div className={classes.col}>
               <div className={classes.row}>{myPages.followerCount}</div>
               <div className={classes.row}>팔로워</div>
+            </div>
+            <div className={classes.verticalCol}>
+              <div className={classes.verticalDivider} />
             </div>
             <div className={classes.col}>
               <div className={classes.row}>{myPages.followingCount}</div>

@@ -171,8 +171,6 @@ const styles = theme => ({
   },
   tabRoot: {
     minHeight: 60,
-    // maxWidth: 264,
-    // width: '33%',
     fontSize: '1.5rem',
   },
   tabIcon: {

@@ -143,7 +143,7 @@ export class MyPage extends React.PureComponent {
               <span className={classes.levelTagInner}>Lv 1</span>
             </div>
           </div>
-          <div className={classes.row}>{global.userData.username}</div>
+          <div className={classes.row}>{localStorage.getItem('username')}</div>
           <div className={classes.row}>
             <Typography variant="headline" className={classes.userCoin}>
               <svg

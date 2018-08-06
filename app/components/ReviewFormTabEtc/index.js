@@ -214,7 +214,7 @@ class ReviewFormTabEtc extends React.PureComponent {
           <Input
             className={classes.inputReview}
             placeholder="사용 및 이용 후기 또는 도움이 되는 정보를 남겨주세요."
-            disableUnderline="true"
+            disableUnderline
             multiline
             name="content"
           />

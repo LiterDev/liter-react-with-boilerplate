@@ -32,33 +32,39 @@ const styles = theme => ({
     left: 0,
     width: '100%',
     height: '100%',
-  }
+  },
 });
 
 function Media(props) {
-
   const { classes } = props;
 
   console.log(props.movieKey);
 
-  switch(props.mediaType) {
+  switch (props.mediaType) {
     case 'IMAGE':
-        return (
-          <div className={classes.iContainer}>
-            <img className={classes.iMediaSize} src={props.fullPath} alt={props.description}/>
-          </div>
-        );
+      return (
+        <div className={classes.iContainer}>
+          <img
+            className={classes.iMediaSize}
+            src={props.fullPath}
+            alt={props.description}
+          />
+        </div>
+      );
     case 'YOUTUBE':
-        return (
-          <div className={classes.vContainer}>
-              {/* <iframe id="player" type="text/html" className={classes.vMediaSize} src={props.fullPath} frameBorder="0" /> */}
-              <iframe id="player" className={classes.vMediaSize} src={`https://www.youtube.com/embed/${props.movieKey}`} frameborder="0" />
-          </div>
-        );
+      return (
+        <div className={classes.vContainer}>
+          {/* <iframe id="player" type="text/html" className={classes.vMediaSize} src={props.fullPath} frameBorder="0" /> */}
+          <iframe
+            id="player"
+            className={classes.vMediaSize}
+            src={`https://www.youtube.com/embed/${props.movieKey}`}
+            frameBorder="0"
+          />
+        </div>
+      );
     default:
-        return (
-          <div></div>
-        )
+      return <div />;
   }
 }
 

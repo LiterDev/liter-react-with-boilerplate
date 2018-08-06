@@ -23,8 +23,6 @@ import InputWithHelper from 'components/InputWithHelper';
 import BlueButton from 'components/BlueButton';
 import { Redirect } from 'react-router-dom';
 // import ErrorPop from 'components/ErrorPop';
-import { makeSelectUserData } from 'containers/App/selectors';
-import { loadUserData } from 'containers/App/actions';
 import {
   makeSelectSignIn,
   makeSelectSignInSuccess,
@@ -155,6 +153,9 @@ export class SignIn extends React.PureComponent {
   //   // DOM 에 관련된 작업: 스크롤 설정, 크기 읽어오기 등
   //   this.props.defaultAction();
   // }
+  componentWillMount() {
+    console.log('will mound');
+  }
   render() {
     const { classes, signinSuccess, signinError } = this.props;
     // console.log(signinSuccess);
@@ -251,7 +252,7 @@ export class SignIn extends React.PureComponent {
 }
 
 SignIn.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  // dispatch: PropTypes.func.isRequired,
   signinForm: PropTypes.func.isRequired,
   // signinSuccess: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   signinError: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -262,7 +263,6 @@ const mapStateToProps = createStructuredSelector({
   signin: makeSelectSignIn(),
   signinSuccess: makeSelectSignInSuccess(),
   signinError: makeSelectSignInError(),
-  userData: makeSelectUserData(),
   // signinEnd: makeSelectSignInEnd(),
 });
 
@@ -274,10 +274,6 @@ function mapDispatchToProps(dispatch) {
     signinEnd: () => {
       console.log('call SignInEnd');
       dispatch(signinInit());
-    },
-    loadUserData: data => {
-      console.log('call loadUserData');
-      dispatch(loadUserData(data));
     },
     // defaultAction: () => {
     //   dispatch(defaultAction());

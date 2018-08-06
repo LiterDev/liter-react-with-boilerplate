@@ -40,14 +40,21 @@ const styles = {
   colDivider: {
     borderRight: '1px solid #aaaaaa',
   },
+  tmpCss: {
+    width: '100%',
+    textAlign: 'center',
+  },
 };
 function RewardContainer(props) {
-  const { classes } = props;
+  const { classes, reword } = props;
   return (
     <Fragment>
-      <ListItem className={classes.tableRow}>
+      <ListItem>
+        <span className={classes.tmpCss}>보상 내역이 없습니다.</span>
+      </ListItem>
+      {/* <ListItem className={classes.tableRow}>
         <span className={classNames(classes.dateCol, classes.colDivider)}>
-          <div className={classes.dateWidth}>{props.data.date}</div>
+          <div className={classes.dateWidth}>{reword.data.date}</div>
         </span>
         <span className={classNames(classes.rewardCol, classes.colDivider)}>
           <svg
@@ -83,9 +90,9 @@ function RewardContainer(props) {
               />
             </g>
           </svg>
-          {props.data.sum}
+          {reword.data.sum}
         </span>
-      </ListItem>
+      </ListItem> */}
       <Divider />
     </Fragment>
   );

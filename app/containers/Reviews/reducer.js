@@ -43,6 +43,8 @@ function reviewsReducer(state = initialState, action) {
         let list = state.get('reviews');
         const curPage = state.get('page') + 1;
         const reviews = list.concat(action.data.content);
+        console.log("]]]] >>>>>>>>>> LOAD SUCCESS");
+        console.log(action.data);
       return state
         .set('page', curPage)
         .set('loadMore', false)

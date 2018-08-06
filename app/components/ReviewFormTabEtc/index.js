@@ -17,7 +17,7 @@ import SurveyList from 'components/SurveyList';
 import LinkIcon from '../../images/ic-link-on@3x.png';
 import WriteIcon from '../../images/ic-write@3x.png';
 import StartTitle from '../../images/ic-star@3x.png';
-
+import SurveyData from '../../survey.json';
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
 
@@ -175,6 +175,11 @@ const surveyBuyType = [
 class ReviewFormTabEtc extends React.PureComponent {
   render() {
     const { classes } = this.props;
+    const word = SurveyData.test;
+    console.log(word);
+    console.log(SurveyData.surveyCate);
+    console.log(SurveyData.surveyCate[0]);
+    console.log(SurveyData.surveyCate[1]);
     return (
       <div>
         <div className={classes.rowdiv}>
@@ -234,8 +239,8 @@ class ReviewFormTabEtc extends React.PureComponent {
           </div>
 
           <SurveyList
-            surveyCate={surveyCate}
-            surveyBuyType={surveyBuyType}
+            surveyCate={SurveyData.surveyCate[0]}
+            surveyBuyType={SurveyData.surveyBuyType[2]}
             // categoryId={this.state.categoryId}
           />
         </div>

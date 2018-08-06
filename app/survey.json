@@ -1,0 +1,215 @@
+{
+  "surveyCate": [
+    [
+      {
+        "surveyId": 1,
+        "surveyName": "가격은 적절한가요?",
+        "sortPosition": 0
+      },
+      {
+        "surveyId": 2,
+        "surveyName": "발림성이 좋나요?",
+        "sortPosition": 1
+      },
+      {
+        "surveyId": 3,
+        "surveyName": "흡수력이 좋나요?",
+        "sortPosition": 2
+      },
+      {
+        "surveyId": 4,
+        "surveyName": "수분감이 충분한가요?",
+        "sortPosition": 3
+      },
+      {
+        "surveyId": 5,
+        "surveyName": "지속력은 어떤가요?",
+        "sortPosition": 4
+      },
+      {
+        "surveyId": 6,
+        "surveyName": "원료(성분)는 안전한가요?",
+        "sortPosition": 5
+      }
+    ],
+    [
+      {
+        "surveyId": 7,
+        "surveyName": "가격은 적절한가요?",
+        "sortPosition": 0
+      },
+      {
+        "surveyId": 8,
+        "surveyName": "제품의 내구성은 어떤가요?",
+        "sortPosition": 1
+      },
+      {
+        "surveyId": 9,
+        "surveyName": "사용하기 편리한가요?",
+        "sortPosition": 2
+      }
+    ],
+    [
+      {
+        "surveyId": 10,
+        "surveyName": "가격은 적절한가요?",
+        "sortPosition": 0
+      },
+      {
+        "surveyId": 11,
+        "surveyName": "신선한가요?",
+        "sortPosition": 1
+      },
+      {
+        "surveyId": 12,
+        "surveyName": "양은 적당한가요?",
+        "sortPosition": 2
+      },
+      {
+        "surveyId": 13,
+        "surveyName": "간편하게 먹을 수 있나요?",
+        "sortPosition": 3
+      }
+    ],
+    [
+      {
+        "surveyId": 14,
+        "surveyName": "가격은 적절한가요?",
+        "sortPosition": 0
+      },
+      {
+        "surveyId": 15,
+        "surveyName": "원단 등 품질에 만족하나요?",
+        "sortPosition": 1
+      },
+      {
+        "surveyId": 16,
+        "surveyName": "표시된 사이즈와 실제 사이즈가 일치하나요?",
+        "sortPosition": 2
+      }
+    ],
+
+    [
+      {
+        "surveyId": 21,
+        "surveyName": "가격은 적절한가요?",
+        "sortPosition": 0
+      },
+      {
+        "surveyId": 22,
+        "surveyName": "제품의 내구성은 어떤가요?",
+        "sortPosition": 1
+      },
+      {
+        "surveyId": 23,
+        "surveyName": "원료는 안전한가요?",
+        "sortPosition": 2
+      },
+      {
+        "surveyId": 24,
+        "surveyName": "사용하기 편리한가요?",
+        "sortPosition": 3
+      }
+    ],
+    [
+      {
+        "surveyId": 25,
+        "surveyName": "가격은 적절한가요?",
+        "sortPosition": 0
+      },
+      {
+        "surveyId": 26,
+        "surveyName": "제품의 내구성은 어떤가요?",
+        "sortPosition": 1
+      }
+    ],
+
+    [
+      {
+        "surveyId": 17,
+        "surveyName": "맛은 어떤가요?",
+        "sortPosition": 0
+      },
+      {
+        "surveyId": 18,
+        "surveyName": "양은 적절한가요?",
+        "sortPosition": 1
+      },
+      {
+        "surveyId": 19,
+        "surveyName": "식기 등 데코레이션은 어떤가요?",
+        "sortPosition": 2
+      },
+      {
+        "surveyId": 20,
+        "surveyName": "가격은 적절한가요?",
+        "sortPosition": 3
+      }
+    ],
+    [
+      {
+        "surveyId": 27,
+        "surveyName": "사용하기 편리한가요?",
+        "sortPosition": 0
+      },
+      {
+        "surveyId": 28,
+        "surveyName": "제품의 내구성은 어떤가요?",
+        "sortPosition": 1
+      },
+      {
+        "surveyId": 29,
+        "surveyName": "원료는 안전한가요?",
+        "sortPosition": 3
+      }
+    ],
+    []
+  ],
+  "surveyBuyType": [
+    [
+      {
+        "surveyId": 30,
+        "surveyName": "종업원들은 친절했나요?",
+        "sortPosition": 0
+      },
+      {
+        "surveyId": 31,
+        "surveyName": "매장의 분위기는 어땠나요?",
+        "sortPosition": 1
+      },
+      {
+        "surveyId": 32,
+        "surveyName": "화장실 등 부대시설이 청결하고 사용하기 쉬운가요?",
+        "sortPosition": 2
+      },
+      {
+        "surveyId": 33,
+        "surveyName": "주차하기가 쉬운가요?",
+        "sortPosition": 3
+      }
+    ],
+    [
+      {
+        "surveyId": 34,
+        "surveyName": "쇼핑몰의 사진, 설명과 제품이 동일한가요?",
+        "sortPosition": 0
+      },
+      {
+        "surveyId": 35,
+        "surveyName": "배송 속도는 어땠나요?",
+        "sortPosition": 1
+      },
+      {
+        "surveyId": 36,
+        "surveyName": "문의 사항에 대해 신속하게 응답하나요?",
+        "sortPosition": 2
+      },
+      {
+        "surveyId": 37,
+        "surveyName": "교환 또는 반품이 용이한가요?",
+        "sortPosition": 3
+      }
+    ],
+    []
+  ]
+}

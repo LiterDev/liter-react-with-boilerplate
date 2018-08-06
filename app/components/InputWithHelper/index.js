@@ -76,6 +76,7 @@ class InputWithHelper extends React.PureComponent {
       value: '',
     };
   }
+
   render() {
     const { classes, placeholder, error, type, inputName } = this.props;
     // console.log(placeholder);
@@ -89,7 +90,7 @@ class InputWithHelper extends React.PureComponent {
           {message => (
             <TextField
               label={message}
-              box="true"
+              box
               className={error ? classes.inputWrapError : classes.inputWrap}
             >
               <Input

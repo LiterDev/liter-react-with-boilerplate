@@ -14,7 +14,6 @@ import RewardContainer from './RewardContainer';
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
   topLine: {
@@ -58,6 +57,9 @@ const styles = theme => ({
   colDivider: {
     borderRight: '1px solid #aaaaaa',
   },
+  tabStyle: {
+    maxWidth: '500px',
+  },
 });
 
 class SimpleTabs extends React.Component {
@@ -70,8 +72,14 @@ class SimpleTabs extends React.Component {
   };
 
   renderTab() {
-    const { tabs } = this.props;
-    return tabs.map(tab => <Tab label={tab.tabLabel} key={tab.tabLabel} />);
+    const { tabs, classes } = this.props;
+    return tabs.map(tab => (
+      <Tab
+        className={classes.tabStyle}
+        label={tab.tabLabel}
+        key={tab.tabLabel}
+      />
+    ));
   }
 
   renderContainer() {
@@ -141,7 +149,7 @@ class SimpleTabs extends React.Component {
     console.log(Object.values(data));
     // return <div>11</div>;
     return Object.values(data).map(row => (
-      <RewardContainer review={row} key={type.concat(row.index)} />
+      <RewardContainer reword={row} key={type.concat(row.index)} />
     ));
   }
 

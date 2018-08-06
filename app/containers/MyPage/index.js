@@ -115,11 +115,15 @@ export class MyPage extends React.PureComponent {
   };
 
   componentDidMount() {
-    const { selectMyReview, global } = this.props;
+    const {
+      selectMyReview,
+      selectFollowerCount,
+      selectFollowingCount,
+    } = this.props;
 
-    selectMyReview(global.userData);
-    loadFollowerCountAction(global.userData);
-    loadFollowingCountAction(global.userData);
+    selectMyReview();
+    selectFollowerCount();
+    selectFollowingCount();
   }
 
   render() {
@@ -187,7 +191,9 @@ MyPage.propTypes = {
   id: PropTypes.string,
   classes: PropTypes.object.isRequired,
   selectMyReview: PropTypes.func,
-  myPages: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  loadFollowerCount: PropTypes.func,
+  loadFollowingCount: PropTypes.func,
+  myPages: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   global: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   follwerCount: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   follwingCount: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -205,17 +211,17 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   console.log('mapDispatch');
   return {
-    selectMyReview: data => {
-      console.log(`select My Review call!!!${data.username}`);
-      dispatch(myPageAction(data));
+    selectMyReview: () => {
+      console.log(`select My Review call!!!`);
+      dispatch(myPageAction());
     },
-    loadFollowerCount: data => {
-      console.log(`load My Review - follower Count call!!!${data.username}`);
-      dispatch(loadFollowerCountAction(data));
+    selectFollowerCount: () => {
+      console.log(`load My Review - follower Count call!!!`);
+      dispatch(loadFollowerCountAction());
     },
-    loadFollowingCount: data => {
-      console.log(`load My Review - following Count call!!!${data.username}`);
-      dispatch(loadFollowingCountAction(data));
+    selectFollowingCount: () => {
+      console.log(`load My Review - following Count call!!!`);
+      dispatch(loadFollowingCountAction());
     },
   };
 }

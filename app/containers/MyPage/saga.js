@@ -8,8 +8,7 @@ import { MYPAGE_ACTION } from './constants';
 import * as actions from './actions';
 // import { makeSelectMyPage } from './selectors';
 
-export function* mypage(data) {
-  console.log(data.data.username);
+export function* mypage() {
   const requestURL = `${process.env.API_URL}/review/myReviewList`;
   const accessToken = localStorage.getItem('accessToken');
   const token = `Bearer ${accessToken}`;
@@ -32,8 +31,7 @@ export function* mypage(data) {
   }
 }
 
-export function* loadFollowerCnt(data) {
-  console.log(data.data.id);
+export function* loadFollowerCnt() {
   const requestURL = `${process.env.API_URL}/follower/count`;
   const accessToken = localStorage.getItem('accessToken');
   const token = `Bearer ${accessToken}`;
@@ -56,8 +54,7 @@ export function* loadFollowerCnt(data) {
   }
 }
 
-export function* loadFollowingCnt(data) {
-  console.log(data.data.username);
+export function* loadFollowingCnt() {
   const requestURL = `${process.env.API_URL}/following/count`;
   const accessToken = localStorage.getItem('accessToken');
   const token = `Bearer ${accessToken}`;

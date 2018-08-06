@@ -172,7 +172,6 @@ class SimpleTabs extends React.Component {
 SimpleTabs.propTypes = {
   classes: PropTypes.object.isRequired,
   data: PropTypes.array,
-  reviewArray: PropTypes.array,
   tabs: PropTypes.array,
 };
 

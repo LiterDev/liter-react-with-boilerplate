@@ -7,6 +7,7 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Star from '@material-ui/icons/Star';
 
 import Media from 'components/Media';
+import TimeAt from 'components/TimeAt';
 
 const styles = {
   line: {
@@ -133,7 +134,6 @@ function ReviewContainer(props) {
   const mediaItem = mediaCollection ? mediaCollection[0] : false;
 
   // const timeDiff = '방금전';
-
   return (
     <div className={classes.line}>
       <span className={classes.col}>
@@ -161,7 +161,7 @@ function ReviewContainer(props) {
             {review.username}
           </span>
           <span className={classNames(classes.leftPadding10, classes.update)}>
-            {review.updateAt}
+            <TimeAt date={review.updateAt} />
           </span>
           <span className={classNames(classes.follow)}>팔로우</span>
         </div>

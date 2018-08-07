@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Media from 'components/Media';
 import MediaSlider from 'components/MediaSlider';
-// import TimeAt from 'components/TimeAt';
+import TimeAt from 'components/TimeAt';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -193,7 +193,7 @@ class ReviewCard extends React.PureComponent {
                 </Typography>
               }
               title={review.user.username}
-              // subheader={<TimeAt date={review.updateAt} />}
+              subheader={<TimeAt date={review.updateAt} />}
             />
           ) : (
             <div />
@@ -219,6 +219,7 @@ class ReviewCard extends React.PureComponent {
           <div>
             <Divider className={classes.divider} light />
           </div>
+
           <CardActions className={classes.actions} disableActionSpacing>
             <div className={classes.activeStatus}>
               <ArrowDropDownCircleIcon className={classes.icons} />
@@ -237,6 +238,7 @@ class ReviewCard extends React.PureComponent {
               <span className={classes.gradeText}>{review.totalScore}</span>
             </div> */}
           </CardActions>
+
         </Card>
       </div>
     );

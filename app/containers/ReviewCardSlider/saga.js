@@ -5,9 +5,12 @@ import { reviewListLoaded, reviewListLoadingError } from './actions';
 import { LOAD_REVIEW_ACTION } from './constants';
 
 export function* getReviews(data) {
+
+  const userid = data.userid;
   const requestURL = `${process.env.API_URL}/review/latestList`;
-  console.log(data);
+
   
+
   try {
     // Call our request helper (see 'utils/request')
     // const reqContents = yield call(request, requestURL, options);

@@ -17,7 +17,7 @@
   "boilerplate.containers.FeaturePage.javascript.header":
     "Next generation JavaScript",
   "boilerplate.containers.FeaturePage.javascript.message":
-    "Use template strings, object destructuring, arrow functions, JSX\n    syntax and more, today.",
+    "Use template strings, object destructuring, arrow functions, JSX\n   \n   syntax and more, today.",
   "boilerplate.containers.FeaturePage.network.header": "Offline-first",
   "boilerplate.containers.FeaturePage.network.message":
     "The next frontier in performant web apps: availability without a\n      network connection from the instant your users load the app.",
@@ -43,8 +43,15 @@
   "boilerplate.containers.LocaleToggle.en": "en",
   "boilerplate.containers.NotFoundPage.header": "Page not found.",
   "app.containers.App.header": "App Title",
-
+  "app.containers.App.ok": "확인",
   "app.containers.MyPage.header": "마이 페이지",
+  "app.containers.MyPage.createWallet": "지갑 생성하기",
+  "app.containers.MyPage.requiredWalletMsg":
+    "이메일 인증으로 지갑을 만들어주세요.",
+  "app.containers.MyPage.emailAuthTitle": "이메일 인증을 하시겠습니까?",
+  "app.containers.MyPage.emailAuthMsg":
+    "회원님의 활동에 따른 보상을 회원님의 지갑으로 지급해 드리고 있습니다.\n   보상을 받으려면 이메일 인증을 통해 지갑을 생성해야 합니다.",
+
   "app.containers.ReviewForm.header": "리뷰작성",
   "app.containers.SignUp.header": "SignUp",
   "app.containers.SignUp.email": "이메일 주소",

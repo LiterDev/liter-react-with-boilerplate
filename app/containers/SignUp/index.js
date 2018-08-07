@@ -104,6 +104,14 @@ const styles = theme => ({
 //   return <Slide direction="left" {...props} />;
 // }
 
+export const validateEmail = email => {
+  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+    return true;
+  }
+  // alert('You have entered an invalid email address!');
+  return false;
+};
+
 /* eslint-disable react/prefer-stateless-function */
 export class SignUp extends React.PureComponent {
   constructor(props) {
@@ -132,6 +140,13 @@ export class SignUp extends React.PureComponent {
     const errors = [];
     if (!email) {
       errors.push(500108);
+    } else {
+      this.setState({
+        emailError: false,
+      });
+    }
+    if (!validateEmail(email)) {
+      errors.push(500110);
     } else {
       this.setState({
         emailError: false,
@@ -193,6 +208,11 @@ export class SignUp extends React.PureComponent {
     if (errorCode === 500106) {
       this.setState({
         usernameError: <FormattedMessage {...messages.username} />,
+      });
+    }
+    if (errorCode === 500110) {
+      this.setState({
+        emailError: <FormattedMessage {...messages.emailvalid} />,
       });
     }
     if (

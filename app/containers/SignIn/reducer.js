@@ -11,6 +11,7 @@ import {
   SIGNIN_SUCCESS,
   SIGNIN_ERROR,
   SIGNIN_INIT,
+  SIGNIN_FACEBOOK_ACTION,
 } from './constants';
 
 export const initialState = fromJS({
@@ -29,6 +30,8 @@ function signInReducer(state = initialState, action) {
     case SIGNIN_ERROR:
       return state.set('signinError', action.data).set('signinSuccess', false);
     case SIGNIN_INIT:
+      return state.set('signinError', false).set('signinSuccess', false);
+    case SIGNIN_FACEBOOK_ACTION:
       return state.set('signinError', false).set('signinSuccess', false);
     default:
       return state;

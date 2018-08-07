@@ -56,6 +56,7 @@
   "app.containers.SignUp.info2":
     "LITER는 회원님의 소중한 정보를 지켜드리기 위해 최선을 다할 것입니다.",
   "app.containers.SignUp.next": "다음",
+  "app.containers.SignUp.emailvalid": "올바른 이메일형식이 아닙니다",
   "app.containers.SignIn.bodytext": "경험을 나누고 보상을 받으세요",
   "app.containers.SignIn.login": "로그인",
   "app.containers.Reviews.header": "리뷰"

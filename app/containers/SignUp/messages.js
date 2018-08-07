@@ -39,4 +39,8 @@ export default defineMessages({
     id: 'app.containers.SignUp.next',
     defaultMessage: 'next',
   },
+  emailvalid: {
+    id: 'app.containers.SignUp.emailvalid',
+    defaultMessage: '이메일 형식',
+  },
 });

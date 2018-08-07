@@ -44,6 +44,7 @@
     "Zeige die Github Repositories von",
   "boilerplate.containers.LocaleToggle.de": "",
   "boilerplate.containers.LocaleToggle.en": "",
+  "app.components.AlertDialog.ok": "확인",
   "boilerplate.containers.NotFoundPage.header": "Seite nicht gefunden.",
   "app.containers.SignUp.header": "SignUp",
   "app.containers.MyPage.start_project.header": "MyPage",

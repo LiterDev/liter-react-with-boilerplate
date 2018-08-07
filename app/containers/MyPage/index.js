@@ -122,7 +122,8 @@ export class MyPage extends React.PureComponent {
         { tabLabel: '리뷰', type: 'REVIEW' },
         { tabLabel: '보상 내역', type: 'REWARD' },
       ],
-      makeWalletPopOpen: true,
+      makeWalletPopOpen: false,
+      havingWallet: false,
     };
 
     this.handleCreateWallet = this.handleCreateWallet.bind(this);
@@ -137,6 +138,7 @@ export class MyPage extends React.PureComponent {
   handleSubmit = e => {
     this.setState({
       makeWalletPopOpen: false,
+      havingWallet: true,
     });
     console.log('ok');
     e.preventDefault();
@@ -170,11 +172,10 @@ export class MyPage extends React.PureComponent {
 
   render() {
     const { classes, myPages, global } = this.props;
-    const { userData } = this.state;
+    const { userData, havingWallet } = this.state;
     console.log(global.userData.username);
 
     // 임시코드
-    const havingWallet = false;
     return (
       <div>
         <div className={classes.container}>

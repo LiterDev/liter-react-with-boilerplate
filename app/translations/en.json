@@ -44,6 +44,7 @@
   "boilerplate.containers.LocaleToggle.en": "en",
   "boilerplate.containers.NotFoundPage.header": "Page not found.",
   "app.containers.App.header": "App Title",
+  "app.components.AlertDialog.ok": "확인",
   "app.containers.MyPage.header": "My Page",
   "app.containers.MyPage.createWallet": "지갑 생성하기",
   "app.containers.MyPage.requiredWalletMsg":

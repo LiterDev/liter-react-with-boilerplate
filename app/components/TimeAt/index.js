@@ -5,8 +5,9 @@
  */
 
 import React from 'react';
-import moment from 'moment/min/moment-with-locales';
+
 import Moment from 'react-moment';
+import moment from 'moment/min/moment-with-locales';
 
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
@@ -32,7 +33,7 @@ Moment.globalLocale = 'ko';
 /* eslint-disable react/prefer-stateless-function */
 class TimeAt extends React.PureComponent {
   render() {
-    return <Moment locale="ko" date={this.props.date} fromNow />;
+    return <Moment date={this.props.date} fromNow />;
   }
 }
 

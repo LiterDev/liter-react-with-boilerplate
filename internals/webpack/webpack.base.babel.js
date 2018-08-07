@@ -129,6 +129,7 @@ module.exports = options => ({
         NAVER_MAP_CLIENTID: JSON.stringify(process.env.NAVER_MAP_CLIENTID),
       },
     }),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   ]),
   resolve: {
     modules: ['node_modules', 'app'],

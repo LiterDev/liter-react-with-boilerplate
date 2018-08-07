@@ -71,6 +71,9 @@ const styles = theme => ({
     color: theme.palette.primary.main,
     fontWeight: theme.typography.fontWeightMedium,
   },
+  link: {
+    textDecoration: 'none',
+  },
 });
 
 // iOS is hosted on high-end devices. We can enable the backdrop transition without
@@ -112,7 +115,12 @@ function AppDrawer(props) {
           {
             // eslint-disable-next-line anchor-is-valid
           }
-          <Link to="/signup" onClick={onClose} role="button">
+          <Link
+            to="/signup"
+            onClick={onClose}
+            role="button"
+            className={classes.link}
+          >
             <Button>signUp</Button>
           </Link>
         </ListItem>
@@ -120,7 +128,12 @@ function AppDrawer(props) {
           {
             // eslint-disable-next-line anchor-is-valid
           }
-          <Link to="/signin" onClick={onClose} role="button">
+          <Link
+            to="/signin"
+            onClick={onClose}
+            role="button"
+            className={classes.link}
+          >
             <Button>signIn</Button>
           </Link>
         </ListItem>
@@ -128,7 +141,12 @@ function AppDrawer(props) {
           {
             // eslint-disable-next-line anchor-is-valid
           }
-          <Link to="/mypage" onClick={onClose} role="button">
+          <Link
+            to="/mypage"
+            onClick={onClose}
+            role="button"
+            className={classes.link}
+          >
             <Button>MyPage</Button>
           </Link>
         </ListItem>
@@ -136,7 +154,12 @@ function AppDrawer(props) {
           {
             // eslint-disable-next-line anchor-is-valid
           }
-          <Link to="/review/write" onClick={onClose} role="button">
+          <Link
+            to="/review/write"
+            onClick={onClose}
+            role="button"
+            className={classes.link}
+          >
             <Button>review</Button>
           </Link>
         </ListItem>
@@ -144,7 +167,12 @@ function AppDrawer(props) {
           {
             // eslint-disable-next-line anchor-is-valid
           }
-          <Link to="/slide" onClick={onClose} role="button">
+          <Link
+            to="/slide"
+            onClick={onClose}
+            role="button"
+            className={classes.link}
+          >
             <Button>slide</Button>
           </Link>
         </ListItem>

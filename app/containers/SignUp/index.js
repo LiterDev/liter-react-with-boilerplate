@@ -7,7 +7,7 @@
 import React from 'react';
 // import Input from '@material-ui/core/Input';
 // import Button from '@material-ui/core/Button';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import { Helmet } from 'react-helmet';
@@ -17,7 +17,7 @@ import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { withStyles } from '@material-ui/core/styles';
-
+import Button from '@material-ui/core/Button';
 import Header from 'components/Header';
 // import SignInput from 'components/SignInput';
 import BlueButton from 'components/BlueButton';
@@ -97,6 +97,17 @@ const styles = theme => ({
     color: '#7c7c7c',
     textAlign: 'center',
     height: 42,
+    display: 'table',
+  },
+  footerText: {
+    display: 'table-cell',
+    verticalAlign: 'middle',
+    color: 'rgb(153, 153, 153)',
+  },
+  footerSignin: {
+    display: 'table-cell',
+    verticalAlign: 'middle',
+    color: 'rgb(153, 153, 153)',
   },
 });
 
@@ -330,9 +341,13 @@ export class SignUp extends React.PureComponent {
         </div>
 
         <footer className={classes.footer}>
-          {/* <FormattedMessage {...messages.next} />
-          <FormattedMessage {...messages.next} /> */}
-          로그인
+          <span className={classes.footerText}>
+            이미 회원이신가요?
+            <Link to="/signin" role="button" style={{ textDecoration: 'none' }}>
+              <Button>로그인</Button>
+            </Link>
+          </span>
+          {/* <span className={classes.footerSignin}>회원가입</span> */}
         </footer>
       </div>
     );

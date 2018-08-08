@@ -23,16 +23,15 @@ import messages from './messages';
 /* eslint-disable react/prefer-stateless-function */
 export class ReviewDetailResolver extends React.PureComponent {
   render() {
-    
-    console.log("]----------- PMPM S--------[");
+    console.log(']----------- PMPM S--------[');
     console.log(this.props.match);
     const reviewId = this.props.match.params.reviewId;
     console.log(reviewId);
-    console.log("]----------- PMPM E--------[");
+    console.log(']----------- PMPM E--------[');
 
     return (
       <div>
-        <ReviewDetailPage reviewId={ reviewId }/>
+        <ReviewDetailPage reviewId={reviewId} />
       </div>
     );
   }

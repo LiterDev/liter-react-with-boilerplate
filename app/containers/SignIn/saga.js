@@ -32,7 +32,6 @@ export function* signin(data) {
 }
 
 export function* signinFacebook(data) {
-  
   const requestURL = `${process.env.API_URL}/auth/signInFacebook`;
   try {
     const options = {

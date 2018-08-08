@@ -20,7 +20,7 @@ import Typography from '@material-ui/core/Typography';
 
 import classNames from 'classnames';
 
-import AlertDialog from 'components/AlertDialog';
+// import AlertDialog from 'components/AlertDialog';
 import Button from 'components/Button';
 import Header from 'components/Header';
 import Tabs from 'components/Tabs';
@@ -241,13 +241,13 @@ export class MyPage extends React.PureComponent {
           </div>
         </div>
         <Tabs tabs={this.state.tabs} data={myPages} />
-        <AlertDialog
+        {/* <AlertDialog
           onClose={this.handleClose}
           open={this.state.makeWalletPopOpen}
           submitHandler={this.handleSubmit}
           title={<FormattedMessage {...messages.emailAuthTitle} />}
           msg={<FormattedMessage {...messages.emailAuthMsg} />}
-        />
+        /> */}
       </div>
     );
   }

@@ -211,7 +211,7 @@ export class SignIn extends React.PureComponent {
     // console.log('will mound');
   }
   handleResponse = data => {
-    console.log(data);
+    // console.log(data);
     this.props.signinFacebook(
       data.profile.id,
       data.profile.email,
@@ -230,7 +230,7 @@ export class SignIn extends React.PureComponent {
     // console.log(signinEnd);
     if (signinSuccess) {
       // console.log(signinSuccess);
-      // console.log(signinSuccess.accessToken);
+      console.log(signinSuccess.accessToken);
       localStorage.setItem('accessToken', signinSuccess.accessToken);
       localStorage.setItem('refreshToken', signinSuccess.refreshToken);
       localStorage.setItem('username', signinSuccess.username);
@@ -310,6 +310,7 @@ export class SignIn extends React.PureComponent {
                   // onClick={this.submitForm}
                 />
               </div>
+              {signinError && '로그인이 실패하였습니다.'}
               <FacebookProvider appId="279985115912357">
                 <Login
                   scope="email"
@@ -325,11 +326,10 @@ export class SignIn extends React.PureComponent {
               </FacebookProvider>
             </div>
           </form>
-          {signinError && '로그인이 실패하였습니다.'}
         </div>
         <footer className={classes.footer}>
           <span className={classes.footerText}>
-            아직 회원이 아니신가요?{' '}
+            아직 회원이 아니신가요?
             <Link to="/signup" role="button" style={{ textDecoration: 'none' }}>
               <Button>회원가입</Button>
             </Link>
@@ -363,7 +363,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(signinAction(email, password));
     },
     signinFacebook: (userId, email, accessToken) => {
-      console.log(userId);
+      // console.log(userId);
       dispatch(signinFacebookAction(userId, email, accessToken));
     },
     signinEnd: () => {

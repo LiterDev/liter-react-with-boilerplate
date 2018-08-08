@@ -25,6 +25,7 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import ReviewCardSlider from 'containers/ReviewCardSlider';
 import MediaSlider from 'components/MediaSlider';
+import FacebookProvider, { Share } from 'react-facebook';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -206,10 +207,10 @@ const styles = theme => ({
     color: '#1591ff',
   },
   paperSheet: {
-    margin: '0 0px 5px 0px',    
+    margin: '0 0px 5px 0px',
   },
   paperWordWrap: {
-    wordWrap: 'break-word', 
+    wordWrap: 'break-word',
     whiteSpace: 'normal',
   },
   paperItem: {
@@ -266,7 +267,7 @@ const styles = theme => ({
     textAlign: 'center',
   },
   // 임시 css - 수정해야함
-  fullDivider: {    
+  fullDivider: {
     width: 'calc(100% + 32px)',
     marginLeft: '-16px',
   },
@@ -286,7 +287,7 @@ const styles = theme => ({
     letterSpacing: 'normal',
     textAlign: 'center',
     color: '#333333',
-  }
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -296,6 +297,9 @@ class ReviewDetailCard extends React.PureComponent {
     const review = reviews;
     console.log(reviews);
     console.log(surveys);
+    // console.log(window.location.href);
+    
+    // this.props.location.state.from.pathname
     // const avatarImageUrl = review.user.profileImageUrl;
     const totalNewReview = 1;
     const mediaCollection = review ? review.mediaCollection : false;
@@ -303,29 +307,44 @@ class ReviewDetailCard extends React.PureComponent {
     const avatarImageUrl = review.user.profileImageUrl;
     const timeDiff = '방금전';
 
-    const elAvatar = (avatarImageUrl != null) ? <Avatar aria-label="Recipe" className={classes.avatar} src={avatarImageUrl}/>
-      : <img aria-label="Recipe" className={classes.avatar} src={avatarDefault} />
+    const elAvatar =
+      avatarImageUrl != null ? (
+        <Avatar
+          aria-label="Recipe"
+          className={classes.avatar}
+          src={avatarImageUrl}
+        />
+      ) : (
+        <img
+          aria-label="Recipe"
+          className={classes.avatar}
+          src={avatarDefault}
+        />
+      );
 
     let surveyArr = false;
     let categorySurvey = false;
     let storeSurvey = false;
-    let svPrd = 0, prdCount = 0;
-    let svDrv = 0, drvCount = 0;
-    let svAs = 0, asCount = 0;
+    let svPrd = 0,
+      prdCount = 0;
+    let svDrv = 0,
+      drvCount = 0;
+    let svAs = 0,
+      asCount = 0;
 
-    if(surveys != false) {
+    if (surveys != false) {
       surveyArr = Object.values(surveys);
       categorySurvey = surveyArr.filter(function(item) {
-        return item.reviewSurveyType == "CATEGORY";
+        return item.reviewSurveyType == 'CATEGORY';
       });
 
       surveyArr = Object.values(surveys);
       storeSurvey = surveyArr.filter(function(item) {
-        return item.reviewSurveyType == "STORE";
+        return item.reviewSurveyType == 'STORE';
       });
 
       const svPro = surveyArr.map(function(item) {
-        switch(item.sortPosition) {
+        switch (item.sortPosition) {
           case 0:
             svPrd += item.score;
             prdCount++;
@@ -351,9 +370,7 @@ class ReviewDetailCard extends React.PureComponent {
         <Card className={classes.card}>
           <CardHeader
             className={classes.cardHeader}
-            avatar={
-              elAvatar
-            }
+            avatar={elAvatar}
             action={
               <Typography>
                 <FormattedMessage {...messages.followText} />
@@ -380,18 +397,25 @@ class ReviewDetailCard extends React.PureComponent {
           </CardContent>
 
           <div>
-            <Paper className={classes.paperRoot} elevation={1}>              
+            <Paper className={classes.paperRoot} elevation={1}>
               <div className={classes.paperSheetHead}>
                 <SmsIcon className={classes.paperIcons} />
-                  <span >재구매할래요!</span>                
+                <span>재구매할래요!</span>
               </div>
               <div className={classes.paperSheet}>
                 <span className={classes.paperItem}>제품</span>
-                <span className={classes.paperDetail}>{review.productName}</span>
+                <span className={classes.paperDetail}>
+                  {review.productName}
+                </span>
               </div>
-              <div className={classNames(classes.paperSheet, classes.paperWordWrap)}>
+              <div
+                className={classNames(
+                  classes.paperSheet,
+                  classes.paperWordWrap,
+                )}
+              >
                 <span className={classes.paperItem}>구매처</span>
-                <span className={classes.paperDetail} >{review.buyLink}</span>
+                <span className={classes.paperDetail}>{review.buyLink}</span>
               </div>
               <div className={classes.paperSheet}>
                 <span className={classes.paperItem}>총평가</span>
@@ -399,16 +423,25 @@ class ReviewDetailCard extends React.PureComponent {
               </div>
 
               <div className={classes.scoreBox}>
-                <div className={classes.scoreItem} >
-                  <div className={classes.scoreGradeBox}><GradeIcon className={classes.gradeicons} /><span>{svPrd}</span></div>
+                <div className={classes.scoreItem}>
+                  <div className={classes.scoreGradeBox}>
+                    <GradeIcon className={classes.gradeicons} />
+                    <span>{svPrd}</span>
+                  </div>
                   <p className={classes.scoreText}>상품 만족</p>
                 </div>
-                <div className={classes.scoreItem} >
-                  <div className={classes.scoreGradeBox}><GradeIcon className={classes.gradeicons} /><span>{svDrv}</span></div>
+                <div className={classes.scoreItem}>
+                  <div className={classes.scoreGradeBox}>
+                    <GradeIcon className={classes.gradeicons} />
+                    <span>{svDrv}</span>
+                  </div>
                   <p className={classes.scoreText}>배송 속도</p>
                 </div>
-                <div className={classes.scoreItem} >
-                  <div className={classes.scoreGradeBox}><GradeIcon className={classes.gradeicons} /><span>{svAs}</span></div>
+                <div className={classes.scoreItem}>
+                  <div className={classes.scoreGradeBox}>
+                    <GradeIcon className={classes.gradeicons} />
+                    <span>{svAs}</span>
+                  </div>
                   <p className={classes.scoreText}>문의 응대</p>
                 </div>
               </div>
@@ -418,11 +451,10 @@ class ReviewDetailCard extends React.PureComponent {
               <div className={classes.newReview}>
                 {/* <span className={classes.newFont}>{ totalNewReview }개의 최신리뷰 보기</span>
                 <KeyboardArrowRightIcon /> */}
-                <div style={{'paddingBottom':'5px'}}></div>
+                <div style={{ paddingBottom: '5px' }} />
               </div>
             </Paper>
           </div>
-
         </Card>
 
         {/* <ReviewCardSlider user={review.user}/> */}
@@ -435,11 +467,24 @@ class ReviewDetailCard extends React.PureComponent {
                 <FormattedMessage {...messages.rewardActive} />
               </span>
             </div>
-            <div className={classes.activeRStatus}>
+            {/* <div className={classes.activeRStatus}>
               <ShareIcon className={classes.shareicons} />
               <span className={classes.shareText}>
                 <FormattedMessage {...messages.sharingText} />
               </span>
+            </div> */}
+            <div className={classes.activeRStatus}>
+              <FacebookProvider appId={process.env.FACEBOOK_APPID}>
+                <Share href={window.location.href}>
+                {/* <Share href="http://www.facebook.com"> */}
+                  <div>
+                    <ShareIcon className={classes.shareicons} />
+                    <span className={classes.shareText}>
+                      <FormattedMessage {...messages.sharingText} />
+                    </span>
+                  </div>
+                </Share>
+              </FacebookProvider>
             </div>
             {/* <div className={classes.activeRStatus}>
               <GradeIcon className={classes.gradeicons} />
@@ -447,7 +492,6 @@ class ReviewDetailCard extends React.PureComponent {
             </div>             */}
           </CardActions>
         </div>
-
       </div>
     );
   }

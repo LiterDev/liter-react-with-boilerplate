@@ -226,7 +226,7 @@ const styles = theme => ({
     width: '100%',
     height: '96px',
     backgroundColor: '#fff6f6',
-    boxShadow: `0 -1px 7px 0 rgba(0, 0, 0, 0.1)`, 
+    boxShadow: `0 -1px 7px 0 rgba(0, 0, 0, 0.1)`,
   },
   snackBarContent: {
     width: '284px',
@@ -258,7 +258,7 @@ const styles = theme => ({
     lineHeight: 'normal',
     textAlign: 'center',
     color: '#574949',
-  }
+  },
 });
 const cateList = [
   {
@@ -471,106 +471,118 @@ class ReviewWrite extends React.PureComponent {
       7. Tags
       8. 평점
     */
-    const movItem = this.state.imageComponent.filter(media => media.mediaType == 'mov');
-    const imageItem = this.state.imageComponent.filter(media => media.mediaType == 'image');
+    const movItem = this.state.imageComponent.filter(
+      media => media.mediaType == 'mov',
+    );
+    const imageItem = this.state.imageComponent.filter(
+      media => media.mediaType == 'image',
+    );
 
     // Validation 1.Title
-    if(!data.get('title')) {
-      this.setState({validationContent: '제목이 없습니다.'});
+    if (!data.get('title')) {
+      this.setState({ validationContent: '제목이 없습니다.' });
       this.handleAlertOpen();
       return false;
     }
     // Validation 2.Category
-    if(data.get('category') == 'false') {
-      this.setState({validationContent: '카테고리가 선택되지 않았습니다'});
+    if (data.get('category') == 'false') {
+      this.setState({ validationContent: '카테고리가 선택되지 않았습니다' });
       this.handleAlertOpen();
       return false;
     }
     // Validation 3.Media Check
-    if(movItem.length < 1 && imageItem.length < 3) {
-      this.setState({validationContent: '사진은 3개 이상 또는 동영상 1개가 반드시 추가되어야 합니다.'});
+    if (movItem.length < 1 && imageItem.length < 3) {
+      this.setState({
+        validationContent:
+          '사진은 3개 이상 또는 동영상 1개가 반드시 추가되어야 합니다.',
+      });
       this.handleAlertOpen();
       return false;
     }
     // Validation 4~6.Purchase Category && Review Content
-    switch(this.state.value) {
+    switch (this.state.value) {
       case 0:
         // TabOnline
-        console.log("TabOnline");
-        if(data.get('productName') === false) {
-          this.setState({validationContent: '상품명을 입력해 주세요.'});
+        console.log('TabOnline');
+        if (data.get('productName') === false) {
+          this.setState({ validationContent: '상품명을 입력해 주세요.' });
           this.handleAlertOpen();
         }
-        if(data.get('buyLink') === false) {
-          this.setState({validationContent: '구매처를 입력해 주세요'});
+        if (data.get('buyLink') === false) {
+          this.setState({ validationContent: '구매처를 입력해 주세요' });
           this.handleAlertOpen();
         }
-        if(data.get('content').trim().length <= 0) {
-          this.setState({validationContent: '리뷰를 작성해 주세요'});
+        if (data.get('content').trim().length <= 0) {
+          this.setState({ validationContent: '리뷰를 작성해 주세요' });
           this.handleAlertOpen();
         }
-      break;
+        break;
       case 1:
         // TabOffline
-        console.log("TabOffline");
-        if(data.get('productName') === false) {
-          this.setState({validationContent: '상품명을 입력해 주세요.'});
+        console.log('TabOffline');
+        if (data.get('productName') === false) {
+          this.setState({ validationContent: '상품명을 입력해 주세요.' });
           this.handleAlertOpen();
         }
         console.log(data.get('storeLat'));
-        if(data.get('storeLat') == 'false' || data.get('storeLng') == 'false') {
-          this.setState({validationContent: '방문한 곳의 주소를 입력해주세요'});
+        if (
+          data.get('storeLat') == 'false' ||
+          data.get('storeLng') == 'false'
+        ) {
+          this.setState({
+            validationContent: '방문한 곳의 주소를 입력해주세요',
+          });
           this.handleAlertOpen();
         }
-        if(data.get('content').trim().length <= 0) {
-          this.setState({validationContent: '리뷰를 작성해 주세요'});
+        if (data.get('content').trim().length <= 0) {
+          this.setState({ validationContent: '리뷰를 작성해 주세요' });
           this.handleAlertOpen();
         }
-      break;
+        break;
       case 2:
         // TabEtc
-        console.log("TabEtc");
-        if(data.get('productName') === false) {
-          this.setState({validationContent: '상품명을 입력해 주세요.'});
+        console.log('TabEtc');
+        if (data.get('productName') === false) {
+          this.setState({ validationContent: '상품명을 입력해 주세요.' });
           this.handleAlertOpen();
         }
-        if(data.get('ectInfo') === false) {
-          this.setState({validationContent: '구매 정보를 입력해주세요'});
+        if (data.get('ectInfo') === false) {
+          this.setState({ validationContent: '구매 정보를 입력해주세요' });
           this.handleAlertOpen();
         }
-        if(data.get('content').trim().length <= 0) {
-          this.setState({validationContent: '리뷰를 작성해 주세요'});
+        if (data.get('content').trim().length <= 0) {
+          this.setState({ validationContent: '리뷰를 작성해 주세요' });
           this.handleAlertOpen();
         }
-      break;
+        break;
     }
     // Validation 7 tags check
-    if(data.get('tags').length <= 0) {
-      this.setState({validationContent: '최소 1개이상의 태그를 넣어주세요.'});
+    if (data.get('tags').length <= 0) {
+      this.setState({ validationContent: '최소 1개이상의 태그를 넣어주세요.' });
       this.handleAlertOpen();
     }
     // Validation 8 평점 Check
     let tSurveyId;
-    switch(this.state.value) {
+    switch (this.state.value) {
       case 0:
         //Survey id: 1, 2, 3, 4, 5, 6
-        tSurveyId = [1,2,3,4,5,6];
-      break;
+        tSurveyId = [1, 2, 3, 4, 5, 6];
+        break;
       case 1:
         //Survey id: 7, 8, 9, 10, 11, 12, 13
-        tSurveyId = [7,8,9,10,11,12,13];
-      break;
+        tSurveyId = [7, 8, 9, 10, 11, 12, 13];
+        break;
       case 2:
         //Survey id: 1, 2, 3, 4, 5, 6
-        tSurveyId = [1,2,3,4,5,6];
-      break;
+        tSurveyId = [1, 2, 3, 4, 5, 6];
+        break;
     }
 
     tSurveyId.map(idx => {
-      if(data.get(`startRating[${idx}].rating`) == 0) {
+      if (data.get(`startRating[${idx}].rating`) == 0) {
         console.log(data.get(`startRating[${idx}].rateTitle`));
         const valContent = data.get(`startRating[${idx}].rateTitle`);
-        this.setState({validationContent: valContent});
+        this.setState({ validationContent: valContent });
         this.handleAlertOpen();
         return false;
       }
@@ -585,16 +597,16 @@ class ReviewWrite extends React.PureComponent {
     }
     // alert('on');
     // console.log('====on');
-    // this.props.onSubmitForm(data);
+    this.props.onSubmitForm(data);
   }
 
   handleAlertOpen = () => {
-    this.setState({'validationAlert': true });
-  }
+    this.setState({ validationAlert: true });
+  };
 
   handleAlertClose = () => {
-    this.setState({'validationAlert': false });
-  }
+    this.setState({ validationAlert: false });
+  };
 
   handleClickOpen = () => {
     this.setState({
@@ -823,25 +835,25 @@ class ReviewWrite extends React.PureComponent {
           <ReviewCategory open={this.state.open} onClose={this.handleClose} />
         </div>
 
-      {/* ]------- Alert Dialog : start --------- [ */}
-      <Snackbar
-        className={classes.snackBar}
-        open={this.state.validationAlert}
-        onClose={this.handleAlertClose}
-      >
-      <SnackbarContent
-        className={classes.snackBarContent}
-        message={
-           <span className={classes.snackBarCover}>
-            <div className={classes.snackBarTitle}>작성오류</div>
-            <div className={classes.snackBarCaption}>
-              {this.state.validationContent}
-            </div>
-          </span>
-        }
-      />
-      </Snackbar>
-      {/* ]------- Alert Dialog : end --------- [ */}
+        {/* ]------- Alert Dialog : start --------- [ */}
+        <Snackbar
+          className={classes.snackBar}
+          open={this.state.validationAlert}
+          onClose={this.handleAlertClose}
+        >
+          <SnackbarContent
+            className={classes.snackBarContent}
+            message={
+              <span className={classes.snackBarCover}>
+                <div className={classes.snackBarTitle}>작성오류</div>
+                <div className={classes.snackBarCaption}>
+                  {this.state.validationContent}
+                </div>
+              </span>
+            }
+          />
+        </Snackbar>
+        {/* ]------- Alert Dialog : end --------- [ */}
       </div>
     );
   }

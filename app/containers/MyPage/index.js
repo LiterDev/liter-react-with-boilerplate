@@ -21,10 +21,10 @@ import Typography from '@material-ui/core/Typography';
 import classNames from 'classnames';
 
 import AlertDialog from 'components/AlertDialog';
-import EmailAuthPop from 'components/EmailAuthSuccessPop';
+// import EmailAuthPop from 'components/EmailAuthSuccessPop';
 import Button from 'components/Button';
 import Header from 'components/Header';
-import TabList from 'components/TabList';
+// import TabList from 'components/TabList';
 import messages from './messages';
 
 import {
@@ -257,7 +257,7 @@ export class MyPage extends React.PureComponent {
             </div>
           </div>
         </div>
-        <TabList tabs={this.state.tabs} data={myPages} />
+        {/* <TabList tabs={this.state.tabs} data={myPages} /> */}
         <AlertDialog
           onClose={this.handleClose}
           open={this.state.makeWalletPopOpen}
@@ -265,11 +265,11 @@ export class MyPage extends React.PureComponent {
           title={<FormattedMessage {...messages.emailAuthTitle} />}
           msg={<FormattedMessage {...messages.emailAuthMsg} />}
         />
-        <EmailAuthPop
+        {/* <EmailAuthPop
           onClose={this.handleClose}
           open={this.state.emailSuccessPop}
           submitHandler={this.handleSubmit}
-        />
+        /> */}
       </div>
     );
   }

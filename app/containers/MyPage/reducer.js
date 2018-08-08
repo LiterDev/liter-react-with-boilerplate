@@ -56,6 +56,7 @@ function myPageReducer(state = initialState, action) {
     case FOLLOWING_COUNT_FAILURE:
       return state;
     default:
+      console.log(action.type);
       return state;
   }
 }

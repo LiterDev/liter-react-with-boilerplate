@@ -20,10 +20,11 @@ import Typography from '@material-ui/core/Typography';
 
 import classNames from 'classnames';
 
-// import AlertDialog from 'components/AlertDialog';
+import AlertDialog from 'components/AlertDialog';
+import EmailAuthPop from 'components/EmailAuthSuccessPop';
 import Button from 'components/Button';
 import Header from 'components/Header';
-import Tabs from 'components/Tabs';
+import TabList from 'components/TabList';
 import messages from './messages';
 
 import {
@@ -123,11 +124,14 @@ export class MyPage extends React.PureComponent {
         { tabLabel: '보상 내역', type: 'REWARD' },
       ],
       makeWalletPopOpen: false,
+      emailSuccessPop: false,
       havingWallet: false,
     };
 
     this.handleCreateWallet = this.handleCreateWallet.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.openEmailSuccesPop = this.openEmailSuccesPop.bind(this);
   }
 
   // handleChange = e => {
@@ -136,11 +140,23 @@ export class MyPage extends React.PureComponent {
   //   });
   // };
   handleSubmit = e => {
+    const { resendEmailAuth } = this.props;
     this.setState({
       makeWalletPopOpen: false,
-      havingWallet: true,
+      // havingWallet: true,
     });
+    resendEmailAuth();
     console.log('ok');
+    e.preventDefault();
+  };
+
+  openEmailSuccesPop = e => {
+    this.setState({
+      makeWalletPopOpen: false,
+      emailSuccessPop: true,
+      // havingWallet: true,
+    });
+    console.log('email ok');
     e.preventDefault();
   };
 
@@ -155,6 +171,7 @@ export class MyPage extends React.PureComponent {
     console.log('close');
     this.setState({
       makeWalletPopOpen: false,
+      emailSuccessPop: false,
     });
   };
 
@@ -240,14 +257,19 @@ export class MyPage extends React.PureComponent {
             </div>
           </div>
         </div>
-        <Tabs tabs={this.state.tabs} data={myPages} />
-        {/* <AlertDialog
+        <TabList tabs={this.state.tabs} data={myPages} />
+        <AlertDialog
           onClose={this.handleClose}
           open={this.state.makeWalletPopOpen}
-          submitHandler={this.handleSubmit}
+          submitHandler={this.openEmailSuccesPop}
           title={<FormattedMessage {...messages.emailAuthTitle} />}
           msg={<FormattedMessage {...messages.emailAuthMsg} />}
-        /> */}
+        />
+        <EmailAuthPop
+          onClose={this.handleClose}
+          open={this.state.emailSuccessPop}
+          submitHandler={this.handleSubmit}
+        />
       </div>
     );
   }
@@ -259,7 +281,7 @@ MyPage.propTypes = {
   selectMyReview: PropTypes.func,
   loadFollowerCount: PropTypes.func,
   loadFollowingCount: PropTypes.func,
-  myPages: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  myPages: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   global: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   follwerCount: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   follwingCount: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -288,6 +310,10 @@ function mapDispatchToProps(dispatch) {
     selectFollowingCount: () => {
       console.log(`load My Review - following Count call!!!`);
       dispatch(loadFollowingCountAction());
+    },
+    resendEmailAuth: () => {
+      console.log(`resend Email Auth`);
+      dispatch(sendEmailAuth());
     },
   };
 }

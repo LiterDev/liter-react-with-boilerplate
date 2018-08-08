@@ -57,6 +57,7 @@ export function* post(postData) {
 
     if (repos && repos.id > 0) {
       // console.log('redirect');
+      // console.log('redirect');
       // const reviewDetailUrl = '/review/' + repos.id;
       const reviewDetailUrl = '/';
       // yield put(NavigationActions.navigate({ routeName: reviewDetailUrl }));

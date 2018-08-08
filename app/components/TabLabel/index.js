@@ -30,6 +30,7 @@ const styles = theme => ({
     verticalAlign: 'middle',
     marginRight: 5,
     display: 'table-cel',
+    // color: 'rgb(244, 244, 244)',
   },
 });
 function TabLabel(props) {

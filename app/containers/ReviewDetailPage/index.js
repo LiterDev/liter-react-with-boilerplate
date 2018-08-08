@@ -17,12 +17,17 @@ import injectReducer from 'utils/injectReducer';
 import Header from 'components/Header';
 import ReviewDetailCard from 'components/ReviewDetailCard';
 
-import { makeSelectReviews, makeSelectReviewId, makeSelectSurveys } from './selectors';
+
+import {
+  makeSelectReviews,
+  makeSelectReviewId,
+  makeSelectSurveys,
+} from './selectors';
 
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import { loadAction  } from './actions';
+import { loadAction } from './actions';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ReviewDetailPage extends React.PureComponent {
@@ -35,21 +40,18 @@ export class ReviewDetailPage extends React.PureComponent {
     // reviewId - detail index
     const { reviews, reviewId, surveys } = this.props;
 
-    console.log("]----detail page render ----[");
+    console.log(']----detail page render ----[');
     // console.log(surveys);
-    if(reviews !== false) {
+    if (reviews !== false) {
       return (
         <div>
-          <Header headerTitle='' />
-          <ReviewDetailCard reviews={reviews} surveys={surveys}/>
+          <Header headerTitle="" />
+          <ReviewDetailCard reviews={reviews} surveys={surveys} />
         </div>
       );
     }
 
-    return (
-      <div>
-      </div>
-    );    
+    return <div />;
   }
 }
 
@@ -67,7 +69,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    loadReview: (reviewId) => {
+    loadReview: reviewId => {
       dispatch(loadAction(reviewId));
     },
   };

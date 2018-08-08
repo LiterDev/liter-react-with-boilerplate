@@ -32,7 +32,7 @@ import GradeIcon from '@material-ui/icons/Grade';
 import Divider from '@material-ui/core/Divider';
 // import classnames from 'classnames';
 // import SvgIcon from '@material-ui/core/SvgIcon';
-
+import FacebookProvider, { Share } from 'react-facebook';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 // import { prototype } from 'node-notifier/notifiers/balloon';
@@ -155,7 +155,9 @@ class ReviewCard extends React.PureComponent {
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
+
   render() {
+    // console.log(window.location.href);
     const { classes } = this.props;
     const { idx, review, viewType } = this.props;
 
@@ -195,7 +197,8 @@ class ReviewCard extends React.PureComponent {
                 </Typography>
               }
               title={review.user.username}
-              subheader={<TimeAt date={review.updateAt} />}
+              subheader={timeDiff}
+              // subheader={<TimeAt date={review.updateAt} />}
             />
           ) : (
             <div />
@@ -221,11 +224,11 @@ class ReviewCard extends React.PureComponent {
           <div>
             <Divider className={classes.divider} light />
           </div>
-
+          
           {/* <ReviewCardBottomBar ref={`card${idx}`} prKey={`card${idx}`} reviewId={review.id} /> */}
           <ReviewCardBottomBarView onVote={false} />
           
-        </Card>
+       </Card>
       </div>
     );
   }

@@ -7,7 +7,7 @@
 import React from 'react';
 // import Input from '@material-ui/core/Input';
 // import Button from '@material-ui/core/Button';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import { Helmet } from 'react-helmet';
@@ -17,7 +17,7 @@ import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { withStyles } from '@material-ui/core/styles';
-
+import Button from '@material-ui/core/Button';
 import Header from 'components/Header';
 // import SignInput from 'components/SignInput';
 import BlueButton from 'components/BlueButton';
@@ -97,12 +97,31 @@ const styles = theme => ({
     color: '#7c7c7c',
     textAlign: 'center',
     height: 42,
+    display: 'table',
+  },
+  footerText: {
+    display: 'table-cell',
+    verticalAlign: 'middle',
+    color: 'rgb(153, 153, 153)',
+  },
+  footerSignin: {
+    display: 'table-cell',
+    verticalAlign: 'middle',
+    color: 'rgb(153, 153, 153)',
   },
 });
 
 // function Transition(props) {
 //   return <Slide direction="left" {...props} />;
 // }
+
+export const validateEmail = email => {
+  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+    return true;
+  }
+  // alert('You have entered an invalid email address!');
+  return false;
+};
 
 /* eslint-disable react/prefer-stateless-function */
 export class SignUp extends React.PureComponent {
@@ -132,6 +151,13 @@ export class SignUp extends React.PureComponent {
     const errors = [];
     if (!email) {
       errors.push(500108);
+    } else {
+      this.setState({
+        emailError: false,
+      });
+    }
+    if (!validateEmail(email)) {
+      errors.push(500110);
     } else {
       this.setState({
         emailError: false,
@@ -193,6 +219,11 @@ export class SignUp extends React.PureComponent {
     if (errorCode === 500106) {
       this.setState({
         usernameError: <FormattedMessage {...messages.username} />,
+      });
+    }
+    if (errorCode === 500110) {
+      this.setState({
+        emailError: <FormattedMessage {...messages.emailvalid} />,
       });
     }
     if (
@@ -310,9 +341,13 @@ export class SignUp extends React.PureComponent {
         </div>
 
         <footer className={classes.footer}>
-          {/* <FormattedMessage {...messages.next} />
-          <FormattedMessage {...messages.next} /> */}
-          로그인
+          <span className={classes.footerText}>
+            이미 회원이신가요?
+            <Link to="/signin" role="button" style={{ textDecoration: 'none' }}>
+              <Button>로그인</Button>
+            </Link>
+          </span>
+          {/* <span className={classes.footerSignin}>회원가입</span> */}
         </footer>
       </div>
     );

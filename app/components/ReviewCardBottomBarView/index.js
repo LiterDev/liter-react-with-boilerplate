@@ -15,6 +15,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import VoteNonIcon from '../../images/ic-voting-non.png';
 import VoteSelIcon from '../../images/ic-voting-sel.png';
 import ShareNonIcon from '../../images/ic-share-non.png';
+import FacebookProvider, { Share } from 'react-facebook';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -166,7 +167,14 @@ class ReviewCardBottomBarView extends React.PureComponent {
               </span>
             </div>
             <div className={classes.activeRStatus}>
-              <img src={curShare.selImg} className={classes.shareicons} />
+              <FacebookProvider appId={process.env.FACEBOOK_APPID}>
+                <Share href={window.location.href}>
+                {/* <Share href="http://www.facebook.com"> */}
+                  <div>
+                    <img src={curShare.selImg} className={classes.shareicons} />
+                  </div>
+                </Share>
+              </FacebookProvider>
             </div>
           </div>
         </div>
@@ -189,8 +197,16 @@ class ReviewCardBottomBarView extends React.PureComponent {
               </span>
             </div>    
             <div className={classes.activeRStatus}>
-              <img src={curShare.selImg} className={classes.shareicons} />
+              <FacebookProvider appId={process.env.FACEBOOK_APPID}>
+                <Share href={window.location.href}>
+                {/* <Share href="http://www.facebook.com"> */}
+                  <div>
+                    <img src={curShare.selImg} className={classes.shareicons} />
+                  </div>
+                </Share>
+              </FacebookProvider>
             </div>
+
           </div>          
         </div>
       );

@@ -90,7 +90,7 @@ class SimpleTabs extends React.Component {
     const result = [];
     const tabItem = tabs[value];
 
-    console.log(data.myPages);
+    console.log(data.myPages.length);
     if (data.myPages) {
       if (tabItem.type === 'REVIEW') {
         result.push(
@@ -131,7 +131,6 @@ class SimpleTabs extends React.Component {
   renderReviewdRow(type, data) {
     if (data !== false) {
       const reviewArray = Object.values(data);
-      console.log(reviewArray);
       return reviewArray.map(row => (
         <ReviewContainer review={row} data={row} key={type.concat(row.id)} />
       ));

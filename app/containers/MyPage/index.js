@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormatHTMLMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -20,6 +20,8 @@ import Typography from '@material-ui/core/Typography';
 
 import classNames from 'classnames';
 
+// import AlertDialog from 'components/AlertDialog';
+import Button from 'components/Button';
 import Header from 'components/Header';
 import Tabs from 'components/Tabs';
 import messages from './messages';
@@ -109,32 +111,52 @@ const styles = {
 
 /* eslint-disable react/prefer-stateless-function */
 export class MyPage extends React.PureComponent {
-  state = {
-    userData: {
-      userId: '1',
-      photoPath:
-        'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAH0AfQMBIgACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAAAQIEBQYDB//EACoQAAICAQIGAQMFAQAAAAAAAAABAhEDBCEFEjFBUXFhIjKhIzRCYoET/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/APtoIsWBIIsWBIIsWBIIsWBIIsWBIIsWBIIsWBIIsWBUEWLAkEWLAkEWYfENatLCo1LJLovHyBl5MkMcebJJRj5bMWXFdJF/fKXqJoc2bJnnzZZuT+ex5gdJj4lpMjpZeV/2VGUmmk07T7nImRpNZm0sv05XHvB9GB0wPLT54ajDHJB7Pt4PSwJBFiwJBFiwIBUAWBUAWOa1uV5tTkndq6XpHRSlywk/CbOW7AAAAAAGy4Jmcc08T6SVpfKN0c5w51rcXuvwdDYFgVAFgVAFbFlbFgWsWVsWBM/qhJLujmF0Oms53UQ/558kPEmB5gAAAAMnhyvW4vZv7NLwmHNqZS7RizcWBaxZWxYFrFlbFgVsWQAJsWQAJs1XFsVZY5V0kqftG0PLU4VnxOD79H4YGhBbJF45uEtmnRUAAe+kwPUZeX+K3kBseF4+TT876z3/AMMyyqpJJKkuhIE2LIAE2LIAFQVsWBYFbMfLrcWPZS534iBlFZzjBXOSS+TV5dflntCoL46mNKTk7k235bAvqpxyajJOLtN7HkAAM3huWGPJNTko8yVWYQA6BNNWt15JNDjyzxu4TcfTMvFxGa2yxUvlbAbMHhi1OLLtGe/h9T1sCwK2LArZjajWRxPlj9U/widZleLD9PV7I1QHrlz5M33y28LoeQAAAAAAAAAAAADIw6vLjpN80fDMcAbjBqIZl9Oz7pnrZpITcJKUXTXQ3GOanCMl3VgYnEfsh7MEzuIfZD2YIEAAAAAAAAAAAAAAAAG20n7fH6NSbXTft8foD//Z',
-    },
-    tabs: [
-      { tabLabel: '리뷰', type: 'REVIEW' },
-      { tabLabel: '보상 내역', type: 'REWARD' },
-    ],
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      userData: {
+        photoPath:
+          'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAH0AfQMBIgACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAAAQIEBQYDB//EACoQAAICAQIGAQMFAQAAAAAAAAABAhEDBCEFEjFBUXFhIjKhIzRCYoET/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/APtoIsWBIIsWBIIsWBIIsWBIIsWBIIsWBIIsWBIIsWBUEWLAkEWLAkEWYfENatLCo1LJLovHyBl5MkMcebJJRj5bMWXFdJF/fKXqJoc2bJnnzZZuT+ex5gdJj4lpMjpZeV/2VGUmmk07T7nImRpNZm0sv05XHvB9GB0wPLT54ajDHJB7Pt4PSwJBFiwJBFiwIBUAWBUAWOa1uV5tTkndq6XpHRSlywk/CbOW7AAAAAAGy4Jmcc08T6SVpfKN0c5w51rcXuvwdDYFgVAFgVAFbFlbFgWsWVsWBM/qhJLujmF0Oms53UQ/558kPEmB5gAAAAMnhyvW4vZv7NLwmHNqZS7RizcWBaxZWxYFrFlbFgVsWQAJsWQAJs1XFsVZY5V0kqftG0PLU4VnxOD79H4YGhBbJF45uEtmnRUAAe+kwPUZeX+K3kBseF4+TT876z3/AMMyyqpJJKkuhIE2LIAE2LIAFQVsWBYFbMfLrcWPZS534iBlFZzjBXOSS+TV5dflntCoL46mNKTk7k235bAvqpxyajJOLtN7HkAAM3huWGPJNTko8yVWYQA6BNNWt15JNDjyzxu4TcfTMvFxGa2yxUvlbAbMHhi1OLLtGe/h9T1sCwK2LArZjajWRxPlj9U/widZleLD9PV7I1QHrlz5M33y28LoeQAAAAAAAAAAAADIw6vLjpN80fDMcAbjBqIZl9Oz7pnrZpITcJKUXTXQ3GOanCMl3VgYnEfsh7MEzuIfZD2YIEAAAAAAAAAAAAAAAAG20n7fH6NSbXTft8foD//Z',
+      },
+      tabs: [
+        { tabLabel: '리뷰', type: 'REVIEW' },
+        { tabLabel: '보상 내역', type: 'REWARD' },
+      ],
+      makeWalletPopOpen: false,
+      havingWallet: false,
+    };
+
+    this.handleCreateWallet = this.handleCreateWallet.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
+
   // handleChange = e => {
   //   this.setState({
   //     // userId: e.target.value,
   //   });
   // };
   handleSubmit = e => {
-    e.preventDefault();
     this.setState({
-      // userId: '',
+      makeWalletPopOpen: false,
+      havingWallet: true,
+    });
+    console.log('ok');
+    e.preventDefault();
+  };
+
+  handleCreateWallet = () => {
+    console.log('makeWallet');
+    this.setState({
+      makeWalletPopOpen: true,
     });
   };
 
-  checkWallet() {
-    //
-  }
+  handleClose = () => {
+    console.log('close');
+    this.setState({
+      makeWalletPopOpen: false,
+    });
+  };
 
   componentDidMount() {
     const {
@@ -150,11 +172,10 @@ export class MyPage extends React.PureComponent {
 
   render() {
     const { classes, myPages, global } = this.props;
-    const { userData } = this.state;
+    const { userData, havingWallet } = this.state;
     console.log(global.userData.username);
 
     // 임시코드
-    const havingWallet = false;
     return (
       <div>
         <div className={classes.container}>
@@ -195,10 +216,14 @@ export class MyPage extends React.PureComponent {
                 0
               </Typography>
             ) : (
-              <div className={classes.makeWalletLink}>
-                지갑 생성하기<br />
-                이메일 인증으로 지갑을 생성하십하세요.
-              </div>
+              <Button
+                className={classes.makeWalletLink}
+                onClick={this.handleCreateWallet}
+              >
+                {<FormattedMessage {...messages.createWallet} />}
+                <br />
+                {<FormattedMessage {...messages.requiredWalletMsg} />}
+              </Button>
             )}
           </div>
           <div className={classNames(classes.row, classes.panelInfo)}>
@@ -216,6 +241,13 @@ export class MyPage extends React.PureComponent {
           </div>
         </div>
         <Tabs tabs={this.state.tabs} data={myPages} />
+        {/* <AlertDialog
+          onClose={this.handleClose}
+          open={this.state.makeWalletPopOpen}
+          submitHandler={this.handleSubmit}
+          title={<FormattedMessage {...messages.emailAuthTitle} />}
+          msg={<FormattedMessage {...messages.emailAuthMsg} />}
+        /> */}
       </div>
     );
   }

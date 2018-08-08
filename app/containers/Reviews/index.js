@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -26,7 +26,7 @@ import saga from './saga';
 import messages from './messages';
 
 import { loadList, loadListMore } from './actions';
-import jQuery from "jquery";
+import jQuery from 'jquery';
 window.$ = window.jQuery = jQuery;
 
 const styles = theme => ({
@@ -41,8 +41,14 @@ export class Reviews extends React.PureComponent {
     loadReviewList();
 
     $(window).scroll(() => {
-      if ($(document).height() - $(window).height() - $(window).scrollTop() < 250) {
-        loadReviewListMore(this.props.reviews.loadMore, this.props.reviews.last);
+      if (
+        $(document).height() - $(window).height() - $(window).scrollTop() <
+        250
+      ) {
+        loadReviewListMore(
+          this.props.reviews.loadMore,
+          this.props.reviews.last,
+        );
       }
     });
   }
@@ -80,7 +86,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(loadList());
     },
     loadReviewListMore: (loadMore, last) => {
-      if(!loadMore && !last) {
+      if (!loadMore && !last) {
         dispatch(loadListMore());
       }
     },

@@ -19,9 +19,14 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import Button from '@material-ui/core/Button';
 import InputWithHelper from 'components/InputWithHelper';
 import BlueButton from 'components/BlueButton';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
+import FacebookProvider, { Login } from 'react-facebook';
+
+import { validateEmail } from 'containers/SignUp';
+
 // import ErrorPop from 'components/ErrorPop';
 import {
   makeSelectSignIn,
@@ -31,7 +36,7 @@ import {
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import { signinAction, signinInit } from './actions';
+import { signinAction, signinInit, signinFacebookAction } from './actions';
 import signUpmessages from '../SignUp/messages';
 import LiterLogo from '../../images/liter-logo@3x.png';
 
@@ -82,7 +87,47 @@ const styles = theme => ({
     paddingTop: 94,
     marginBottom: 2,
   },
+  facebookBtn: {
+    marginTop: 91,
+    width: '100%',
+    height: 36,
+    borderRadius: 3,
+    border: 'solid 0.5px rgb(57, 103, 175)',
+  },
+  facebookBtnText: {
+    fontFamily: 'SFProText',
+    fontSize: 13,
+    fontWeight: 600,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    textAlign: 'center',
+    color: 'rgb(57, 103, 175)',
+  },
+  footer: {
+    position: 'fixed',
+    left: 0,
+    bottom: 0,
+    width: '100%',
+    backgroundColor: '#fafafa',
+    color: '#7c7c7c',
+    textAlign: 'center',
+    height: 42,
+    display: 'table',
+  },
+  footerText: {
+    display: 'table-cell',
+    verticalAlign: 'middle',
+    color: 'rgb(153, 153, 153)',
+  },
+  footerSignin: {
+    display: 'table-cell',
+    verticalAlign: 'middle',
+    color: 'rgb(153, 153, 153)',
+  },
 });
+
 /* eslint-disable react/prefer-stateless-function */
 export class SignIn extends React.PureComponent {
   constructor(props) {
@@ -97,14 +142,21 @@ export class SignIn extends React.PureComponent {
   onSubmitFormInit(event) {
     event.preventDefault();
     const email = event.target.email.value;
+
     const password = event.target.password.value;
     const errors = [];
+
+    // console.log(validateEmail(email));
+
     if (!email) {
       errors.push(500108);
     } else {
       this.setState({
         emailError: false,
       });
+    }
+    if (!validateEmail(email)) {
+      errors.push(500110);
     }
     if (!password) {
       errors.push(500100);
@@ -134,9 +186,11 @@ export class SignIn extends React.PureComponent {
       this.setState({
         emailError: <FormattedMessage {...signUpmessages.email} />,
       });
-    }
-
-    if (
+    } else if (errorCode === 500110) {
+      this.setState({
+        emailError: <FormattedMessage {...signUpmessages.emailvalid} />,
+      });
+    } else if (
       errorCode === 500100 ||
       errorCode === 500101 ||
       errorCode === 500102 ||
@@ -154,15 +208,29 @@ export class SignIn extends React.PureComponent {
   //   this.props.defaultAction();
   // }
   componentWillMount() {
-    console.log('will mound');
+    // console.log('will mound');
   }
+  handleResponse = data => {
+    // console.log(data);
+    this.props.signinFacebook(
+      data.profile.id,
+      data.profile.email,
+      data.tokenDetail.accessToken,
+    );
+  };
+
+  handleError = error => {
+    console.log(error);
+    // this.setState({ error });
+  };
+
   render() {
     const { classes, signinSuccess, signinError } = this.props;
     // console.log(signinSuccess);
     // console.log(signinEnd);
     if (signinSuccess) {
       // console.log(signinSuccess);
-      // console.log(signinSuccess.accessToken);
+      console.log(signinSuccess.accessToken);
       localStorage.setItem('accessToken', signinSuccess.accessToken);
       localStorage.setItem('refreshToken', signinSuccess.refreshToken);
       localStorage.setItem('username', signinSuccess.username);
@@ -242,10 +310,32 @@ export class SignIn extends React.PureComponent {
                   // onClick={this.submitForm}
                 />
               </div>
+              {signinError && '로그인이 실패하였습니다.'}
+              <FacebookProvider appId="279985115912357">
+                <Login
+                  scope="email"
+                  onResponse={this.handleResponse}
+                  onError={this.handleError}
+                >
+                  <button className={classes.facebookBtn}>
+                    <span className={classes.facebookBtnText}>
+                      Facebook으로 로그인
+                    </span>
+                  </button>
+                </Login>
+              </FacebookProvider>
             </div>
           </form>
-          {signinError && '로그인이 실패하였습니다.'}
         </div>
+        <footer className={classes.footer}>
+          <span className={classes.footerText}>
+            아직 회원이 아니신가요?
+            <Link to="/signup" role="button" style={{ textDecoration: 'none' }}>
+              <Button>회원가입</Button>
+            </Link>
+          </span>
+          {/* <span className={classes.footerSignin}>회원가입</span> */}
+        </footer>
       </div>
     );
   }
@@ -254,6 +344,7 @@ export class SignIn extends React.PureComponent {
 SignIn.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   signinForm: PropTypes.func.isRequired,
+  // signinFacebookAction: PropTypes.func.isRequired,
   // signinSuccess: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   signinError: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   // defaultAction: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -271,8 +362,12 @@ function mapDispatchToProps(dispatch) {
     signinForm: (email, password) => {
       dispatch(signinAction(email, password));
     },
+    signinFacebook: (userId, email, accessToken) => {
+      // console.log(userId);
+      dispatch(signinFacebookAction(userId, email, accessToken));
+    },
     signinEnd: () => {
-      console.log('call SignInEnd');
+      // console.log('call SignInEnd');
       dispatch(signinInit());
     },
     // defaultAction: () => {

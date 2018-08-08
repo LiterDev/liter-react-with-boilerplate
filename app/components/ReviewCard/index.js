@@ -5,10 +5,10 @@
  */
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Media from 'components/Media';
 import MediaSlider from 'components/MediaSlider';
 import TimeAt from 'components/TimeAt';
@@ -31,7 +31,7 @@ import Divider from '@material-ui/core/Divider';
 // import classnames from 'classnames';
 // import SvgIcon from '@material-ui/core/SvgIcon';
 
-import { FormattedMessage } from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import messages from './messages';
 // import { prototype } from 'node-notifier/notifiers/balloon';
 
@@ -151,11 +151,12 @@ class ReviewCard extends React.PureComponent {
   // state = { expanded: false };
 
   handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }));
+    this.setState(state => ({expanded: !state.expanded}));
   };
+
   render() {
-    const { classes } = this.props;
-    const { review, viewType } = this.props;
+    const {classes} = this.props;
+    const {review, viewType} = this.props;
 
     const mediaCollection = review ? review.mediaCollection : false;
     const mediaItem = mediaCollection ? mediaCollection[0] : false;
@@ -193,7 +194,8 @@ class ReviewCard extends React.PureComponent {
                 </Typography>
               }
               title={review.user.username}
-              subheader={<TimeAt date={review.updateAt} />}
+              subheader={timeDiff}
+              // subheader={<TimeAt date={review.updateAt} />}
             />
           ) : (
             <div />
@@ -201,7 +203,7 @@ class ReviewCard extends React.PureComponent {
 
           {/* { mediaItem ? ( <Media fullPath={mediaItem.fullPath} mediaType={mediaItem.mediaType} description={mediaItem.name} /> ) : ( <div></div> ) } */}
 
-          <MediaSlider media={mediaCollection} />
+          <MediaSlider media={mediaCollection}/>
 
           {/* <CardMedia
             className={classes.media}
@@ -217,18 +219,18 @@ class ReviewCard extends React.PureComponent {
             </StyledLink>
           </CardContent>
           <div>
-            <Divider className={classes.divider} light />
+            <Divider className={classes.divider} light/>
           </div>
 
           <CardActions className={classes.actions} disableActionSpacing>
             <div className={classes.activeStatus}>
-              <ArrowDropDownCircleIcon className={classes.icons} />
+              <ArrowDropDownCircleIcon className={classes.icons}/>
               <span className={classes.captionText}>
                 <FormattedMessage {...messages.rewardActive} />
               </span>
             </div>
             <div className={classes.activeRStatus}>
-              <ShareIcon className={classes.shareicons} />
+              <ShareIcon className={classes.shareicons}/>
               <span className={classes.shareText}>
                 <FormattedMessage {...messages.sharingText} />
               </span>

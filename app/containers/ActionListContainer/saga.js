@@ -14,8 +14,13 @@ export function* getContents() {
   const userid = yield select(makeSelectUserID());
   const followType = yield select(makeSelectPageType());
 
-  const requestFollowURL = `${process.env.API_URL}/follow/follower/${userid}`;
-  const requestFollowingURL = `${process.env.API_URL}/follow/following/${userid}`;
+  const accessToken = localStorage.getItem('accessToken');
+  const token = `Bearer ${accessToken}`;
+
+  // const requestFollowURL = `${process.env.API_URL}/follow/follower/${userid}`;
+  // const requestFollowingURL = `${process.env.API_URL}/follow/following/${userid}`;
+  const requestFollowURL = `${process.env.API_URL}/follow/follower`;
+  const requestFollowingURL = `${process.env.API_URL}/follow/following`;
 
   const requestURL =
     followType == 'follow' ? requestFollowURL : requestFollowingURL;
@@ -26,12 +31,14 @@ export function* getContents() {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
+      'Authorization': token,
     },
   };
 
   try {
     // Call our request helper (see 'utils/request')
     const reqContents = yield call(request, requestURL, options);
+    console.log(reqContents);
     yield put(listLoaded(reqContents, userid));
   } catch (err) {
     yield put(listLoadingError(err));

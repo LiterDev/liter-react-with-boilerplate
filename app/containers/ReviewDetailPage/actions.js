@@ -4,7 +4,16 @@
  *
  */
 
-import { DEFAULT_ACTION, LOAD_ACTION, LOAD_SUCCESS, LOAD_SURVEY_SUCCESS, LOAD_FAILURE } from './constants';
+import { DEFAULT_ACTION, 
+        LOAD_ACTION, 
+        LOAD_SUCCESS, 
+        LOAD_SURVEY_SUCCESS, 
+        LOAD_FAILURE,
+        FOLLOW_ACTION,
+        VOTE_ACTION,
+        VOTE_SUCCESS,
+        VOTE_ERROR
+} from './constants';
 
 export function defaultAction() {
   return {
@@ -36,6 +45,34 @@ export function loadedSurvey(data) {
 export function loadedFailure(error) {
   return {
     type: LOAD_FAILURE,
+    error
+  };
+}
+
+export function followAction(followId) {
+  return {
+    type: FOLLOW_ACTION,
+    followId
+  };
+}
+
+export function voteAction(reviewId) {
+  return {
+    type: VOTE_ACTION,
+    reviewId
+  };
+}
+
+export function voteSuccess(data) {
+  return {
+    type: VOTE_SUCCESS,
+    data
+  };
+}
+
+export function voteError(error) {
+  return {
+    type: VOTE_ERROR,
     error
   };
 }

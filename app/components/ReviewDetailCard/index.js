@@ -25,9 +25,11 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import ReviewCardSlider from 'containers/ReviewCardSlider';
 import MediaSlider from 'components/MediaSlider';
+import FollowButton from 'components/FollowButton';
 import FacebookProvider, { Share } from 'react-facebook';
 
 import ReviewCardBottomBar from 'containers/ReviewCardBottomBar';
+import ReviewCardBottomBarView from 'components/ReviewCardBottomBarView';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -103,6 +105,7 @@ const styles = theme => ({
     lineHeight: '1.63',
     letterSpacing: 'normal',
     color: ' #333333',
+    whiteSpace: 'pre-wrap',
   },
   divider: {
     margin: 'auto',
@@ -324,6 +327,10 @@ class ReviewDetailCard extends React.PureComponent {
         />
       );
 
+    // const formatContent = review.content.split('\n').map( line => {
+    //     return (<span>{line}<br/></span>)
+    //   });
+
     let surveyArr = false;
     let categorySurvey = false;
     let storeSurvey = false;
@@ -374,9 +381,7 @@ class ReviewDetailCard extends React.PureComponent {
             className={classes.cardHeader}
             avatar={elAvatar}
             action={
-              <Typography>
-                <FormattedMessage {...messages.followText} />
-              </Typography>
+              <FollowButton onViewFollow={this.props.handleFollow} followId={review.user.id}/>
             }
             title={review.user.username}
             subheader={timeDiff}
@@ -474,8 +479,9 @@ class ReviewDetailCard extends React.PureComponent {
               <span className={classes.shareText}>
                 <FormattedMessage {...messages.sharingText} />
               </span>
-            </div> */}            
-          <ReviewCardBottomBar ref={`detailCard${review.id}`} prKey={`detailCard${review.id}`} reviewId={review.id} />
+            </div> */}
+          {/* <ReviewCardBottomBar ref={`detailCard${review.id}`} prKey={`detailCard${review.id}`} reviewId={review.id} /> */}
+          <ReviewCardBottomBarView likeYN={review.likeYN} onViewVote={this.props.handleVoting} reviewId={review.id} viewType="fixed"/>
       </div>
     );
   }

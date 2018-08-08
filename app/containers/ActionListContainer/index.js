@@ -40,6 +40,7 @@ import { makeSelectList, makeSelectListContents } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import Tmessages from './messages';
+import avatarDefault from '../../images/ic-avatar.png';
 
 const styles = theme => ({
   root: {
@@ -135,6 +136,9 @@ export class ActionListContainer extends React.PureComponent {
     const nType = followType == 'follow' ? 0 : 1;
     const messages = Tmessages[nType];
 
+    console.log("]-------------- USERID -----------[");
+    console.log(this.props.userid);
+
     let content = null;
     const followArray = contents.content != null ? contents.content : [];
 
@@ -150,7 +154,7 @@ export class ActionListContainer extends React.PureComponent {
             <div className={classes.row}>
               <Avatar
                 alt={item.username}
-                src={item.profileImageUrl}
+                src={(item.profileImageUrl) ? item.profileImageUrl: avatarDefault }
                 className={classes.avatar}
               />
             </div>

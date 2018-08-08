@@ -24,5 +24,7 @@ const makeSelectReviewId = () =>
 const makeSelectSurveys = () =>
   createSelector(selectReviewDetailPageDomain, substate => substate.get('surveys'));
 
+const makeSelectError = () =>
+  createSelector(selectReviewDetailPageDomain, substate => substate.get('error'));
 
-export { selectReviewDetailPageDomain, makeSelectReviewId, makeSelectReviews, makeSelectSurveys };
+export { selectReviewDetailPageDomain, makeSelectReviewId, makeSelectReviews, makeSelectSurveys, makeSelectError };

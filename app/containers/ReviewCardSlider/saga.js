@@ -8,13 +8,22 @@ export function* getReviews(data) {
 
   const userid = data.userid;
   const requestURL = `${process.env.API_URL}/review/latestList`;
-
-  
+  const accessToken = localStorage.getItem('accessToken');
+  const token = `Bearer ${accessToken}`;
+  const options = {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json;charset=UTF-8',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': '*',
+      'Authorization': token,
+    },
+  };    
 
   try {
     // Call our request helper (see 'utils/request')
     // const reqContents = yield call(request, requestURL, options);
-    const reqContents = yield call(request, requestURL);
+    const reqContents = yield call(request, requestURL, options);
     yield put(reviewListLoaded(reqContents));
   } catch (err) {
     yield put(reviewListLoadingError(err));

@@ -11,6 +11,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { bindActionCreators } from 'redux'
 import classNames from 'classnames';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -22,18 +23,9 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 
-import { voteAction } from './actions';
+import { voteAction, voteGo } from './actions';
 
-const styles = theme => ({
-  root: {
-    position: 'fixed',
-    bottom: '0',
-    width: '100%',
-    height: '52px',
-    backgroundColor: '#fcfcfc',
-    boxShadow: `0 -1px 7px 0 rgba(0, 0, 0, 0.1)`,
-  },
-});
+const styles = theme => ({});
 
 /* eslint-disable react/prefer-stateless-function */
 export class ReviewCardBottomBar extends React.PureComponent {
@@ -49,12 +41,11 @@ export class ReviewCardBottomBar extends React.PureComponent {
   render() {
     const { classes } = this.props;
     const { reviewId, liked, campaign, prKey } = this.props;
-    console.log(prKey);
 
     return (
-      <div className={classes.root}>
+      <div>        
         {/* <ReviewCardBottomBarView onVote={this.onVote} liked={liked} campaign={campaign} ref={ref => this.child = ref } /> */}
-        <ReviewCardBottomBarView onViewVote={this.onVote} liked={liked} campaign={campaign} />        
+        {/* <ReviewCardBottomBarView onViewVote={this.onVote} liked={liked} campaign={campaign} /> */}
       </div>
     );
   }

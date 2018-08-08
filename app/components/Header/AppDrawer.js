@@ -17,7 +17,7 @@ import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   paper: {
-    width: 250,
+    width: '82%',
     backgroundColor: theme.palette.background.paper,
   },
   title: {

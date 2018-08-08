@@ -26,6 +26,8 @@ import Paper from '@material-ui/core/Paper';
 import ReviewCardSlider from 'containers/ReviewCardSlider';
 import MediaSlider from 'components/MediaSlider';
 
+import ReviewCardBottomBar from 'containers/ReviewCardBottomBar';
+
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
@@ -427,7 +429,7 @@ class ReviewDetailCard extends React.PureComponent {
 
         {/* <ReviewCardSlider user={review.user}/> */}
 
-        <div className={classes.floatBottom}>
+        {/* <div className={classes.floatBottom}>
           <CardActions className={classes.actions} disableActionSpacing>
             <div className={classes.activeStatus}>
               <SmsIcon className={classes.icons} />
@@ -441,13 +443,11 @@ class ReviewDetailCard extends React.PureComponent {
                 <FormattedMessage {...messages.sharingText} />
               </span>
             </div>
-            {/* <div className={classes.activeRStatus}>
-              <GradeIcon className={classes.gradeicons} />
-              <span className={classes.gradeText}>{review.totalScore}</span>
-            </div>             */}
           </CardActions>
-        </div>
+        </div> */}
 
+        <ReviewCardBottomBar ref={`detailCard${review.id}`} prKey={`detailCard${review.id}`} reviewId={review.id} />
+        
       </div>
     );
   }

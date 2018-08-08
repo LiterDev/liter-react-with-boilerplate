@@ -46,7 +46,7 @@ export class Reviews extends React.PureComponent {
       }
     });
   }
-
+  
   render() {
     // const { classes } = this.props;
     const { reviews } = this.props;

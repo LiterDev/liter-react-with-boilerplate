@@ -11,6 +11,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Media from 'components/Media';
 import MediaSlider from 'components/MediaSlider';
+import ReviewCardBottomBar from 'containers/ReviewCardBottomBar';
+import ReviewCardBottomBarView from 'components/ReviewCardBottomBarView';
 import TimeAt from 'components/TimeAt';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -155,7 +157,7 @@ class ReviewCard extends React.PureComponent {
   };
   render() {
     const { classes } = this.props;
-    const { review, viewType } = this.props;
+    const { idx, review, viewType } = this.props;
 
     const mediaCollection = review ? review.mediaCollection : false;
     const mediaItem = mediaCollection ? mediaCollection[0] : false;
@@ -220,25 +222,9 @@ class ReviewCard extends React.PureComponent {
             <Divider className={classes.divider} light />
           </div>
 
-          <CardActions className={classes.actions} disableActionSpacing>
-            <div className={classes.activeStatus}>
-              <ArrowDropDownCircleIcon className={classes.icons} />
-              <span className={classes.captionText}>
-                <FormattedMessage {...messages.rewardActive} />
-              </span>
-            </div>
-            <div className={classes.activeRStatus}>
-              <ShareIcon className={classes.shareicons} />
-              <span className={classes.shareText}>
-                <FormattedMessage {...messages.sharingText} />
-              </span>
-            </div>
-            {/* <div className={classes.activeRStatus}>
-              <GradeIcon className={classes.gradeicons} />
-              <span className={classes.gradeText}>{review.totalScore}</span>
-            </div> */}
-          </CardActions>
-
+          {/* <ReviewCardBottomBar ref={`card${idx}`} prKey={`card${idx}`} reviewId={review.id} /> */}
+          <ReviewCardBottomBarView onVote={false} />
+          
         </Card>
       </div>
     );

@@ -35,9 +35,9 @@ class ReviewList extends React.PureComponent {
       return (
         <div>
           {reviewArray &&
-            reviewArray.map(review => (
+            reviewArray.map((review, idx) => (
               <div key={review.id}>
-                <ReviewCard review={review} />
+                <ReviewCard idx={idx} review={review} />
               </div>
             ))}
         </div>

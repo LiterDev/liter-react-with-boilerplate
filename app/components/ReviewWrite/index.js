@@ -580,7 +580,7 @@ class ReviewWrite extends React.PureComponent {
 
     tSurveyId.map(idx => {
       if (data.get(`startRating[${idx}].rating`) == 0) {
-        console.log(data.get(`startRating[${idx}].rateTitle`));
+        // console.log(data.get(`startRating[${idx}].rateTitle`));
         const valContent = data.get(`startRating[${idx}].rateTitle`);
         this.setState({ validationContent: valContent });
         this.handleAlertOpen();

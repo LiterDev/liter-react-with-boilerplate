@@ -171,7 +171,7 @@ class ReviewCard extends React.PureComponent {
     // temp date
     // call time-diff function (6 level)
     const timeDiff = '방금전';
-
+    
     const elAvatar =
       avatarImageUrl != null ? (
         <Avatar
@@ -195,7 +195,9 @@ class ReviewCard extends React.PureComponent {
               className={classes.cardHeader}
               avatar={elAvatar}
               action={
-                <FollowButton onViewFollow={this.props.handleFollow} followId={review.user.id}>
+                <FollowButton 
+                  onViewFollow={this.props.handleFollow} 
+                  followId={review.user.id}>
                 </FollowButton>
               }
               title={review.user.username}
@@ -228,7 +230,7 @@ class ReviewCard extends React.PureComponent {
           </div>
 
           {/* <ReviewCardBottomBar ref={`card${idx}`} prKey={`card${idx}`} reviewId={review.id} /> */}
-          <ReviewCardBottomBarView likeYN={review.likeYN} onViewVote={false} />
+          <ReviewCardBottomBarView likeYn={review.likeYn} onViewVote={false} />
           
        </Card>
       </div>

@@ -10,6 +10,7 @@ import {
   LOAD_LIST_SUCCESS,
   LOAD_LIST_ERROR,
   SET_FOLLOW,
+  SET_UNFOLLOW,
   SET_FOLLOWED_SUCCESS,
   SET_FOLLOWED_ERROR,
   DEL_FOLLOW,
@@ -43,6 +44,9 @@ function actionListContainerReducer(state = initialState, action) {
     case LOAD_LIST_ERROR:
       return state.set('error', action.error).set('loading', false);
     case SET_FOLLOWED_SUCCESS:
+      // state.setIn(['list', 'contents']).content.filter(item => {
+      //   return item.id == action.data.followId;
+      // }).set('followStatus', 'FOLLOW');      
       return state;
     case SET_FOLLOWED_ERROR:
       console.log(state);
@@ -53,7 +57,9 @@ function actionListContainerReducer(state = initialState, action) {
       //     .set('followedStatusText', '팔로우 실패..')
       //   );
       return state;
-    case DEL_FOLLOW:
+    case SET_FOLLOW:
+      return state;
+    case SET_UNFOLLOW:
       return state;
     default:
       return state;

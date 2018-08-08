@@ -35,7 +35,7 @@ import Header from 'components/Header';
 
 import { makeSelectPageType } from 'containers/FollowActionPage/selectors';
 
-import { loadList, setFollow } from './actions';
+import { loadList, setFollow, setUnFollow } from './actions';
 import { makeSelectList, makeSelectListContents } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -110,6 +110,14 @@ const styles = theme => ({
     width: theme.spacing.unit * 4,
     height: theme.spacing.unit * 4,
   },
+  nolistcontainer: {
+    backgroundColor: '#ffffff',
+  },
+  nolist: {
+    height: '300px',
+    textAlign: 'center',
+    margin: '100px 0 0 0',
+  }
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -125,8 +133,16 @@ export class ActionListContainer extends React.PureComponent {
       this.props.onLoadList();
   }
 
-  onFollowCtrlClick = followid => {
-    this.props.onSetFollow(followid);
+  onFollowCtrlClick = followId => {
+    console.log("onFollowCtrlClick>>>>>>>>>>>>>>>");
+    console.log(followId);
+    this.props.onSetFollow(followId);
+  };
+
+  onUnFollowCtrlClick = followId => {
+    console.log("onUnFollowCtrlClick>>>>>>>>>>>>>>>");
+    console.log(followId);
+    this.props.onSetUnFollow(followId);
   };
 
   render() {
@@ -142,7 +158,10 @@ export class ActionListContainer extends React.PureComponent {
     let content = null;
     const followArray = contents.content != null ? contents.content : [];
 
-    if (this.props.contents != false) {
+    console.log("this.props.contents-----------------------");
+    console.log(followArray);
+
+    if (followArray.length > 0) {
       const filledArray = this.props.contents.content;
       content = filledArray.map((item, idx) => (
         <ListItem
@@ -172,12 +191,35 @@ export class ActionListContainer extends React.PureComponent {
             </ListItemText>
           </div>
           <div>
-            <FollowCtrl followid={item.id} onFollow={this.onFollowCtrlClick} />
+            <FollowCtrl 
+              followId={item.id} 
+              onUnFollow={this.onUnFollowCtrlClick} 
+              onFollow={this.onFollowCtrlClick} 
+              followYn={(item.followStatus == 'UNFOLLOW')? 0: 1} 
+            />
           </div>
         </ListItem>
       ));
-    }
 
+      return (
+        <div>
+          <div className={classes.container}>
+            <Header
+              headerTitle={<FormattedMessage {...messages.headerTitle} />}
+            />
+          </div>
+          <div className={classes.nolistcontainer}>
+            <Typography className={classes.followCaption}>
+              <FormattedMessage {...messages.followCaption} />{' '}
+              {followArray.length}
+            </Typography>
+            <List>{content}</List>
+          </div>
+        </div>
+      );
+
+    } 
+    
     return (
       <div>
         <div className={classes.container}>
@@ -190,7 +232,9 @@ export class ActionListContainer extends React.PureComponent {
             <FormattedMessage {...messages.followCaption} />{' '}
             {followArray.length}
           </Typography>
-          <List>{content}</List>
+          <div className={classes.nolist}>
+             <FormattedMessage {...messages.nolistCaption} />
+          </div>
         </div>
       </div>
     );
@@ -224,6 +268,9 @@ function mapDispatchToProps(dispatch) {
     },
     onSetFollow: followid => {
       dispatch(setFollow(followid));
+    },
+    onSetUnFollow: followid => {
+      dispatch(setUnFollow(followid));
     },
   };
 }

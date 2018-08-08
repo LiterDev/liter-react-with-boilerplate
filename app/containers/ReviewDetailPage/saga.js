@@ -32,7 +32,7 @@ export function* getReview(data) {
     // Call our request helper (see 'utils/request')
     // const reqContents = yield call(request, requestURL, options);
     const reqContents = yield call(request, requestURL, options);
-    const reqSurvey = yield call(request, requestSurveyURL);
+    const reqSurvey = yield call(request, requestSurveyURL, options);
     yield put(loadedSuccess(reqContents));
     yield put(loadedSurvey(reqSurvey));
 
@@ -99,7 +99,23 @@ export function* sagaVote(data) {
     const reqContents = yield call(request, requestURL, options);
     console.log("Vote Success <<<<<<<<<<<<<<<<<<<<");
     console.log(reqContents);
-    yield put(voteSuccess(reqContents));
+
+    ////////////////////////////////////////////////////////////////////////
+    const requestURL2 = `${process.env.API_URL}/review/detail/${reviewId}`;
+    const options2 = {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': token,
+      },
+    };
+    const review = yield call(request, requestURL2, options2);
+    ////////////////////////////////////////////////////////////////////////
+
+    yield put(voteSuccess(review));
+    // yield put(voteSuccess(reqContents));
   } catch(err) {
     yield put(voteError(err));
     console.log("Vote Failure <<<<<<<<<<<<<<<<<<<<");

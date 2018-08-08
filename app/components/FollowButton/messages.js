@@ -11,4 +11,8 @@ export default defineMessages({
     id: 'app.components.FollowButton.header',
     defaultMessage: 'This is the FollowButton component !',
   },
+  buttonTitle: {
+    id: 'app.components.FollowButton.buttonTitle',
+    defaultMessage: '팔로우',
+  },
 });

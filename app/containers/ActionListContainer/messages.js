@@ -28,6 +28,10 @@ export default defineMessages([
       id: 'app.containers.ActionListContainer.followCaption',
       defaultMessage: '팔로워',
     },
+    nolistCaption: {
+      id: 'app.containers.ActionListContainer.nolistCaption',
+      defaultMessage: '팔로워 내역이 없습니다.',
+    },
   },
   {
     header: {
@@ -49,6 +53,10 @@ export default defineMessages([
     followCaption: {
       id: 'app.containers.ActionListContainer.followCaption',
       defaultMessage: '팔로잉',
+    },
+    nolistCaption: {
+      id: 'app.containers.ActionListContainer.nolistCaption',
+      defaultMessage: '팔로잉 내역이 없습니다.',
     },
   },
 ]);

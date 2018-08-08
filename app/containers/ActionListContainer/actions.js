@@ -11,6 +11,7 @@ import {
   SET_FOLLOW,
   SET_FOLLOWED_SUCCESS,
   SET_FOLLOWED_ERROR,
+  SET_UNFOLLOW,
 } from './constants';
 
 export function loadList() {
@@ -37,6 +38,13 @@ export function listLoadingError(error) {
 export function setFollow(followid) {
   return {
     type: SET_FOLLOW,
+    followid,
+  };
+}
+
+export function setUnFollow(followid) {
+  return {
+    type: SET_UNFOLLOW,
     followid,
   };
 }

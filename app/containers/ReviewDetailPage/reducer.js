@@ -41,7 +41,8 @@ function reviewDetailPageReducer(state = initialState, action) {
     case VOTE_ACTION:
       return state;
     case VOTE_SUCCESS:
-      return state;
+      return state
+            .set('reviews', action.data);
     case VOTE_ERROR:
       return state.set('error', action.error);
     default:

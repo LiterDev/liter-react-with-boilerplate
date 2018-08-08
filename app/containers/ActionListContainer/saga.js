@@ -5,8 +5,8 @@ import {
   makeSelectPageType,
 } from 'containers/FollowActionPage/selectors';
 
-import { LOAD_LIST, SET_FOLLOW, DEL_FOLLOW } from './constants';
-import { listLoaded, listLoadingError } from './actions';
+import { LOAD_LIST, SET_FOLLOW, SET_UNFOLLOW } from './constants';
+import { loadList, listLoaded, listLoadingError } from './actions';
 import { setFollowedSuccess, setFollowedError } from './actions';
 
 export function* getContents() {
@@ -45,60 +45,60 @@ export function* getContents() {
   }
 }
 
-export function* delFollowSaga(data) {
-  const userid = yield select(makeSelectUserID());
-  const followid = data.followid;
-  console.log(data.followid);
-  console.log(` << ${userid}`);
-
-  const requestURL = `${process.env.API_URL}/follow/${followid}`;
-
+export function* setUnFollowSaga(data) {
+  const followId = data.followid;
+  const requestURL = `${process.env.API_URL}/follow/${followId}`;
+  const accessToken = localStorage.getItem('accessToken');
+  const token = `Bearer ${accessToken}`;
   const options = {
     method: 'DELETE',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
+      'Authorization': token,
     },
   };
 
   try {
     // Call our request helper (see 'utils/request')
     const reqContents = yield call(request, requestURL, options);
-    yield put(setFollowedSuccess(reqContents));
+    // console.log(reqContents);
+    // yield put(setFollowedSuccess(reqContents));
+    yield put(loadList());
   } catch (err) {
     // yield put(setFollowedError(err));
-    yield put(setFollowedError(err));
+    // yield put(setFollowedError(err));
+    yield put(loadList());
   }
 }
 
 export function* setFollowSaga(data) {
-  const userid = yield select(makeSelectUserID());
-  const followid = data.followid;
-  console.log(data.followid);
-  console.log(` << ${userid}`);
-
-  const requestURL = `${process.env.API_URL}/follow/`;
-
+  const followId = data.followid;
+  const requestURL = `${process.env.API_URL}/follow`;
+  const accessToken = localStorage.getItem('accessToken');
+  const token = `Bearer ${accessToken}`;
   const options = {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
+      'Authorization': token,
     },
     body: JSON.stringify({
-      followid,
+      'followId': followId
     }),
   };
-
   try {
     // Call our request helper (see 'utils/request')
     const reqContents = yield call(request, requestURL, options);
-    yield put(setFollowedSuccess(reqContents));
+    console.log(reqContents);
+    // yield put(setFollowedSuccess({reqContents, followId}));
+    yield put(loadList());
   } catch (err) {
     // yield put(setFollowedError(err));
-    yield put(setFollowedError(err));
+    yield put(loadList());
   }
 }
 
@@ -107,5 +107,5 @@ export default function* defaultSaga() {
   // See example in containers/HomePage/saga.js
   yield takeLatest(LOAD_LIST, getContents);
   yield takeLatest(SET_FOLLOW, setFollowSaga);
-  yield takeLatest(DEL_FOLLOW, delFollowSaga);
+  yield takeLatest(SET_UNFOLLOW, setUnFollowSaga);
 }

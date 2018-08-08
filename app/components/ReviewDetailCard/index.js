@@ -481,7 +481,7 @@ class ReviewDetailCard extends React.PureComponent {
               </span>
             </div> */}
           {/* <ReviewCardBottomBar ref={`detailCard${review.id}`} prKey={`detailCard${review.id}`} reviewId={review.id} /> */}
-          <ReviewCardBottomBarView likeYN={review.likeYN} onViewVote={this.props.handleVoting} reviewId={review.id} viewType="fixed"/>
+          <ReviewCardBottomBarView likeYn={review.likeYn} onViewVote={this.props.handleVoting} reviewId={review.id} viewType="fixed"/>
       </div>
     );
   }

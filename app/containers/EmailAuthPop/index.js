@@ -23,13 +23,12 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
+import Timer from 'components/Timer';
 
 import { sendEmailAuth } from './actions';
 import makeSelectEmailAuthPop from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-
-import Moment from 'react-moment';
 
 // import styled from 'styled-components';
 
@@ -64,36 +63,24 @@ const styles = {
 
 /* eslint-disable react/prefer-stateless-function */
 export class EmailAuthPop extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      seconds: Number(localStorage.getItem('sendEmailSuccessTime')),
-    };
-  }
+  reSendEmail = () => {
+    const { sendEmail } = this.props;
+    // this.setState({
+    //   sendStatus: false,
+    // });
+    sendEmail();
+  };
 
-  tick() {
-    const { seconds } = this.state;
-    this.setState({
-      seconds: seconds + 1,
-    });
-  }
-
-  componentDidMount() {
-    console.log(Date.now());
-    this.timer = setInterval(() => this.tick(), 1000);
-  }
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
-
+  handleClose = () => {
+    this.props.onClose(false);
+  };
+  
   render() {
-    const { classes, open, resSendEmail } = this.props;
-
-    const { seconds } = this.state;
+    const { classes, open, sendEmail } = this.props;
 
     // const elapsed = Math.round(this.state.elapsed / 100);
     // const second = (elapsed / 10).toFixed(1);
-
+    if (open) sendEmail();
     return (
       <div>
         <Dialog fullScreen open={open} onClose={this.handleClose}>
@@ -123,21 +110,15 @@ export class EmailAuthPop extends React.PureComponent {
               보상을 받을 수 있습니다.
               <br />
               <br />
-              {seconds}
-              <br />
-              sucess{' '}
-              <Moment
-                date={Number(localStorage.getItem('sendEmailSuccessTime'))}
-              />
-              tonow <Moment date={Date.UTC()} />
-              (인증 남은 시간)
-              <br />
-              <br />
             </DialogContentText>
+            <Timer />
+            (인증 남은 시간)
+            <br />
+            <br />
             <Divider />
             <br />
             <Button
-              onClick={resSendEmail}
+              onClick={sendEmail}
               className={classes.okBtn}
               color="secondary"
               variant="outlined"
@@ -170,7 +151,7 @@ export class EmailAuthPop extends React.PureComponent {
 }
 
 EmailAuthPop.propTypes = {
-  resSendEmail: PropTypes.func,
+  sendEmail: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -179,7 +160,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    resSendEmail: () => {
+    sendEmail: () => {
       console.log('ReSend Email Auth');
       dispatch(sendEmailAuth());
     },

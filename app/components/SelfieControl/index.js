@@ -161,10 +161,8 @@ class SelfieControl extends React.PureComponent {
   }
 
   handleSubmit = () => {
-    console.log(this.state.imageFormData);
-
+    const self = this;
     const data = this.state.imageFormData;   
-    
     const requestURL = `${process.env.API_URL}/user/profile`;
     const accessToken = localStorage.getItem('accessToken');
     const token = `Bearer ${accessToken}`;
@@ -182,10 +180,12 @@ class SelfieControl extends React.PureComponent {
       'data': data,
     })
     .then(function (response) {
-      console.log(self);
       self.setState({
         'open': false
       });
+      
+      self.props.callbackFunc();
+
       return response;
     })
     .catch(function (error) {
@@ -196,7 +196,8 @@ class SelfieControl extends React.PureComponent {
 
   render() {
     const { classes } = this.props;
-    
+    const { callbackFunc } = this.props;
+
     let selfieData = null;
     if(this.state.imageData) {
       selfieData = <Avatar className={classes.bigAvatar} width={150} height={150} src={ URL.createObjectURL(this.state.imageData) } />

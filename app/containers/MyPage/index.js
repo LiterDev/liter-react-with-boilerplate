@@ -180,7 +180,7 @@ export class MyPage extends React.PureComponent {
 
   componentDidMount() {
     const { selectMyReview, selectUserData } = this.props;
-
+ 
     selectUserData();
     selectMyReview();
   }
@@ -207,7 +207,7 @@ export class MyPage extends React.PureComponent {
     // 임시코드
     return (
       <div>
-        <SelfieControl changeSelfie={click => this.changeSelfie = click}/> 
+        <SelfieControl changeSelfie={click => this.changeSelfie = click} callbackFunc={this.props.selectUserData}/> 
         <div className={classes.container}>
           <Header headerTitle={<FormattedMessage {...messages.header} />} />
         </div>

@@ -5,23 +5,12 @@
  */
 
 import { fromJS } from 'immutable';
-import {
-  MYPAGE_ACTION,
-  MYPAGE_SUCCESS,
-  MYPAGE_FAILURE,
-  FOLLOWER_COUNT_ACTION,
-  FOLLOWER_COUNT_SUCCESS,
-  FOLLOWER_COUNT_FAILURE,
-  FOLLOWING_COUNT_ACTION,
-  FOLLOWING_COUNT_SUCCESS,
-  FOLLOWING_COUNT_FAILURE,
-  LOAD_USER_DATA,
-  LOAD_USER_SUCCESS,
-  LOAD_USER_ERROR,
-} from './constants';
+import * as constants from './constants';
 
 export const initialState = fromJS({
-  myPages: false,
+  reviews: false,
+  rewords: false,
+  acquire: 0,
   followerCount: 0,
   followingCount: 0,
   loading: false,
@@ -31,39 +20,57 @@ export const initialState = fromJS({
 
 function myPageReducer(state = initialState, action) {
   switch (action.type) {
-    case MYPAGE_ACTION:
+    case constants.MYPAGE_REVIEWS_ACTION:
       return state.set('loading', true).set('error', false);
-    case MYPAGE_SUCCESS:
+    case constants.MYPAGE_REVIEWS_SUCCESS:
       return state
         .set('loading', false)
         .set('error', false)
-        .set('myPages', action.data.content);
-    case MYPAGE_FAILURE:
+        .set('reviews', action.data.content);
+    case constants.MYPAGE_REVIEWS_FAILURE:
       return state;
-    case FOLLOWER_COUNT_ACTION:
+    case constants.MYPAGE_REWORDS_ACTION:
+      return state.set('loading', true).set('error', false);
+    case constants.MYPAGE_REWORDS_SUCCESS:
+      return state
+        .set('loading', false)
+        .set('error', false)
+        .set('rewords', action.data.content);
+    case constants.MYPAGE_REWORDS_FAILURE:
       return state;
-    case FOLLOWER_COUNT_SUCCESS:
+    case constants.REWORDS_ACQUIRE_ACTION:
+      return state.set('loading', true).set('error', false);
+    case constants.REWORDS_ACQUIRE_SUCCESS:
+      return state
+        .set('loading', false)
+        .set('error', false)
+        .set('acquire', action.data.content);
+    case constants.REWORDS_ACQUIRE_FAILURE:
+      return state;
+    case constants.FOLLOWER_COUNT_ACTION:
+      return state;
+    case constants.FOLLOWER_COUNT_SUCCESS:
       // console.log(action);
       return state
         .set('loading', false)
         .set('error', false)
         .set('followerCount', action.data);
-    case FOLLOWER_COUNT_FAILURE:
+    case constants.FOLLOWER_COUNT_FAILURE:
       return state;
-    case FOLLOWING_COUNT_ACTION:
+    case constants.FOLLOWING_COUNT_ACTION:
       return state;
-    case FOLLOWING_COUNT_SUCCESS:
+    case constants.FOLLOWING_COUNT_SUCCESS:
       return state
         .set('loading', false)
         .set('error', false)
         .set('followingCount', action.data);
-    case FOLLOWING_COUNT_FAILURE:
+    case constants.FOLLOWING_COUNT_FAILURE:
       return state;
-    case LOAD_USER_DATA:
+    case constants.LOAD_USER_DATA:
       return state;
-    case LOAD_USER_SUCCESS:
+    case constants.LOAD_USER_SUCCESS:
       return state.set('userData', action.data);
-    case LOAD_USER_ERROR:
+    case constants.LOAD_USER_ERROR:
       // console.log(action.data);
       return state;
     default:

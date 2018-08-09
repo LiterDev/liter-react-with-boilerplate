@@ -5,9 +5,15 @@
  */
 
 import {
-  MYPAGE_ACTION,
-  MYPAGE_SUCCESS,
-  MYPAGE_FAILURE,
+  MYPAGE_REVIEWS_ACTION,
+  MYPAGE_REVIEWS_SUCCESS,
+  MYPAGE_REVIEWS_FAILURE,
+  MYPAGE_REWORDS_ACTION,
+  MYPAGE_REWORDS_SUCCESS,
+  MYPAGE_REWORDS_FAILURE,
+  REWORDS_ACQUIRE_ACTION,
+  REWORDS_ACQUIRE_SUCCESS,
+  REWORDS_ACQUIRE_FAILURE,
   FOLLOWER_COUNT_ACTION,
   FOLLOWER_COUNT_SUCCESS,
   FOLLOWER_COUNT_FAILURE,
@@ -38,26 +44,74 @@ export function loadUserError(data) {
   };
 }
 
-export function myPageAction() {
+export function myReviewsAction() {
   // console.log('myPageAction');
   return {
-    type: MYPAGE_ACTION,
+    type: MYPAGE_REVIEWS_ACTION,
   };
 }
 
-export function myPageSuccess(data) {
+export function myReviewsSuccess(data) {
   // console.log('myPageSuccess');
   // console.log(data);
   return {
-    type: MYPAGE_SUCCESS,
+    type: MYPAGE_REVIEWS_SUCCESS,
     data,
   };
 }
 
-export function myPageFailure(error) {
-  console.log('myPageFailure');
+export function myReviewsFailure(error) {
+  console.log('myReviewFailure');
   return {
-    type: MYPAGE_FAILURE,
+    type: MYPAGE_REVIEWS_FAILURE,
+    error,
+  };
+}
+
+export function myRewordsAction() {
+  // console.log('myPageAction');
+  return {
+    type: MYPAGE_REWORDS_ACTION,
+  };
+}
+
+export function myRewordsSuccess(data) {
+  // console.log('myPageSuccess');
+  // console.log(data);
+  return {
+    type: MYPAGE_REWORDS_SUCCESS,
+    data,
+  };
+}
+
+export function myRewordsFailure(error) {
+  console.log('myReviewFailure');
+  return {
+    type: MYPAGE_REWORDS_FAILURE,
+    error,
+  };
+}
+
+export function myRewordAcquireAction() {
+  // console.log('myRewordAcquireAction');
+  return {
+    type: REWORDS_ACQUIRE_ACTION,
+  };
+}
+
+export function myRewordsAcquireSuccess(data) {
+  // console.log('myRewordsAcquireSuccess');
+  // console.log(data);
+  return {
+    type: REWORDS_ACQUIRE_SUCCESS,
+    data,
+  };
+}
+
+export function myRewordsAcquireFailure(error) {
+  console.log('myRewordsAcquireFailure');
+  return {
+    type: REWORDS_ACQUIRE_FAILURE,
     error,
   };
 }

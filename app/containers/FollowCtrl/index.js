@@ -100,7 +100,7 @@ export class FollowCtrl extends React.PureComponent {
   render() {
     const { classes } = this.props;
     const { followId, followType, followYn } = this.props;
-    
+
     if(followYn) {
       return (
         <div>

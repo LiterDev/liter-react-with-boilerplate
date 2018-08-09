@@ -15,24 +15,28 @@ import Typography from '@material-ui/core/Typography';
 import messages from './messages';
 
 const styles = theme => ({
+  followBox: {
+    paddingRight: '16px',
+    paddingTop: '22px',
+  },
   buttonText: {
     width: '34px',
     height: '16px',
     fontFamily: 'AppleSDGothicNeo',
-    fontSize: '13px',
+    fontSize: '12px',
     fontWeight: '600',
     fontStyle: 'normal',
     fontStretch: 'normal',
     lineHeight: 'normal',
     letterSpacing: 'normal',
     textAlign: 'center',
-    color: '#000000',
+    color: '#1591ff',
   },
   unButtonText: {
     width: '34px',
     height: '16px',
     fontFamily: 'AppleSDGothicNeo',
-    fontSize: '13px',
+    fontSize: '12px',
     fontWeight: '600',
     fontStyle: 'normal',
     fontStretch: 'normal',
@@ -45,10 +49,6 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 class FollowButton extends React.PureComponent {
-
-  onFollow = followId => {
-    this.props.onViewFollow(followId);
-  }
 
   handleSetFollow = (evt) => {
     evt.preventDefault();
@@ -66,17 +66,17 @@ class FollowButton extends React.PureComponent {
     const { classes } = this.props;
     const { followId, followType, followYn } = this.props;
 
-    if(followYn) {
+    if(followYn > 0) {
       return (
-        <div>
+        <div className={classes.followBox}>
           <Typography className={classes.unButtonText}>
-            <FormattedMessage {...messages.buttonTitle} />
-          </Typography>
+            <FormattedMessage {...messages.unButtonTitle} />
+          </Typography>          
         </div>
-      );  
+      );
     }
     return (
-      <div>
+      <div className={classes.followBox}>
         <Typography className={classes.buttonText}>
           <FormattedMessage {...messages.buttonTitle} />
         </Typography>

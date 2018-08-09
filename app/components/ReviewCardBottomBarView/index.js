@@ -149,8 +149,6 @@ class ReviewCardBottomBarView extends React.PureComponent {
     const { reviewId, onViewVote, campaign, viewType, likeYn } = this.props;
     const { voting, reviewing, sharing, viewClass } = this.state; 
     
-    console.log(likeYn);
-
     const curVote = (likeYn)? votingIcons.sel : votingIcons.non;
     const curReviewing = (campaign)? reviewingIcons.sel : reviewingIcons.non;
     const curShare = shareIcons.non;

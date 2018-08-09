@@ -17,7 +17,6 @@ import injectReducer from 'utils/injectReducer';
 import Header from 'components/Header';
 import ReviewDetailCard from 'components/ReviewDetailCard';
 
-
 import {
   makeSelectReviews,
   makeSelectReviewId,
@@ -43,17 +42,17 @@ export class ReviewDetailPage extends React.PureComponent {
     loadReview(reviewId);
   }
 
-  handleVoting = (reviewId) => {
-    console.log("handleVoting in detail");
+  handleVoting = reviewId => {
+    console.log('handleVoting in detail');
     console.log(reviewId);
     this.props.doVoting(reviewId);
-  }
+  };
 
-  handleFollow = (followId) => {
-    console.log("handleVoting in detail");
+  handleFollow = followId => {
+    console.log('handleVoting in detail');
     console.log(followId);
     this.props.doFollow(followId);
-  }
+  };
 
   render() {
     // reviewId - detail index
@@ -67,12 +66,17 @@ export class ReviewDetailPage extends React.PureComponent {
       return (
         <div>
           <Header headerTitle="" />
-          <ReviewDetailCard reviews={reviews} surveys={surveys} handleVoting={this.handleVoting} handleFollow={this.handleFollow} />
+          <ReviewDetailCard
+            reviews={reviews}
+            surveys={surveys}
+            handleVoting={this.handleVoting}
+            handleFollow={this.handleFollow}
+          />
         </div>
       );
     }
 
-    return <div/>;
+    return <div />;
   }
 }
 

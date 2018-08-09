@@ -8,7 +8,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
@@ -23,7 +23,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
+import Timer from 'components/Timer';
 
+import { sendEmailAuth } from './actions';
 import makeSelectEmailAuthPop from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -61,8 +63,24 @@ const styles = {
 
 /* eslint-disable react/prefer-stateless-function */
 export class EmailAuthPop extends React.PureComponent {
+  reSendEmail = () => {
+    const { sendEmail } = this.props;
+    // this.setState({
+    //   sendStatus: false,
+    // });
+    sendEmail();
+  };
+
+  handleClose = () => {
+    this.props.onClose(false);
+  };
+  
   render() {
-    const { classes, open, submitHandler } = this.props;
+    const { classes, open, sendEmail } = this.props;
+
+    // const elapsed = Math.round(this.state.elapsed / 100);
+    // const second = (elapsed / 10).toFixed(1);
+    if (open) sendEmail();
     return (
       <div>
         <Dialog fullScreen open={open} onClose={this.handleClose}>
@@ -82,7 +100,7 @@ export class EmailAuthPop extends React.PureComponent {
               가입하신 이메일 주소로 인증 메일을 발송하였습니다.
               <br />
               <br />
-              test****@gmail.com
+              {localStorage.getItem('username')}
               <br />
               <br />
               메일에 포함된 링크를 탭하여 인증을 완료하십시오.
@@ -92,18 +110,17 @@ export class EmailAuthPop extends React.PureComponent {
               보상을 받을 수 있습니다.
               <br />
               <br />
-              59:59
-              <br />
-              (인증 남은 시간)
-              <br />
-              <br />
             </DialogContentText>
+            <Timer />
+            (인증 남은 시간)
+            <br />
+            <br />
             <Divider />
             <br />
             <Button
-              onClick={this.resSendEmail}
+              onClick={sendEmail}
               className={classes.okBtn}
-              color="second"
+              color="secondary"
               variant="outlined"
               autoFocus
             >
@@ -120,7 +137,7 @@ export class EmailAuthPop extends React.PureComponent {
               <Button
                 // onClick={submitHandler}
                 className={classes.okBtn}
-                color="second"
+                color="secondary"
                 autoFocus
               >
                 문의하기
@@ -134,7 +151,7 @@ export class EmailAuthPop extends React.PureComponent {
 }
 
 EmailAuthPop.propTypes = {
-  // dispatch: PropTypes.func.isRequired,
+  sendEmail: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -143,7 +160,10 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    sendEmail: () => {
+      console.log('ReSend Email Auth');
+      dispatch(sendEmailAuth());
+    },
   };
 }
 

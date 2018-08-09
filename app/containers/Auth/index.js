@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 // import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import axios from 'axios';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -52,6 +53,44 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
   />
 );
 
+export const PrivateWalletRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      localStorage.getItem('username') ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{ pathname: '/signin', state: { from: props.location } }}
+        />
+      )
+    }
+  />
+);
+
+const requestURL = `${process.env.API_URL}/user/authInfo`;
+
+export function validAuth() {
+  // console.log(props);
+  const accessToken = localStorage.getItem('accessToken');
+  // const refreshToken = localStorage.getItem('refreshToken');
+  // console.log(accessToken);
+  const token = `Bearer ${accessToken}`;
+
+  return axios
+    .get(requestURL, { headers: { Authorization: token } })
+    .then(res => {
+      // console.log(res);
+      console.log(res.data.hasWallet);
+      if (res.data.hasWallet) {
+        return true;
+      }
+      return false;
+    });
+  // console.log(result);
+  // return false;
+  // console.log(hasWallet);
+}
 // const validAuth = {
 //   isAuthenticated: false,
 //   authenticate(cb) {

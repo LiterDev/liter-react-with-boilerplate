@@ -3,13 +3,13 @@ import request from 'utils/request';
 
 import { makeSelectReviewId } from './selectors';
 
-import { 
-    loadedSuccess, 
-    loadedFailure, 
-    loadedSurvey,
-    voteSuccess,
-    voteError,
-  } from './actions';
+import {
+  loadedSuccess,
+  loadedFailure,
+  loadedSurvey,
+  voteSuccess,
+  voteError,
+} from './actions';
 import { LOAD_ACTION, FOLLOW_ACTION, VOTE_ACTION } from './constants';
 
 export function* getReview(data) {
@@ -25,25 +25,33 @@ export function* getReview(data) {
       Accept: 'application/json;charset=UTF-8',
       'Content-Type': 'application/json;charset=UTF-8',
       'Access-Control-Allow-Origin': '*',
-      'Authorization': token,
+      Authorization: token,
     },
-  };  
+  };
   try {
     // Call our request helper (see 'utils/request')
     // const reqContents = yield call(request, requestURL, options);
-    const reqContents = yield call(request, requestURL, options);
-    const reqSurvey = yield call(request, requestSurveyURL, options);
+    let reqContents = null;
+    let reqSurvey = null;
+    if (accessToken) {
+      reqContents = yield call(request, requestURL, options);
+      reqSurvey = yield call(request, requestSurveyURL, options);
+    } else {
+      reqContents = yield call(request, requestURL);
+      reqSurvey = yield call(request, requestSurveyURL);
+    }
+    // const reqContents = yield call(request, requestURL, options);
+    // const reqSurvey = yield call(request, requestSurveyURL, options);
     yield put(loadedSuccess(reqContents));
     yield put(loadedSurvey(reqSurvey));
-
   } catch (err) {
     yield put(loadedFailure(err));
   }
 }
 
 export function* sagaFollow(data) {
-  console.log("]]]]] saga [[[[[[----------do Follow");
-  console.log(data);
+  // console.log(']]]]] saga [[[[[[----------do Follow');
+  // console.log(data);
   const followId = data.followId;
   const requestURL = `${process.env.API_URL}/follow/`;
   const accessToken = localStorage.getItem('accessToken');
@@ -54,7 +62,7 @@ export function* sagaFollow(data) {
       Accept: 'application/json;charset=UTF-8',
       'Content-Type': 'application/json;charset=UTF-8',
       'Access-Control-Allow-Origin': '*',
-      'Authorization': token,
+      Authorization: token,
     },
     body: JSON.stringify({
       followId,
@@ -64,19 +72,18 @@ export function* sagaFollow(data) {
   try {
     // Call our request helper (see 'utils/request')
     const reqContents = yield call(request, requestURL, options);
-    console.log("Follow Success <<<<<<<<<<<<<<<<<<<<");
+    console.log('Follow Success <<<<<<<<<<<<<<<<<<<<');
     console.log(reqContents);
     // yield put(setFollowedSuccess(reqContents));
   } catch (err) {
-    console.log("Follow Failure <<<<<<<<<<<<<<<<<<<<");
+    console.log('Follow Failure <<<<<<<<<<<<<<<<<<<<');
     // yield put(setFollowedError(err));
     // yield put(setFollowedError(err));
   }
-
 }
 
 export function* sagaVote(data) {
-  console.log("]]]]] saga [[[[[[----------do Vote");
+  console.log(']]]]] saga [[[[[[----------do Vote');
   console.log(data);
   const reviewId = data.reviewId;
 
@@ -87,17 +94,17 @@ export function* sagaVote(data) {
     const options = {
       method: 'POST',
       headers: {
-        'Accept': 'application/json;charset=UTF-8',
+        Accept: 'application/json;charset=UTF-8',
         'Content-Type': 'application/json;charset=UTF-8',
         'Access-Control-Allow-Origin': '*',
-        'Authorization': token,
+        Authorization: token,
       },
       body: JSON.stringify({
-        'reviewId': reviewId,
+        reviewId: reviewId,
       }),
     };
     const reqContents = yield call(request, requestURL, options);
-    console.log("Vote Success <<<<<<<<<<<<<<<<<<<<");
+    console.log('Vote Success <<<<<<<<<<<<<<<<<<<<');
     console.log(reqContents);
 
     ////////////////////////////////////////////////////////////////////////
@@ -105,10 +112,10 @@ export function* sagaVote(data) {
     const options2 = {
       method: 'GET',
       headers: {
-        'Accept': 'application/json;charset=UTF-8',
+        Accept: 'application/json;charset=UTF-8',
         'Content-Type': 'application/json;charset=UTF-8',
         'Access-Control-Allow-Origin': '*',
-        'Authorization': token,
+        Authorization: token,
       },
     };
     const review = yield call(request, requestURL2, options2);
@@ -116,9 +123,9 @@ export function* sagaVote(data) {
 
     yield put(voteSuccess(review));
     // yield put(voteSuccess(reqContents));
-  } catch(err) {
+  } catch (err) {
     yield put(voteError(err));
-    console.log("Vote Failure <<<<<<<<<<<<<<<<<<<<");
+    console.log('Vote Failure <<<<<<<<<<<<<<<<<<<<');
     console.log(err.response.status);
   }
 }

@@ -213,7 +213,7 @@ class ReviewCard extends React.PureComponent {
                 </FollowAjxButton>
 
               }
-              title={review.user.username}
+              title={review.user.userNickName}
               subheader={timeDiff}
               // subheader={<TimeAt date={review.updateAt} />}
             />

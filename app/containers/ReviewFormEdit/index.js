@@ -1,6 +1,6 @@
 /**
  *
- * ReviewForm
+ * ReviewFormEdit
  *
  */
 
@@ -13,34 +13,17 @@ import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+
+import { withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Header from 'components/Header';
 
 import ReviewWrite from 'components/ReviewWrite';
 
-import { withStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-// import dotenv from 'dotenv';
-
-// import dotenv from 'dotenv';
-
-// import SvgIcon from '@material-ui/core/SvgIcon';
-
-// import Button from '@material-ui/core/Button';
-
-// import Upload from 'material-ui-upload/Upload';
-
-import {
-  makeSelectReviewForm,
-  makeSelectReviews,
-  makeSelectReviewId,
-  makeSelectSurveys,
-  makeSelectError,
-} from './selectors';
+import makeSelectReviewFormEdit from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import { postAction, loadAction, loadInit } from './actions';
 
 const styles = theme => ({
   containerWrap: {
@@ -125,107 +108,39 @@ const styles = theme => ({
     right: theme.spacing.unit * 2,
   },
 });
-
 /* eslint-disable react/prefer-stateless-function */
-export class ReviewForm extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.initHandler = this.initHandler.bind(this);
-  }
-  componentDidMount() {
-    // const { loadReview } = this.props;
-    // const reviewId = this.props.match.params.reviewId;
-    // console.log(reviewId);
-    // if (reviewId) {
-    //   loadReview(reviewId);
-    // }
-  }
-
-  initHandler() {
-    this.props.loadInit();
-  }
-  componentWillMount() {
-    const { loadReview } = this.props;
-    const reviewId = this.props.match.params.reviewId;
-    console.log(reviewId);
-    if (reviewId) {
-      loadReview(reviewId);
-    }
-  }
+export class ReviewFormEdit extends React.PureComponent {
   render() {
-    const { classes, reviewId, reviews, surveys } = this.props;
+    const { classes } = this.props;
     const { reviewform } = this.props;
-    const { loading } = reviewform;
-    console.log(this.props.match.params.reviewId);
-    if (this.props.match.params.reviewId > 0) {
-      this.initHandler();
-    }
+    // const { loading } = reviewform;
 
-    // console.log(reviews);
-    // console.log(surveys);
-    // dotenv.config();
-    // console.log(process.env.API_URL);
-    // console.log(process.env.NODE_ENV);
     return (
       <div>
         <Header headerTitle={<FormattedMessage {...messages.header} />} />
-        {loading ? (
+        {/* {loading ? (
           <div className={classes.dimmed}>
             <CircularProgress className={classes.progress} />
           </div>
         ) : (
           <div />
-        )}
-        <ReviewWrite
-          onSubmitForm={this.props.onSubmitForm}
-          style={{}}
-          reviews={reviews}
-          surveys={surveys}
-        />
+        )} */}
+        <ReviewWrite onSubmitForm={this.props.onSubmitForm} style={{}} />
       </div>
     );
   }
 }
 
-ReviewForm.propTypes = {
+ReviewFormEdit.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  imagePreviewUrl: PropTypes.string,
-  accept: PropTypes.string,
-  label: PropTypes.any,
-  multi: PropTypes.bool,
-  passBase64: PropTypes.bool,
-  onSubmitForm: PropTypes.func,
-  loadReview: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
-  reviewform: makeSelectReviewForm(),
-  reviews: makeSelectReviews(),
-  surveys: makeSelectSurveys(),
-  error: makeSelectError(),
+  reviewformedit: makeSelectReviewFormEdit(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    // onSubmitForm: evt => {
-    //   if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-    //   console.log('submit');
-    //   console.log(this.state.files);
-    //   const data = new FormData(evt.target);
-    //   data.concat(this.state.files);
-    //   dispatch(postAction(data));
-    // },
-    onSubmitForm: data => {
-      dispatch(postAction(data));
-    },
-    loadReview: reviewId => {
-      dispatch(loadAction(reviewId));
-    },
-    loadInit: () => {
-      // console.log('loadInit');
-      dispatch(loadInit());
-    },
-
     dispatch,
   };
 }
@@ -235,12 +150,12 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'reviewForm', reducer });
-const withSaga = injectSaga({ key: 'reviewForm', saga });
+const withReducer = injectReducer({ key: 'reviewFormEdit', reducer });
+const withSaga = injectSaga({ key: 'reviewFormEdit', saga });
 
 export default compose(
   withReducer,
   withSaga,
   withConnect,
   withStyles(styles),
-)(ReviewForm);
+)(ReviewFormEdit);

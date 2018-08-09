@@ -5,7 +5,8 @@
  */
 
 import React from 'react';
-// import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom'
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -19,6 +20,10 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Header from 'components/Header';
 import ReviewList from 'components/ReviewList';
+import ReviewTopTag from 'components/ReviewTopTag';
+
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
 
 import makeSelectReviews from './selectors';
 import reducer from './reducer';
@@ -32,6 +37,14 @@ window.$ = window.jQuery = jQuery;
 const styles = theme => ({
   root: {
     paddingTop: theme.spacing.unit * 0,
+  },
+  floatBtn: {
+    position: 'fixed',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
+  },
+  reviewList: {
+    marginTop: theme.spacing.unit * 11.3,
   },
 });
 /* eslint-disable react/prefer-stateless-function */
@@ -52,10 +65,12 @@ export class Reviews extends React.PureComponent {
       }
     });
   }
-  
+  loadValue = value => {
+    console.log(value);
+  };
   render() {
     // const { classes } = this.props;
-    const { reviews } = this.props;
+    const { reviews, classes } = this.props;
 
     return (
       <div>
@@ -63,7 +78,21 @@ export class Reviews extends React.PureComponent {
           headerTitle={<FormattedMessage {...messages.header} />}
           searchBar="true"
         />
-        <ReviewList reviews={reviews} />
+
+        <ReviewTopTag loadValue={this.loadValue} />
+        <div className={classes.reviewList}>
+          <ReviewList reviews={reviews} />
+        </div>
+        <Link
+          to="/review/write"
+          // onClick={onClose}
+          role="button"
+          className={classes.link}
+        >
+          <Button variant="fab" className={classes.floatBtn} color="secondary">
+            <AddIcon />
+          </Button>
+        </Link>
       </div>
     );
   }
@@ -89,6 +118,9 @@ function mapDispatchToProps(dispatch) {
       if (!loadMore && !last) {
         dispatch(loadListMore());
       }
+    },
+    loadReviewListWithCategory: value => {
+      
     },
   };
 }

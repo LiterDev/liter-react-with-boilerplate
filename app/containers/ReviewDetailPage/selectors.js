@@ -16,15 +16,29 @@ const selectReviewDetailPageDomain = state =>
  * Default selector used by ReviewDetailPage
  */
 const makeSelectReviews = () =>
-  createSelector(selectReviewDetailPageDomain, substate => substate.get('reviews'));
+  createSelector(selectReviewDetailPageDomain, substate =>
+    substate.get('reviews'),
+  );
 
 const makeSelectReviewId = () =>
-  createSelector(selectReviewDetailPageDomain, substate => substate.get('reviewId'));
+  createSelector(selectReviewDetailPageDomain, substate =>
+    substate.get('reviewId'),
+  );
 
 const makeSelectSurveys = () =>
-  createSelector(selectReviewDetailPageDomain, substate => substate.get('surveys'));
+  createSelector(selectReviewDetailPageDomain, substate =>
+    substate.get('surveys'),
+  );
 
 const makeSelectError = () =>
-  createSelector(selectReviewDetailPageDomain, substate => substate.get('error'));
+  createSelector(selectReviewDetailPageDomain, substate =>
+    substate.get('error'),
+  );
 
-export { selectReviewDetailPageDomain, makeSelectReviewId, makeSelectReviews, makeSelectSurveys, makeSelectError };
+export {
+  selectReviewDetailPageDomain,
+  makeSelectReviewId,
+  makeSelectReviews,
+  makeSelectSurveys,
+  makeSelectError,
+};

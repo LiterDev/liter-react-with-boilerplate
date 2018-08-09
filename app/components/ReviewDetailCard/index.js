@@ -399,7 +399,7 @@ class ReviewDetailCard extends React.PureComponent {
                 followId={review.user.id}
               />
             }
-            title={review.user.username}
+            title={review.user.userNickName}
             subheader={timeDiff}
           />
           <CardContent>

@@ -149,6 +149,7 @@
     "@material-ui/core": "latest",
     "@material-ui/icons": "latest",
     "@material/react-text-field": "^0.3.0",
+    "axios": "^0.18.0",
     "babel-polyfill": "6.26.0",
     "chalk": "^2.4.1",
     "compression": "1.7.2",

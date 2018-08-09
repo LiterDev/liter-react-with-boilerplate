@@ -26,10 +26,11 @@ import Reviews from 'containers/Reviews/Loadable';
 // import ReviewDetailPage from 'containers/ReviewDetailPage/Loadable';
 import ReviewDetailResolver from 'containers/ReviewDetailResolver/Loadable';
 import EmailValid from 'containers/EmailValid/Loadable';
+import ReviewFormEdit from 'containers/ReviewFormEdit/Loadable';
 
 // import Header from 'components/Header';
 // import Footer from 'components/Footer';
-import { PrivateRoute } from 'containers/Auth';
+import { PrivateRoute, PrivateWalletRoute } from 'containers/Auth';
 import SignUp from 'containers/SignUp/Loadable';
 import SignIn from 'containers/SignIn/Loadable';
 import { withStyles } from '@material-ui/core/styles';
@@ -60,6 +61,7 @@ function App(props) {
   // const naverMapUrl = `https://openapi.map.naver.com/openapi/v3/maps.js?clientId=${
   //   process.env.NAVER_MAP_CLIENTID
   // }}&submodules=geocoder`;
+
   return (
     <div className={classes.root}>
       <Helmet
@@ -80,7 +82,8 @@ function App(props) {
         <Route path="/follow/:userId" component={FollowActionPage} />
         <Route exact path="/following" component={FollowingActionPage} />
         <Route path="/following/:userId" component={FollowingActionPage} />
-        <PrivateRoute exact path="/review/write" component={ReviewForm} />
+        <PrivateWalletRoute exact path="/review/write" component={ReviewForm} />
+        <PrivateRoute path="/review/edit/:reviewId" component={ReviewForm} />
         <Route path="/review/:reviewId" component={ReviewDetailResolver} />
         <Route path="/following" component={FollowingActionPage} />
         <Route path="/slide" component={SlideTest} />

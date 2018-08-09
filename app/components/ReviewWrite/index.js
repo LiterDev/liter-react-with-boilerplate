@@ -632,7 +632,30 @@ class ReviewWrite extends React.PureComponent {
     });
   };
   render() {
-    const { classes } = this.props;
+    const { classes, reviews, surveys } = this.props;
+    if (reviews) {
+      console.log(reviews);
+      let store = 0;
+      if (reviews.store === 'ONLINE') {
+        store = 0;
+      } else if (reviews.store === 'OFFLINE') {
+        store = 1;
+      } else {
+        store = 2;
+      }
+      const mediaCollection =reviews.mediaCollection;
+      if (mediaCollection){
+        // if (){
+
+        // }
+      }
+      this.setState({
+        value: store,
+        selectedValue: reviews.categoryId,
+      });
+
+      // this.handleClose(reviews.)
+    }
     return (
       <div>
         <form onSubmit={this.onSubmitFormInit}>
@@ -657,6 +680,7 @@ class ReviewWrite extends React.PureComponent {
                   multiline
                   placeholder="제목"
                   name="title"
+                  value={reviews.title}
                 />
               </FormControl>
             </div>
@@ -861,6 +885,8 @@ class ReviewWrite extends React.PureComponent {
 
 ReviewWrite.propTypes = {
   onSubmitForm: PropTypes.func.isRequired,
+  reviews: PropTypes.any,
+  surveys: PropTypes.any,
 };
 
 export default withStyles(styles)(ReviewWrite);

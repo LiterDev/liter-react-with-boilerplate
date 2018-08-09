@@ -5,11 +5,11 @@
  */
 
 import { fromJS } from 'immutable';
-import { 
-  DEFAULT_ACTION, 
-  LOAD_ACTION, 
-  LOAD_SUCCESS, 
-  LOAD_SURVEY_SUCCESS, 
+import {
+  DEFAULT_ACTION,
+  LOAD_ACTION,
+  LOAD_SUCCESS,
+  LOAD_SURVEY_SUCCESS,
   LOAD_FAILURE,
   FOLLOW_ACTION,
   VOTE_ACTION,
@@ -29,11 +29,9 @@ function reviewDetailPageReducer(state = initialState, action) {
     case LOAD_ACTION:
       return state;
     case LOAD_SUCCESS:
-      return state
-            .set('reviews', action.data);
+      return state.set('reviews', action.data);
     case LOAD_SURVEY_SUCCESS:
-      return state
-            .set('surveys', action.data);
+      return state.set('surveys', action.data);
     case LOAD_FAILURE:
       return state;
     case FOLLOW_ACTION:
@@ -41,8 +39,7 @@ function reviewDetailPageReducer(state = initialState, action) {
     case VOTE_ACTION:
       return state;
     case VOTE_SUCCESS:
-      return state
-            .set('reviews', action.data);
+      return state.set('reviews', action.data);
     case VOTE_ERROR:
       return state.set('error', action.error);
     default:

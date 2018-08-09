@@ -20,6 +20,8 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Header from 'components/Header';
 import ReviewList from 'components/ReviewList';
+import ReviewTopTag from 'components/ReviewTopTag';
+
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 
@@ -41,6 +43,9 @@ const styles = theme => ({
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2,
   },
+  reviewList: {
+    marginTop: theme.spacing.unit * 11.3,
+  },
 });
 /* eslint-disable react/prefer-stateless-function */
 export class Reviews extends React.PureComponent {
@@ -60,7 +65,9 @@ export class Reviews extends React.PureComponent {
       }
     });
   }
-
+  loadValue = value => {
+    console.log(value);
+  };
   render() {
     // const { classes } = this.props;
     const { reviews, classes } = this.props;
@@ -71,7 +78,11 @@ export class Reviews extends React.PureComponent {
           headerTitle={<FormattedMessage {...messages.header} />}
           searchBar="true"
         />
-        <ReviewList reviews={reviews} />
+
+        <ReviewTopTag loadValue={this.loadValue} />
+        <div className={classes.reviewList}>
+          <ReviewList reviews={reviews} />
+        </div>
         <Link
           to="/review/write"
           // onClick={onClose}
@@ -107,6 +118,9 @@ function mapDispatchToProps(dispatch) {
       if (!loadMore && !last) {
         dispatch(loadListMore());
       }
+    },
+    loadReviewListWithCategory: value => {
+      
     },
   };
 }

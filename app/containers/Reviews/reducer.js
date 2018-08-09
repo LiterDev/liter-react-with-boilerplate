@@ -26,9 +26,7 @@ export const initialState = fromJS({
 function reviewsReducer(state = initialState, action) {
   switch (action.type) {
     case LOAD_REVIEW_ACTION:
-      return state
-        .set('loading', true)
-        .set('error', false);
+      return state.set('loading', true).set('error', false);
     case LOAD_REVIEW_SUCCESS:
       return state
         .set('loading', false)
@@ -37,22 +35,19 @@ function reviewsReducer(state = initialState, action) {
     case LOAD_REVIEW_ERROR:
       return state;
     case LOAD_REVIEW_MORE:
-      return state
-        .set('loadMore', true);
+      return state.set('loadMore', true);
     case LOAD_REVIEW_MORE_SUCCESS:
-        let list = state.get('reviews');
-        const curPage = state.get('page') + 1;
-        const reviews = list.concat(action.data.content);
-        console.log("]]]] >>>>>>>>>> LOAD SUCCESS");
+      let list = state.get('reviews');
+      const curPage = state.get('page') + 1;
+      const reviews = list.concat(action.data.content);
+      console.log(']]]] >>>>>>>>>> LOAD SUCCESS');
       return state
         .set('page', curPage)
         .set('loadMore', false)
         .set('reviews', reviews)
         .set('last', action.data.last);
     case LOAD_REVIEW_MORE_ERROR:
-      return state
-        .set('loadMore', false)
-        .set('error', true);
+      return state.set('loadMore', false).set('error', true);
     default:
       return state;
   }

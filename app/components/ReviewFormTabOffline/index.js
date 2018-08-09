@@ -19,10 +19,15 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import Input from '@material-ui/core/Input';
 import TagInput from 'components/TagInput';
 import SurveyList from 'components/SurveyList';
+import TabLabel from 'components/TabLabel';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Paper from '@material-ui/core/Paper';
 
 import LinkIcon from '../../images/ic-link-on@3x.png';
 import WriteIcon from '../../images/ic-write@3x.png';
 import StartTitle from '../../images/ic-star@3x.png';
+import CheckIcon from '../../images/ic-repurchase@3x.png';
 import SurveyData from '../../survey.json';
 
 // import { FormattedMessage } from 'react-intl';
@@ -146,6 +151,16 @@ const styles = theme => ({
     position: 'relative',
     height: 200,
   },
+  tabRoot: {
+    // minHeight: 60,
+    paddingTop: 10,
+    width: '40%',
+    fontSize: '1.5rem',
+  },
+  tabPaper: {
+    heght: 20,
+    marginTop: 10,
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -160,6 +175,7 @@ class ReviewFormTabOffline extends React.PureComponent {
         lat: 37.5103487,
         lng: 127.06104640000001,
       },
+      value: false,
       // zoom: 17,
     };
   }
@@ -185,6 +201,11 @@ class ReviewFormTabOffline extends React.PureComponent {
     //     lng: lngS,
     //   },
     // });
+  };
+  handleChange = (event, value) => {
+    this.setState({
+      value,
+    });
   };
   render() {
     const { classes } = this.props;
@@ -285,7 +306,42 @@ class ReviewFormTabOffline extends React.PureComponent {
             surveyBuyType={SurveyData.surveyBuyType[0]}
           /> */}
         </div>
-        <input name="recommend" value="YES" type="hidden" />
+        <div className={classes.rowdivSec}>
+          <div className={classes.buyWrap}>
+            <img src={CheckIcon} alt="check" className={classes.iconWrite} />
+            <span className={classes.cateText}>재구매를 하겠습니까?</span>
+          </div>
+          <Divider className={classes.divider} />
+          <Paper className={classes.tabPaper}>
+            <Tabs
+              value={this.state.value}
+              onChange={this.handleChange}
+              indicatorColor="primary"
+              textColor="secondary"
+              centered
+            >
+              <Tab
+                label={<TabLabel>예</TabLabel>}
+                classes={{
+                  root: classes.tabRoot,
+                  labelIcon: classes.tabIcon,
+                }}
+              />
+              <Tab
+                label={<TabLabel>아니오</TabLabel>}
+                classes={{
+                  root: classes.tabRoot,
+                  labelIcon: classes.tabIcon,
+                }}
+              />
+            </Tabs>
+          </Paper>
+        </div>
+        <input
+          name="recommend"
+          value={this.state.value === 0 ? 'YES' : 'NO'}
+          type="hidden"
+        />
         <input type="hidden" name="store" value="OFFLINE" />
       </div>
     );
@@ -295,45 +351,6 @@ class ReviewFormTabOffline extends React.PureComponent {
 ReviewFormTabOffline.propTypes = {
   category: PropTypes.number.isRequired,
 };
-const surveyCate = [
-  {
-    surveyId: 7,
-    surveyName: '주차하기가 쉬운가요?',
-    sortPosition: 0,
-  },
-  {
-    surveyId: 8,
-    surveyName: '맛은 어떤가요?',
-    sortPosition: 1,
-  },
-  {
-    surveyId: 9,
-    surveyName: '양은 적당한가요?',
-    sortPosition: 2,
-  },
-];
-const surveyBuyType = [
-  {
-    surveyId: 10,
-    surveyName: '종업원들은 친절했나요?',
-    sortPosition: 0,
-  },
-  {
-    surveyId: 11,
-    surveyName: '매장의 분위기는 어땠나요?',
-    sortPosition: 1,
-  },
-  {
-    surveyId: 12,
-    surveyName: '화장실 등 부대시설이 청결하고 사용하기 쉬운가요?',
-    sortPosition: 2,
-  },
-  {
-    surveyId: 13,
-    surveyName: '주차하기가 쉬운가요?',
-    sortPosition: 3,
-  },
-];
 
 // export default ReviewFormTabOffline;
 // export default withStyles(styles)(ReviewFormTabOffline);

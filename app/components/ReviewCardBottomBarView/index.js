@@ -7,10 +7,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import { createStructuredSelector } from 'reselect';
+import { voteAction } from 'containers/ReviewCardBottomBar/actions';
+import makeSelectReviewCardBottomBar from 'containers/ReviewCardBottomBar/selectors';
 
 import VoteNonIcon from '../../images/ic-voting-non.png';
 import VoteSelIcon from '../../images/ic-voting-sel.png';
@@ -21,6 +26,16 @@ import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
 const styles = theme => ({
+  rootFix: {
+    position: 'fixed',
+    bottom: '0',
+    width: '100%',
+    height: '52px',
+    backgroundColor: '#fcfcfc',
+    boxShadow: `0 -1px 7px 0 rgba(0, 0, 0, 0.1)`,
+  },
+  rootBottom: {
+  },
   actions: {
     paddingTop: '12px',
     bottom: '0',
@@ -125,22 +140,18 @@ class ReviewCardBottomBarView extends React.PureComponent {
     reviewingIcons.non.styleClass = this.props.classes.captionNText;
     shareIcons.non.styleClass = this.props.classes.shareText;
    
-    this.handleVote = this.handleVote.bind(this);
-  }
+    this.state.viewClass = (props.viewType)? this.props.classes.rootFix : this.props.classes.rootBottom;
 
-  handleVote = () => {
-    this.props.onViewVote();
-  };
+  }
 
   render() {
     const { classes } = this.props;
-    const { onViewVote, liked, campaign } = this.props;
-    const { voting, reviewing, sharing } = this.state; 
+    const { reviewId, onViewVote, campaign, viewType, likeYn } = this.props;
+    const { voting, reviewing, sharing, viewClass } = this.state; 
     
-    console.log("]] ----- ref ---- [[");
-    console.log(this);
+    console.log(likeYn);
 
-    const curVote = (liked)? votingIcons.sel : votingIcons.non;
+    const curVote = (likeYn)? votingIcons.sel : votingIcons.non;
     const curReviewing = (campaign)? reviewingIcons.sel : reviewingIcons.non;
     const curShare = shareIcons.non;
     // const curVote = votingIcons.sel;
@@ -151,11 +162,11 @@ class ReviewCardBottomBarView extends React.PureComponent {
 
     if(onViewVote !== false) {
       return (
-        <div className={classes.root}>
+        <div className={viewClass}>
           <div className={classes.actions}>
             <div className={classes.activeStatus}>
-              <img src={curVote.selImg} className={classes.icons} onClick={() => { this.handleVote() }} />
-              <span className={curVote.styleClass} onClick={() => this.handleVote} >
+              <img src={curVote.selImg} className={classes.icons} onClick={() => { this.props.onViewVote(this.props.reviewId) }} />
+              <span className={curVote.styleClass} onClick={() => { this.props.onViewVote(this.props.reviewId) }} >
                 {/* <FormattedMessage {...messages.votingActive} /> */}
                 좋아요
               </span>
@@ -214,9 +225,29 @@ class ReviewCardBottomBarView extends React.PureComponent {
   }
 }
 
+// const mapStateToProps = createStructuredSelector({
+//   reviewcardbottombar: makeSelectReviewCardBottomBar(), 
+// });
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     handleVote: () => {
+//       dispatch(voteAction());
+//     },
+//   };
+// };
+
 ReviewCardBottomBarView.propTypes = {
   onClick: PropTypes.func,
 };
 
-export default withStyles(styles)(ReviewCardBottomBarView);
+const withConnect = connect(
+  // mapStateToProps,
+  // mapDispatchToProps,
+);
+
+export default compose(
+  withConnect,
+  withStyles(styles)
+)(ReviewCardBottomBarView);
 

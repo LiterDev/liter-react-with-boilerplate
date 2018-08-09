@@ -7,6 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
+import { compose } from 'redux';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -25,9 +26,12 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import ReviewCardSlider from 'containers/ReviewCardSlider';
 import MediaSlider from 'components/MediaSlider';
+import FollowButton from 'components/FollowButton';
 import FacebookProvider, { Share } from 'react-facebook';
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 
 import ReviewCardBottomBar from 'containers/ReviewCardBottomBar';
+import ReviewCardBottomBarView from 'components/ReviewCardBottomBarView';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -103,6 +107,7 @@ const styles = theme => ({
     lineHeight: '1.63',
     letterSpacing: 'normal',
     color: ' #333333',
+    whiteSpace: 'pre-wrap',
   },
   divider: {
     margin: 'auto',
@@ -192,7 +197,7 @@ const styles = theme => ({
   paperSheetHead: {
     width: '100%',
     margin: '0 0px 10px 0px',
-    float: 'left',
+    // float: 'left',
     fontFamily: 'AppleSDGothicNeo',
     fontSize: '14px',
     fontWeight: 'bold',
@@ -201,6 +206,8 @@ const styles = theme => ({
     lineHeight: '30px',
     letterSpacing: 'normal',
     color: '#1591ff',
+    position: 'relative',
+    // height: 30,
   },
   paperIcons: {
     margin: '0 8px 2px 0px',
@@ -290,6 +297,15 @@ const styles = theme => ({
     textAlign: 'center',
     color: '#333333',
   },
+  googleMap: {
+    width: '100%',
+    position: 'relative',
+    height: 127,
+    marginBottom: 10,
+  },
+  mapWrap: {
+    position: 'relative',
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -300,7 +316,7 @@ class ReviewDetailCard extends React.PureComponent {
     console.log(reviews);
     console.log(surveys);
     // console.log(window.location.href);
-    
+
     // this.props.location.state.from.pathname
     // const avatarImageUrl = review.user.profileImageUrl;
     const totalNewReview = 1;
@@ -323,6 +339,10 @@ class ReviewDetailCard extends React.PureComponent {
           src={avatarDefault}
         />
       );
+
+    // const formatContent = review.content.split('\n').map( line => {
+    //     return (<span>{line}<br/></span>)
+    //   });
 
     let surveyArr = false;
     let categorySurvey = false;
@@ -374,9 +394,10 @@ class ReviewDetailCard extends React.PureComponent {
             className={classes.cardHeader}
             avatar={elAvatar}
             action={
-              <Typography>
-                <FormattedMessage {...messages.followText} />
-              </Typography>
+              <FollowButton
+                onViewFollow={this.props.handleFollow}
+                followId={review.user.id}
+              />
             }
             title={review.user.username}
             subheader={timeDiff}
@@ -400,10 +421,37 @@ class ReviewDetailCard extends React.PureComponent {
 
           <div>
             <Paper className={classes.paperRoot} elevation={1}>
-              <div className={classes.paperSheetHead}>
-                <SmsIcon className={classes.paperIcons} />
-                <span>재구매할래요!</span>
-              </div>
+              {reviews.store === 'OFFLINE' ? (
+                <div className={classes.mapWrap}>
+                  <div className={classes.paperSheetHead}>
+                    <SmsIcon className={classes.paperIcons} />
+                    <span>재방문할래요!</span>
+                  </div>
+                  <div className={classes.googleMap}>
+                    <Map
+                      google={this.props.google}
+                      zoom={15}
+                      initialCenter={{
+                        lat: review.storeLat,
+                        lng: review.storeLng,
+                      }}
+                      className={classes.googleMap}
+                    >
+                      <Marker
+                        position={{
+                          lat: review.storeLat,
+                          lng: review.storeLng,
+                        }}
+                      />
+                    </Map>
+                  </div>
+                </div>
+              ) : (
+                <div className={classes.paperSheetHead}>
+                  <SmsIcon className={classes.paperIcons} />
+                  <span>재구매할래요!</span>
+                </div>
+              )}
               <div className={classes.paperSheet}>
                 <span className={classes.paperItem}>제품</span>
                 <span className={classes.paperDetail}>
@@ -474,8 +522,14 @@ class ReviewDetailCard extends React.PureComponent {
               <span className={classes.shareText}>
                 <FormattedMessage {...messages.sharingText} />
               </span>
-            </div> */}            
-          <ReviewCardBottomBar ref={`detailCard${review.id}`} prKey={`detailCard${review.id}`} reviewId={review.id} />
+            </div> */}
+        {/* <ReviewCardBottomBar ref={`detailCard${review.id}`} prKey={`detailCard${review.id}`} reviewId={review.id} /> */}
+        <ReviewCardBottomBarView
+          likeYn={review.likeYn}
+          onViewVote={this.props.handleVoting}
+          reviewId={review.id}
+          viewType="fixed"
+        />
       </div>
     );
   }
@@ -483,4 +537,11 @@ class ReviewDetailCard extends React.PureComponent {
 
 ReviewDetailCard.propTypes = {};
 
-export default withStyles(styles)(ReviewDetailCard);
+// export default withStyles(styles)(ReviewDetailCard);
+export default compose(
+  GoogleApiWrapper({
+    apiKey: 'AIzaSyC8E2pXbUN9C_oDzn8rMH9FXnK76brBSw4',
+    language: 'ko',
+  }),
+  withStyles(styles),
+)(ReviewDetailCard);

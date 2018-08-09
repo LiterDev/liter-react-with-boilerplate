@@ -19,6 +19,9 @@ import ReviewWrite from 'components/ReviewWrite';
 
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+
 // import dotenv from 'dotenv';
 
 // import dotenv from 'dotenv';
@@ -112,6 +115,11 @@ const styles = theme => ({
     left: 'calc(50% - 20px)',
     top: 'calc(50% - 20px)',
   },
+  floatBtn: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -136,6 +144,7 @@ export class ReviewForm extends React.PureComponent {
           <div />
         )}
         <ReviewWrite onSubmitForm={this.props.onSubmitForm} style={{}} />
+        
       </div>
     );
   }

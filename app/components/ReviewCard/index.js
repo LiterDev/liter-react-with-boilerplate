@@ -13,6 +13,8 @@ import Media from 'components/Media';
 import MediaSlider from 'components/MediaSlider';
 import ReviewCardBottomBar from 'containers/ReviewCardBottomBar';
 import ReviewCardBottomBarView from 'components/ReviewCardBottomBarView';
+import FollowButton from 'components/FollowButton';
+
 import TimeAt from 'components/TimeAt';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -160,6 +162,7 @@ class ReviewCard extends React.PureComponent {
     // console.log(window.location.href);
     const { classes } = this.props;
     const { idx, review, viewType } = this.props;
+    const { handleVoting } = this.props;
 
     const mediaCollection = review ? review.mediaCollection : false;
     const mediaItem = mediaCollection ? mediaCollection[0] : false;
@@ -168,7 +171,7 @@ class ReviewCard extends React.PureComponent {
     // temp date
     // call time-diff function (6 level)
     const timeDiff = '방금전';
-
+    
     const elAvatar =
       avatarImageUrl != null ? (
         <Avatar
@@ -192,9 +195,10 @@ class ReviewCard extends React.PureComponent {
               className={classes.cardHeader}
               avatar={elAvatar}
               action={
-                <Typography>
-                  <FormattedMessage {...messages.followText} />
-                </Typography>
+                <FollowButton 
+                  onViewFollow={this.props.handleFollow} 
+                  followId={review.user.id}>
+                </FollowButton>
               }
               title={review.user.username}
               subheader={timeDiff}
@@ -224,9 +228,9 @@ class ReviewCard extends React.PureComponent {
           <div>
             <Divider className={classes.divider} light />
           </div>
-          
+
           {/* <ReviewCardBottomBar ref={`card${idx}`} prKey={`card${idx}`} reviewId={review.id} /> */}
-          <ReviewCardBottomBarView onVote={false} />
+          <ReviewCardBottomBarView likeYn={review.likeYn} onViewVote={false} />
           
        </Card>
       </div>

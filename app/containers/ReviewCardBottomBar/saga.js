@@ -1,4 +1,4 @@
-import { take, call, put, select, takeLatest } from 'redux-saga/effects';
+import { take, call, fork, put, select, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
 import { DEFAULT_ACTION, VOTE_ACTION } from './constants';
 import makeSelectReviewCardBottomBar from './selectors';
@@ -24,7 +24,6 @@ export function* voteProcess(postData, ownId) {
         reviewId: postData.data,
       }),
     };
-
     const repos = yield call(request, requestURL, options);
     yield put(voteSuccess(repos));
   } catch(err) {

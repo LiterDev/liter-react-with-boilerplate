@@ -76,7 +76,10 @@ function App(props) {
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />
         <PrivateRoute path="/mypage" component={MyPage} />
-        <Route path="/follow" component={FollowActionPage} />
+        <Route exact path="/follow" component={FollowActionPage} />
+        <Route path="/follow/:userId" component={FollowActionPage} />
+        <Route exact path="/following" component={FollowingActionPage} />
+        <Route path="/following/:userId" component={FollowingActionPage} />
         <PrivateRoute exact path="/review/write" component={ReviewForm} />
         <Route path="/review/:reviewId" component={ReviewDetailResolver} />
         <Route path="/following" component={FollowingActionPage} />

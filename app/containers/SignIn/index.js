@@ -311,7 +311,7 @@ export class SignIn extends React.PureComponent {
                 />
               </div>
               {signinError && '로그인이 실패하였습니다.'}
-              <FacebookProvider appId="279985115912357">
+              <FacebookProvider appId={process.env.FACEBOOK_APPID}>
                 <Login
                   scope="email"
                   onResponse={this.handleResponse}

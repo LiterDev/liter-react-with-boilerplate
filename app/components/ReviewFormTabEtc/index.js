@@ -13,11 +13,16 @@ import SearchIcon from '@material-ui/icons/Search';
 import Input from '@material-ui/core/Input';
 import TagInput from 'components/TagInput';
 import SurveyList from 'components/SurveyList';
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import TabLabel from 'components/TabLabel';
+import Tab from '@material-ui/core/Tab';
 
 import LinkIcon from '../../images/ic-link-on@3x.png';
 import WriteIcon from '../../images/ic-write@3x.png';
 import StartTitle from '../../images/ic-star@3x.png';
 import SurveyData from '../../survey.json';
+import CheckIcon from '../../images/ic-repurchase@3x.png';
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
 
@@ -134,52 +139,39 @@ const styles = theme => ({
     maxWidth: '100%',
     paddingTop: 20,
   },
+  tabRoot: {
+    // minHeight: 60,
+    paddingTop: 10,
+    width: '40%',
+    fontSize: '1.5rem',
+  },
+  tabPaper: {
+    heght: 20,
+    marginTop: 10,
+  },
 });
-
-const surveyCate = [
-  {
-    surveyId: 1,
-    surveyName: '상품에 만족하시나요?',
-    sortPosition: 0,
-  },
-  {
-    surveyId: 2,
-    surveyName: '배송속도는 어땠나요?',
-    sortPosition: 1,
-  },
-  {
-    surveyId: 3,
-    surveyName: '문의 사항에 대해 신속하게 응답하나요?',
-    sortPosition: 2,
-  },
-];
-const surveyBuyType = [
-  {
-    surveyId: 4,
-    surveyName: '상품에 만족하시나요?',
-    sortPosition: 0,
-  },
-  {
-    surveyId: 5,
-    surveyName: '배송속도는 어땠나요?',
-    sortPosition: 1,
-  },
-  {
-    surveyId: 6,
-    surveyName: '문의 사항에 대해 신속하게 응답하나요?',
-    sortPosition: 2,
-  },
-];
 
 /* eslint-disable react/prefer-stateless-function */
 class ReviewFormTabEtc extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: false,
+    };
+  }
+  handleChange = (event, value) => {
+    this.setState({
+      value,
+    
+    });
+  };
   render() {
     const { classes } = this.props;
     const word = SurveyData.test;
-    console.log(word);
-    console.log(SurveyData.surveyCate);
-    console.log(SurveyData.surveyCate[0]);
-    console.log(SurveyData.surveyCate[1]);
+    // console.log(word);
+    // console.log(SurveyData.surveyCate);
+    // console.log(SurveyData.surveyCate[0]);
+    // console.log(SurveyData.surveyCate[1]);
     return (
       <div>
         <div className={classes.rowdiv}>
@@ -244,6 +236,42 @@ class ReviewFormTabEtc extends React.PureComponent {
             // categoryId={this.state.categoryId}
           />
         </div>
+        <div className={classes.rowdivSec}>
+          <div className={classes.buyWrap}>
+            <img src={CheckIcon} alt="check" className={classes.iconWrite} />
+            <span className={classes.cateText}>재구매를 하겠습니까?</span>
+          </div>
+          <Divider className={classes.divider} />
+          <Paper className={classes.tabPaper}>
+            <Tabs
+              value={this.state.value}
+              onChange={this.handleChange}
+              indicatorColor="primary"
+              textColor="secondary"
+              centered
+            >
+              <Tab
+                label={<TabLabel>예</TabLabel>}
+                classes={{
+                  root: classes.tabRoot,
+                  labelIcon: classes.tabIcon,
+                }}
+              />
+              <Tab
+                label={<TabLabel>아니오</TabLabel>}
+                classes={{
+                  root: classes.tabRoot,
+                  labelIcon: classes.tabIcon,
+                }}
+              />
+            </Tabs>
+          </Paper>
+        </div>
+        <input
+          name="recommend"
+          value={this.state.value === 0 ? 'YES' : 'NO'}
+          type="hidden"
+        />
         <input type="hidden" name="store" value="ETC" />
       </div>
     );

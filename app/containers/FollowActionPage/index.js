@@ -27,9 +27,12 @@ import messages from './messages';
 /* eslint-disable react/prefer-stateless-function */
 export class FollowActionPage extends React.PureComponent {
   render() {
-    const { followType, userid } = this.props;
+    const { followType } = this.props;
+    const userId = this.props.match.params.userId;
 
-    console.log(followType);
+    // console.log("]-------------- USERID -----------[");
+    // console.log(userId);
+    // console.log(followType);
 
     return (
       <div>
@@ -37,7 +40,7 @@ export class FollowActionPage extends React.PureComponent {
           <title>FollowActionPage</title>
           <meta name="description" content="Description of FollowActionPage" />
         </Helmet>
-        <ActionListContainer followType={followType} userid={userid} />
+        <ActionListContainer followType={followType} userid={userId} />
       </div>
     );
   }

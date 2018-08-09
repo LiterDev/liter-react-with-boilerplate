@@ -44,8 +44,8 @@ export function* getReviewMore() {
   const reviews = yield select(makeSelectReviews());
   const curPage = reviews.page + 1;
   const requestURL = `${process.env.API_URL}/review/latestList?page=${curPage}`;
-  // const accessToken = localStorage.getItem('accessToken');
-  // const token = `Bearer ${accessToken}`;
+  const accessToken = localStorage.getItem('accessToken');
+  const token = `Bearer ${accessToken}`;
   const options = {
     method: 'GET',
     headers: {
@@ -56,8 +56,8 @@ export function* getReviewMore() {
     },
   };
   try {
-    const reqContents = yield call(request, requestURL);
-    // const reqContents = yield call(request, requestURL, options);
+    // const reqContents = yield call(request, requestURL);
+    const reqContents = yield call(request, requestURL, options);
     yield put(loadListMoreSuccess(reqContents));
   } catch (err) {}
 }

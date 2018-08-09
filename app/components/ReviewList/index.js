@@ -48,7 +48,13 @@ class ReviewList extends React.PureComponent {
           {reviewArray &&
             reviewArray.map((review, idx) => (
               <div key={review.id}>
-                <ReviewCard idx={idx} review={review} handleVoting={this.handleVoting} handleFollow={this.handleFollow}/>
+                <ReviewCard 
+                  idx={idx} 
+                  followYn={review.followYn} 
+                  review={review} 
+                  handleVoting={this.handleVoting} 
+                  handleFollow={this.handleFollow}
+                />
               </div>
             ))}
             <ReviewCardBottomBar />

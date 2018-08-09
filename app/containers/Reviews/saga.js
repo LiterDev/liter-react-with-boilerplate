@@ -10,21 +10,21 @@ import makeSelectReviews from './selectors';
 
 export function* getReviews() {
   const requestURL = `${process.env.API_URL}/review/latestList?page=1`;
-  // const accessToken = localStorage.getItem('accessToken');
-  // const token = `Bearer ${accessToken}`;
+  const accessToken = localStorage.getItem('accessToken');
+  const token = `Bearer ${accessToken}`;
   const options = {
     method: 'GET',
     headers: {
       Accept: 'application/json;charset=UTF-8',
       'Content-Type': 'application/json;charset=UTF-8',
       'Access-Control-Allow-Origin': '*',
-      // 'Authorization': token,
+      'Authorization': token,
     },
-  };  
+  };
   try {
     // Call our request helper (see 'utils/request')
-    const reqContents = yield call(request, requestURL);
-    // const reqContents = yield call(request, requestURL, options);
+    // const reqContents = yield call(request, requestURL);
+    const reqContents = yield call(request, requestURL, options);
     yield put(reviewListLoaded(reqContents));
   } catch (err) {
     yield put(reviewListLoadingError(err));
@@ -35,20 +35,20 @@ export function* getReviewMore() {
   const reviews = yield(select(makeSelectReviews()));
   const curPage = reviews.page + 1;
   const requestURL = `${process.env.API_URL}/review/latestList?page=${curPage}`;
-  // const accessToken = localStorage.getItem('accessToken');
-  // const token = `Bearer ${accessToken}`;
+  const accessToken = localStorage.getItem('accessToken');
+  const token = `Bearer ${accessToken}`;
   const options = {
     method: 'GET',
     headers: {
       Accept: 'application/json;charset=UTF-8',
       'Content-Type': 'application/json;charset=UTF-8',
       'Access-Control-Allow-Origin': '*',
-      // 'Authorization': token,
+      'Authorization': token,
     },
   }; 
   try {
-    const reqContents = yield call(request, requestURL);
-    // const reqContents = yield call(request, requestURL, options);
+    // const reqContents = yield call(request, requestURL);
+    const reqContents = yield call(request, requestURL, options);
     yield put(loadListMoreSuccess(reqContents));
     } catch (err) {
   }

@@ -26,6 +26,8 @@ import Paper from '@material-ui/core/Paper';
 import ReviewCardSlider from 'containers/ReviewCardSlider';
 import MediaSlider from 'components/MediaSlider';
 import FollowButton from 'components/FollowButton';
+import FollowAjxButton from 'components/FollowAjxButton';
+
 import FacebookProvider, { Share } from 'react-facebook';
 
 import ReviewCardBottomBar from 'containers/ReviewCardBottomBar';
@@ -381,7 +383,12 @@ class ReviewDetailCard extends React.PureComponent {
             className={classes.cardHeader}
             avatar={elAvatar}
             action={
-              <FollowButton onViewFollow={this.props.handleFollow} followId={review.user.id}/>
+              // <FollowButton onViewFollow={this.props.handleFollow} followId={review.user.id}/>
+              <FollowAjxButton
+                followEmail={review.user.username}
+                followYn={review.followYn}
+                followId={review.user.id}>
+              </FollowAjxButton>
             }
             title={review.user.username}
             subheader={timeDiff}

@@ -53,7 +53,7 @@ export function* setUnFollowSaga(data) {
   const options = {
     method: 'DELETE',
     headers: {
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
       'Authorization': token,
@@ -63,13 +63,16 @@ export function* setUnFollowSaga(data) {
   try {
     // Call our request helper (see 'utils/request')
     const reqContents = yield call(request, requestURL, options);
-    // console.log(reqContents);
+    console.log("]]-----------------UN FOLLOW-----------------[[");
+    console.log(reqContents);
     // yield put(setFollowedSuccess(reqContents));
     yield put(loadList());
   } catch (err) {
     // yield put(setFollowedError(err));
     // yield put(setFollowedError(err));
-    yield put(loadList());
+    // yield put(loadList());
+    console.log("]]----------------- ERROR-----------------[[");
+    console.log(err);
   }
 }
 
@@ -81,8 +84,8 @@ export function* setFollowSaga(data) {
   const options = {
     method: 'POST',
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      'Accept': 'application/json;charset=UTF-8',
+      'Content-Type': 'application/json;charset=UTF-8',
       'Access-Control-Allow-Origin': '*',
       'Authorization': token,
     },
@@ -93,12 +96,15 @@ export function* setFollowSaga(data) {
   try {
     // Call our request helper (see 'utils/request')
     const reqContents = yield call(request, requestURL, options);
+    console.log("]]----------------- FOLLOW-----------------[[");
     console.log(reqContents);
     // yield put(setFollowedSuccess({reqContents, followId}));
     yield put(loadList());
   } catch (err) {
     // yield put(setFollowedError(err));
-    yield put(loadList());
+    //yield put(loadList());
+    console.log("]]----------------- ERROR-----------------[[");
+    console.log(err);
   }
 }
 

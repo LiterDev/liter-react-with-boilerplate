@@ -14,6 +14,7 @@ import MediaSlider from 'components/MediaSlider';
 import ReviewCardBottomBar from 'containers/ReviewCardBottomBar';
 import ReviewCardBottomBarView from 'components/ReviewCardBottomBarView';
 import FollowButton from 'components/FollowButton';
+import FollowAjxButton from 'components/FollowAjxButton';
 
 import TimeAt from 'components/TimeAt';
 import Card from '@material-ui/core/Card';
@@ -148,6 +149,10 @@ const styles = theme => ({
     padding: '0 0 0 16px',
     float: 'right',
   },
+  followButton: {
+    display: 'block',
+    border: '1px solid red',
+  }
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -195,10 +200,18 @@ class ReviewCard extends React.PureComponent {
               className={classes.cardHeader}
               avatar={elAvatar}
               action={
-                <FollowButton 
-                  onViewFollow={this.props.handleFollow} 
+                // <FollowButton
+                //   followYn={review.followYn}
+                //   onViewFollow={this.props.handleFollow} 
+                //   followId={review.user.id}>
+                // </FollowButton>
+
+                <FollowAjxButton
+                  followEmail={review.user.username}
+                  followYn={review.followYn}
                   followId={review.user.id}>
-                </FollowButton>
+                </FollowAjxButton>
+
               }
               title={review.user.username}
               subheader={timeDiff}

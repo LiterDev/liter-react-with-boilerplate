@@ -28,10 +28,13 @@ import TabList from 'components/TabList';
 import EmailAuthPop from '../EmailAuthPop';
 import messages from './messages';
 
+import avatarDefault from '../../images/ic-avatar.png';
+
 import {
   myPageAction,
   loadFollowerCountAction,
   loadFollowingCountAction,
+  loadUserData,
 } from './actions';
 import * as selectors from './selectors';
 
@@ -116,10 +119,6 @@ export class MyPage extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      userData: {
-        photoPath:
-          'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAH0AfQMBIgACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAAAQIEBQYDB//EACoQAAICAQIGAQMFAQAAAAAAAAABAhEDBCEFEjFBUXFhIjKhIzRCYoET/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/APtoIsWBIIsWBIIsWBIIsWBIIsWBIIsWBIIsWBIIsWBUEWLAkEWLAkEWYfENatLCo1LJLovHyBl5MkMcebJJRj5bMWXFdJF/fKXqJoc2bJnnzZZuT+ex5gdJj4lpMjpZeV/2VGUmmk07T7nImRpNZm0sv05XHvB9GB0wPLT54ajDHJB7Pt4PSwJBFiwJBFiwIBUAWBUAWOa1uV5tTkndq6XpHRSlywk/CbOW7AAAAAAGy4Jmcc08T6SVpfKN0c5w51rcXuvwdDYFgVAFgVAFbFlbFgWsWVsWBM/qhJLujmF0Oms53UQ/558kPEmB5gAAAAMnhyvW4vZv7NLwmHNqZS7RizcWBaxZWxYFrFlbFgVsWQAJsWQAJs1XFsVZY5V0kqftG0PLU4VnxOD79H4YGhBbJF45uEtmnRUAAe+kwPUZeX+K3kBseF4+TT876z3/AMMyyqpJJKkuhIE2LIAE2LIAFQVsWBYFbMfLrcWPZS534iBlFZzjBXOSS+TV5dflntCoL46mNKTk7k235bAvqpxyajJOLtN7HkAAM3huWGPJNTko8yVWYQA6BNNWt15JNDjyzxu4TcfTMvFxGa2yxUvlbAbMHhi1OLLtGe/h9T1sCwK2LArZjajWRxPlj9U/widZleLD9PV7I1QHrlz5M33y28LoeQAAAAAAAAAAAADIw6vLjpN80fDMcAbjBqIZl9Oz7pnrZpITcJKUXTXQ3GOanCMl3VgYnEfsh7MEzuIfZD2YIEAAAAAAAAAAAAAAAAG20n7fH6NSbXTft8foD//Z',
-      },
       tabs: [
         { tabLabel: '리뷰', type: 'REVIEW' },
         { tabLabel: '보상 내역', type: 'REWARD' },
@@ -177,22 +176,31 @@ export class MyPage extends React.PureComponent {
   };
 
   componentDidMount() {
-    const {
-      selectMyReview,
-      selectFollowerCount,
-      selectFollowingCount,
-    } = this.props;
+    const { selectMyReview, selectUserData } = this.props;
 
+    selectUserData();
     selectMyReview();
-    selectFollowerCount();
-    selectFollowingCount();
   }
 
   render() {
-    const { classes, myPages, global } = this.props;
-    const { userData, havingWallet } = this.state;
-    console.log(global.userData.username);
+    const {
+      classes,
+      myPages,
+      selectFollowerCount,
+      selectFollowingCount,
+    } = this.props;
+    const { havingWallet } = this.state;
 
+    /* TODO:: 현재대로 라면  리렌더링 시 팔로워, 팔로잉 재조회 처리됨.
+      load state 나 firstload 등 스테이트 추가 해서 페이지 로딩시에만 처리되도로 수정해야함.
+      render 포함 시킨 이유는 selectUserData 의  userId가 필요하나 componentDidMount시 호출하면
+      비동기로 처리되어 userData가 팔로워 건수보다 늦게 결과가 도착하여 userId값을 가져오지 못함.
+    */
+
+    if (myPages.userData) {
+      selectFollowerCount(myPages.userData.id);
+      selectFollowingCount(myPages.userData.id);
+    }
     // 임시코드
     return (
       <div>
@@ -204,7 +212,11 @@ export class MyPage extends React.PureComponent {
             <div className={classes.avatarDiv}>
               <Avatar
                 alt=""
-                src={userData.photoPath}
+                src={
+                  myPages.userData.profileImageUrl
+                    ? myPages.userData.profileImageUrl
+                    : avatarDefault
+                }
                 className={classNames(classes.avatar, classes.bigAvatar)}
               />
               <span className={classes.levelTagInner}>Lv 1</span>
@@ -286,6 +298,7 @@ MyPage.propTypes = {
   global: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   follwerCount: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   follwingCount: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  selectUserData: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -298,19 +311,21 @@ const mapStateToProps = createStructuredSelector({
 });
 
 function mapDispatchToProps(dispatch) {
-  console.log('mapDispatch');
   return {
     selectMyReview: () => {
-      console.log(`select My Review call!!!`);
       dispatch(myPageAction());
     },
-    selectFollowerCount: () => {
-      console.log(`load My Review - follower Count call!!!`);
-      dispatch(loadFollowerCountAction());
+    selectFollowerCount: userId => {
+      // console.log(`load My Review - follower Count call!!! --- ${userId}`);
+      dispatch(loadFollowerCountAction(userId));
     },
-    selectFollowingCount: () => {
-      console.log(`load My Review - following Count call!!!`);
-      dispatch(loadFollowingCountAction());
+    selectFollowingCount: userId => {
+      // console.log(`load My Review - following Count call!!! --- ${userId}`);
+      dispatch(loadFollowingCountAction(userId));
+    },
+    selectUserData: () => {
+      // console.log('signinUserData');
+      dispatch(loadUserData());
     },
   };
 }

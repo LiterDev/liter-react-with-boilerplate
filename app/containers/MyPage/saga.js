@@ -4,7 +4,12 @@
 
 import { call, put, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
-import { MYPAGE_ACTION } from './constants';
+import {
+  MYPAGE_ACTION,
+  LOAD_USER_DATA,
+  FOLLOWER_COUNT_ACTION,
+  FOLLOWING_COUNT_ACTION,
+} from './constants';
 import * as actions from './actions';
 // import { makeSelectMyPage } from './selectors';
 
@@ -31,8 +36,11 @@ export function* mypage() {
   }
 }
 
-export function* loadFollowerCnt() {
-  const requestURL = `${process.env.API_URL}/follower/count`;
+export function* loadFollowerCnt(data) {
+  // console.log(`loadFollowerCnt::${data.userId}`);
+  const requestURL = `${process.env.API_URL}/follow/follower/count/${
+    data.userId
+  }`;
   const accessToken = localStorage.getItem('accessToken');
   const token = `Bearer ${accessToken}`;
   try {
@@ -47,15 +55,18 @@ export function* loadFollowerCnt() {
 
     // const req = request(request, requestURL, options);
     const reqContents = yield call(request, requestURL, options);
-    console.log(reqContents);
-    yield put(actions.myPageSuccess(reqContents));
+    // console.log(`request followerCnt :: ${reqContents}`);
+    yield put(actions.loadFollowerCountSuccess(reqContents));
   } catch (err) {
-    yield put(actions.myPageFailure(err));
+    yield put(actions.loadFollowerCountFailure(err));
   }
 }
 
-export function* loadFollowingCnt() {
-  const requestURL = `${process.env.API_URL}/following/count`;
+export function* loadFollowingCnt(data) {
+  // console.log(`loadFollowingCnt::${data.userId}`);
+  const requestURL = `${process.env.API_URL}/follow/following/count/${
+    data.userId
+  }`;
   const accessToken = localStorage.getItem('accessToken');
   const token = `Bearer ${accessToken}`;
   try {
@@ -70,10 +81,33 @@ export function* loadFollowingCnt() {
 
     // const req = request(request, requestURL, options);
     const reqContents = yield call(request, requestURL, options);
-    console.log(reqContents);
-    yield put(actions.myPageSuccess(reqContents));
+    // console.log(`request followingCnt :: ${reqContents}`);
+    yield put(actions.loadFollowingCountSuccess(reqContents));
   } catch (err) {
-    yield put(actions.myPageFailure(err));
+    yield put(actions.loadFollowingCountFailure(err));
+  }
+}
+
+export function* getUserData() {
+  const requestURL = `${process.env.API_URL}/user/authInfo`;
+  const accessToken = localStorage.getItem('accessToken');
+  const token = `Bearer ${accessToken}`;
+  try {
+    const options = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        Authorization: token,
+      },
+    };
+
+    const reqContents = yield call(request, requestURL, options);
+    // console.log(reqContents);
+    yield put(actions.loadUserSuccess(reqContents));
+  } catch (err) {
+    yield put(actions.loadUserError(err));
   }
 }
 
@@ -86,4 +120,7 @@ export default function* defaultSaga() {
   // It returns task descriptor (just like fork) so we can continue execution
   // It will be cancelled automatically on component unmount
   yield takeLatest(MYPAGE_ACTION, mypage);
+  yield takeLatest(LOAD_USER_DATA, getUserData);
+  yield takeLatest(FOLLOWER_COUNT_ACTION, loadFollowerCnt);
+  yield takeLatest(FOLLOWING_COUNT_ACTION, loadFollowingCnt);
 }

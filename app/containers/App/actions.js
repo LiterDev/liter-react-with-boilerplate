@@ -63,9 +63,3 @@ export function repoLoadingError(error) {
   };
 }
 
-export function loadUserData(data) {
-  return {
-    type: LOAD_USER_DATA,
-    data,
-  };
-}

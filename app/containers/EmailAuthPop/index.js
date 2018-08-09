@@ -74,7 +74,6 @@ export class EmailAuthPop extends React.PureComponent {
   handleClose = () => {
     this.props.onClose(false);
   };
-  
   render() {
     const { classes, open, sendEmail } = this.props;
 

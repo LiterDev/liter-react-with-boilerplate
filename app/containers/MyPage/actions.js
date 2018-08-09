@@ -14,18 +14,40 @@ import {
   FOLLOWING_COUNT_ACTION,
   FOLLOWING_COUNT_SUCCESS,
   FOLLOWING_COUNT_FAILURE,
+  LOAD_USER_DATA,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_ERROR,
 } from './constants';
 
+export function loadUserData() {
+  return {
+    type: LOAD_USER_DATA,
+  };
+}
+
+export function loadUserSuccess(data) {
+  return {
+    type: LOAD_USER_SUCCESS,
+    data,
+  };
+}
+export function loadUserError(data) {
+  return {
+    type: LOAD_USER_ERROR,
+    data,
+  };
+}
+
 export function myPageAction() {
-  console.log('myPageAction');
+  // console.log('myPageAction');
   return {
     type: MYPAGE_ACTION,
   };
 }
 
 export function myPageSuccess(data) {
-  console.log('myPageSuccess');
-  console.log(data);
+  // console.log('myPageSuccess');
+  // console.log(data);
   return {
     type: MYPAGE_SUCCESS,
     data,
@@ -40,16 +62,16 @@ export function myPageFailure(error) {
   };
 }
 
-export function loadFollowerCountAction() {
-  console.log('loadFollowerCountAction');
+export function loadFollowerCountAction(userId) {
+  // console.log(`loadFollowerCountAction::${userId}`);
   return {
     type: FOLLOWER_COUNT_ACTION,
+    userId,
   };
 }
 
 export function loadFollowerCountSuccess(data) {
-  console.log('loadFollowerCountSuccess');
-  console.log(data);
+  // console.log(`loadFollowerCountSuccess::${data}`);
   return {
     type: FOLLOWER_COUNT_SUCCESS,
     data,
@@ -64,16 +86,17 @@ export function loadFollowerCountFailure(error) {
   };
 }
 
-export function loadFollowingCountAction() {
-  console.log('loadFollowingCountAction');
+export function loadFollowingCountAction(userId) {
+  // console.log(`loadFollowingCountAction:::${userId}`);
   return {
     type: FOLLOWING_COUNT_ACTION,
+    userId,
   };
 }
 
 export function loadFollowingCountSuccess(data) {
-  console.log('loadFollowingCountSuccess');
-  console.log(data);
+  // console.log('loadFollowingCountSuccess');
+  // console.log(data);
   return {
     type: FOLLOWING_COUNT_SUCCESS,
     data,

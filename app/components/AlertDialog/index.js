@@ -79,7 +79,7 @@ class AlertDialog extends React.Component {
             <Button
               className={classes.okBtn}
               onClick={submitHandler}
-              color="second"
+              color="secondary"
               autoFocus
             >
               {/* {<FormattedMessage {...messages.ok} />} */}

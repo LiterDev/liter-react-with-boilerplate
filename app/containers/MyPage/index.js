@@ -21,10 +21,11 @@ import Typography from '@material-ui/core/Typography';
 import classNames from 'classnames';
 
 import AlertDialog from 'components/AlertDialog';
-import EmailAuthPop from 'components/EmailAuthSuccessPop';
+
 import Button from 'components/Button';
 import Header from 'components/Header';
 import TabList from 'components/TabList';
+import EmailAuthPop from '../EmailAuthPop';
 import messages from './messages';
 
 import {
@@ -279,8 +280,8 @@ MyPage.propTypes = {
   id: PropTypes.string,
   classes: PropTypes.object.isRequired,
   selectMyReview: PropTypes.func,
-  loadFollowerCount: PropTypes.func,
-  loadFollowingCount: PropTypes.func,
+  selectFollowerCount: PropTypes.func,
+  selectFollowingCount: PropTypes.func,
   myPages: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   global: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   follwerCount: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -310,10 +311,6 @@ function mapDispatchToProps(dispatch) {
     selectFollowingCount: () => {
       console.log(`load My Review - following Count call!!!`);
       dispatch(loadFollowingCountAction());
-    },
-    resendEmailAuth: () => {
-      console.log(`resend Email Auth`);
-      dispatch(sendEmailAuth());
     },
   };
 }

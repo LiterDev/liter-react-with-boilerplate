@@ -20,7 +20,9 @@ function emailAuthPopReducer(state = initialState, action) {
     case SEND_EMAIL_AUTH:
       return state;
     case EMAIL_AUTH_SUCCESS:
-      localStorage.setItem('sendEmailSuccessTime', action.data.time);
+      console.log(action.data)
+      localStorage.setItem('sendEmailSuccessTime', action.data.createdAt);
+      localStorage.setItem('sendEmailStatus', action.data.active);
       return state;
     default:
       return state;

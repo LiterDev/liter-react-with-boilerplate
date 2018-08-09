@@ -472,10 +472,10 @@ class ReviewWrite extends React.PureComponent {
       8. 평점
     */
     const movItem = this.state.imageComponent.filter(
-      media => media.mediaType == 'mov',
+      media => media.mediaType === 'mov',
     );
     const imageItem = this.state.imageComponent.filter(
-      media => media.mediaType == 'image',
+      media => media.mediaType === 'image',
     );
 
     // Validation 1.Title
@@ -484,8 +484,13 @@ class ReviewWrite extends React.PureComponent {
       this.handleAlertOpen();
       return false;
     }
+    if (data.get('title').length > 49) {
+      this.setState({ validationContent: '제목은 50자이내로 입력해주세요' });
+      this.handleAlertOpen();
+      return false;
+    }
     // Validation 2.Category
-    if (data.get('category') == 'false') {
+    if (data.get('category') === 'false') {
       this.setState({ validationContent: '카테고리가 선택되지 않았습니다' });
       this.handleAlertOpen();
       return false;
@@ -504,89 +509,166 @@ class ReviewWrite extends React.PureComponent {
       case 0:
         // TabOnline
         console.log('TabOnline');
-        if (data.get('productName') === false) {
+        if (!Boolean(data.get('productName'))) {
           this.setState({ validationContent: '상품명을 입력해 주세요.' });
           this.handleAlertOpen();
+          return false;
         }
-        if (data.get('buyLink') === false) {
+        if (!Boolean(data.get('buyLink'))) {
           this.setState({ validationContent: '구매처를 입력해 주세요' });
           this.handleAlertOpen();
+          return false;
         }
-        if (data.get('content').trim().length <= 0) {
+        if (!Boolean(data.get('content').trim())) {
           this.setState({ validationContent: '리뷰를 작성해 주세요' });
           this.handleAlertOpen();
+          return false;
         }
         break;
       case 1:
         // TabOffline
         console.log('TabOffline');
-        if (data.get('productName') === false) {
+        if (!Boolean(data.get('productName'))) {
           this.setState({ validationContent: '상품명을 입력해 주세요.' });
           this.handleAlertOpen();
+          return false;
         }
         console.log(data.get('storeLat'));
-        if (
-          data.get('storeLat') == 'false' ||
-          data.get('storeLng') == 'false'
-        ) {
+        if (!Boolean(data.get('storeLat')) || !Boolean(data.get('storeLng'))) {
           this.setState({
             validationContent: '방문한 곳의 주소를 입력해주세요',
           });
           this.handleAlertOpen();
+          return false;
         }
-        if (data.get('content').trim().length <= 0) {
+        if (!Boolean(data.get('content').trim())) {
           this.setState({ validationContent: '리뷰를 작성해 주세요' });
           this.handleAlertOpen();
+          return false;
         }
         break;
       case 2:
         // TabEtc
         console.log('TabEtc');
-        if (data.get('productName') === false) {
+        if (!Boolean(data.get('productName'))) {
           this.setState({ validationContent: '상품명을 입력해 주세요.' });
           this.handleAlertOpen();
+          return false;
         }
-        if (data.get('ectInfo') === false) {
+        if (!Boolean(data.get('ectInfo'))) {
           this.setState({ validationContent: '구매 정보를 입력해주세요' });
           this.handleAlertOpen();
+          return false;
         }
-        if (data.get('content').trim().length <= 0) {
+        if (!Boolean(data.get('content').trim())) {
           this.setState({ validationContent: '리뷰를 작성해 주세요' });
           this.handleAlertOpen();
+          return false;
         }
         break;
+      default:
+        console.log('default');
+    }
+
+    if (data.get('content').trim().length < 50) {
+      this.setState({ validationContent: '리뷰를 50자이상 작성해 주세요' });
+      this.handleAlertOpen();
+      return false;
     }
     // Validation 7 tags check
     if (data.get('tags').length <= 0) {
       this.setState({ validationContent: '최소 1개이상의 태그를 넣어주세요.' });
       this.handleAlertOpen();
+      return false;
     }
+
+    let tSurveyIdByCate;
+    switch (this.state.selectedValue) {
+      case 0:
+        tSurveyIdByCate = [1, 2, 3, 4, 5, 6];
+        break;
+      case 1:
+        tSurveyIdByCate = [7, 8, 9];
+        break;
+      case 2:
+        tSurveyIdByCate = [10, 11, 12, 13];
+        break;
+      case 3:
+        tSurveyIdByCate = [14, 15, 16];
+        break;
+      case 4:
+        tSurveyIdByCate = [21, 22, 23, 24];
+        break;
+      case 5:
+        tSurveyIdByCate = [25, 26];
+        break;
+      case 6:
+        tSurveyIdByCate = [17, 18, 19, 20];
+        break;
+      case 7:
+        tSurveyIdByCate = [27, 28, 29];
+        break;
+      default:
+        tSurveyIdByCate = [];
+    }
+
+    let nullCountCate = 0;
+    let valContentCate = null;
+    console.log(tSurveyIdByCate);
+    console.log(this.state.selectedValue);
+    for (let i = 0; i < tSurveyIdByCate.length; i += 1) {
+      console.log(data.get(`startRating[${tSurveyIdByCate[i]}].rating`));
+      if (data.get(`startRating[${tSurveyIdByCate[i]}].rating`) < 1) {
+        nullCountCate += 1;
+        // console.log(data.get(`startRating[${tSurveyIdByCate[i]}].rating`));
+        valContentCate = data.get(
+          `startRating[${tSurveyIdByCate[i]}].rateTitle`,
+        );
+        break;
+      }
+    }
+    if (nullCountCate > 0) {
+      this.setState({
+        validationContent: `${valContentCate} 평점을 입력해주세요`,
+      });
+      this.handleAlertOpen();
+      return false;
+    }
+
     // Validation 8 평점 Check
     let tSurveyId;
     switch (this.state.value) {
       case 0:
-        //Survey id: 1, 2, 3, 4, 5, 6
-        tSurveyId = [1, 2, 3, 4, 5, 6];
+        // Survey id: 1, 2, 3, 4, 5, 6
+        tSurveyId = [34, 35, 36, 37];
         break;
       case 1:
-        //Survey id: 7, 8, 9, 10, 11, 12, 13
-        tSurveyId = [7, 8, 9, 10, 11, 12, 13];
+        // Survey id: 7, 8, 9, 10, 11, 12, 13
+        tSurveyId = [30, 31, 32, 33];
         break;
-      case 2:
-        //Survey id: 1, 2, 3, 4, 5, 6
-        tSurveyId = [1, 2, 3, 4, 5, 6];
-        break;
+      default:
+        tSurveyId = [];
     }
 
-    tSurveyId.map(idx => {
-      if (data.get(`startRating[${idx}].rating`) == 0) {
-        // console.log(data.get(`startRating[${idx}].rateTitle`));
-        const valContent = data.get(`startRating[${idx}].rateTitle`);
-        this.setState({ validationContent: valContent });
-        this.handleAlertOpen();
-        return false;
+    let nullCount = 0;
+    let valContent = null;
+    for (let i = 0; i < tSurveyId.length; i += 1) {
+      // console.log(data.get(`startRating[${tSurveyId[i]}].rating`));
+      if (data.get(`startRating[${tSurveyId[i]}].rating`) < 1) {
+        nullCount += 1;
+        // console.log(data.get(`startRating[${tSurveyId[i]}].rating`));
+        valContent = data.get(`startRating[${tSurveyId[i]}].rateTitle`);
+        // this.setState({ validationContent: valContent });
+        // this.handleAlertOpen();
+        break;
       }
-    });
+    }
+
+    if (nullCount > 0) {
+      this.setState({ validationContent: `${valContent} 평점을 입력해주세요` });
+      this.handleAlertOpen();
+      return false;
+    }
 
     if (this.state.imageComponent.length > 0) {
       for (let i = 0; i < this.state.imageComponent.length; i += 1) {
@@ -597,7 +679,7 @@ class ReviewWrite extends React.PureComponent {
     }
     // alert('on');
     // console.log('====on');
-    this.props.onSubmitForm(data);
+    // this.props.onSubmitForm(data);
   }
 
   handleAlertOpen = () => {
@@ -643,10 +725,9 @@ class ReviewWrite extends React.PureComponent {
       } else {
         store = 2;
       }
-      const mediaCollection =reviews.mediaCollection;
-      if (mediaCollection){
+      const mediaCollection = reviews.mediaCollection;
+      if (mediaCollection) {
         // if (){
-
         // }
       }
       this.setState({

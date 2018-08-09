@@ -175,7 +175,7 @@ class ReviewFormTabOffline extends React.PureComponent {
         lat: 37.5103487,
         lng: 127.06104640000001,
       },
-      value: false,
+      value: 0,
       // zoom: 17,
     };
   }
@@ -290,7 +290,7 @@ class ReviewFormTabOffline extends React.PureComponent {
             <img src={StartTitle} alt="write" className={classes.iconWrite} />
             <span className={classes.cateText}>별평점</span>
           </div>
-          {this.props.category > 0 ? (
+          {this.props.category > -1 ? (
             <SurveyList
               surveyCate={SurveyData.surveyCate[this.props.category]}
               surveyBuyType={SurveyData.surveyBuyType[0]}

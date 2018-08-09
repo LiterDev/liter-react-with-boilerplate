@@ -42,9 +42,11 @@ const styles = theme => ({
     position: 'fixed',
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2,
+    zIndex: 1100,
   },
   reviewList: {
-    marginTop: theme.spacing.unit * 11.3,
+    marginTop: theme.spacing.unit * 13,
+    zIndex: 1100,
   },
 });
 /* eslint-disable react/prefer-stateless-function */

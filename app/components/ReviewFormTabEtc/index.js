@@ -156,7 +156,7 @@ class ReviewFormTabEtc extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      value: false,
+      value: 0,
     };
   }
   handleChange = (event, value) => {

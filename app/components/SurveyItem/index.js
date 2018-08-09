@@ -92,15 +92,15 @@ class SurveyItem extends React.PureComponent {
           starHoverColor="rgb(21, 145, 255)"
           svgIconPath="M19.77 29.503l6.838 4.288c1.252.786 2.784-.376 2.455-1.845l-1.813-8.063 6.047-5.433c1.104-.99.51-2.87-.94-2.99l-7.957-.7-3.114-7.62a1.626 1.626 0 0 0-3.031 0l-3.114 7.603-7.958.7c-1.45.12-2.043 2-.939 2.99l6.047 5.432-1.813 8.064c-.33 1.469 1.203 2.63 2.455 1.845l6.838-4.271z"
         /> */}
-        <input 
-          type="hidden" 
+        <input
+          type="hidden"
           name={`startRating[${surveyId}].rating`}
-          value={this.state.rating} 
+          value={this.state.rating}
         />
-        <input 
-          type="hidden" 
+        <input
+          type="hidden"
           name={`startRating[${surveyId}].rateTitle`}
-          value={this.props.surveyName} 
+          value={this.props.surveyName}
         />
       </div>
     );

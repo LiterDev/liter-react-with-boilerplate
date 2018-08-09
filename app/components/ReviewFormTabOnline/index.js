@@ -157,7 +157,7 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 class ReviewFormTabOnline extends React.PureComponent {
   state = {
-    value: false,
+    value: 0,
   };
 
   handleChange = (event, value) => {
@@ -225,7 +225,7 @@ class ReviewFormTabOnline extends React.PureComponent {
             <span className={classes.cateText}>별평점</span>
           </div>
 
-          {this.props.category > 0 ? (
+          {this.props.category > -1 ? (
             <SurveyList
               surveyCate={SurveyData.surveyCate[this.props.category]}
               surveyBuyType={SurveyData.surveyBuyType[1]}

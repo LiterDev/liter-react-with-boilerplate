@@ -70,58 +70,20 @@ export const PrivateWalletRoute = ({ component: Component, ...rest }) => (
 
 const requestURL = `${process.env.API_URL}/user/authInfo`;
 
-export function validAuth() {
+export function validAuth(props) {
   // console.log(props);
   const accessToken = localStorage.getItem('accessToken');
   // const refreshToken = localStorage.getItem('refreshToken');
   // console.log(accessToken);
   const token = `Bearer ${accessToken}`;
+  // const result = axios.get(requestURL, { headers: { Authorization: token } });
 
-  return axios
-    .get(requestURL, { headers: { Authorization: token } })
-    .then(res => {
-      // console.log(res);
-      console.log(res.data.hasWallet);
-      if (res.data.hasWallet) {
-        return true;
-      }
-      return false;
-    });
-  // console.log(result);
-  // return false;
-  // console.log(hasWallet);
+  return true;
+  
 }
-// const validAuth = {
-//   isAuthenticated: false,
-//   authenticate(cb) {
-//     this.isAuthenticated = true;
-//     setTimeout(cb, 100); // fake async
-//   },
-//   signout(cb) {
-//     this.isAuthenticated = false;
-//     setTimeout(cb, 100);
-//   },
-// };
 
-// export const PrivateRoute = ({ component: Component, ...rest }) => (
-//   <Route
-//     {...rest}
-//     render={props =>
-//       validAuth.isAuthenticated ? (
-//         <Component {...props} />
-//       ) : (
-//         <Redirect
-//           to={{
-//             pathname: '/login',
-//             state: { from: props.location },
-//           }}
-//         />
-//       )
-//     }
-//   />
-// );
-
-function Auth() {
+function Auth(props) {
+  console.log(props.auth);
   return <div>{/* <FormattedMessage {...messages.header} /> */}</div>;
 }
 

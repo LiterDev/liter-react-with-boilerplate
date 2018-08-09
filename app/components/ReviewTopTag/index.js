@@ -28,6 +28,7 @@ const styles = theme => ({
     backgroundColor: '#ffffff',
     minHeight: '113',
     width: '100%',
+    zIndex: 1100,
     // right: theme.spacing.unit * 2,
   },
   row: {

@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { browserHistory } from 'react-router';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -26,6 +27,12 @@ import { Redirect, Link } from 'react-router-dom';
 import FacebookProvider, { Login } from 'react-facebook';
 
 import { validateEmail } from 'containers/SignUp';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Divider from '@material-ui/core/Divider';
 
 // import ErrorPop from 'components/ErrorPop';
 import {
@@ -126,6 +133,31 @@ const styles = theme => ({
     verticalAlign: 'middle',
     color: 'rgb(153, 153, 153)',
   },
+  popFooter: {
+    textAlign: 'center',
+  },
+  popWrap: {
+    // width: 295,
+    marginRight: 0,
+    marginLeft: 0,
+  },
+  popRoot: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    // borderTop: '1px',
+    // marginRight: 0,
+    // marginLeft: 0,
+  },
+  popPaper: {
+    width: 295,
+    textAlign: 'center',
+    // marginRight: 0,
+    // marginLeft: 0,
+  },
+  button: {
+    margin: 'auto',
+    display: 'block',
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -136,9 +168,27 @@ export class SignIn extends React.PureComponent {
       complete: false,
       emailError: false,
       passwordError: false,
+      openSuccesPop: false,
     };
     this.onSubmitFormInit = this.onSubmitFormInit.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
+  handleClose = () => {
+    this.setState({
+      openSuccesPop: false,
+    });
+    // let pathLink = '/';
+    // if (this.props.location.state) {
+    //   pathLink = this.props.location.state.from.pathname;
+    // }
+    const location = this.props.location;
+    if (location.state && location.state.from.pathname) {
+      this.props.history.push(location.state.from.pathname);
+    } else {
+      this.props.history.push('/');
+    }
+  };
+
   onSubmitFormInit(event) {
     event.preventDefault();
     const email = event.target.email.value;
@@ -229,8 +279,11 @@ export class SignIn extends React.PureComponent {
     // console.log(signinSuccess);
     // console.log(signinEnd);
     if (signinSuccess) {
+      this.setState({
+        openSuccesPop: true,
+      });
       // console.log(signinSuccess);
-      console.log(signinSuccess.accessToken);
+      // console.log(signinSuccess.accessToken);
       localStorage.setItem('accessToken', signinSuccess.accessToken);
       localStorage.setItem('refreshToken', signinSuccess.refreshToken);
       localStorage.setItem('username', signinSuccess.username);
@@ -239,17 +292,17 @@ export class SignIn extends React.PureComponent {
       let pathLink = '/';
       // console.log(this.props.location);
       // console.log(this.props.location.state);
-      if (this.props.location.state) {
-        pathLink = this.props.location.state.from.pathname;
-      }
-      return (
-        <Redirect
-          to={{
-            pathname: pathLink,
-            // state: { from: this.props.location },
-          }}
-        />
-      );
+      // if (this.props.location.state) {
+      //   pathLink = this.props.location.state.from.pathname;
+      // }
+      // return (
+      //   <Redirect
+      //     to={{
+      //       pathname: pathLink,
+      //       // state: { from: this.props.location },
+      //     }}
+      //   />
+      // );
     }
     // if (signinError) {
     //   this.handleClickOpen();
@@ -331,11 +384,81 @@ export class SignIn extends React.PureComponent {
           <span className={classes.footerText}>
             아직 회원이 아니신가요?
             <Link to="/signup" role="button" style={{ textDecoration: 'none' }}>
-              <Button>회원가입</Button>
+              <Button className={classes.button}>회원가입</Button>
             </Link>
           </span>
           {/* <span className={classes.footerSignin}>회원가입</span> */}
         </footer>
+        <Dialog
+          open={this.state.openSuccesPop}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          className={classes.popWrap}
+          fullWidth="true"
+          // maxWidth="false"
+          classes={{
+            root: classes.popRoot,
+            paper: classes.popPaper,
+          }}
+        >
+          <DialogTitle id="alert-dialog-title">
+            {/* {"Use Google's location service?"} */}
+          </DialogTitle>
+
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              로그인 되었습니다.
+            </DialogContentText>
+          </DialogContent>
+          <Divider />
+          <DialogActions
+            // className={classes.popFooter}
+            classes={{
+              root: classes.popRoot,
+              // paper: classes.popFooter,
+            }}
+          >
+            <Button onClick={this.handleClose} color="secondary">
+              확인
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog
+          open={this.state.openFacePop}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          className={classes.popWrap}
+          fullWidth="true"
+          // maxWidth="false"
+          classes={{
+            root: classes.popRoot,
+            paper: classes.popPaper,
+          }}
+        >
+          <DialogTitle id="alert-dialog-title">
+            ‘LITER’가 'facebook.com'을<br/> 사용하여 로그인하려고 합니다.
+          </DialogTitle>
+
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              사용자에 관한 정보를 앱 및 웹 사이트가 공유하게 됩니다.
+            </DialogContentText>
+          </DialogContent>
+          <Divider />
+          <DialogActions
+            // className={classes.popFooter}
+            classes={{
+              root: classes.popRoot,
+              // paper: classes.popFooter,
+            }}
+          >
+            <Button onClick={this.handleClose} color="secondary">
+              확인
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }

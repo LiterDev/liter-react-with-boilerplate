@@ -21,6 +21,7 @@ import Typography from '@material-ui/core/Typography';
 import classNames from 'classnames';
 
 import AlertDialog from 'components/AlertDialog';
+import SelfieControl from 'components/SelfieControl';
 
 import Button from 'components/Button';
 import Header from 'components/Header';
@@ -133,6 +134,8 @@ export class MyPage extends React.PureComponent {
     this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.openEmailSuccesPop = this.openEmailSuccesPop.bind(this);
+
+    this.selfie = React.createRef();
   }
 
   // handleChange = e => {
@@ -192,10 +195,10 @@ export class MyPage extends React.PureComponent {
     const { classes, myPages, global } = this.props;
     const { userData, havingWallet } = this.state;
     console.log(global.userData.username);
-
     // 임시코드
     return (
       <div>
+        <SelfieControl changeSelfie={click => this.changeSelfie = click}/> 
         <div className={classes.container}>
           <Header headerTitle={<FormattedMessage {...messages.header} />} />
         </div>
@@ -206,6 +209,7 @@ export class MyPage extends React.PureComponent {
                 alt=""
                 src={userData.photoPath}
                 className={classNames(classes.avatar, classes.bigAvatar)}
+                onClick={() => this.changeSelfie()}
               />
               <span className={classes.levelTagInner}>Lv 1</span>
             </div>

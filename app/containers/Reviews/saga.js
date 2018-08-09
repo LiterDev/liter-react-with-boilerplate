@@ -11,34 +11,22 @@ import makeSelectReviews from './selectors';
 export function* getReviews() {
   const requestURL = `${process.env.API_URL}/review/latestList?page=1`;
   const accessToken = localStorage.getItem('accessToken');
-<<<<<<< HEAD
-  const token = `Bearer ${accessToken}`;
-=======
   let token = null;
   if (accessToken) {
     token = `Bearer ${accessToken}`;
   }
 
->>>>>>> 20c47d3b1bf88d62b579c764b03d07ee4a2d6e1f
   const options = {
     method: 'GET',
     headers: {
       Accept: 'application/json;charset=UTF-8',
       'Content-Type': 'application/json;charset=UTF-8',
       'Access-Control-Allow-Origin': '*',
-<<<<<<< HEAD
-      'Authorization': token,
-=======
       Authorization: token,
->>>>>>> 20c47d3b1bf88d62b579c764b03d07ee4a2d6e1f
     },
   };
   try {
     // Call our request helper (see 'utils/request')
-<<<<<<< HEAD
-    // const reqContents = yield call(request, requestURL);
-    const reqContents = yield call(request, requestURL, options);
-=======
     let reqContents = null;
     if (accessToken) {
       reqContents = yield call(request, requestURL, options);
@@ -46,7 +34,6 @@ export function* getReviews() {
       reqContents = yield call(request, requestURL);
     }
 
->>>>>>> 20c47d3b1bf88d62b579c764b03d07ee4a2d6e1f
     yield put(reviewListLoaded(reqContents));
   } catch (err) {
     yield put(reviewListLoadingError(err));
@@ -65,11 +52,7 @@ export function* getReviewMore() {
       Accept: 'application/json;charset=UTF-8',
       'Content-Type': 'application/json;charset=UTF-8',
       'Access-Control-Allow-Origin': '*',
-<<<<<<< HEAD
-      'Authorization': token,
-=======
       Authorization: token,
->>>>>>> 20c47d3b1bf88d62b579c764b03d07ee4a2d6e1f
     },
   };
   try {

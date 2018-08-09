@@ -396,19 +396,12 @@ class ReviewDetailCard extends React.PureComponent {
             className={classes.cardHeader}
             avatar={elAvatar}
             action={
-<<<<<<< HEAD
               // <FollowButton onViewFollow={this.props.handleFollow} followId={review.user.id}/>
               <FollowAjxButton
                 followEmail={review.user.username}
                 followYn={review.followYn}
                 followId={review.user.id}>
               </FollowAjxButton>
-=======
-              <FollowButton
-                onViewFollow={this.props.handleFollow}
-                followId={review.user.id}
-              />
->>>>>>> 20c47d3b1bf88d62b579c764b03d07ee4a2d6e1f
             }
             title={review.user.userNickName}
             subheader={timeDiff}

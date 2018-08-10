@@ -190,7 +190,7 @@ class TabList extends React.Component {
             </div>
           </ListItem>
           <Divider />
-          {this.renderRewordRow(tabItem.type, data.rewords)}
+          {this.renderRewardRow(tabItem.type, data.rewards)}
         </List>,
       );
     }
@@ -224,14 +224,14 @@ class TabList extends React.Component {
     );
   }
 
-  renderRewordRow(type, data) {
+  renderRewardRow(type, data) {
     const { classes } = this.props;
     console.log('####');
     console.log(Object.values(data));
     // return <div>11</div>;
     if (data !== false && data.length > 0) {
       return Object.values(data).map(row => (
-        <RewardContainer reword={row} key={type.concat(row.id)} />
+        <RewardContainer reward={row} key={type.concat(row.id)} />
       ));
     }
     return (

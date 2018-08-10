@@ -45,7 +45,7 @@ const styles = {
   },
 };
 function RewardContainer(props) {
-  // const { classes, reword } = props;
+  // const { classes, reward } = props;
   const { classes } = props;
   return (
     <Fragment>
@@ -54,7 +54,7 @@ function RewardContainer(props) {
       </ListItem>
       {/* <ListItem className={classes.tableRow}>
         <span className={classNames(classes.dateCol, classes.colDivider)}>
-          <div className={classes.dateWidth}>{reword.data.date}</div>
+          <div className={classes.dateWidth}>{reward.data.date}</div>
         </span>
         <span className={classNames(classes.rewardCol, classes.colDivider)}>
           <svg
@@ -90,7 +90,7 @@ function RewardContainer(props) {
               />
             </g>
           </svg>
-          {reword.data.sum}
+          {reward.data.sum}
         </span>
       </ListItem> */}
       <Divider />

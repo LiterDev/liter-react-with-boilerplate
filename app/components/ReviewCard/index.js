@@ -35,6 +35,7 @@ import GradeIcon from '@material-ui/icons/Grade';
 import Divider from '@material-ui/core/Divider';
 // import classnames from 'classnames';
 // import SvgIcon from '@material-ui/core/SvgIcon';
+
 import FacebookProvider, { Share } from 'react-facebook';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -214,8 +215,8 @@ class ReviewCard extends React.PureComponent {
 
               }
               title={review.user.userNickName}
-              subheader={timeDiff}
-              // subheader={<TimeAt date={review.updateAt} />}
+              // subheader={timeDiff}
+              subheader={<TimeAt date={review.updateAt} />}
             />
           ) : (
             <div />

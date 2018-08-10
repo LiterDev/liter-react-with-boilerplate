@@ -28,6 +28,7 @@ import ReviewCardSlider from 'containers/ReviewCardSlider';
 import MediaSlider from 'components/MediaSlider';
 import FollowButton from 'components/FollowButton';
 import FollowAjxButton from 'components/FollowAjxButton';
+import TimeAt from 'components/TimeAt';
 
 import FacebookProvider, { Share } from 'react-facebook';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
@@ -404,7 +405,7 @@ class ReviewDetailCard extends React.PureComponent {
               </FollowAjxButton>
             }
             title={review.user.userNickName}
-            subheader={timeDiff}
+            subheader={<TimeAt date={review.updateAt} />}
           />
           <CardContent>
             <Typography className={classes.reviewTitle} component="p">

@@ -163,7 +163,6 @@ function ReviewContainer(props) {
           <span className={classNames(classes.leftPadding10, classes.update)}>
             <TimeAt date={review.updateAt} />
           </span>
-          <span className={classNames(classes.follow)}>팔로우</span>
         </div>
         <div
           className={classNames(

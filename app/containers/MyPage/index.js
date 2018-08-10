@@ -24,7 +24,7 @@ import AlertDialog from 'components/AlertDialog';
 import SelfieControl from 'components/SelfieControl';
 
 import Button from 'components/Button';
-import Header from 'components/Header';
+import MyPageHeader from 'components/MyPageHeader';
 import TabList from 'components/TabList';
 import EmailAuthPop from '../EmailAuthPop';
 import messages from './messages';
@@ -236,7 +236,7 @@ export class MyPage extends React.PureComponent {
           callbackFunc={this.props.selectUserData}
         />
         <div className={classes.container}>
-          <Header headerTitle={<FormattedMessage {...messages.header} />} />
+          <MyPageHeader headerTitle={<FormattedMessage {...messages.header} />} />
         </div>
         <div className={classes.panel}>
           <div className={classes.row}>

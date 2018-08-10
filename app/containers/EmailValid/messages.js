@@ -9,6 +9,6 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   header: {
     id: 'app.containers.EmailValid.header',
-    defaultMessage: 'This is EmailValid container !',
+    defaultMessage: '이메일 인증 !',
   },
 });

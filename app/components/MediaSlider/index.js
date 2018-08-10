@@ -32,10 +32,47 @@ const styles = theme => ({
   container: {
     // border: '1px solid red',
   },
+  slideCaptionBox: {
+    position: 'relative',
+    top: '-40px',
+    left: '87%',
+    display: 'inline-block',
+    height: '24px',
+    opacity: '0.65',
+    borderRadius: '2px',
+    backgroundColor: '#000000',
+  },
+  slideCaption: {
+    display: 'block',
+    margin: 'auto',
+    padding: '3px 6px 3px 6px',
+    fontFamily: 'SFProDisplay',
+    fontSize: '13px',
+    fontWeight: '600',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: '1.6',
+    letterSpacing: 'normal',
+    textAlign: 'center',
+    color: '#ffffff',
+  },
 })
 
 /* eslint-disable react/prefer-stateless-function */
 class MediaSlider extends React.PureComponent {
+  state = {
+    currentSlide: 1,
+    totalSlide: false,
+  }
+
+  componentDidMount() {
+    if(this.props.media !== false) {
+      // this.setState('totoalSlideCount', Object.values(this.props.media).length);
+      const totalSlide = Object.values(this.props.media).length;
+      this.setState({'totalSlide': totalSlide});
+    }
+  }
+
   render() {
     const { classes } = this.props;
     const { media, user } = this.props;
@@ -53,12 +90,17 @@ class MediaSlider extends React.PureComponent {
     if (media !== false) {
       mediaArray = Object.values(media);
 
-    // console.log(']---------slider--------[');
-    // console.log(this.props);
+      console.log(mediaArray);
 
       return (
         <div className={classes.root}>
-          <Slider {...settings}>
+          <Slider {...settings}
+              afterChange={
+                (currentSlide) => {
+                  this.setState({ currentSlide: currentSlide + 1 })
+                }
+              }
+          >
               {
                 mediaArray &&
                 mediaArray.map((review, idx) => (
@@ -66,6 +108,9 @@ class MediaSlider extends React.PureComponent {
                 ))
               }
           </Slider>
+            <div className={classes.slideCaptionBox}>
+              <span className={classes.slideCaption}>{this.state.currentSlide} / {this.state.totalSlide}</span>
+            </div>
         </div>
       );
     }

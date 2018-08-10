@@ -67,5 +67,7 @@
   "app.containers.SignUp.emailvalid": "올바른 이메일형식이 아닙니다",
   "app.containers.SignIn.bodytext": "경험을 나누고 보상을 받으세요",
   "app.containers.SignIn.login": "로그인",
-  "app.containers.Reviews.header": "리뷰"
+  "app.containers.Reviews.header": "리뷰",
+
+  "app.component.ReviewHeader.helpEmailAddress": "help@literproject.com"
 }

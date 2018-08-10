@@ -5,7 +5,9 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
 import {
-  MYPAGE_ACTION,
+  MYPAGE_REVIEWS_ACTION,
+  MYPAGE_REWORDS_ACTION,
+  REWORDS_ACQUIRE_ACTION,
   LOAD_USER_DATA,
   FOLLOWER_COUNT_ACTION,
   FOLLOWING_COUNT_ACTION,
@@ -13,7 +15,7 @@ import {
 import * as actions from './actions';
 // import { makeSelectMyPage } from './selectors';
 
-export function* mypage() {
+export function* getMyReviews() {
   const requestURL = `${process.env.API_URL}/review/myReviewList`;
   const accessToken = localStorage.getItem('accessToken');
   const token = `Bearer ${accessToken}`;
@@ -30,9 +32,55 @@ export function* mypage() {
     // const req = request(request, requestURL, options);
     const reqContents = yield call(request, requestURL, options);
     console.log(reqContents);
-    yield put(actions.myPageSuccess(reqContents));
+    yield put(actions.myReviewsSuccess(reqContents));
   } catch (err) {
-    yield put(actions.myPageFailure(err));
+    yield put(actions.myReviewsFailure(err));
+  }
+}
+
+export function* getMyRewords() {
+  const requestURL = `${process.env.API_URL}/reword`;
+  const accessToken = localStorage.getItem('accessToken');
+  const token = `Bearer ${accessToken}`;
+  try {
+    const options = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        Authorization: token,
+      },
+    };
+
+    // const req = request(request, requestURL, options);
+    const reqContents = yield call(request, requestURL, options);
+    console.log(reqContents);
+    yield put(actions.myRewordsSuccess(reqContents));
+  } catch (err) {
+    yield put(actions.myRewordsFailure(err));
+  }
+}
+
+export function* getAcquire() {
+  const requestURL = `${process.env.API_URL}/reword/acquire`;
+  const accessToken = localStorage.getItem('accessToken');
+  const token = `Bearer ${accessToken}`;
+  try {
+    const options = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        Authorization: token,
+      },
+    };
+
+    // const req = request(request, requestURL, options);
+    const reqContents = yield call(request, requestURL, options);
+    console.log(reqContents);
+    yield put(actions.myRewordsAcquireSuccess(reqContents));
+  } catch (err) {
+    yield put(actions.myRewordsAcquireFailure(err));
   }
 }
 
@@ -119,7 +167,9 @@ export default function* defaultSaga() {
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
   // It will be cancelled automatically on component unmount
-  yield takeLatest(MYPAGE_ACTION, mypage);
+  yield takeLatest(MYPAGE_REVIEWS_ACTION, getMyReviews);
+  yield takeLatest(MYPAGE_REWORDS_ACTION, getMyRewords);
+  yield takeLatest(REWORDS_ACQUIRE_ACTION, getAcquire);
   yield takeLatest(LOAD_USER_DATA, getUserData);
   yield takeLatest(FOLLOWER_COUNT_ACTION, loadFollowerCnt);
   yield takeLatest(FOLLOWING_COUNT_ACTION, loadFollowingCnt);

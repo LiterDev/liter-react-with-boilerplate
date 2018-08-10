@@ -31,12 +31,7 @@ import messages from './messages';
 
 import avatarDefault from '../../images/ic-avatar.png';
 
-import {
-  myPageAction,
-  loadFollowerCountAction,
-  loadFollowingCountAction,
-  loadUserData,
-} from './actions';
+import * as actions from './actions';
 import * as selectors from './selectors';
 
 import reducer from './reducer';
@@ -178,11 +173,29 @@ export class MyPage extends React.PureComponent {
     });
   };
 
+  tabListHandler = type => {
+    const { selectMyReviews, selectMyRewords, selectAcquire } = this.props;
+    console.log(type);
+    switch (type) {
+      case 0:
+        console.log('REVIEW call');
+        selectMyReviews();
+        break;
+      case 1:
+        console.log('REWORD call');
+        selectAcquire();
+        selectMyRewords();
+        break;
+      default:
+        selectMyReviews();
+        console.log('default');
+    }
+  };
+
   componentDidMount() {
-    const { selectMyReview, selectUserData } = this.props;
- 
+    const { selectUserData } = this.props;
+
     selectUserData();
-    selectMyReview();
   }
 
   render() {
@@ -207,7 +220,10 @@ export class MyPage extends React.PureComponent {
     // 임시코드
     return (
       <div>
-        <SelfieControl changeSelfie={click => this.changeSelfie = click} callbackFunc={this.props.selectUserData}/> 
+        <SelfieControl
+          changeSelfie={click => (this.changeSelfie = click)}
+          callbackFunc={this.props.selectUserData}
+        />
         <div className={classes.container}>
           <Header headerTitle={<FormattedMessage {...messages.header} />} />
         </div>
@@ -275,7 +291,11 @@ export class MyPage extends React.PureComponent {
             </div>
           </div>
         </div>
-        <TabList tabs={this.state.tabs} data={myPages} />
+        <TabList
+          tabs={this.state.tabs}
+          data={myPages}
+          tabListHandler={this.tabListHandler}
+        />
         <AlertDialog
           onClose={this.handleClose}
           open={this.state.makeWalletPopOpen}
@@ -296,14 +316,16 @@ export class MyPage extends React.PureComponent {
 MyPage.propTypes = {
   id: PropTypes.string,
   classes: PropTypes.object.isRequired,
-  selectMyReview: PropTypes.func,
+  selectMyReviews: PropTypes.func,
+  selectMyRewords: PropTypes.func,
+  selectAcquire: PropTypes.func,
   selectFollowerCount: PropTypes.func,
   selectFollowingCount: PropTypes.func,
+  selectUserData: PropTypes.func,
   myPages: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   global: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   follwerCount: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   follwingCount: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  selectUserData: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -317,20 +339,26 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    selectMyReview: () => {
-      dispatch(myPageAction());
+    selectMyReviews: () => {
+      dispatch(actions.myReviewsAction());
+    },
+    selectMyRewords: () => {
+      dispatch(actions.myRewordsAction());
+    },
+    selectAcquire: () => {
+      dispatch(actions.myRewordAcquireAction());
     },
     selectFollowerCount: userId => {
       // console.log(`load My Review - follower Count call!!! --- ${userId}`);
-      dispatch(loadFollowerCountAction(userId));
+      dispatch(actions.loadFollowerCountAction(userId));
     },
     selectFollowingCount: userId => {
       // console.log(`load My Review - following Count call!!! --- ${userId}`);
-      dispatch(loadFollowingCountAction(userId));
+      dispatch(actions.loadFollowingCountAction(userId));
     },
     selectUserData: () => {
       // console.log('signinUserData');
-      dispatch(loadUserData());
+      dispatch(actions.loadUserData());
     },
   };
 }

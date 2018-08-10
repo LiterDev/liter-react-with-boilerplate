@@ -62,7 +62,7 @@ class MediaSlider extends React.PureComponent {
               {
                 mediaArray &&
                 mediaArray.map((review, idx) => (
-                  <Media key={review.id} fullPath={review.fullPath} mediaType={review.mediaType} description={review.name} idx={idx} movieKey={review.movieKey} />
+                  <Media key={idx} fullPath={review.fullPath} mediaType={review.mediaType} description={review.name} idx={review.id} movieKey={review.movieKey} />
                 ))
               }
           </Slider>

@@ -531,6 +531,7 @@ class ReviewDetailCard extends React.PureComponent {
         <ReviewCardBottomBarView
           likeYn={review.likeYn}
           onViewVote={this.props.handleVoting}
+          review={review} 
           reviewId={review.id}
           viewType="fixed"
         />

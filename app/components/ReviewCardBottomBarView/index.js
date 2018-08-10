@@ -22,6 +22,8 @@ import VoteSelIcon from '../../images/ic-voting-sel.png';
 import ShareNonIcon from '../../images/ic-share-non.png';
 import FacebookProvider, { Share } from 'react-facebook';
 
+import CubeEndIcon from '../../images/ic-cube-end.png';
+
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
@@ -93,6 +95,11 @@ const styles = theme => ({
     letterSpacing: 'normal',
     color: '#aaaaaa',
   },
+  cubeEnd: {
+    width: '6px',
+    height: '10px',
+    objectFit: 'contain',
+  }
 })
 
 const votingIcons = {
@@ -146,7 +153,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
 
   render() {
     const { classes } = this.props;
-    const { reviewId, onViewVote, campaign, viewType, likeYn } = this.props;
+    const { reviewId, onViewVote, campaign, viewType, likeYn, review } = this.props;
     const { voting, reviewing, sharing, viewClass } = this.state; 
     
     const curVote = (likeYn)? votingIcons.sel : votingIcons.non;
@@ -157,6 +164,31 @@ class ReviewCardBottomBarView extends React.PureComponent {
     // const curShare = shareIcons.non;
     // const curReviewing = reviewingIcons.non;
     // const curReviewing = reviewingIcons.sel;
+
+    // current status for campaign
+    let currentStatus = null;
+    switch(review.rewardActive) {
+      case "DOING":
+        currentStatus = (
+          <span className={curReviewing.styleClass}>
+            <FormattedMessage {...messages.rewardActive} />
+          </span>
+        );
+      break;
+      case "END":
+        currentStatus = (
+          <span className={curReviewing.styleClass}>
+            <img src={ CubeEndIcon } className={classes.cubeEnd} />
+            <span className={curReviewing.styleClass}>
+              { review.rewardLitercube }
+            </span>
+          </span>
+        );
+      break;
+      default:
+
+      break;
+    }
 
     if(onViewVote !== false) {
       return (
@@ -170,10 +202,9 @@ class ReviewCardBottomBarView extends React.PureComponent {
               </span>
             </div>
             <div className={classes.activeStatus}>
-              <span className={curReviewing.styleClass}>              
-                {/* <FormattedMessage {...messages.rewardActive} /> */}
-                진행중
-              </span>
+              {/* <span className={curReviewing.styleClass}> */}
+                { currentStatus }
+              {/* </span> */}
             </div>
             <div className={classes.activeRStatus}>
               <FacebookProvider appId={process.env.FACEBOOK_APPID}>
@@ -200,10 +231,9 @@ class ReviewCardBottomBarView extends React.PureComponent {
               </span>
             </div>
             <div className={classes.activeStatus}>
-              <span className={curReviewing.styleClass}>              
-                {/* <FormattedMessage {...messages.rewardActive} /> */}
-                진행중
-              </span>
+              {/* <span className={curReviewing.styleClass}>               */}
+                { currentStatus }
+              {/* </span> */}
             </div>    
             <div className={classes.activeRStatus}>
               <FacebookProvider appId={process.env.FACEBOOK_APPID}>

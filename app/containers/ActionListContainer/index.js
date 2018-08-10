@@ -30,7 +30,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
-import Header from 'components/Header';
+import PopupHeader from 'components/PopupHeader';
 
 import { loadList, setFollow, setUnFollow } from './actions';
 import { makeSelectList, makeSelectListContents } from './selectors';
@@ -201,7 +201,7 @@ export class ActionListContainer extends React.PureComponent {
       return (
         <div>
           <div className={classes.container}>
-            <Header
+            <PopupHeader
               headerTitle={<FormattedMessage {...messages.headerTitle} />}
             />
           </div>
@@ -219,7 +219,7 @@ export class ActionListContainer extends React.PureComponent {
     return (
       <div>
         <div className={classes.container}>
-          <Header
+          <PopupHeader
             headerTitle={<FormattedMessage {...messages.headerTitle} />}
           />
         </div>

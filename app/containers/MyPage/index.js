@@ -198,6 +198,17 @@ export class MyPage extends React.PureComponent {
     selectUserData();
   }
 
+  navigateFollower = () => {
+    console.log("Follower");
+    this.props.history.push('/follow');
+  }
+
+  navigateFollowing = () => {
+    console.log("Following");
+    this.props.history.push('/following');
+    // this.props.history.pushState('/following');
+  }
+
   render() {
     const {
       classes,
@@ -280,14 +291,14 @@ export class MyPage extends React.PureComponent {
           <div className={classNames(classes.row, classes.panelInfo)}>
             <div className={classes.col}>
               <div className={classes.row}>{myPages.followerCount}</div>
-              <div className={classes.row}>팔로워</div>
+              <div className={classes.row} onClick={this.navigateFollower} >팔로워</div>
             </div>
             <div className={classes.verticalCol}>
               <div className={classes.verticalDivider} />
             </div>
             <div className={classes.col}>
               <div className={classes.row}>{myPages.followingCount}</div>
-              <div className={classes.row}>팔로잉</div>
+              <div className={classes.row} onClick={this.navigateFollowing} >팔로잉</div>
             </div>
           </div>
         </div>

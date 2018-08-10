@@ -30,17 +30,14 @@ export class FollowingActionPage extends React.PureComponent {
     const { followType } = this.props;
     const userId = this.props.match.params.userId;
 
-    // console.log("]-------------- USERID -----------[");
-    // console.log(userId);
-    // console.log(followType);
-
     return (
       <div>
         <Helmet>
           <title>FollowActionPage</title>
           <meta name="description" content="Description of FollowActionPage" />
         </Helmet>
-        <ActionListContainer followType={followType} userid={userId} />
+        {/* <ActionListContainer followType={followType} userid={userId} /> */}
+        <ActionListContainer fType='following' userid={userId} />
       </div>
     );
   }

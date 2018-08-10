@@ -17,10 +17,9 @@ import {
 } from './constants';
 
 export const initialState = fromJS({
-  type: 'follow',
+  type: false,
   loading: false,
   error: false,
-  userid: false,
   list: {
     contents: false,
   },
@@ -37,7 +36,7 @@ function actionListContainerReducer(state = initialState, action) {
       return (
         state
           .set('loading', false)
-          .set('userid', action.userid)
+          // .set('userid', action.userid)
           // .setIn(['list', 'contents'], Object.values(action.list));
           .setIn(['list', 'contents'], action.list)
       );

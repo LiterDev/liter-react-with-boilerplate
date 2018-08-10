@@ -15,7 +15,6 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { makeSelectLoading, makeSelectError } from 'containers/App/selectors';
 
-import { makeSelectUserID } from 'containers/FollowActionPage/selectors';
 import FollowCtrl from 'containers/FollowCtrl';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -32,8 +31,6 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
 import Header from 'components/Header';
-
-import { makeSelectPageType } from 'containers/FollowActionPage/selectors';
 
 import { loadList, setFollow, setUnFollow } from './actions';
 import { makeSelectList, makeSelectListContents } from './selectors';
@@ -122,6 +119,10 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 export class ActionListContainer extends React.PureComponent {
+  state = {
+    followFlag: null,
+  }
+
   constructor(props) {
     super(props);
     console.log(props);
@@ -129,8 +130,7 @@ export class ActionListContainer extends React.PureComponent {
   }
 
   componentDidMount() {
-    if (this.props.userid && this.props.userid.trim().length > 0)
-      this.props.onLoadList();
+    this.props.onLoadList(this.props.fType);
   }
 
   onFollowCtrlClick = followId => {
@@ -148,12 +148,9 @@ export class ActionListContainer extends React.PureComponent {
   render() {
     const { classes } = this.props;
     const { followType, contents } = this.props;
+    const { fType } = this.props;
 
-    const nType = followType == 'follow' ? 0 : 1;
-    const messages = Tmessages[nType];
-
-    console.log("]-------------- USERID -----------[");
-    console.log(this.props.userid);
+    const messages = Tmessages[(fType == 'follow')? 0 : 1];
 
     let content = null;
     const followArray = contents.content != null ? contents.content : [];
@@ -217,7 +214,6 @@ export class ActionListContainer extends React.PureComponent {
           </div>
         </div>
       );
-
     } 
     
     return (
@@ -246,9 +242,7 @@ ActionListContainer.propTypes = {
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   contents: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   onLoadList: PropTypes.func,
-  userid: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onSetFollow: PropTypes.func,
-  type: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -256,15 +250,12 @@ const mapStateToProps = createStructuredSelector({
   contents: makeSelectListContents(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
-  userid: makeSelectUserID(),
-  type: makeSelectPageType(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    onLoadList: evt => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(loadList());
+    onLoadList: (followType) => {
+      dispatch(loadList(followType));
     },
     onSetFollow: followid => {
       dispatch(setFollow(followid));

@@ -90,21 +90,9 @@ function App(props) {
         <Route path="/follow/:userId" component={FollowActionPage} />
         <Route exact path="/following" component={FollowingActionPage} />
         <Route path="/following/:userId" component={FollowingActionPage} />
-<<<<<<< HEAD
-        <PrivateWalletRoute
-          exact
-          path="/review/write"
-          component={ReviewForm}
-          // authenticated={this.state.isAuthenticatedWallet}
-        />
-        <Route path="/review/edit/:reviewId" component={ReviewForm} />
-        <Route path="/review/:reviewId" component={ReviewDetailResolver} />
-        <Route path="/following" component={FollowingActionPage} />
-=======
         <PrivateWalletRoute exact path="/review/write" component={ReviewForm} />
         <PrivateRoute path="/review/edit/:reviewId" component={ReviewForm} />
         <Route path="/review/:reviewId" component={ReviewDetailResolver} />        
->>>>>>> 71a0f55331140e5fdfb815d0269656b38eda1edd
         <Route path="/slide" component={SlideTest} />
         {/* <PrivateRoute path="/valid/:validString" component={EmailValid} /> */}
         <Route path="/valid" component={EmailValid} />

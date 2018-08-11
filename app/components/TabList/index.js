@@ -149,8 +149,8 @@ class TabList extends React.Component {
       );
     } else if (tabItem.type === 'REWARD') {
       result.push(
-        <List>
-          {/* <ListItem key={tabItem.type.concat('header')}>
+        <List key={tabItem.type.concat('list')}>
+          <ListItem key={tabItem.type.concat('header')}>
             <span className={classes.col3}>신규보상</span>
             <span className={classes.col1}>
               <svg
@@ -180,17 +180,17 @@ class TabList extends React.Component {
                 {'보상받기'}
               </button>
             </span>
-          </ListItem> */}
-          {/* <Divider /> */}
-          {/* <ListItem key={tabItem.type.concat(0)}>
+          </ListItem>
+          <Divider />
+          <ListItem key={tabItem.type.concat(0)}>
             <div className={classes.rewardTopLine}>
               <span className={classes.rewardHeaderDate}>일시</span>
               <span className={classes.rewardHeaderReward}>보상액</span>
               <span className={classes.rewardHeaderTotal}>총액</span>
             </div>
-          </ListItem> */}
-          {/* <Divider /> */}
-          {/* {this.renderRewordRow(tabItem.type, data.rewords)} */}
+          </ListItem>
+          <Divider />
+          {this.renderRewardRow(tabItem.type, data.rewards)}
         </List>,
       );
     }
@@ -224,14 +224,14 @@ class TabList extends React.Component {
     );
   }
 
-  renderRewordRow(type, data) {
+  renderRewardRow(type, data) {
     const { classes } = this.props;
     console.log('####');
     console.log(Object.values(data));
     // return <div>11</div>;
     if (data !== false && data.length > 0) {
       return Object.values(data).map(row => (
-        <RewardContainer reword={row} key={type.concat(row.id)} />
+        <RewardContainer reward={row} key={type.concat(row.id)} />
       ));
     }
     return (

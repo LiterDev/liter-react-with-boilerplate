@@ -8,7 +8,7 @@ import { fromJS } from 'immutable';
 import { DEFAULT_ACTION } from './constants';
 
 export const initialState = fromJS({
-  userid: '1',
+  userid: '0',
   followType: 'follow',
 });
 

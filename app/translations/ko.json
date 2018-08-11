@@ -72,5 +72,7 @@
 
   "app.components.ReviewCard.followText": "팔로우",
   "app.components.ReviewCard.rewardActive": "진행중",
-  "app.components.ReviewCard.sharing": "공유하기"
+  "app.components.ReviewCard.sharing": "공유하기",
+  "app.component.ReviewHeader.helpEmailAddress": "help@literproject.com",
+  "app.containers.EmailValid.header": "이메일 인증"
 }

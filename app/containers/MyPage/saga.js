@@ -6,8 +6,8 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
 import {
   MYPAGE_REVIEWS_ACTION,
-  MYPAGE_REWORDS_ACTION,
-  REWORDS_ACQUIRE_ACTION,
+  MYPAGE_REWARDS_ACTION,
+  REWARDS_ACQUIRE_ACTION,
   LOAD_USER_DATA,
   FOLLOWER_COUNT_ACTION,
   FOLLOWING_COUNT_ACTION,
@@ -37,8 +37,8 @@ export function* getMyReviews() {
   }
 }
 
-export function* getMyRewords() {
-  const requestURL = `${process.env.API_URL}/reword`;
+export function* getMyRewards() {
+  const requestURL = `${process.env.API_URL}/reward`;
   const accessToken = localStorage.getItem('accessToken');
   const token = `Bearer ${accessToken}`;
   try {
@@ -54,14 +54,14 @@ export function* getMyRewords() {
     // const req = request(request, requestURL, options);
     const reqContents = yield call(request, requestURL, options);
     console.log(reqContents);
-    yield put(actions.myRewordsSuccess(reqContents));
+    yield put(actions.myRewardsSuccess(reqContents));
   } catch (err) {
-    yield put(actions.myRewordsFailure(err));
+    yield put(actions.myRewardsFailure(err));
   }
 }
 
 export function* getAcquire() {
-  const requestURL = `${process.env.API_URL}/reword/acquire`;
+  const requestURL = `${process.env.API_URL}/reward/acquire`;
   const accessToken = localStorage.getItem('accessToken');
   const token = `Bearer ${accessToken}`;
   try {
@@ -77,9 +77,9 @@ export function* getAcquire() {
     // const req = request(request, requestURL, options);
     const reqContents = yield call(request, requestURL, options);
     console.log(reqContents);
-    yield put(actions.myRewordsAcquireSuccess(reqContents));
+    yield put(actions.myRewardsAcquireSuccess(reqContents));
   } catch (err) {
-    yield put(actions.myRewordsAcquireFailure(err));
+    yield put(actions.myRewardsAcquireFailure(err));
   }
 }
 
@@ -167,8 +167,8 @@ export default function* defaultSaga() {
   // It returns task descriptor (just like fork) so we can continue execution
   // It will be cancelled automatically on component unmount
   yield takeLatest(MYPAGE_REVIEWS_ACTION, getMyReviews);
-  yield takeLatest(MYPAGE_REWORDS_ACTION, getMyRewords);
-  yield takeLatest(REWORDS_ACQUIRE_ACTION, getAcquire);
+  yield takeLatest(MYPAGE_REWARDS_ACTION, getMyRewards);
+  yield takeLatest(REWARDS_ACQUIRE_ACTION, getAcquire);
   yield takeLatest(LOAD_USER_DATA, getUserData);
   yield takeLatest(FOLLOWER_COUNT_ACTION, loadFollowerCnt);
   yield takeLatest(FOLLOWING_COUNT_ACTION, loadFollowingCnt);

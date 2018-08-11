@@ -13,14 +13,8 @@ const makeSelectListContents = () =>
     contentState.getIn(['list', 'contents']),
   );
 
-const makeSelectUserID = () =>
-  createSelector(actionListDomain, actionListDomain =>
-    actionListDomain.get('userid'),
-  );
-
 export {
   actionListDomain,
   makeSelectListContents,
   makeSelectList,
-  makeSelectUserID,
 };

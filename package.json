@@ -27,6 +27,7 @@
     "build:dll": "node ./internals/scripts/dependencies.js",
     "start": "cross-env NODE_ENV=development API_URL=http://127.0.0.1:8080 FACEBOOK_APPID=251477072130227 NAVER_MAP_CLIENTID=rMSQYs31Pd_BGO8gC5bA node server",
     "local": "cross-env NODE_ENV=development API_URL=http://192.168.1.62:8080 FACEBOOK_APPID=251477072130227 NAVER_MAP_CLIENTID=rMSQYs31Pd_BGO8gC5bA node server",
+    "start:cuma": "cross-env NODE_ENV=development API_URL=http://192.168.0.160:8080 FACEBOOK_APPID=251477072130227 NAVER_MAP_CLIENTID=rMSQYs31Pd_BGO8gC5bA node server",
     "start:dev": "cross-env NODE_ENV=development API_URL=http://api.getliter.io FACEBOOK_APPID=251477072130227 NAVER_MAP_CLIENTID=rMSQYs31Pd_BGO8gC5bA node server",
     "start:tunnel": "cross-env NODE_ENV=development ENABLE_TUNNEL=true node server",
     "start:production": "npm run test && npm run build && npm run start:prod",

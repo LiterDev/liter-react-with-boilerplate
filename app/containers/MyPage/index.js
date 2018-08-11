@@ -24,7 +24,7 @@ import AlertDialog from 'components/AlertDialog';
 import SelfieControl from 'components/SelfieControl';
 
 import Button from 'components/Button';
-import Header from 'components/Header';
+import MyPageHeader from 'components/MyPageHeader';
 import TabList from 'components/TabList';
 import EmailAuthPop from '../EmailAuthPop';
 import messages from './messages';
@@ -174,7 +174,7 @@ export class MyPage extends React.PureComponent {
   };
 
   tabListHandler = type => {
-    const { selectMyReviews, selectMyRewords, selectAcquire } = this.props;
+    const { selectMyReviews, selectMyRewards, selectAcquire } = this.props;
     console.log(type);
     switch (type) {
       case 0:
@@ -182,9 +182,9 @@ export class MyPage extends React.PureComponent {
         selectMyReviews();
         break;
       case 1:
-        console.log('REWORD call');
+        console.log('REWARD call');
         selectAcquire();
-        selectMyRewords();
+        selectMyRewards();
         break;
       default:
         selectMyReviews();
@@ -196,6 +196,17 @@ export class MyPage extends React.PureComponent {
     const { selectUserData } = this.props;
 
     selectUserData();
+  }
+
+  navigateFollower = () => {
+    console.log("Follower");
+    this.props.history.push('/follow');
+  }
+
+  navigateFollowing = () => {
+    console.log("Following");
+    this.props.history.push('/following');
+    // this.props.history.pushState('/following');
   }
 
   render() {
@@ -225,7 +236,7 @@ export class MyPage extends React.PureComponent {
           callbackFunc={this.props.selectUserData}
         />
         <div className={classes.container}>
-          <Header headerTitle={<FormattedMessage {...messages.header} />} />
+          <MyPageHeader headerTitle={<FormattedMessage {...messages.header} />} />
         </div>
         <div className={classes.panel}>
           <div className={classes.row}>
@@ -280,14 +291,14 @@ export class MyPage extends React.PureComponent {
           <div className={classNames(classes.row, classes.panelInfo)}>
             <div className={classes.col}>
               <div className={classes.row}>{myPages.followerCount}</div>
-              <div className={classes.row}>팔로워</div>
+              <div className={classes.row} onClick={this.navigateFollower} >팔로워</div>
             </div>
             <div className={classes.verticalCol}>
               <div className={classes.verticalDivider} />
             </div>
             <div className={classes.col}>
               <div className={classes.row}>{myPages.followingCount}</div>
-              <div className={classes.row}>팔로잉</div>
+              <div className={classes.row} onClick={this.navigateFollowing} >팔로잉</div>
             </div>
           </div>
         </div>
@@ -317,7 +328,7 @@ MyPage.propTypes = {
   id: PropTypes.string,
   classes: PropTypes.object.isRequired,
   selectMyReviews: PropTypes.func,
-  selectMyRewords: PropTypes.func,
+  selectMyRewards: PropTypes.func,
   selectAcquire: PropTypes.func,
   selectFollowerCount: PropTypes.func,
   selectFollowingCount: PropTypes.func,
@@ -342,11 +353,11 @@ function mapDispatchToProps(dispatch) {
     selectMyReviews: () => {
       dispatch(actions.myReviewsAction());
     },
-    selectMyRewords: () => {
-      dispatch(actions.myRewordsAction());
+    selectMyRewards: () => {
+      dispatch(actions.myRewardsAction());
     },
     selectAcquire: () => {
-      dispatch(actions.myRewordAcquireAction());
+      dispatch(actions.myRewardAcquireAction());
     },
     selectFollowerCount: userId => {
       // console.log(`load My Review - follower Count call!!! --- ${userId}`);

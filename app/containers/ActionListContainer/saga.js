@@ -1,18 +1,14 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
-import {
-  makeSelectUserID,
-  makeSelectPageType,
-} from 'containers/FollowActionPage/selectors';
 
 import { LOAD_LIST, SET_FOLLOW, SET_UNFOLLOW } from './constants';
 import { loadList, listLoaded, listLoadingError } from './actions';
 import { setFollowedSuccess, setFollowedError } from './actions';
 
-export function* getContents() {
+export function* getContents(data) {
   // Select username from store
-  const userid = yield select(makeSelectUserID());
-  const followType = yield select(makeSelectPageType());
+  // const followType = yield select(makeSelectPageType());
+  const followType = data.followType;
 
   const accessToken = localStorage.getItem('accessToken');
   const token = `Bearer ${accessToken}`;
@@ -39,7 +35,7 @@ export function* getContents() {
     // Call our request helper (see 'utils/request')
     const reqContents = yield call(request, requestURL, options);
     console.log(reqContents);
-    yield put(listLoaded(reqContents, userid));
+    yield put(listLoaded(reqContents));
   } catch (err) {
     yield put(listLoadingError(err));
   }

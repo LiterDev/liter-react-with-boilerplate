@@ -14,7 +14,7 @@ import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import Header from 'components/Header';
+import ReviewHeader from 'components/ReviewHeader';
 import ReviewDetailCard from 'components/ReviewDetailCard';
 
 import {
@@ -65,7 +65,7 @@ export class ReviewDetailPage extends React.PureComponent {
     if (reviews !== false) {
       return (
         <div>
-          <Header headerTitle="" />
+          <ReviewHeader headerTitle="" />
           <ReviewDetailCard
             reviews={reviews}
             surveys={surveys}

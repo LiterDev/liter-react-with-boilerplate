@@ -8,8 +8,8 @@ export function* signin(data) {
   const requestURL = `${process.env.API_URL}/auth/signIn`;
   // const requestURL = 'http://api.getliter.io/auth/signIn';
   // console.log(data);
-  // console.log(data.email);
-  // console.log(data.password);
+  console.log(data.email);
+  console.log(data.password);
   try {
     const options = {
       method: 'POST',
@@ -18,7 +18,7 @@ export function* signin(data) {
         'Content-Type': 'application/json;charset=UTF-8',
         'Access-Control-Allow-Origin': '*',
       },
-      body: JSON.stringify({
+      data: JSON.stringify({
         username: data.email,
         password: data.password,
       }),
@@ -41,7 +41,7 @@ export function* signinFacebook(data) {
         'Content-Type': 'application/json;charset=UTF-8',
         'Access-Control-Allow-Origin': '*',
       },
-      body: JSON.stringify({
+      data: JSON.stringify({
         facebookUserId: data.userId,
         email: data.email,
         accessToken: data.accessToken,

@@ -20,7 +20,7 @@ export function* setFollowSagaData(userid) {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
           },
-          body: JSON.stringify({
+          data: JSON.stringify({
             userid,
           }),
         };

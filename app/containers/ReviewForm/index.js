@@ -147,7 +147,7 @@ export class ReviewForm extends React.PureComponent {
   componentWillMount() {
     const { loadReview } = this.props;
     const reviewId = this.props.match.params.reviewId;
-    console.log(reviewId);
+    // console.log(reviewId);
     if (reviewId) {
       loadReview(reviewId);
     }
@@ -156,7 +156,7 @@ export class ReviewForm extends React.PureComponent {
     const { classes, reviewId, reviews, surveys } = this.props;
     const { reviewform } = this.props;
     const { loading } = reviewform;
-    console.log(this.props.match.params.reviewId);
+    // console.log(this.props.match.params.reviewId);
     if (this.props.match.params.reviewId > 0) {
       this.initHandler();
     }

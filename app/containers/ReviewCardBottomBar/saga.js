@@ -20,7 +20,7 @@ export function* voteProcess(postData, ownId) {
         'Access-Control-Allow-Origin': '*',
         Authorization: token,
       },
-      body: JSON.stringify({
+      data: JSON.stringify({
         reviewId: postData.data,
       }),
     };

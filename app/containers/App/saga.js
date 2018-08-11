@@ -18,7 +18,7 @@ export function* getUserData(data) {
         'Content-Type': 'application/json;charset=UTF-8',
         'Access-Control-Allow-Origin': '*',
       },
-      body: JSON.stringify({
+      data: JSON.stringify({
         username: data.email,
         password: data.password,
       }),
@@ -42,7 +42,7 @@ export function* signinFacebook(data) {
         'Content-Type': 'application/json;charset=UTF-8',
         'Access-Control-Allow-Origin': '*',
       },
-      body: JSON.stringify({
+      data: JSON.stringify({
         facebookUserId: data.userId,
         email: data.email,
         accessToken: data.accessToken,

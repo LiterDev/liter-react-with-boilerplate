@@ -252,7 +252,7 @@ class TabList extends React.Component {
 
           <Divider />
           {this.renderRewardRow(tabItem.type, data.rewards)}
-        </List>        
+        </List>,
       );
     }
 

@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+import axios from 'axios';
 
 /**
  * Parses the JSON returned by a network request
@@ -8,10 +9,14 @@ import 'whatwg-fetch';
  * @return {object}          The parsed JSON from the request
  */
 function parseJSON(response) {
+  // console.log(response);
   if (response.status === 204 || response.status === 205) {
     return null;
   }
-  return response.json();
+
+  // console.log('===========');
+  // console.log(response.data);
+  return response.data;
 }
 
 /**
@@ -22,6 +27,8 @@ function parseJSON(response) {
  * @return {object|undefined} Returns either the response, or throws an error
  */
 function checkStatus(response) {
+  // console.log(response);
+  // console.log(response.status);
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
@@ -49,7 +56,15 @@ function checkStatus(response) {
  * @return {object}           The response data
  */
 export default function request(url, options) {
-  return fetch(url, options)
-    .then(checkStatus)
-    .then(parseJSON);
+  console.log(options.method);
+  console.log(options.headers);
+  return axios({
+    method: options.method,
+    url,
+    data: options.data,
+    headers: options.headers,
+  });
+  // return axios(url, options.)
+  //   .then(checkStatus)
+  //   .then(parseJSON);
 }

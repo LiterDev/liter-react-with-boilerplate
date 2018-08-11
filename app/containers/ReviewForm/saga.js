@@ -48,7 +48,7 @@ export function* post(postData) {
         'Access-Control-Allow-Origin': '*',
         Authorization: token,
       },
-      body: postData.data,
+      data: postData.data,
     };
 
     // const req = request(request, requestURL, options);

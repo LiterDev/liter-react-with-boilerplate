@@ -121,9 +121,7 @@ function mapDispatchToProps(dispatch) {
         dispatch(loadListMore());
       }
     },
-    loadReviewListWithCategory: value => {
-      
-    },
+    loadReviewListWithCategory: value => {},
   };
 }
 

@@ -64,7 +64,7 @@ export function* sagaFollow(data) {
       'Access-Control-Allow-Origin': '*',
       Authorization: token,
     },
-    body: JSON.stringify({
+    data: JSON.stringify({
       followId,
     }),
   };
@@ -99,7 +99,7 @@ export function* sagaVote(data) {
         'Access-Control-Allow-Origin': '*',
         Authorization: token,
       },
-      body: JSON.stringify({
+      data: JSON.stringify({
         reviewId: reviewId,
       }),
     };

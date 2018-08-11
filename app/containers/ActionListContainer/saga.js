@@ -89,7 +89,7 @@ export function* setFollowSaga(data) {
       'Access-Control-Allow-Origin': '*',
       'Authorization': token,
     },
-    body: JSON.stringify({
+    data: JSON.stringify({
       'followId': followId
     }),
   };

@@ -46,7 +46,7 @@ export function* signup(signData) {
         'Content-Type': 'application/json;charset=UTF-8',
         'Access-Control-Allow-Origin': '*',
       },
-      body: JSON.stringify({
+      data: JSON.stringify({
         email: signData.data.get('email'),
         userNickName: signData.data.get('username'),
         password: signData.data.get('password'),

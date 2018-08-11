@@ -28,7 +28,6 @@ export function* getMyReviews() {
         Authorization: token,
       },
     };
-
     // const req = request(request, requestURL, options);
     const reqContents = yield call(request, requestURL, options);
     console.log(reqContents);

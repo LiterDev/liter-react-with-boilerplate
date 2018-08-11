@@ -5,89 +5,31 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import {
-  // BrowserRouter as Router,
-  Route,
-  // Link,
-  Redirect,
-  // withRouter,
-} from 'react-router-dom';
 import makeSelectAuth from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-// import messages from './messages';
+import messages from './messages';
 
-// const fakeAuth = {
-//   isAuthenticated: false,
-//   authenticate(cb) {
-//     this.isAuthenticated = true;
-//     setTimeout(cb, 100); // fake async
-//   },
-//   signout(cb) {
-//     this.isAuthenticated = false;
-//     setTimeout(cb, 100);
-//   },
-// };
-
-export const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      localStorage.getItem('username') ? (
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{ pathname: '/signin', state: { from: props.location } }}
-        />
-      )
-    }
-  />
-);
-
-export const PrivateWalletRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      localStorage.getItem('username') ? (
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{ pathname: '/signin', state: { from: props.location } }}
-        />
-      )
-    }
-  />
-);
-
-const requestURL = `${process.env.API_URL}/user/authInfo`;
-
-export function validAuth(props) {
-  // console.log(props);
-  const accessToken = localStorage.getItem('accessToken');
-  // const refreshToken = localStorage.getItem('refreshToken');
-  // console.log(accessToken);
-  const token = `Bearer ${accessToken}`;
-  // const result = axios.get(requestURL, { headers: { Authorization: token } });
-
-  return true;
-  
-}
-
-function Auth(props) {
-  console.log(props.auth);
-  return <div>{/* <FormattedMessage {...messages.header} /> */}</div>;
+function Auth() {
+  // this.auth();
+  console.log('auth============');
+  return (
+    <div>
+      <FormattedMessage {...messages.header} />
+    </div>
+  );
 }
 
 Auth.propTypes = {
-  // dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({

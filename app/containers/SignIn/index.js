@@ -155,8 +155,8 @@ const styles = theme => ({
     // marginLeft: 0,
   },
   button: {
-    margin: 'auto',
-    display: 'block',
+    // margin: 'auto',
+    // display: 'block',
   },
 });
 

@@ -7,9 +7,6 @@ import { initialState } from './reducer';
 
 const selectAuthDomain = state => state.get('auth', initialState);
 
-const makeAuthAcessValid = () =>
-  createSelector(selectAuthDomain, substate => substate.toJS());
-
 /**
  * Other specific selectors
  */
@@ -22,4 +19,4 @@ const makeSelectAuth = () =>
   createSelector(selectAuthDomain, substate => substate.toJS());
 
 export default makeSelectAuth;
-export { selectAuthDomain, makeSelectAuth, makeAuthAcessValid };
+export { selectAuthDomain };

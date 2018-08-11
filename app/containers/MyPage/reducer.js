@@ -9,7 +9,7 @@ import * as constants from './constants';
 
 export const initialState = fromJS({
   reviews: false,
-  rewords: false,
+  rewards: false,
   acquire: 0,
   followerCount: 0,
   followingCount: 0,
@@ -29,23 +29,27 @@ function myPageReducer(state = initialState, action) {
         .set('reviews', action.data.content);
     case constants.MYPAGE_REVIEWS_FAILURE:
       return state;
-    case constants.MYPAGE_REWORDS_ACTION:
+    case constants.MYPAGE_REWARDS_ACTION:
       return state.set('loading', true).set('error', false);
-    case constants.MYPAGE_REWORDS_SUCCESS:
+    case constants.MYPAGE_REWARDS_SUCCESS:
+        console.log("action.data::reward list -------- reducer mypage");
+        console.log(action.data);
       return state
         .set('loading', false)
         .set('error', false)
-        .set('rewords', action.data.content);
-    case constants.MYPAGE_REWORDS_FAILURE:
+        .set('rewards', action.data);
+    case constants.MYPAGE_REWARDS_FAILURE:
       return state;
-    case constants.REWORDS_ACQUIRE_ACTION:
+    case constants.REWARDS_ACQUIRE_ACTION:
       return state.set('loading', true).set('error', false);
-    case constants.REWORDS_ACQUIRE_SUCCESS:
+    case constants.REWARDS_ACQUIRE_SUCCESS:
+        console.log("action.data::acquire list -------- reducer mypage");
+        console.log(action.data);
       return state
         .set('loading', false)
         .set('error', false)
-        .set('acquire', action.data.content);
-    case constants.REWORDS_ACQUIRE_FAILURE:
+        .set('acquire', action.data);
+    case constants.REWARDS_ACQUIRE_FAILURE:
       return state;
     case constants.FOLLOWER_COUNT_ACTION:
       return state;

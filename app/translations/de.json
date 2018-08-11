@@ -57,5 +57,9 @@
     "회원님의 활동에 따른 보상을 회원님의 지갑으로 지급해 드리고 있습니다. <br>보상을 받으려면 이메일 인증을 통해 지갑을 생성해야 합니다.",
 
   "app.containers.App.header": "App Test",
-  "app.component.ReviewHeader.helpEmailAddress": "help@literproject.com"
+  "app.component.ReviewHeader.helpEmailAddress": "help@literproject.com",
+
+  "app.components.ReviewCardBottomBarView.rewardActive": "진행중",
+  "app.components.FollowAjxButton.unButtonTitle": "팔로잉",
+  "app.components.FollowAjxButton.buttonTitle": "팔로우"
 }

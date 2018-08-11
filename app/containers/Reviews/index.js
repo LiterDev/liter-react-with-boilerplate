@@ -60,6 +60,7 @@ export class Reviews extends React.PureComponent {
         $(document).height() - $(window).height() - $(window).scrollTop() <
         250
       ) {
+        console.log(this.props);
         loadReviewListMore(
           this.props.reviews.loadMore,
           this.props.reviews.last,

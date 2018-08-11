@@ -43,7 +43,7 @@ import avatarDefault from '../../images/ic-avatar.png';
 
 const styles = theme => ({
   root: {
-    paddingTop: theme.spacing.unit * 0,
+    // paddingTop: theme.spacing.unit * 0,
   },
   card: {
     // maxWidth: 400,

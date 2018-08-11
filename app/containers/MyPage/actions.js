@@ -8,12 +8,12 @@ import {
   MYPAGE_REVIEWS_ACTION,
   MYPAGE_REVIEWS_SUCCESS,
   MYPAGE_REVIEWS_FAILURE,
-  MYPAGE_REWORDS_ACTION,
-  MYPAGE_REWORDS_SUCCESS,
-  MYPAGE_REWORDS_FAILURE,
-  REWORDS_ACQUIRE_ACTION,
-  REWORDS_ACQUIRE_SUCCESS,
-  REWORDS_ACQUIRE_FAILURE,
+  MYPAGE_REWARDS_ACTION,
+  MYPAGE_REWARDS_SUCCESS,
+  MYPAGE_REWARDS_FAILURE,
+  REWARDS_ACQUIRE_ACTION,
+  REWARDS_ACQUIRE_SUCCESS,
+  REWARDS_ACQUIRE_FAILURE,
   FOLLOWER_COUNT_ACTION,
   FOLLOWER_COUNT_SUCCESS,
   FOLLOWER_COUNT_FAILURE,
@@ -68,50 +68,50 @@ export function myReviewsFailure(error) {
   };
 }
 
-export function myRewordsAction() {
+export function myRewardsAction() {
   // console.log('myPageAction');
   return {
-    type: MYPAGE_REWORDS_ACTION,
+    type: MYPAGE_REWARDS_ACTION,
   };
 }
 
-export function myRewordsSuccess(data) {
+export function myRewardsSuccess(data) {
   // console.log('myPageSuccess');
   // console.log(data);
   return {
-    type: MYPAGE_REWORDS_SUCCESS,
+    type: MYPAGE_REWARDS_SUCCESS,
     data,
   };
 }
 
-export function myRewordsFailure(error) {
+export function myRewardsFailure(error) {
   console.log('myReviewFailure');
   return {
-    type: MYPAGE_REWORDS_FAILURE,
+    type: MYPAGE_REWARDS_FAILURE,
     error,
   };
 }
 
-export function myRewordAcquireAction() {
-  // console.log('myRewordAcquireAction');
+export function myRewardAcquireAction() {
+  // console.log('myRewardAcquireAction');
   return {
-    type: REWORDS_ACQUIRE_ACTION,
+    type: REWARDS_ACQUIRE_ACTION,
   };
 }
 
-export function myRewordsAcquireSuccess(data) {
-  // console.log('myRewordsAcquireSuccess');
+export function myRewardsAcquireSuccess(data) {
+  // console.log('myRewardsAcquireSuccess');
   // console.log(data);
   return {
-    type: REWORDS_ACQUIRE_SUCCESS,
+    type: REWARDS_ACQUIRE_SUCCESS,
     data,
   };
 }
 
-export function myRewordsAcquireFailure(error) {
-  console.log('myRewordsAcquireFailure');
+export function myRewardsAcquireFailure(error) {
+  console.log('myRewardsAcquireFailure');
   return {
-    type: REWORDS_ACQUIRE_FAILURE,
+    type: REWARDS_ACQUIRE_FAILURE,
     error,
   };
 }

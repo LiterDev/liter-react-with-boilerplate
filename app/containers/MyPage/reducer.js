@@ -32,19 +32,23 @@ function myPageReducer(state = initialState, action) {
     case constants.MYPAGE_REWARDS_ACTION:
       return state.set('loading', true).set('error', false);
     case constants.MYPAGE_REWARDS_SUCCESS:
+        console.log("action.data::reward list -------- reducer mypage");
+        console.log(action.data);
       return state
         .set('loading', false)
         .set('error', false)
-        .set('rewards', action.data.content);
+        .set('rewards', action.data);
     case constants.MYPAGE_REWARDS_FAILURE:
       return state;
     case constants.REWARDS_ACQUIRE_ACTION:
       return state.set('loading', true).set('error', false);
     case constants.REWARDS_ACQUIRE_SUCCESS:
+        console.log("action.data::acquire list -------- reducer mypage");
+        console.log(action.data);
       return state
         .set('loading', false)
         .set('error', false)
-        .set('acquire', action.data.content);
+        .set('acquire', action.data);
     case constants.REWARDS_ACQUIRE_FAILURE:
       return state;
     case constants.FOLLOWER_COUNT_ACTION:

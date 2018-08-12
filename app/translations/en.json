@@ -69,5 +69,9 @@
   "app.containers.SignIn.login": "로그인",
   "app.containers.Reviews.header": "리뷰",
 
-  "app.component.ReviewHeader.helpEmailAddress": "help@literproject.com"
+  "app.component.ReviewHeader.helpEmailAddress": "help@literproject.com",
+
+  "app.components.ReviewCardBottomBarView.rewardActive": "진행중",
+  "app.components.FollowAjxButton.unButtonTitle": "팔로잉",
+  "app.components.FollowAjxButton.buttonTitle": "팔로우"
 }

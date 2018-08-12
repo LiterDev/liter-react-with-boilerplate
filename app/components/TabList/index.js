@@ -13,6 +13,11 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from 'components/Button';
 
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+
 import ReviewContainer from './ReviewContainer';
 import RewardContainer from './RewardContainer';
 
@@ -99,15 +104,66 @@ const styles = theme => ({
     paddingLeft: '10px',
     flex: 3,
   },
+  newRewardSnackbar: {
+    width: '100%',
+    height: '53px',
+    backgroundColor: 'rgba(0,0,0,0.85)',
+  },
+  newRewardSnackbarContent: {
+    marginTop: '-35px',
+    width: '100%',
+    lineHeight: '53px',    
+    height: '53px',
+    color: '#fff',
+    textAlign: 'center',
+  },
+  newRewardSnackBarCaption: {
+    opacity: '0.51',
+    fonFamily: 'AppleSDGothicNeo',
+    fontSize: '12px',
+    fontWeight: 'normal',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    color: '#ffffff',
+  },
+  newRewardSnackBarCoin: {
+    fonFamily: 'SFProDisplay',
+    fontSize: '19.8px',
+    fontWeight: '600',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    color: '#ffffff',
+  },
+  newRewardSnackBarBtn: {
+    borderRadius: '1.6px',
+    width: '107px',
+    height: '32px',
+    border: 'solid 1px #1591ff',
+    margin: '29px 8px 29px 8px',
+    fonFamily: 'AppleSDGothicNeo',
+    fontSize: '14px',
+    fontWeight: 'bold',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: '1.14',
+    letterSpacing: 'normal',
+    color: '#1591ff',
+  }
 });
 
 class TabList extends React.Component {
   state = {
     value: 0,
+    newReward: false,
   };
 
   componentDidMount = () => {
     this.props.tabListHandler(this.state.value);
+    this.setState({ newReward: true });
   };
 
   handleChange = (event, value) => {
@@ -129,13 +185,15 @@ class TabList extends React.Component {
 
   renderContainer() {
     const { data, tabs } = this.props;
-    const { value } = this.state;
+    const { value, newReward } = this.state;
     const { classes } = this.props;
 
     const result = [];
     const tabItem = tabs[value];
 
+    console.log("]----------- myPage::renderContainer:data ---------[");
     console.log(data);
+
     if (tabItem.type === 'REVIEW') {
       result.push(
         <div key={tabItem.type.concat('0')}>
@@ -153,22 +211,8 @@ class TabList extends React.Component {
           <ListItem key={tabItem.type.concat('header')}>
             <span className={classes.col3}>신규보상</span>
             <span className={classes.col1}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="10"
-                height="21"
-                viewBox="0 0 10 21"
-              >
-                <g fill="none" fillRule="evenodd">
-                  <path fill="#FFF" d="M-155-201h375v667h-375z" />
-                  <path
-                    fill="#1591FF"
-                    fillRule="nonzero"
-                    stroke="#1591FF"
-                    strokeWidth=".2"
-                    d="M7.886 6.502l.114.1v.972l-.034.072-.142.08A3.67 3.67 0 0 0 4.776 9.37l3.108.048.116.106-.059 1.022-.12.096-3.388-.042c-.018.139-.027.26-.027.376l.001.075v.028c.003.104.003.174-.002.233l3.48.05.115.105-.059 1.023-.12.096-3-.067c.596 1.045 1.747 1.71 3.066 1.757l.113.107-.059 1.022-.117.096c-2.01 0-3.798-1.186-4.44-2.918l-1.272-.048L2 12.428l.059-1.022.125-.096.861.048a4.1 4.1 0 0 1-.018-.383c0-.14.01-.25.037-.341l-.953-.043L2 10.485l.059-1.023.121-.096 1.153.033c.704-1.78 2.504-2.948 4.553-2.897z"
-                  />
-                </g>
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="21" viewBox="0 0 10 21" >
+                <g fill="none" fillRule="evenodd"><path fill="#FFF" d="M-155-201h375v667h-375z" /><path fill="#1591FF" fillRule="nonzero" stroke="#1591FF" strokeWidth=".2"d="M7.886 6.502l.114.1v.972l-.034.072-.142.08A3.67 3.67 0 0 0 4.776 9.37l3.108.048.116.106-.059 1.022-.12.096-3.388-.042c-.018.139-.027.26-.027.376l.001.075v.028c.003.104.003.174-.002.233l3.48.05.115.105-.059 1.023-.12.096-3-.067c.596 1.045 1.747 1.71 3.066 1.757l.113.107-.059 1.022-.117.096c-2.01 0-3.798-1.186-4.44-2.918l-1.272-.048L2 12.428l.059-1.022.125-.096.861.048a4.1 4.1 0 0 1-.018-.383c0-.14.01-.25.037-.341l-.953-.043L2 10.485l.059-1.023.121-.096 1.153.033c.704-1.78 2.504-2.948 4.553-2.897z" /></g>
               </svg>
               {data.acquire}
             </span>
@@ -189,6 +233,23 @@ class TabList extends React.Component {
               <span className={classes.rewardHeaderTotal}>총액</span>
             </div>
           </ListItem>
+
+          <Snackbar
+            className={classes.newRewardSnackbar}
+            open={this.state.newReward}
+            onClose={this.handleReceiveClose} >
+            <div className={classes.newRewardSnackbarContent}>
+              <span className={classes.newRewardSnackBarCaption}>
+                지금 받을 수 있는 신규보상
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="21" viewBox="0 0 10 21" >
+                <g fill="none" fillRule="evenodd"><path d="M-155-201h375v667h-375z" /><path fill="#fff" fillRule="nonzero" stroke="#fff" strokeWidth=".1"d="M7.886 6.502l.114.1v.972l-.034.072-.142.08A3.67 3.67 0 0 0 4.776 9.37l3.108.048.116.106-.059 1.022-.12.096-3.388-.042c-.018.139-.027.26-.027.376l.001.075v.028c.003.104.003.174-.002.233l3.48.05.115.105-.059 1.023-.12.096-3-.067c.596 1.045 1.747 1.71 3.066 1.757l.113.107-.059 1.022-.117.096c-2.01 0-3.798-1.186-4.44-2.918l-1.272-.048L2 12.428l.059-1.022.125-.096.861.048a4.1 4.1 0 0 1-.018-.383c0-.14.01-.25.037-.341l-.953-.043L2 10.485l.059-1.023.121-.096 1.153.033c.704-1.78 2.504-2.948 4.553-2.897z" /></g>
+              </svg>
+              <span className={classes.newRewardSnackBarCoin}>{data.acquire}</span>
+              <button className={classes.newRewardSnackBarBtn}>보상받기</button>
+            </div>
+          </Snackbar>
+
           <Divider />
           {this.renderRewardRow(tabItem.type, data.rewards)}
         </List>,
@@ -227,27 +288,29 @@ class TabList extends React.Component {
   renderRewardRow(type, data) {
     const { classes } = this.props;
     console.log('####');
-    console.log(Object.values(data));
+    console.log(Boolean(data));
+      //console.log(Object.values(data));
     // return <div>11</div>;
-    if (data !== false && data.length > 0) {
+    if (Boolean(data) !== false && data.length > 0) {
       return Object.values(data).map(row => (
         <RewardContainer reward={row} key={type.concat(row.id)} />
       ));
     }
+    
     return (
-      <div key={type.concat('-empty')}>111</div>
-      // <Card className={classes.card} key={type.concat(1)}>
-      //   <CardContent className={classes.emptyCardContents}>
-      //     <Typography className={classes.emptyTitle}>
-      //       보상받은 내역이 없습니다.
-      //     </Typography>
-      //     {/* <StyledLink to={`/review/${review.id}`}>
-      //         <Typography className={classes.reviewTitle} component="p">
-      //           {review.title}
-      //         </Typography>
-      //       </StyledLink> */}
-      //   </CardContent>
-      // </Card>
+      // <div key={type.concat('-empty')}>111</div>
+      <Card className={classes.card} key={type.concat(1)}>
+        <CardContent className={classes.emptyCardContents}>
+          <Typography className={classes.emptyTitle}>
+            보상받은 내역이 없습니다.
+          </Typography>
+          {/* <StyledLink to={`/review/${review.id}`}>
+              <Typography className={classes.reviewTitle} component="p">
+                {review.title}
+              </Typography>
+            </StyledLink> */}
+        </CardContent>
+      </Card>
     );
   }
 

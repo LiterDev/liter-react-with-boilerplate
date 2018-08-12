@@ -679,7 +679,7 @@ class ReviewWrite extends React.PureComponent {
     }
     // alert('on');
     // console.log('====on');
-    // this.props.onSubmitForm(data);
+    this.props.onSubmitForm(data);
   }
 
   handleAlertOpen = () => {

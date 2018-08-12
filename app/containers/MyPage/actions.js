@@ -100,7 +100,7 @@ export function myRewardAcquireAction() {
 }
 
 export function myRewardsAcquireSuccess(data) {
-  // console.log('myRewArdsAcquireSuccess');
+  // console.log('myRewardsAcquireSuccess');
   // console.log(data);
   return {
     type: REWARDS_ACQUIRE_SUCCESS,

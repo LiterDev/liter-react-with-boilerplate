@@ -304,7 +304,7 @@ class ReviewHeader extends React.Component {
         <div className={classes.snackbarContent}>
           <div
             className={classNames(classes.cautionCaption, classes.snackbarActionButton)} onClick={this.handleReport}>
-            신고하기
+            리뷰 신고하기
           </div>
           <div
             className={classes.snackbarActionButton} onClick={this.handleSnackbarClose}>

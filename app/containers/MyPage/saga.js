@@ -53,6 +53,7 @@ export function* getMyRewards() {
 
     // const req = request(request, requestURL, options);
     const reqContents = yield call(request, requestURL, options);
+    console.log("]========= getMyReward SAGA ======[");
     console.log(reqContents);
     yield put(actions.myRewardsSuccess(reqContents));
   } catch (err) {
@@ -76,6 +77,7 @@ export function* getAcquire() {
 
     // const req = request(request, requestURL, options);
     const reqContents = yield call(request, requestURL, options);
+    console.log("]========= getAcquire SAGA ======[");
     console.log(reqContents);
     yield put(actions.myRewardsAcquireSuccess(reqContents));
   } catch (err) {

@@ -19,6 +19,7 @@ import Slider from 'react-slick';
 const styles = theme => ({
   // paddingBottom - floating bar
   root: {
+    marginBottom: '-24px',
   },
   flex: {
     flex: 1,

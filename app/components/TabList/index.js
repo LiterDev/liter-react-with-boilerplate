@@ -208,7 +208,7 @@ class TabList extends React.Component {
     } else if (tabItem.type === 'REWARD') {
       result.push(
         <List key={tabItem.type.concat('list')}>
-          <ListItem key={tabItem.type.concat('header')}>
+          {/* <ListItem key={tabItem.type.concat('header')}>
             <span className={classes.col3}>신규보상</span>
             <span className={classes.col1}>
               <svg xmlns="http://www.w3.org/2000/svg" width="10" height="21" viewBox="0 0 10 21" >
@@ -232,7 +232,7 @@ class TabList extends React.Component {
               <span className={classes.rewardHeaderReward}>보상액</span>
               <span className={classes.rewardHeaderTotal}>총액</span>
             </div>
-          </ListItem>
+          </ListItem> */}
 
           <Snackbar
             className={classes.newRewardSnackbar}
@@ -249,8 +249,6 @@ class TabList extends React.Component {
               <button className={classes.newRewardSnackBarBtn}>보상받기</button>
             </div>
           </Snackbar>
-
-          <Divider />
           {this.renderRewardRow(tabItem.type, data.rewards)}
         </List>,
       );

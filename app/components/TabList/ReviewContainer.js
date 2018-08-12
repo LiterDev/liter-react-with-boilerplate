@@ -8,10 +8,6 @@ import Star from '@material-ui/icons/Star';
 
 import Media from 'components/Media';
 import TimeAt from 'components/TimeAt';
-import StyledLink from '../ReviewCard/StyledLink';
-import Typography from '@material-ui/core/Typography';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
 
 const styles = {
   line: {
@@ -72,9 +68,6 @@ const styles = {
   },
   fontSize14: {
     fontSize: '14px',
-  },
-  leftPadding0: {
-    paddingLeft: '0px',
   },
   leftPadding6: {
     paddingLeft: '6px',
@@ -143,83 +136,71 @@ function ReviewContainer(props) {
   // const timeDiff = '방금전';
   return (
     <div className={classes.line}>
-      <Card>
-        <span className={classes.col}>
-          <div className={classes.reviewPhoto}>
-            {mediaItem ? (
-              <Media
-                fullPath={mediaItem.fullPath}
-                mediaType={mediaItem.mediaType}
-                description={mediaItem.name}
-              />
-            ) : (
-              <div />
-            )}
-          </div>
-        </span>
-        <span className={classes.col3}>
-          <div
-            className={classNames(
-              classes.row,
-              classes.topRow,
-              classes.fontSize12,
-            )}
-          >
-            <span className={classNames(classes.left, classes.userName)}>
-              {review.user.userNickName}
+      <span className={classes.col}>
+        <div className={classes.reviewPhoto}>
+          {mediaItem ? (
+            <Media
+              fullPath={mediaItem.fullPath}
+              mediaType={mediaItem.mediaType}
+              description={mediaItem.name}
+            />
+          ) : (
+            <div />
+          )}
+        </div>
+      </span>
+      <span className={classes.col3}>
+        <div
+          className={classNames(
+            classes.row,
+            classes.topRow,
+            classes.fontSize12,
+          )}
+        >
+          <span className={classNames(classes.left, classes.userName)}>
+            {review.username}
+          </span>
+          <span className={classNames(classes.leftPadding10, classes.update)}>
+            <TimeAt date={review.updateAt} />
+          </span>
+        </div>
+        <div
+          className={classNames(
+            classes.row,
+            classes.title,
+            classes.fontSize14,
+            classes.paddingBottom,
+          )}
+        >
+          {review.title}
+        </div>
+        <div className={classNames(classes.row, classes.fontSize13)}>
+          <div className={classNames(classes.left, classes.col1)}>
+            <span
+              className={
+                review.rewardActive === 'DOING'
+                  ? classes.ingTrue
+                  : classes.ingFalse
+              }
+            >
+              <CheckCircleOutline style={{ fontSize: 13 }} />
+              <span className={classes.leftPadding6}>진행중</span>
             </span>
-            <span className={classNames(classes.leftPadding10, classes.update)}>
-              <TimeAt date={review.updateAt} />
+          </div>
+          <div className={classNames(classes.right, classes.col3Non)}>
+            <span className={classNames(classes.col1, classes.saveAlt)}>
+              <SaveAlt style={{ fontSize: 13 }} />
+              <span className={classes.leftPadding6}>{review.linkCount}</span>
+            </span>
+            <span
+              className={(classes.col1, classes.star, classes.leftpadding16)}
+            >
+              <Star style={{ fontSize: 13 }} />
+              <span className={classes.leftPadding6}>{review.totalScore}</span>
             </span>
           </div>
-          <CardContent
-            className={classNames(
-              classes.row,
-              classes.title,
-              classes.fontSize14,
-              classes.paddingBottom,
-              classes.leftPadding0,
-            )}
-          >
-            <StyledLink to={`/review/${review.id}`}>
-              <Typography className={classes.reviewTitle} component="p">
-                {review.title}
-              </Typography>
-            </StyledLink>
-          </CardContent>
-          <CardActions>
-            <CheckCircleOutline style={{ fontSize: 13 }} />
-          </CardActions>
-          <div className={classNames(classes.row, classes.fontSize13)}>
-            <div className={classNames(classes.left, classes.col1)}>
-              <span
-                className={
-                  review.rewardActive === 'DOING'
-                    ? classes.ingTrue
-                    : classes.ingFalse
-                }
-              >
-                <CheckCircleOutline style={{ fontSize: 13 }} />
-                <span className={classes.leftPadding6}>진행중</span>
-              </span>
-            </div>
-            <div className={classNames(classes.right, classes.col3Non)}>
-              <span className={classNames(classes.col1, classes.saveAlt)}>
-                <SaveAlt style={{ fontSize: 13 }} />
-                <span className={classes.leftPadding6}>{review.linkCount}</span>
-              </span>
-              <span
-                className={(classes.col1, classes.star, classes.leftpadding16)}
-              >
-                <Star style={{ fontSize: 13 }} />
-                <span className={classes.leftPadding6}>
-                  {review.totalScore}
-                </span>
-              </span>
-            </div>
-          </div>
-        </span>
-      </Card>
+        </div>
+      </span>
     </div>
   );
 }

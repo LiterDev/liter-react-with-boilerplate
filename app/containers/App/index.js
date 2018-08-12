@@ -91,7 +91,6 @@ function App(props) {
         <Route path="/follow/:userId" component={FollowActionPage} />
         <Route exact path="/following" component={FollowingActionPage} />
         <Route path="/following/:userId" component={FollowingActionPage} />
-<<<<<<< HEAD
         <PrivateWalletRoute
           exact
           path="/review/write"
@@ -104,11 +103,6 @@ function App(props) {
         <PrivateWalletRoute exact path="/review/write" component={ReviewForm} />
         <PrivateRoute path="/review/edit/:reviewId" component={ReviewForm} />
         <Route path="/review/:reviewId" component={ReviewDetailResolver} />
-=======
-        <PrivateWalletRoute exact path="/review/write" component={ReviewForm} />
-        <PrivateRoute path="/review/edit/:reviewId" component={ReviewForm} />
-        <Route path="/review/:reviewId" component={ReviewDetailResolver} />        
->>>>>>> e300ccd7116f669a7a9032a7b72f5f9ee5bad814
         <Route path="/slide" component={SlideTest} />
         {/* <PrivateRoute path="/valid/:validString" component={EmailValid} /> */}
         <Route path="/valid" component={EmailValid} />
@@ -159,28 +153,79 @@ App.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-// axios.interceptors.request.use(
-//   function(config) {
-//     // const url = config.url;
+axios.interceptors.request.use(
+  function(config) {
+    // const url = config.url;
 
-//     const accessToken = localStorage.getItem('accessToken');
-//     const token = `Bearer ${accessToken}`;
-//     // config.headers.Authorization = token;
+    // config.headers.Authorization = token;
+    console.log(config);
+    console.log(config.method);
 
-//     return config;
-//   },
-//   function(error) {
-//     showSMessage(error.message, 'error');
-//     return Promise.reject(error);
-//   },
-// );
+    const url = config.url;
+    console.log(url);
+    if (url.includes('/engagement') && config.method === 'post') {
+      console.log('engagement!!!');
+      return validHasWallet(config);
+      // const valisResult = validHasWallet(config);
+      // console.log(valisResult);
 
+    }
+    return config;
+  },
+  function(error) {
+    // showSMessage(error.message, 'error');
+    return Promise.reject(error);
+  },
+);
+const validHasWallet = config => {
+  const requestURL = `${process.env.API_URL}/user/authInfo`;
+  const accessToken = localStorage.getItem('accessToken');
+  const token = `Bearer ${accessToken}`;
+
+  return axios({
+    method: 'GET',
+    url: requestURL,
+    headers: {
+      Accept: 'application/json;charset=UTF-8',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': '*',
+      Authorization: token,
+    },
+  })
+    .then(resp => {
+      console.log(resp);
+      console.log(resp.data);
+      if (!resp.data.hasWallet) {
+        console.log('aaaaa');
+        alert('지갑인증이 필요한 서비스 입니다');
+        browserHistory.push('/mypage');
+        // return new Promise(() => {});
+        const error = new Error();
+        error.statusCode = 407;
+        error.statusMessage = '지갑인증이 필요한 서비스 입니다';
+        // statusCode: number;
+        // statusMessage: string;
+
+        // return Promise.reject(error);
+        // return {
+        //   headers: {},
+        //   method: config.method,
+        //   url: ""
+        // };
+        return false;
+        // return Promise.reject(resp.data.hasWallet);
+      }
+      return true;
+    })
+    .catch(err => {
+      // browserHistory.push('/');
+    });
+};
 // Add a request interceptor
 // axios.interceptors.request.use(
 //   function(config) {
 //     // Do something before request is sent
 
-    
 //     return config;
 //   },
 //   function(error) {
@@ -189,38 +234,38 @@ App.propTypes = {
 //   },
 // );
 
-// axios.interceptors.response.use(
-//   function(response) {
-//     // Do something with response data
-//     return response;
-//   },
-//   function(error) {
-//     // console.log(error);
-//     // console.log(error.status);
-//     // Do something with response error
-//     if (error.response) {
-//       // The request was made and the server responded with a status code
-//       // that falls out of the range of 2xx
-//       console.log(error.response.data);
-//       console.log(error.response.status);
-//       console.log(error.response.headers);
-//     } else if (error.request) {
-//       // The request was made but no response was received
-//       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-//       // http.ClientRequest in node.js
-//       console.log(error.request);
-//     } else {
-//       // Something happened in setting up the request that triggered an Error
-//       console.log('Error', error.message);
-//     }
-//     if (error.response.status === 401) {
-//       // doRefreshToken();
-//       browserHistory.push('/signin');
-//     }
-//     console.log(error.config);
-//     return Promise.reject(error);
-//   },
-// );
+axios.interceptors.response.use(
+  function(response) {
+    // Do something with response data
+    return response;
+  },
+  function(error) {
+    // console.log(error);
+    // console.log(error.status);
+    // Do something with response error
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      console.log(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error', error.message);
+    }
+    if (error.response.status === 401) {
+      // doRefreshToken();
+      browserHistory.push('/signin');
+    }
+    console.log(error.config);
+    return Promise.reject(error);
+  },
+);
 
 // export default App;
 export default withRoot(withStyles(styles)(App));

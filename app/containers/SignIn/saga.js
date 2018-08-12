@@ -18,10 +18,10 @@ export function* signin(data) {
         'Content-Type': 'application/json;charset=UTF-8',
         'Access-Control-Allow-Origin': '*',
       },
-      data: JSON.stringify({
+      data: {
         username: data.email,
         password: data.password,
-      }),
+      },
     };
 
     const signinRes = yield call(request, requestURL, options);

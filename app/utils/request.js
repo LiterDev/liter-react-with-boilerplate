@@ -57,6 +57,7 @@ function checkStatus(response) {
  */
 export default function request(url, options) {
   console.log(options.method);
+  console.log(options.data);
   console.log(options.headers);
 
   // const accessToken = localStorage.getItem('accessToken');

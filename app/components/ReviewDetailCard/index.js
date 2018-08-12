@@ -314,7 +314,7 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 class ReviewDetailCard extends React.PureComponent {
   render() {
-    const { classes, reviews, surveys } = this.props;
+    const { classes, reviews, surveys, history } = this.props;
     const review = reviews;
     console.log(reviews);
     console.log(surveys);
@@ -401,8 +401,8 @@ class ReviewDetailCard extends React.PureComponent {
               <FollowAjxButton
                 followEmail={review.user.username}
                 followYn={review.followYn}
-                followId={review.user.id}>
-              </FollowAjxButton>
+                followId={review.user.id}
+              />
             }
             title={review.user.userNickName}
             subheader={<TimeAt date={review.updateAt} />}
@@ -532,9 +532,10 @@ class ReviewDetailCard extends React.PureComponent {
         <ReviewCardBottomBarView
           likeYn={review.likeYn}
           onViewVote={this.props.handleVoting}
-          review={review} 
+          review={review}
           reviewId={review.id}
           viewType="fixed"
+          history={history}
         />
       </div>
     );

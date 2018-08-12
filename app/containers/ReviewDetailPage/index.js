@@ -7,15 +7,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-
+import axios from 'axios';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
 import ReviewHeader from 'components/ReviewHeader';
 import ReviewDetailCard from 'components/ReviewDetailCard';
+
+import { withStyles } from '@material-ui/core/styles';
 
 import {
   makeSelectReviews,
@@ -29,10 +32,21 @@ import saga from './saga';
 import messages from './messages';
 import { loadAction, followAction, voteAction } from './actions';
 
+const styles = theme => ({
+  root: {
+    height: theme.spacing.unit * 0,
+
+    // position: 'relative',
+  },
+});
+
 /* eslint-disable react/prefer-stateless-function */
 export class ReviewDetailPage extends React.PureComponent {
   constructor(props) {
     super(props);
+    this.state = {
+      openSuccesPop: false,
+    };
     this.handleVoting = this.handleVoting.bind(this);
     this.handleFollow = this.handleFollow.bind(this);
   }
@@ -43,8 +57,6 @@ export class ReviewDetailPage extends React.PureComponent {
   }
 
   handleVoting = reviewId => {
-    console.log('handleVoting in detail');
-    console.log(reviewId);
     this.props.doVoting(reviewId);
   };
 
@@ -56,8 +68,9 @@ export class ReviewDetailPage extends React.PureComponent {
 
   render() {
     // reviewId - detail index
-    const { reviews, reviewId, surveys, error } = this.props;
-
+    const { reviews, reviewId, surveys, error, classes, history } = this.props;
+    console.log(history);
+    // this.props.history.push('/follow');
     console.log(']----detail page render ----[');
     // console.log(surveys);
     console.log(error);
@@ -71,6 +84,7 @@ export class ReviewDetailPage extends React.PureComponent {
             surveys={surveys}
             handleVoting={this.handleVoting}
             handleFollow={this.handleFollow}
+            history={history}
           />
         </div>
       );
@@ -121,4 +135,5 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
+  withStyles(styles),
 )(ReviewDetailPage);

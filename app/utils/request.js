@@ -57,19 +57,30 @@ function checkStatus(response) {
  */
 export default function request(url, options) {
   console.log(options.method);
-  console.log(options.data);
+  // console.log(options.data);
   console.log(options.headers);
 
   // const accessToken = localStorage.getItem('accessToken');
   // const token = `Bearer ${accessToken}`;
-  return axios({
-    url: url,
-    method: options.method,
-    data: options.data,
-    headers: options.headers,
-  })
-    .then(checkStatus)
-    .then(parseJSON);
+  if (options.data) {
+    return axios({
+      url: url,
+      method: options.method,
+      data: options.data,
+      headers: options.headers,
+    })
+      .then(checkStatus)
+      .then(parseJSON);
+  } else {
+    return axios({
+      url: url,
+      method: options.method,
+      headers: options.headers,
+    })
+      .then(checkStatus)
+      .then(parseJSON);
+  }
+
   //   .then(parseJSON);;
   // if (options.header) {
   //   return axios({

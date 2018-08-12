@@ -23,7 +23,14 @@ import Header from 'components/Header';
 import BlueButton from 'components/BlueButton';
 import InputWithHelper from 'components/InputWithHelper';
 
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
+
+
 // import Button from '@material-ui/core/Button';
 // import BottomNavigation from '@material-ui/core/BottomNavigation';
 
@@ -109,6 +116,31 @@ const styles = theme => ({
     verticalAlign: 'middle',
     color: 'rgb(153, 153, 153)',
   },
+  popFooter: {
+    textAlign: 'center',
+  },
+  popWrap: {
+    // width: 295,
+    marginRight: 0,
+    marginLeft: 0,
+  },
+  popRoot: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    // borderTop: '1px',
+    // marginRight: 0,
+    // marginLeft: 0,
+  },
+  popPaper: {
+    width: 295,
+    textAlign: 'center',
+    // marginRight: 0,
+    // marginLeft: 0,
+  },
+  button: {
+    // margin: 'auto',
+    // display: 'block',
+  },
 });
 
 // function Transition(props) {
@@ -133,10 +165,19 @@ export class SignUp extends React.PureComponent {
       usernameError: false,
       passwordError: false,
       passwordRepeatError: false,
+      openSuccesPop: false,
     };
     this.onSubmitFormInit = this.onSubmitFormInit.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
+  handleClose = () => {
+    this.setState({
+      openSuccesPop: false,
+    });
+
+    this.props.history.push('/signin');
+  };
   onSubmitFormInit(event) {
     event.preventDefault();
     // if (!this.state.complete) {
@@ -268,15 +309,19 @@ export class SignUp extends React.PureComponent {
           });
       }
     }
+    console.log(signupRes);
     if (signupRes) {
-      return (
-        <Redirect
-          to={{
-            pathname: '/signin',
-            // state: { from: props.location },
-          }}
-        />
-      );
+      this.setState({
+        openSuccesPop: true,
+      });
+      // return (
+      //   <Redirect
+      //     to={{
+      //       pathname: '/signin',
+      //       // state: { from: props.location },
+      //     }}
+      //   />
+      // );
     }
     return (
       <div>
@@ -349,6 +394,41 @@ export class SignUp extends React.PureComponent {
           </span>
           {/* <span className={classes.footerSignin}>회원가입</span> */}
         </footer>
+        <Dialog
+          open={this.state.openSuccesPop}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          className={classes.popWrap}
+          fullWidth="true"
+          // maxWidth="false"
+          classes={{
+            root: classes.popRoot,
+            paper: classes.popPaper,
+          }}
+        >
+          <DialogTitle id="alert-dialog-title">
+            {/* {"Use Google's location service?"} */}
+          </DialogTitle>
+
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              회원가입이 되었습니다.
+            </DialogContentText>
+          </DialogContent>
+          <Divider />
+          <DialogActions
+            // className={classes.popFooter}
+            classes={{
+              root: classes.popRoot,
+              // paper: classes.popFooter,
+            }}
+          >
+            <Button onClick={this.handleClose} color="secondary">
+              확인
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }

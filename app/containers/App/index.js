@@ -153,74 +153,75 @@ App.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-axios.interceptors.request.use(
-  function(config) {
-    // const url = config.url;
+// axios.interceptors.request.use(
+//   function(config) {
+//     // const url = config.url;
 
-    // config.headers.Authorization = token;
-    console.log(config);
-    console.log(config.method);
+//     // config.headers.Authorization = token;
+//     console.log(config);
+//     console.log(config.method);
 
-    const url = config.url;
-    console.log(url);
-    if (url.includes('/engagement') && config.method === 'post') {
-      console.log('engagement!!!');
-      return validHasWallet(config);
-      // const valisResult = validHasWallet(config);
-      // console.log(valisResult);
+//     const url = config.url;
+//     console.log(url);
+//     if (url.includes('/engagement') && config.method === 'post') {
+//       console.log('engagement!!!');
 
-    }
-    return config;
-  },
-  function(error) {
-    // showSMessage(error.message, 'error');
-    return Promise.reject(error);
-  },
-);
-const validHasWallet = config => {
-  const requestURL = `${process.env.API_URL}/user/authInfo`;
-  const accessToken = localStorage.getItem('accessToken');
-  const token = `Bearer ${accessToken}`;
+//       validHasWallet(config);
+//       throw new axios.Cancel('Operation canceled by the user.');
+//       // const valisResult = validHasWallet(config);
+//       // console.log(valisResult);
+//     }
+//     return config;
+//   },
+//   function(error) {
+//     // showSMessage(error.message, 'error');
+//     return Promise.reject(error);
+//   },
+// );
+// const validHasWallet = config => {
+//   const requestURL = `${process.env.API_URL}/user/authInfo`;
+//   const accessToken = localStorage.getItem('accessToken');
+//   const token = `Bearer ${accessToken}`;
 
-  return axios({
-    method: 'GET',
-    url: requestURL,
-    headers: {
-      Accept: 'application/json;charset=UTF-8',
-      'Content-Type': 'application/json;charset=UTF-8',
-      'Access-Control-Allow-Origin': '*',
-      Authorization: token,
-    },
-  })
-    .then(resp => {
-      console.log(resp);
-      console.log(resp.data);
-      if (!resp.data.hasWallet) {
-        console.log('aaaaa');
-        alert('지갑인증이 필요한 서비스 입니다');
-        browserHistory.push('/mypage');
-        // return new Promise(() => {});
-        const error = new Error();
-        error.statusCode = 407;
-        error.statusMessage = '지갑인증이 필요한 서비스 입니다';
-        // statusCode: number;
-        // statusMessage: string;
+//   return axios({
+//     method: 'GET',
+//     url: requestURL,
+//     headers: {
+//       Accept: 'application/json;charset=UTF-8',
+//       'Content-Type': 'application/json;charset=UTF-8',
+//       'Access-Control-Allow-Origin': '*',
+//       Authorization: token,
+//     },
+//   })
+//     .then(resp => {
+//       console.log(resp);
+//       console.log(resp.data);
+//       if (!resp.data.hasWallet) {
+//         console.log('aaaaa');
+//         alert('지갑인증이 필요한 서비스 입니다');
+//         browserHistory.push('/mypage');
+//         // return new Promise(() => {});
+//         const error = new Error();
+//         error.statusCode = 407;
+//         error.statusMessage = '지갑인증이 필요한 서비스 입니다';
+//         // statusCode: number;
+//         // statusMessage: string;
 
-        // return Promise.reject(error);
-        // return {
-        //   headers: {},
-        //   method: config.method,
-        //   url: ""
-        // };
-        return false;
-        // return Promise.reject(resp.data.hasWallet);
-      }
-      return true;
-    })
-    .catch(err => {
-      // browserHistory.push('/');
-    });
-};
+//         // return Promise.reject(error);
+//         // return {
+//         //   headers: {},
+//         //   method: config.method,
+//         //   url: ""
+//         // };
+//         // return false;
+//         // return Promise.reject(resp.data.hasWallet);
+//       }
+//       return config;
+//     })
+//     .catch(err => {
+//       // browserHistory.push('/');
+//     });
+// };
 // Add a request interceptor
 // axios.interceptors.request.use(
 //   function(config) {
@@ -234,38 +235,38 @@ const validHasWallet = config => {
 //   },
 // );
 
-axios.interceptors.response.use(
-  function(response) {
-    // Do something with response data
-    return response;
-  },
-  function(error) {
-    // console.log(error);
-    // console.log(error.status);
-    // Do something with response error
-    if (error.response) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      // The request was made but no response was received
-      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-      // http.ClientRequest in node.js
-      console.log(error.request);
-    } else {
-      // Something happened in setting up the request that triggered an Error
-      console.log('Error', error.message);
-    }
-    if (error.response.status === 401) {
-      // doRefreshToken();
-      browserHistory.push('/signin');
-    }
-    console.log(error.config);
-    return Promise.reject(error);
-  },
-);
+// axios.interceptors.response.use(
+//   function(response) {
+//     // Do something with response data
+//     return response;
+//   },
+//   function(error) {
+//     // console.log(error);
+//     // console.log(error.status);
+//     // Do something with response error
+//     if (error.response) {
+//       // The request was made and the server responded with a status code
+//       // that falls out of the range of 2xx
+//       console.log(error.response.data);
+//       console.log(error.response.status);
+//       console.log(error.response.headers);
+//     } else if (error.request) {
+//       // The request was made but no response was received
+//       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+//       // http.ClientRequest in node.js
+//       console.log(error.request);
+//     } else {
+//       // Something happened in setting up the request that triggered an Error
+//       console.log('Error', error.message);
+//     }
+//     if (error.response.status === 401) {
+//       // doRefreshToken();
+//       browserHistory.push('/signin');
+//     }
+//     console.log(error.config);
+//     return Promise.reject(error);
+//   },
+// );
 
 // export default App;
 export default withRoot(withStyles(styles)(App));

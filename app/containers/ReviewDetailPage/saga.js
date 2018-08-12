@@ -14,34 +14,41 @@ import { LOAD_ACTION, FOLLOW_ACTION, VOTE_ACTION } from './constants';
 
 export function* getReview(data) {
   // const reviewId = yield select(makeSelectReviewId());
+  console.log(`getReview.data =====[ ${data.reviewId}]`);
   const reviewId = data.reviewId;
   const requestURL = `${process.env.API_URL}/review/detail/${reviewId}`;
   const requestSurveyURL = `${process.env.API_URL}/review/survey/${reviewId}`;
   const accessToken = localStorage.getItem('accessToken');
-  const token = `Bearer ${accessToken}`;
-  const options = {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json;charset=UTF-8',
-      'Content-Type': 'application/json;charset=UTF-8',
-      'Access-Control-Allow-Origin': '*',
-      Authorization: token,
-    },
-  };
+  // const token = `Bearer ${accessToken}`;
+  let options = null;
+  if (accessToken) {
+    const token = `Bearer ${accessToken}`;
+    options = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        Authorization: token,
+      },
+    };
+  } else {
+    options = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+      },
+    };
+  }
+
   try {
     // Call our request helper (see 'utils/request')
     // const reqContents = yield call(request, requestURL, options);
-    let reqContents = null;
-    let reqSurvey = null;
-    if (accessToken) {
-      reqContents = yield call(request, requestURL, options);
-      reqSurvey = yield call(request, requestSurveyURL, options);
-    } else {
-      reqContents = yield call(request, requestURL);
-      reqSurvey = yield call(request, requestSurveyURL);
-    }
-    // const reqContents = yield call(request, requestURL, options);
-    // const reqSurvey = yield call(request, requestSurveyURL, options);
+    
+    const reqContents = yield call(request, requestURL, options);
+    const reqSurvey = yield call(request, requestSurveyURL, options);
     yield put(loadedSuccess(reqContents));
     yield put(loadedSurvey(reqSurvey));
   } catch (err) {

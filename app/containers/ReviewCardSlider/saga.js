@@ -5,7 +5,7 @@ import { reviewListLoaded, reviewListLoadingError } from './actions';
 import { LOAD_REVIEW_ACTION } from './constants';
 
 export function* getReviews(data) {
-
+  console.log(`reaview saga === [ ${data}]`);
   const userid = data.userid;
   const requestURL = `${process.env.API_URL}/review/latestList`;
   const accessToken = localStorage.getItem('accessToken');
@@ -16,9 +16,9 @@ export function* getReviews(data) {
       Accept: 'application/json;charset=UTF-8',
       'Content-Type': 'application/json;charset=UTF-8',
       'Access-Control-Allow-Origin': '*',
-      'Authorization': token,
+      Authorization: token,
     },
-  };    
+  };
 
   try {
     // Call our request helper (see 'utils/request')

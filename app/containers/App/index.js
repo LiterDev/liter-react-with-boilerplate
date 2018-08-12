@@ -9,6 +9,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
+import { browserHistory } from 'react-router';
 // import styled from 'styled-components';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
@@ -90,7 +91,6 @@ function App(props) {
         <Route path="/follow/:userId" component={FollowActionPage} />
         <Route exact path="/following" component={FollowingActionPage} />
         <Route path="/following/:userId" component={FollowingActionPage} />
-<<<<<<< HEAD
         <PrivateWalletRoute
           exact
           path="/review/write"
@@ -100,11 +100,9 @@ function App(props) {
         <Route path="/review/edit/:reviewId" component={ReviewForm} />
         <Route path="/review/:reviewId" component={ReviewDetailResolver} />
         <Route path="/following" component={FollowingActionPage} />
-=======
         <PrivateWalletRoute exact path="/review/write" component={ReviewForm} />
         <PrivateRoute path="/review/edit/:reviewId" component={ReviewForm} />
-        <Route path="/review/:reviewId" component={ReviewDetailResolver} />        
->>>>>>> 71a0f55331140e5fdfb815d0269656b38eda1edd
+        <Route path="/review/:reviewId" component={ReviewDetailResolver} />
         <Route path="/slide" component={SlideTest} />
         {/* <PrivateRoute path="/valid/:validString" component={EmailValid} /> */}
         <Route path="/valid" component={EmailValid} />
@@ -172,106 +170,51 @@ App.propTypes = {
 // );
 
 // Add a request interceptor
-axios.interceptors.request.use(
-  function(config) {
-    // Do something before request is sent
+// axios.interceptors.request.use(
+//   function(config) {
+//     // Do something before request is sent
 
-    // config.headers.AccessControlAllowOrigin =  '*';
-    // config.headers.Accept = 'application/json';
-    return config;
-  },
-  function(error) {
-    // Do something with request error
-    return Promise.reject(error);
-  },
-);
-
-axios.interceptors.response.use(
-  function(response) {
-    // Do something with response data
-    return response;
-  },
-  function(error) {
-    console.log(error);
-    console.log(error.status);
-    // Do something with response error
-    if (error.response) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      // The request was made but no response was received
-      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-      // http.ClientRequest in node.js
-      console.log(error.request);
-    } else {
-      // Something happened in setting up the request that triggered an Error
-      console.log('Error', error.message);
-    }
-    console.log(error.config);
-    return Promise.reject(error);
-  },
-);
-// axios.interceptors.response.use(
-//   function(response) {
-//     // requestSuccess();
-//     return response;
+    
+//     return config;
 //   },
 //   function(error) {
-//     console.log(error);
-//     console.log(error.status)
-//     console.log(error.response.status);
-//     // console.log(error.response.data.code === '401012');
-//     if (error.response.status === 401) {
-//       // doRefreshToken();
-
-//       deleteOAuthToken();
-
-//       browserHistory.push('/');
-//     } else if (error.response.data.code === '2003002') {
-//       showSMessage('Server connection is lost', 'error');
-//       browserHistory.push('/');
-//     }
+//     // Do something with request error
 //     return Promise.reject(error);
 //   },
 // );
 
-export const doRefreshToken = () => {
-  const authUrl = `${process.env.API_URL}/auth/claimAccessToken`;
-  const refreashToken = localStorage.getItem('refreashToken');
-  const token = `Bearer ${refreashToken}`;
-  // config.headers.Authorization = token;
-  console.log('doRefreshToken');
-  return axios({
-    method: 'POST',
-    url: authUrl,
-    headers: {
-      Authorization: token,
-    },
-  })
-    .then(resp => {
-      // if (resp.data.code === 201) {
+// axios.interceptors.response.use(
+//   function(response) {
+//     // Do something with response data
+//     return response;
+//   },
+//   function(error) {
+//     // console.log(error);
+//     // console.log(error.status);
+//     // Do something with response error
+//     if (error.response) {
+//       // The request was made and the server responded with a status code
+//       // that falls out of the range of 2xx
+//       console.log(error.response.data);
+//       console.log(error.response.status);
+//       console.log(error.response.headers);
+//     } else if (error.request) {
+//       // The request was made but no response was received
+//       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+//       // http.ClientRequest in node.js
+//       console.log(error.request);
+//     } else {
+//       // Something happened in setting up the request that triggered an Error
+//       console.log('Error', error.message);
+//     }
+//     if (error.response.status === 401) {
+//       // doRefreshToken();
+//       browserHistory.push('/signin');
+//     }
+//     console.log(error.config);
+//     return Promise.reject(error);
+//   },
+// );
 
-      localStorage.setItem('accessToken', resp.accessToken);
-      localStorage.setItem('refreshToken', resp.refreshToken);
-      localStorage.setItem('username', resp.username);
-
-      return resp.data;
-      // }
-    })
-    .catch(err => {
-      const error = JSON.parse(JSON.stringify(err)).response;
-      console.log(error, error.data.code, error.data.code === 401013);
-      if (error.data.code === 401013) {
-        showSMessage('Login session expired', 'info');
-      } else {
-        showSMessage('Server connection is lost', 'error');
-      }
-      // deleteOAuthToken();
-      browserHistory.push('/signin');
-    });
-};
 // export default App;
 export default withRoot(withStyles(styles)(App));

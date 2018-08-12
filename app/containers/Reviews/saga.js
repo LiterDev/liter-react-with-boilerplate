@@ -11,28 +11,35 @@ import makeSelectReviews from './selectors';
 export function* getReviews() {
   const requestURL = `${process.env.API_URL}/review/latestList?page=1`;
   const accessToken = localStorage.getItem('accessToken');
+  console.log(`accessToken========[ ${accessToken}]`);
   let token = null;
+  let options = null;
   if (accessToken) {
     token = `Bearer ${accessToken}`;
+    options = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        Authorization: token,
+      },
+    };
+  } else {
+    options = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+      },
+    };
   }
 
-  const options = {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json;charset=UTF-8',
-      'Content-Type': 'application/json;charset=UTF-8',
-      'Access-Control-Allow-Origin': '*',
-      Authorization: token,
-    },
-  };
   try {
     // Call our request helper (see 'utils/request')
-    let reqContents = null;
-    if (accessToken) {
-      reqContents = yield call(request, requestURL, options);
-    } else {
-      reqContents = yield call(request, requestURL);
-    }
+
+    const reqContents = yield call(request, requestURL, options);
 
     yield put(reviewListLoaded(reqContents));
   } catch (err) {

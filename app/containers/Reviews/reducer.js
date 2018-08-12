@@ -24,6 +24,7 @@ export const initialState = fromJS({
 });
 
 function reviewsReducer(state = initialState, action) {
+  console.log(`reaview action === [ ${action.type} ]`);
   switch (action.type) {
     case LOAD_REVIEW_ACTION:
       return state.set('loading', true).set('error', false);

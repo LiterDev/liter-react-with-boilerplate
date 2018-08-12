@@ -73,7 +73,7 @@ export class Reviews extends React.PureComponent {
   render() {
     // const { classes } = this.props;
     const { reviews, classes } = this.props;
-
+    console.log(reviews);
     return (
       <div>
         <Header
@@ -113,7 +113,9 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     loadReviewList: evt => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+      // console.log(evt);
+      // if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+
       dispatch(loadList());
     },
     loadReviewListMore: (loadMore, last) => {

@@ -23,15 +23,14 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 class ReviewList extends React.PureComponent {
-
   handleVoting = () => {
-    console.log("handleVoting clicked--------");
-  }
+    console.log('handleVoting clicked--------');
+  };
 
-  handleFollow = (followId) => {
-    console.log("handleFollow clicked--------");
+  handleFollow = followId => {
+    console.log('handleFollow clicked--------');
     console.log(followId);
-  }
+  };
 
   render() {
     const { reviews } = this.props;
@@ -48,16 +47,16 @@ class ReviewList extends React.PureComponent {
           {reviewArray &&
             reviewArray.map((review, idx) => (
               <div key={review.id}>
-                <ReviewCard 
-                  idx={idx} 
-                  followYn={review.followYn} 
-                  review={review} 
-                  handleVoting={this.handleVoting} 
+                <ReviewCard
+                  idx={idx}
+                  followYn={review.followYn}
+                  review={review}
+                  handleVoting={this.handleVoting}
                   handleFollow={this.handleFollow}
                 />
               </div>
             ))}
-            <ReviewCardBottomBar />
+          <ReviewCardBottomBar />
         </div>
       );
     }

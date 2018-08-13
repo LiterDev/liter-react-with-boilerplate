@@ -147,10 +147,10 @@ class ReviewTopTag extends React.PureComponent {
       swipeToSlide: true,
     };
     // console.log(reviewFirst);
-    // if (Boolean(reviewFirst)) {
-    //   console.log(reviewFirst.mediaCollection);
-    //   console.log(reviewFirst.mediaCollection[0]);
-    // }
+    if (Boolean(reviewFirst)) {
+      console.log(reviewFirst.mediaCollection);
+      console.log(reviewFirst.mediaCollection[0]);
+    }
 
     return (
       <div className={classes.root}>
@@ -160,7 +160,13 @@ class ReviewTopTag extends React.PureComponent {
               {Boolean(reviewFirst) ? (
                 <Avatar
                   alt="Adelle Charles"
-                  src={reviewFirst.mediaCollection[0].fullPath}
+                  src={
+                    reviewFirst.mediaCollection[0].mediaType === 'YOUTUBE'
+                      ? `http://img.youtube.com/vi/${
+                          reviewFirst.mediaCollection[0].movieKey
+                        }/1.jpg`
+                      : reviewFirst.mediaCollection[0].fullPath
+                  }
                   className={classNames(classes.avatar, classes.bigAvatar)}
                   onClick={() => this.handleTag(-9)}
                 />
@@ -190,7 +196,11 @@ class ReviewTopTag extends React.PureComponent {
                 <div className={classes.avawrap} key={item.categoryId}>
                   <Avatar
                     alt="Adelle Charles"
-                    src={item.fullPath}
+                    src={
+                      item.mediaType === 'YOUTUBE'
+                        ? `http://img.youtube.com/vi/${item.movieKey}/1.jpg`
+                        : item.fullPath
+                    }
                     className={classNames(classes.avatar, classes.bigAvatar)}
                     onClick={() => this.handleTag(item.categoryId)}
                   />

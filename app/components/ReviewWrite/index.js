@@ -585,28 +585,28 @@ class ReviewWrite extends React.PureComponent {
     let tSurveyIdByCate;
     switch (this.state.selectedValue) {
       case 0:
-        tSurveyIdByCate = [1, 2, 3, 4, 5, 6];
+        tSurveyIdByCate = [1, 2, 3];
         break;
       case 1:
-        tSurveyIdByCate = [7, 8, 9];
+        tSurveyIdByCate = [11, 12, 13];
         break;
       case 2:
-        tSurveyIdByCate = [10, 11, 12, 13];
+        tSurveyIdByCate = [21, 22, 23];
         break;
       case 3:
-        tSurveyIdByCate = [14, 15, 16];
+        tSurveyIdByCate = [31, 32, 33];
         break;
       case 4:
-        tSurveyIdByCate = [21, 22, 23, 24];
+        tSurveyIdByCate = [41, 42, 43];
         break;
       case 5:
-        tSurveyIdByCate = [25, 26];
+        tSurveyIdByCate = [51, 52, 53];
         break;
       case 6:
-        tSurveyIdByCate = [17, 18, 19, 20];
+        tSurveyIdByCate = [61, 62, 63];
         break;
       case 7:
-        tSurveyIdByCate = [27, 28, 29];
+        tSurveyIdByCate = [71, 72, 73];
         break;
       default:
         tSurveyIdByCate = [];
@@ -614,8 +614,8 @@ class ReviewWrite extends React.PureComponent {
 
     let nullCountCate = 0;
     let valContentCate = null;
-    console.log(tSurveyIdByCate);
-    console.log(this.state.selectedValue);
+    // console.log(tSurveyIdByCate);
+    // console.log(this.state.selectedValue);
     for (let i = 0; i < tSurveyIdByCate.length; i += 1) {
       console.log(data.get(`startRating[${tSurveyIdByCate[i]}].rating`));
       if (data.get(`startRating[${tSurveyIdByCate[i]}].rating`) < 1) {
@@ -627,6 +627,8 @@ class ReviewWrite extends React.PureComponent {
         break;
       }
     }
+
+    console.log(nullCountCate);
     if (nullCountCate > 0) {
       this.setState({
         validationContent: `${valContentCate} 평점을 입력해주세요`,
@@ -640,11 +642,16 @@ class ReviewWrite extends React.PureComponent {
     switch (this.state.value) {
       case 0:
         // Survey id: 1, 2, 3, 4, 5, 6
-        tSurveyId = [34, 35, 36, 37];
+        tSurveyId = [91, 92, 93];
         break;
       case 1:
         // Survey id: 7, 8, 9, 10, 11, 12, 13
-        tSurveyId = [30, 31, 32, 33];
+        tSurveyId = [81, 82, 83];
+        
+        break;
+      case 2:
+        // Survey id: 7, 8, 9, 10, 11, 12, 13
+        tSurveyId = [101, 102, 103];
         break;
       default:
         tSurveyId = [];
@@ -653,7 +660,7 @@ class ReviewWrite extends React.PureComponent {
     let nullCount = 0;
     let valContent = null;
     for (let i = 0; i < tSurveyId.length; i += 1) {
-      // console.log(data.get(`startRating[${tSurveyId[i]}].rating`));
+      console.log(data.get(`startRating[${tSurveyId[i]}].rating`));
       if (data.get(`startRating[${tSurveyId[i]}].rating`) < 1) {
         nullCount += 1;
         // console.log(data.get(`startRating[${tSurveyId[i]}].rating`));

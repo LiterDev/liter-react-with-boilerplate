@@ -353,6 +353,15 @@ export class SignUp extends React.PureComponent {
     // this.validationResult(this.props.error.response.data.code);
     // }
   }
+
+  componentWillUpdate() {
+    if (this.props.error) {
+      console.log(this.props.error);
+      if (this.props.error.response) {
+        this.validationResult(this.props.error.response.data.code);
+      }
+    }
+  }
   render() {
     const { classes, error, signupRes } = this.props;
 
@@ -364,25 +373,25 @@ export class SignUp extends React.PureComponent {
     // console.log(signupRes);
     // console.log(loading);
     // console.log(error);
-    if (error) {
-      // console.log(error);
-      if (error.response) {
-        // console.log(error.response.data);
-        // console.log(error.response);
-        // this.validationResult(error.response.data.code);
-        // error.response
-        //   // .json()
-        //   .then(data => {
-        //     console.log(data);
-        //     this.validationResult(data.code);
-        //   })
-        //   .catch(err => {
-        //     console.log(err);
-        //   });
-        // this.props.error = false;
-      }
-    }
-    console.log(signupRes);
+    // if (error) {
+    // console.log(error);
+    // if (error.response) {
+    // console.log(error.response.data);
+    // console.log(error.response);
+    // this.validationResult(error.response.data.code);
+    // error.response
+    //   // .json()
+    //   .then(data => {
+    //     console.log(data);
+    //     this.validationResult(data.code);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
+    // this.props.error = false;
+    // }
+    // }
+    // console.log(signupRes);
     if (signupRes) {
       this.setState({
         openSuccesPop: true,

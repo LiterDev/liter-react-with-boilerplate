@@ -117,7 +117,8 @@ class ReviewTopTag extends React.PureComponent {
     this.props.loadValue(value);
   };
   render() {
-    const { classes } = this.props;
+    const { classes, categorys } = this.props;
+    console.log(`categorys ====[ ${categorys}]`);
     const settings = {
       dots: false,
       className: 'center',
@@ -136,7 +137,7 @@ class ReviewTopTag extends React.PureComponent {
                 alt="Adelle Charles"
                 src={Cola}
                 className={classNames(classes.avatar, classes.bigAvatar)}
-                onClick={() => this.handleTag(0)}
+                onClick={() => this.handleTag(-9)}
               />
               <p className={classes.text}>#최신</p>
             </div>
@@ -145,11 +146,25 @@ class ReviewTopTag extends React.PureComponent {
                 alt="Adelle Charles"
                 src={Cola}
                 className={classNames(classes.avatar, classes.bigAvatar)}
-                onClick={() => this.handleTag(1)}
+                onClick={() => this.handleTag(-1)}
               />
               <p className={classes.text}>#최신</p>
             </div>
-            <div className={classes.avawrap}>
+            
+            {categorys &&
+              categorys.map(item => (
+                <div className={classes.avawrap} key={item.categoryId}>
+                  <Avatar
+                    alt="Adelle Charles"
+                    src={item.fullPath}
+                    className={classNames(classes.avatar, classes.bigAvatar)}
+                    onClick={() => this.handleTag(item.categoryId)}
+                  />
+                  <p className={classes.text}>#최신</p>
+                </div>
+              ))}
+
+            {/* <div className={classes.avawrap}>
               <Avatar
                 alt="Adelle Charles"
                 src={Cola}
@@ -184,7 +199,7 @@ class ReviewTopTag extends React.PureComponent {
                 onClick={() => this.handleTag(5)}
               />
               <p className={classes.text}>#최신</p>
-            </div>
+            </div> */}
           </Slider>
         </div>
       </div>
@@ -194,6 +209,7 @@ class ReviewTopTag extends React.PureComponent {
 
 ReviewTopTag.propTypes = {
   loadValue: PropTypes.func.isRequired,
+  categorys: PropTypes.object,
 };
 
 // export default ReviewTopTag;

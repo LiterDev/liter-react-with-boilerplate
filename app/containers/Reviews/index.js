@@ -30,7 +30,7 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 
-import { loadList, loadListMore } from './actions';
+import { loadList, loadListMore, loadCategory } from './actions';
 import jQuery from 'jquery';
 window.$ = window.jQuery = jQuery;
 
@@ -52,15 +52,22 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 export class Reviews extends React.PureComponent {
   componentDidMount() {
-    const { loadReviewList, loadReviewListMore, loadMore, last } = this.props;
+    const {
+      loadReviewList,
+      loadReviewListMore,
+      loadMore,
+      last,
+      loadCategoryList,
+    } = this.props;
     loadReviewList();
+    loadCategoryList();
 
     $(window).scroll(() => {
       if (
         $(document).height() - $(window).height() - $(window).scrollTop() <
         250
       ) {
-        console.log(this.props);
+        // console.log(this.props);
         loadReviewListMore(
           this.props.reviews.loadMore,
           this.props.reviews.last,
@@ -74,7 +81,9 @@ export class Reviews extends React.PureComponent {
   render() {
     // const { classes } = this.props;
     const { reviews, classes } = this.props;
+
     console.log(reviews);
+    // console.log(this.props.categorys);
     return (
       <div>
         <Header
@@ -82,7 +91,10 @@ export class Reviews extends React.PureComponent {
           searchBar="true"
         />
 
-        <ReviewTopTag loadValue={this.loadValue} />
+        <ReviewTopTag
+          loadValue={this.loadValue}
+          categorys={reviews.categorys}
+        />
         <div className={classes.reviewList}>
           <ReviewList reviews={reviews} />
         </div>
@@ -103,6 +115,7 @@ export class Reviews extends React.PureComponent {
 
 Reviews.propTypes = {
   loadReviewList: PropTypes.func,
+  loadCategoryList: PropTypes.func,
   loadReviewListMore: PropTypes.func,
   reviews: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
@@ -125,6 +138,9 @@ function mapDispatchToProps(dispatch) {
       }
     },
     loadReviewListWithCategory: value => {},
+    loadCategoryList: () => {
+      dispatch(loadCategory());
+    },
   };
 }
 

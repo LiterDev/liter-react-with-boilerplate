@@ -111,8 +111,8 @@ class ImagePreviewButtonWithoutSlider extends React.PureComponent {
         this.props.handleImageAppend(event.target.files);
       }
 
-      const eventStatus = event;
-      eventStatus.target.value = null;
+      // const eventStatus = event;
+      // eventStatus.target.value = null;
     }
   }
 

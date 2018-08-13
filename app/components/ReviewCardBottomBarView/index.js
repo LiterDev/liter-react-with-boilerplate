@@ -193,7 +193,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
 
   handleVoting = reviewId => {
     // console.log('handleVoting in detail');
-    console.log(`this.props.likeYn =====[ ${this.props.likeYn}]`);
+    // console.log(`this.props.likeYn =====[ ${this.props.likeYn}]`);
     if (this.props.likeYn > 0) {
       this.props.onViewVote(reviewId);
     } else {

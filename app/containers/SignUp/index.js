@@ -314,6 +314,7 @@ export class SignUp extends React.PureComponent {
       this.setState({
         openSuccesPop: true,
       });
+      // this.props.signupRes = false;
       // return (
       //   <Redirect
       //     to={{

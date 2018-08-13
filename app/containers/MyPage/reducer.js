@@ -32,8 +32,8 @@ function myPageReducer(state = initialState, action) {
     case constants.MYPAGE_REWARDS_ACTION:
       return state.set('loading', true).set('error', false);
     case constants.MYPAGE_REWARDS_SUCCESS:
-        console.log("action.data::reward list -------- reducer mypage");
-        console.log(action.data);
+      console.log('action.data::reward list -------- reducer mypage');
+      console.log(action.data);
       return state
         .set('loading', false)
         .set('error', false)
@@ -43,8 +43,8 @@ function myPageReducer(state = initialState, action) {
     case constants.REWARDS_ACQUIRE_ACTION:
       return state.set('loading', true).set('error', false);
     case constants.REWARDS_ACQUIRE_SUCCESS:
-        console.log("action.data::acquire list -------- reducer mypage");
-        console.log(action.data);
+      console.log('action.data::acquire list -------- reducer mypage');
+      console.log(action.data);
       return state
         .set('loading', false)
         .set('error', false)
@@ -75,6 +75,13 @@ function myPageReducer(state = initialState, action) {
     case constants.LOAD_USER_SUCCESS:
       return state.set('userData', action.data);
     case constants.LOAD_USER_ERROR:
+      // console.log(action.data);
+      return state;
+    case constants.CHANGE_NICK_NAME_ACTION:
+      return state;
+    case constants.CHANGE_NICK_NAME_SUCCESS:
+      return state.set('userData', action.data);
+    case constants.CHANGE_NICK_NAME_FAILURE:
       // console.log(action.data);
       return state;
     default:

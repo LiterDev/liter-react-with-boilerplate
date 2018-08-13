@@ -271,15 +271,15 @@ class ReviewCardBottomBarView extends React.PureComponent {
 
     // current status for campaign
     let currentStatus = null;
-    switch (review.rewardActive) {
-      case 'DOING':
+    switch (review.reviewTimeLimit) {
+      case 'UNLIMIT':
         currentStatus = (
           <span className={curReviewing.styleClass}>
             <FormattedMessage {...messages.rewardActive} />
           </span>
         );
         break;
-      case 'END':
+      case 'LIMIT':
         currentStatus = (
           <span className={curReviewing.styleClass}>
             <img src={CubeEndIcon} className={classes.cubeEnd} />

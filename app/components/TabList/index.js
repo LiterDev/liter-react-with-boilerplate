@@ -163,7 +163,12 @@ class TabList extends React.Component {
 
   componentDidMount = () => {
     this.props.tabListHandler(this.state.value);
-    this.setState({ newReward: true });
+       
+    console.log("]----------- myPage::componentDidMount:data ---------[");
+    console.log(this.props.data);
+    if(Boolean(this.props.data.acquire) && this.props.data.acquire > 0) {
+      this.setState({ newReward: true });
+    }
   };
 
   handleChange = (event, value) => {
@@ -191,8 +196,8 @@ class TabList extends React.Component {
     const result = [];
     const tabItem = tabs[value];
 
-    console.log("]----------- myPage::renderContainer:data ---------[");
-    console.log(data);
+    // console.log("]----------- myPage::renderContainer:data ---------[");
+    // console.log(data);
 
     if (tabItem.type === 'REVIEW') {
       result.push(
@@ -289,6 +294,7 @@ class TabList extends React.Component {
     console.log(Boolean(data));
       //console.log(Object.values(data));
     // return <div>11</div>;
+
     if (Boolean(data) !== false && data.length > 0) {
       return Object.values(data).map(row => (
         <RewardContainer reward={row} key={type.concat(row.id)} />

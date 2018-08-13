@@ -19,6 +19,7 @@ import { FormattedMessage } from 'react-intl';
 
 import messages from './messages';
 import Cola from '../../images/Coca-Cola-Logo 2.png';
+import request from 'utils/request';
 
 const styles = theme => ({
   root: {
@@ -112,6 +113,11 @@ const styles = theme => ({
 });
 /* eslint-disable react/prefer-stateless-function */
 class ReviewTopTag extends React.PureComponent {
+
+  componentDidMount() {
+
+  }
+
   handleTag = value => {
     // console.log(value);
     this.props.loadValue(value);

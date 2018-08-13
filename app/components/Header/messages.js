@@ -14,4 +14,8 @@ export default defineMessages({
     id: 'boilerplate.components.Header.features',
     defaultMessage: 'Features',
   },
+  helpEmailAddress: {
+    id: 'boilerplate.components.Header.helpEmailAddress',
+    defaultMessage: 'help@literproject.com',
+  }
 });

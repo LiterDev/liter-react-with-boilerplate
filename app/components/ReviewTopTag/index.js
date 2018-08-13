@@ -191,13 +191,15 @@ class ReviewTopTag extends React.PureComponent {
               <p className={classes.text}>#인기</p>
             </div> */}
 
+{/* <img alt="Adelle Charles" src="https://youtu.be/761ae_KDg_Q" class="jss99"> */}
             {categorys &&
               categorys.map(item => (
                 <div className={classes.avawrap} key={item.categoryId}>
                   <Avatar
                     alt="Adelle Charles"
                     src={
-                      item.mediaType === 'YOUTUBE'
+                      item.fullPath.includes('https://www.youtube') ||
+                      item.fullPath.includes('https://youtu.be')
                         ? `http://img.youtube.com/vi/${item.movieKey}/1.jpg`
                         : item.fullPath
                     }

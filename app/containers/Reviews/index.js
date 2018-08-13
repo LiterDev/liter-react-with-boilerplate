@@ -51,6 +51,13 @@ const styles = theme => ({
 });
 /* eslint-disable react/prefer-stateless-function */
 export class Reviews extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cateValue: -9,
+    };
+  }
+
   componentDidMount() {
     const {
       loadReviewList,
@@ -59,7 +66,7 @@ export class Reviews extends React.PureComponent {
       last,
       loadCategoryList,
     } = this.props;
-    loadReviewList();
+    loadReviewList(this.state.cateValue);
     loadCategoryList();
 
     $(window).scroll(() => {
@@ -71,18 +78,24 @@ export class Reviews extends React.PureComponent {
         loadReviewListMore(
           this.props.reviews.loadMore,
           this.props.reviews.last,
+          this.state.cateValue,
         );
       }
     });
   }
   loadValue = value => {
-    // console.log(value);
+    console.log(value);
+    this.setState({
+      cateValue: value,
+    });
+    this.props.loadReviewList(this.state.cateValue);
+    // loadReviewList();
   };
   render() {
     // const { classes } = this.props;
     const { reviews, classes } = this.props;
 
-    // console.log(reviews.reviews[0]);
+    // console.log(reviews);
     // console.log(this.props.categorys);
     return (
       <div>
@@ -127,15 +140,15 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    loadReviewList: evt => {
+    loadReviewList: cateValue => {
       // console.log(evt);
       // if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-
-      dispatch(loadList());
+      // console.log(`cateValue ====[ ${cateValue}]`);
+      dispatch(loadList(cateValue));
     },
-    loadReviewListMore: (loadMore, last) => {
+    loadReviewListMore: (loadMore, last, cateValue) => {
       if (!loadMore && !last) {
-        dispatch(loadListMore());
+        dispatch(loadListMore(cateValue));
       }
     },
     loadReviewListWithCategory: value => {},

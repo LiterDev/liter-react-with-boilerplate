@@ -15,10 +15,11 @@ import {
   LOAD_CATEGORY_SUCCESS,
 } from './constants';
 
-export function loadList() {
-  // console.log(`reaview loadList === [ call ]`);
+export function loadList(cateValue) {
+  // console.log(`reaview loadList === [ ${cateValue} ]`);
   return {
     type: LOAD_REVIEW_ACTION,
+    cateValue,
   };
 }
 
@@ -36,9 +37,10 @@ export function reviewListLoadingError(error) {
   };
 }
 
-export function loadListMore() {
+export function loadListMore(cateValue) {
   return {
     type: LOAD_REVIEW_MORE,
+    cateValue,
   };
 }
 

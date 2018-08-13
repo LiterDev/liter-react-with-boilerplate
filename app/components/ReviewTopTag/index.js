@@ -147,10 +147,10 @@ class ReviewTopTag extends React.PureComponent {
       swipeToSlide: true,
     };
     // console.log(reviewFirst);
-    if (Boolean(reviewFirst)) {
-      console.log(reviewFirst.mediaCollection);
-      console.log(reviewFirst.mediaCollection[0]);
-    }
+    // if (Boolean(reviewFirst)) {
+    //   console.log(reviewFirst.mediaCollection);
+    //   console.log(reviewFirst.mediaCollection[0]);
+    // }
 
     return (
       <div className={classes.root}>

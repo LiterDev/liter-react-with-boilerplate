@@ -231,7 +231,7 @@ class ReviewFormTabEtc extends React.PureComponent {
           </div>
 
           <SurveyList
-            surveyCate={SurveyData.surveyCate[0]}
+            surveyCate={SurveyData.surveyCate[this.props.category]}
             surveyBuyType={SurveyData.surveyBuyType[2]}
             // categoryId={this.state.categoryId}
           />
@@ -278,7 +278,9 @@ class ReviewFormTabEtc extends React.PureComponent {
   }
 }
 
-ReviewFormTabEtc.propTypes = {};
+ReviewFormTabEtc.propTypes = {
+
+};
 
 // export default ReviewFormTabEtc;
 export default withStyles(styles)(ReviewFormTabEtc);

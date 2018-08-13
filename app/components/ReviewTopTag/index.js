@@ -191,7 +191,8 @@ class ReviewTopTag extends React.PureComponent {
                   <Avatar
                     alt="Adelle Charles"
                     src={
-                      item.mediaType === 'YOUTUBE'
+                      item.includes('https://youtube') ||
+                      item.includes('https://youtu.be')
                         ? `http://img.youtube.com/vi/${item.movieKey}/1.jpg`
                         : item.fullPath
                     }

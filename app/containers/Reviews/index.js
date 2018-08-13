@@ -82,7 +82,7 @@ export class Reviews extends React.PureComponent {
     // const { classes } = this.props;
     const { reviews, classes } = this.props;
 
-    console.log(reviews.reviews[0]);
+    // console.log(reviews.reviews[0]);
     // console.log(this.props.categorys);
     return (
       <div>

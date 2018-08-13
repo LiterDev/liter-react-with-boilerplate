@@ -130,7 +130,7 @@ class ReviewTopTag extends React.PureComponent {
   };
   render() {
     const { classes, categorys, reviewFirst } = this.props;
-    console.log(`categorys ====[ ${categorys}]`);
+    // console.log(`categorys ====[ ${categorys}]`);
     const settings = {
       dots: false,
       className: 'center',
@@ -140,17 +140,33 @@ class ReviewTopTag extends React.PureComponent {
       slidesToScroll: 1,
       swipeToSlide: true,
     };
+    // console.log(reviewFirst);
+    // if (Boolean(reviewFirst)) {
+    //   console.log(reviewFirst.mediaCollection);
+    //   console.log(reviewFirst.mediaCollection[0]);
+    // }
+
     return (
       <div className={classes.root}>
         <div className={classes.row}>
           <Slider {...settings}>
             <div className={classes.avawrap}>
-              <Avatar
-                alt="Adelle Charles"
-                src={reviewFirst.mediaCollection[0].fullPath}
-                className={classNames(classes.avatar, classes.bigAvatar)}
-                onClick={() => this.handleTag(-9)}
-              />
+              {Boolean(reviewFirst) ? (
+                <Avatar
+                  alt="Adelle Charles"
+                  src={reviewFirst.mediaCollection[0]}
+                  className={classNames(classes.avatar, classes.bigAvatar)}
+                  onClick={() => this.handleTag(-9)}
+                />
+              ) : (
+                <Avatar
+                  alt="Adelle Charles"
+                  src={Cola}
+                  // src={reviewFirst.mediaCollection[0]}
+                  className={classNames(classes.avatar, classes.bigAvatar)}
+                  onClick={() => this.handleTag(-9)}
+                />
+              )}
               <p className={classes.text}>#최신</p>
             </div>
             {/* <div className={classes.avawrap}>

@@ -110,6 +110,18 @@ const styles = theme => ({
   //     animation: rotation 4s infinite linear;
   // }
 });
+const cateName = [
+  '뷰티',
+  '라이프',
+  '푸드',
+  '패션',
+  '유아',
+  '취미',
+  '맛집',
+  '펫',
+  '그외',
+];
+
 /* eslint-disable react/prefer-stateless-function */
 class ReviewTopTag extends React.PureComponent {
   handleTag = value => {
@@ -117,7 +129,7 @@ class ReviewTopTag extends React.PureComponent {
     this.props.loadValue(value);
   };
   render() {
-    const { classes, categorys } = this.props;
+    const { classes, categorys, reviewFirst } = this.props;
     console.log(`categorys ====[ ${categorys}]`);
     const settings = {
       dots: false,
@@ -135,22 +147,22 @@ class ReviewTopTag extends React.PureComponent {
             <div className={classes.avawrap}>
               <Avatar
                 alt="Adelle Charles"
-                src={Cola}
+                src={reviewFirst.mediaCollection[0].fullPath}
                 className={classNames(classes.avatar, classes.bigAvatar)}
                 onClick={() => this.handleTag(-9)}
               />
               <p className={classes.text}>#최신</p>
             </div>
-            <div className={classes.avawrap}>
+            {/* <div className={classes.avawrap}>
               <Avatar
                 alt="Adelle Charles"
                 src={Cola}
                 className={classNames(classes.avatar, classes.bigAvatar)}
                 onClick={() => this.handleTag(-1)}
               />
-              <p className={classes.text}>#최신</p>
-            </div>
-            
+              <p className={classes.text}>#인기</p>
+            </div> */}
+
             {categorys &&
               categorys.map(item => (
                 <div className={classes.avawrap} key={item.categoryId}>
@@ -160,7 +172,7 @@ class ReviewTopTag extends React.PureComponent {
                     className={classNames(classes.avatar, classes.bigAvatar)}
                     onClick={() => this.handleTag(item.categoryId)}
                   />
-                  <p className={classes.text}>#최신</p>
+                  <p className={classes.text}>#{cateName[item.categoryId]}</p>
                 </div>
               ))}
 
@@ -210,6 +222,7 @@ class ReviewTopTag extends React.PureComponent {
 ReviewTopTag.propTypes = {
   loadValue: PropTypes.func.isRequired,
   categorys: PropTypes.object,
+  reviewFirst: PropTypes.object,
 };
 
 // export default ReviewTopTag;

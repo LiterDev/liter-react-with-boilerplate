@@ -8,8 +8,8 @@ export function* signin(data) {
   const requestURL = `${process.env.API_URL}/auth/signIn`;
   // const requestURL = 'http://api.getliter.io/auth/signIn';
   // console.log(data);
-  console.log(data.email);
-  console.log(data.password);
+  // console.log(data.email);
+  // console.log(data.password);
   try {
     const options = {
       method: 'POST',

@@ -16,7 +16,7 @@ import {
 } from './constants';
 
 export function loadList() {
-  console.log(`reaview loadList === [ call ]`);
+  // console.log(`reaview loadList === [ call ]`);
   return {
     type: LOAD_REVIEW_ACTION,
   };

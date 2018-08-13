@@ -86,13 +86,13 @@ function App(props) {
       },
     }).then(resp => {
       console.log(resp.data);
-      localStorage.setItem('accessToken', resp.data.accessToken);
-      localStorage.setItem('refreshToken', resp.data.refreshToken);
+      // localStorage.setItem('accessToken', resp.data.accessToken);
+      // localStorage.setItem('refreshToken', resp.data.refreshToken);
       localStorage.setItem('username', resp.data.username);
       localStorage.setItem('userNickName', resp.data.userNickName);
       localStorage.setItem('profileImageUrl', resp.data.profileImageUrl);
       localStorage.setItem('hasWallet', resp.data.hasWallet);
-      localStorage.setItem('hasWallet', resp.data.validStatus);
+      localStorage.setItem('validStatus', resp.data.validStatus);
     });
   }
 

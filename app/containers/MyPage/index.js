@@ -17,6 +17,7 @@ import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 
 import classNames from 'classnames';
 
@@ -24,7 +25,7 @@ import AlertDialog from 'components/AlertDialog';
 import SelfieControl from 'components/SelfieControl';
 
 import Button from 'components/Button';
-import Header from 'components/Header';
+import MyPageHeader from 'components/MyPageHeader';
 import TabList from 'components/TabList';
 import EmailAuthPop from '../EmailAuthPop';
 import messages from './messages';
@@ -36,6 +37,7 @@ import * as selectors from './selectors';
 
 import reducer from './reducer';
 import saga from './saga';
+import ModifyPop from '../../components/ModifyPop';
 
 const styles = {
   container: {
@@ -121,12 +123,14 @@ export class MyPage extends React.PureComponent {
       ],
       makeWalletPopOpen: false,
       emailSuccessPop: false,
+      nickChangePop: false,
       havingWallet: false,
     };
 
     this.handleCreateWallet = this.handleCreateWallet.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleNickChange = this.handleNickChange.bind(this);
     this.openEmailSuccesPop = this.openEmailSuccesPop.bind(this);
 
     this.selfie = React.createRef();
@@ -170,6 +174,23 @@ export class MyPage extends React.PureComponent {
     this.setState({
       makeWalletPopOpen: false,
       emailSuccessPop: false,
+      nickChangePop: false,
+    });
+  };
+
+  handleNickChange = userNickName => {
+    const { changeUserNick } = this.props;
+    console.log('handleNickChange');
+    changeUserNick(userNickName);
+    this.setState({
+      nickChangePop: false,
+    });
+  };
+
+  openUserNickChange = () => {
+    console.log('nick change');
+    this.setState({
+      nickChangePop: true,
     });
   };
 
@@ -199,15 +220,15 @@ export class MyPage extends React.PureComponent {
   }
 
   navigateFollower = () => {
-    console.log("Follower");
+    console.log('Follower');
     this.props.history.push('/follow');
-  }
+  };
 
   navigateFollowing = () => {
-    console.log("Following");
+    console.log('Following');
     this.props.history.push('/following');
     // this.props.history.pushState('/following');
-  }
+  };
 
   render() {
     const {
@@ -236,7 +257,9 @@ export class MyPage extends React.PureComponent {
           callbackFunc={this.props.selectUserData}
         />
         <div className={classes.container}>
-          <Header headerTitle={<FormattedMessage {...messages.header} />} />
+          <MyPageHeader
+            headerTitle={<FormattedMessage {...messages.header} />}
+          />
         </div>
         <div className={classes.panel}>
           <div className={classes.row}>
@@ -254,7 +277,18 @@ export class MyPage extends React.PureComponent {
               <span className={classes.levelTagInner}>Lv 1</span>
             </div>
           </div>
-          <div className={classes.row}>{localStorage.getItem('username')}</div>
+          <div className={classes.row}>
+            <IconButton
+              color="inherit"
+              aria-label="Close"
+              className={classes.close}
+              onClick={() => {
+                this.openUserNickChange();
+              }}
+            >
+              {localStorage.getItem('userNickName')}
+            </IconButton>
+          </div>
           <div className={classes.row}>
             {havingWallet ? (
               <Typography variant="headline" className={classes.userCoin}>
@@ -275,7 +309,7 @@ export class MyPage extends React.PureComponent {
                     />
                   </g>
                 </svg>
-                0
+                {myPages.userData.literCoin}
               </Typography>
             ) : (
               <Button
@@ -291,14 +325,18 @@ export class MyPage extends React.PureComponent {
           <div className={classNames(classes.row, classes.panelInfo)}>
             <div className={classes.col}>
               <div className={classes.row}>{myPages.followerCount}</div>
-              <div className={classes.row} onClick={this.navigateFollower} >팔로워</div>
+              <div className={classes.row} onClick={this.navigateFollower}>
+                팔로워
+              </div>
             </div>
             <div className={classes.verticalCol}>
               <div className={classes.verticalDivider} />
             </div>
             <div className={classes.col}>
               <div className={classes.row}>{myPages.followingCount}</div>
-              <div className={classes.row} onClick={this.navigateFollowing} >팔로잉</div>
+              <div className={classes.row} onClick={this.navigateFollowing}>
+                팔로잉
+              </div>
             </div>
           </div>
         </div>
@@ -319,6 +357,12 @@ export class MyPage extends React.PureComponent {
           open={this.state.emailSuccessPop}
           submitHandler={this.handleSubmit}
         />
+        <ModifyPop
+          defaultValue={localStorage.getItem('userNickName')}
+          onClose={this.handleClose}
+          open={this.state.nickChangePop}
+          submitHandler={this.handleNickChange}
+        />
       </div>
     );
   }
@@ -333,6 +377,7 @@ MyPage.propTypes = {
   selectFollowerCount: PropTypes.func,
   selectFollowingCount: PropTypes.func,
   selectUserData: PropTypes.func,
+  changeUserNick: PropTypes.func,
   myPages: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   global: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   follwerCount: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -370,6 +415,10 @@ function mapDispatchToProps(dispatch) {
     selectUserData: () => {
       // console.log('signinUserData');
       dispatch(actions.loadUserData());
+    },
+    changeUserNick: userNickName => {
+      console.log(`load User Nick Name --  call!!! --- ${userNickName}`);
+      dispatch(actions.changeNickNameAction());
     },
   };
 }

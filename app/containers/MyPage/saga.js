@@ -11,6 +11,7 @@ import {
   LOAD_USER_DATA,
   FOLLOWER_COUNT_ACTION,
   FOLLOWING_COUNT_ACTION,
+  CHANGE_NICK_NAME_ACTION,
 } from './constants';
 import * as actions from './actions';
 // import { makeSelectMyPage } from './selectors';
@@ -53,7 +54,7 @@ export function* getMyRewards() {
 
     // const req = request(request, requestURL, options);
     const reqContents = yield call(request, requestURL, options);
-    console.log("]========= getMyReward SAGA ======[");
+    console.log(']========= getMyReward SAGA ======[');
     console.log(reqContents);
     yield put(actions.myRewardsSuccess(reqContents));
   } catch (err) {
@@ -77,7 +78,7 @@ export function* getAcquire() {
 
     // const req = request(request, requestURL, options);
     const reqContents = yield call(request, requestURL, options);
-    console.log("]========= getAcquire SAGA ======[");
+    console.log(']========= getAcquire SAGA ======[');
     console.log(reqContents);
     yield put(actions.myRewardsAcquireSuccess(reqContents));
   } catch (err) {
@@ -160,6 +161,32 @@ export function* getUserData() {
   }
 }
 
+export function* changeUserNickName(data) {
+  const requestURL = `${process.env.API_URL}/user/nickname`;
+  const accessToken = localStorage.getItem('accessToken');
+  const token = `Bearer ${accessToken}`;
+  try {
+    const options = {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        Authorization: token,
+      },
+      data: {
+        userNickName: data.userNickName,
+      },
+    };
+
+    const reqContents = yield call(request, requestURL, options);
+    // console.log(reqContents);
+    yield put(actions.loadUserSuccess(reqContents));
+  } catch (err) {
+    yield put(actions.loadUserError(err));
+  }
+}
+
 /**
  * Root saga manages watcher lifecycle
  */
@@ -174,4 +201,5 @@ export default function* defaultSaga() {
   yield takeLatest(LOAD_USER_DATA, getUserData);
   yield takeLatest(FOLLOWER_COUNT_ACTION, loadFollowerCnt);
   yield takeLatest(FOLLOWING_COUNT_ACTION, loadFollowingCnt);
+  yield takeLatest(CHANGE_NICK_NAME_ACTION, changeUserNickName);
 }

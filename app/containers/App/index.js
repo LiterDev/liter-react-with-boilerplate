@@ -29,6 +29,7 @@ import Reviews from 'containers/Reviews/Loadable';
 // import ReviewDetailPage from 'containers/ReviewDetailPage/Loadable';
 import ReviewDetailResolver from 'containers/ReviewDetailResolver/Loadable';
 import EmailValid from 'containers/EmailValid/Loadable';
+import About from 'components/About/Loadable';
 // import ReviewFormEdit from 'containers/ReviewFormEdit/Loadable';
 
 // import Header from 'components/Header';
@@ -132,6 +133,7 @@ function App(props) {
         <Route path="/slide" component={SlideTest} />
         {/* <PrivateRoute path="/valid/:validString" component={EmailValid} /> */}
         <Route path="/valid" component={EmailValid} />
+        <Route path="/about" component={About} />
 
         <Route path="" component={NotFoundPage} />
       </Switch>

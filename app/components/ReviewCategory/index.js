@@ -165,7 +165,7 @@ class ReviewCategory extends React.PureComponent {
           selImg: LifeSel,
           nonImg: Life,
           active: 0,
-          name: '라이프',
+          name: '리빙',
         },
         {
           cateIndex: 2,
@@ -186,14 +186,14 @@ class ReviewCategory extends React.PureComponent {
           selImg: BabySel,
           nonImg: Baby,
           active: 0,
-          name: '유아',
+          name: '유아/아동',
         },
         {
           cateIndex: 5,
           selImg: hobbySel,
           nonImg: Hobby,
           active: 0,
-          name: '취미',
+          name: '여가',
         },
         {
           cateIndex: 6,

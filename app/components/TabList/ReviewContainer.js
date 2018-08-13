@@ -6,6 +6,7 @@ import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Star from '@material-ui/icons/Star';
 
+import StyledLink from 'components/ReviewCard/StyledLink';
 import Media from 'components/Media';
 import TimeAt from 'components/TimeAt';
 
@@ -158,7 +159,7 @@ function ReviewContainer(props) {
           )}
         >
           <span className={classNames(classes.left, classes.userName)}>
-            {review.username}
+            {review.user.userNickName}
           </span>
           <span className={classNames(classes.leftPadding10, classes.update)}>
             <TimeAt date={review.updateAt} />
@@ -172,7 +173,7 @@ function ReviewContainer(props) {
             classes.paddingBottom,
           )}
         >
-          {review.title}
+          <StyledLink to={`/review/${review.id}`}>{review.title}</StyledLink>
         </div>
         <div className={classNames(classes.row, classes.fontSize13)}>
           <div className={classNames(classes.left, classes.col1)}>

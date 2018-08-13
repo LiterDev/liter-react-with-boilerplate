@@ -36,6 +36,7 @@ import * as selectors from './selectors';
 
 import reducer from './reducer';
 import saga from './saga';
+import InputWithHelper from '../../components/InputWithHelper';
 
 const styles = {
   container: {
@@ -199,15 +200,15 @@ export class MyPage extends React.PureComponent {
   }
 
   navigateFollower = () => {
-    console.log("Follower");
+    console.log('Follower');
     this.props.history.push('/follow');
-  }
+  };
 
   navigateFollowing = () => {
-    console.log("Following");
+    console.log('Following');
     this.props.history.push('/following');
     // this.props.history.pushState('/following');
-  }
+  };
 
   render() {
     const {
@@ -236,7 +237,9 @@ export class MyPage extends React.PureComponent {
           callbackFunc={this.props.selectUserData}
         />
         <div className={classes.container}>
-          <MyPageHeader headerTitle={<FormattedMessage {...messages.header} />} />
+          <MyPageHeader
+            headerTitle={<FormattedMessage {...messages.header} />}
+          />
         </div>
         <div className={classes.panel}>
           <div className={classes.row}>
@@ -254,7 +257,13 @@ export class MyPage extends React.PureComponent {
               <span className={classes.levelTagInner}>Lv 1</span>
             </div>
           </div>
-          <div className={classes.row}>{localStorage.getItem('username')}</div>
+          <div className={classes.row}>
+            <InputWithHelper
+              type="text"
+              inputName="userNickName"
+              value={localStorage.getItem('userNickName')}
+            />
+          </div>
           <div className={classes.row}>
             {havingWallet ? (
               <Typography variant="headline" className={classes.userCoin}>
@@ -275,7 +284,7 @@ export class MyPage extends React.PureComponent {
                     />
                   </g>
                 </svg>
-                0
+                {myPages.userData.literCoin}
               </Typography>
             ) : (
               <Button
@@ -291,14 +300,18 @@ export class MyPage extends React.PureComponent {
           <div className={classNames(classes.row, classes.panelInfo)}>
             <div className={classes.col}>
               <div className={classes.row}>{myPages.followerCount}</div>
-              <div className={classes.row} onClick={this.navigateFollower} >팔로워</div>
+              <div className={classes.row} onClick={this.navigateFollower}>
+                팔로워
+              </div>
             </div>
             <div className={classes.verticalCol}>
               <div className={classes.verticalDivider} />
             </div>
             <div className={classes.col}>
               <div className={classes.row}>{myPages.followingCount}</div>
-              <div className={classes.row} onClick={this.navigateFollowing} >팔로잉</div>
+              <div className={classes.row} onClick={this.navigateFollowing}>
+                팔로잉
+              </div>
             </div>
           </div>
         </div>

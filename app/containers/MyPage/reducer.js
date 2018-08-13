@@ -80,6 +80,8 @@ function myPageReducer(state = initialState, action) {
     case constants.CHANGE_NICK_NAME_ACTION:
       return state;
     case constants.CHANGE_NICK_NAME_SUCCESS:
+      console.log(action.data);
+      localStorage.setItem('userNickName', action.data.userNickName);
       return state.set('userData', action.data);
     case constants.CHANGE_NICK_NAME_FAILURE:
       // console.log(action.data);

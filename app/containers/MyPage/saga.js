@@ -180,11 +180,11 @@ export function* changeUserNickName(data) {
       },
     };
 
-    const reqContents = yield call(request, requestURL, options);
+    yield call(request, requestURL, options);
     // console.log(reqContents);
-    yield put(actions.loadUserSuccess(reqContents));
+    yield put(actions.changeNickNameSuccess(data));
   } catch (err) {
-    yield put(actions.loadUserError(err));
+    yield put(actions.changeNickNameFailure(err));
   }
 }
 

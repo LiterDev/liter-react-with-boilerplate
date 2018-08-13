@@ -230,14 +230,14 @@ class TabList extends React.Component {
               </button>
             </span>
           </ListItem>
-          <Divider />
+          <Divider /> */}
           <ListItem key={tabItem.type.concat(0)}>
             <div className={classes.rewardTopLine}>
               <span className={classes.rewardHeaderDate}>일시</span>
               <span className={classes.rewardHeaderReward}>보상액</span>
               <span className={classes.rewardHeaderTotal}>총액</span>
             </div>
-          </ListItem> */}
+          </ListItem>
 
           <Snackbar
             className={classes.newRewardSnackbar}
@@ -254,7 +254,8 @@ class TabList extends React.Component {
               <button className={classes.newRewardSnackBarBtn}>보상받기</button>
             </div>
           </Snackbar>
-          {this.renderRewardRow(tabItem.type, data.rewards)}
+          
+          { this.renderRewardRow(tabItem.type, data.rewards) }
         </List>,
       );
     }

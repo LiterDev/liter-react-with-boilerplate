@@ -647,7 +647,7 @@ class ReviewWrite extends React.PureComponent {
       case 1:
         // Survey id: 7, 8, 9, 10, 11, 12, 13
         tSurveyId = [81, 82, 83];
-        
+
         break;
       case 2:
         // Survey id: 7, 8, 9, 10, 11, 12, 13

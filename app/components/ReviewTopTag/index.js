@@ -198,7 +198,7 @@ class ReviewTopTag extends React.PureComponent {
                     alt="Adelle Charles"
                     src={
                       item.fullPath.includes('https://www.youtube') ||
-                      item.fullPath.includes('https://www.youtu.be')
+                      item.fullPath.includes('https://youtu.be')
                         ? `http://img.youtube.com/vi/${item.movieKey}/1.jpg`
                         : item.fullPath
                     }

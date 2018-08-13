@@ -24,12 +24,12 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 class ReviewList extends React.PureComponent {
   handleVoting = () => {
-    console.log('handleVoting clicked--------');
+    // console.log('handleVoting clicked--------');
   };
 
   handleFollow = followId => {
-    console.log('handleFollow clicked--------');
-    console.log(followId);
+    // console.log('handleFollow clicked--------');
+    // console.log(followId);
   };
 
   render() {
@@ -38,8 +38,8 @@ class ReviewList extends React.PureComponent {
     let reviewArray = false;
 
     if (reviews !== false) {
-      console.log(']=====]review list[=====[');
-      console.log(reviews.reviews);
+      // console.log(']=====]review list[=====[');
+      // console.log(reviews.reviews);
       reviewArray = reviews.reviews;
 
       return (

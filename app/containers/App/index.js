@@ -70,6 +70,32 @@ function App(props) {
 
   const { classes } = props;
 
+  const accessToken = localStorage.getItem('accessToken');
+
+  if (accessToken) {
+    const requestURL = `${process.env.API_URL}/user/authInfo`;
+    const token = `Bearer ${accessToken}`;
+    axios({
+      method: 'GET',
+      url: requestURL,
+      headers: {
+        Accept: 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        Authorization: token,
+      },
+    }).then(resp => {
+      // console.log(resp.data);
+      // localStorage.setItem('accessToken', resp.data.accessToken);
+      // localStorage.setItem('refreshToken', resp.data.refreshToken);
+      localStorage.setItem('username', resp.data.username);
+      localStorage.setItem('userNickName', resp.data.userNickName);
+      localStorage.setItem('profileImageUrl', resp.data.profileImageUrl);
+      localStorage.setItem('hasWallet', resp.data.hasWallet);
+      localStorage.setItem('validStatus', resp.data.validStatus);
+    });
+  }
+
   return (
     <div className={classes.root}>
       <Helmet
@@ -91,7 +117,7 @@ function App(props) {
         <Route path="/follow/:userId" component={FollowActionPage} />
         <Route exact path="/following" component={FollowingActionPage} />
         <Route path="/following/:userId" component={FollowingActionPage} />
-        <PrivateWalletRoute
+        <PrivateRoute
           exact
           path="/review/write"
           component={ReviewForm}
@@ -100,8 +126,8 @@ function App(props) {
         <Route path="/review/edit/:reviewId" component={ReviewForm} />
         <Route path="/review/:reviewId" component={ReviewDetailResolver} />
         <Route path="/following" component={FollowingActionPage} />
-        <PrivateWalletRoute exact path="/review/write" component={ReviewForm} />
-        <PrivateRoute path="/review/edit/:reviewId" component={ReviewForm} />
+        {/* <PrivateRoute exact path="/review/write" component={ReviewForm} /> */}
+        {/* <PrivateRoute path="/review/edit/:reviewId" component={ReviewForm} /> */}
         <Route path="/review/:reviewId" component={ReviewDetailResolver} />
         <Route path="/slide" component={SlideTest} />
         {/* <PrivateRoute path="/valid/:validString" component={EmailValid} /> */}

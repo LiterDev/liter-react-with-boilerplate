@@ -91,7 +91,7 @@ class MediaSlider extends React.PureComponent {
     if (media !== false) {
       mediaArray = Object.values(media);
 
-      console.log(mediaArray);
+      // console.log(mediaArray);
 
       return (
         <div className={classes.root}>

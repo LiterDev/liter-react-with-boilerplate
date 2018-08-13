@@ -11,10 +11,12 @@ import {
   LOAD_REVIEW_MORE,
   LOAD_REVIEW_MORE_SUCCESS,
   LOAD_REVIEW_MORE_ERROR,
+  LOAD_CATEGORY,
+  LOAD_CATEGORY_SUCCESS,
 } from './constants';
 
 export function loadList() {
-  console.log(`reaview loadList === [ call ]`);
+  // console.log(`reaview loadList === [ call ]`);
   return {
     type: LOAD_REVIEW_ACTION,
   };
@@ -54,3 +56,16 @@ export function loadListMoreError(error) {
   };
 }
 
+export function loadCategory() {
+  return {
+    type: LOAD_CATEGORY,
+  };
+}
+
+export function categoryLoaded(data) {
+  // console.log(`categoryLoaded data ====[ ${data}]`);
+  return {
+    type: LOAD_CATEGORY_SUCCESS,
+    data,
+  };
+}

@@ -11,4 +11,6 @@ export const LOAD_REVIEW_ERROR = 'app/Reviews/LOAD_REVIEW_ERROR';
 export const LOAD_REVIEW_MORE = 'app/Reviews/LOAD_REVIEW_MORE';
 export const LOAD_REVIEW_MORE_SUCCESS = 'app/Reviews/LOAD_REVIEW_MORE_SUCCESS';
 export const LOAD_REVIEW_MORE_ERROR = 'app/Reviews/LOAD_REVIEW_MORE_ERROR';
+export const LOAD_CATEGORY = 'app/Reviews/LOAD_CATEGORY';
+export const LOAD_CATEGORY_SUCCESS = 'app/Reviews/LOAD_CATEGORY_SUCCESS';
 

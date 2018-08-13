@@ -165,6 +165,7 @@ export function* changeUserNickName(data) {
   const requestURL = `${process.env.API_URL}/user/nickname`;
   const accessToken = localStorage.getItem('accessToken');
   const token = `Bearer ${accessToken}`;
+  console.log(data);
   try {
     const options = {
       method: 'POST',

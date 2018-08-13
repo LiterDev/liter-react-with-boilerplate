@@ -12,6 +12,8 @@ import {
   LOAD_REVIEW_MORE,
   LOAD_REVIEW_MORE_SUCCESS,
   LOAD_REVIEW_MORE_ERROR,
+  LOAD_CATEGORY,
+  LOAD_CATEGORY_SUCCESS,
 } from './constants';
 
 export const initialState = fromJS({
@@ -21,10 +23,12 @@ export const initialState = fromJS({
   loading: false,
   error: false,
   loadMore: false,
+  categorys: false,
 });
 
 function reviewsReducer(state = initialState, action) {
   console.log(`reaview action === [ ${action.type} ]`);
+  console.log(action.data);
   switch (action.type) {
     case LOAD_REVIEW_ACTION:
       return state.set('loading', true).set('error', false);
@@ -49,6 +53,10 @@ function reviewsReducer(state = initialState, action) {
         .set('last', action.data.last);
     case LOAD_REVIEW_MORE_ERROR:
       return state.set('loadMore', false).set('error', true);
+    case LOAD_CATEGORY:
+      return state;
+    case LOAD_CATEGORY_SUCCESS:
+      return state.set('categorys', action.data);
     default:
       return state;
   }

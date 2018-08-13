@@ -81,6 +81,7 @@ class PrivateWalletRoute extends React.Component {
       );
     }
     if (!this.state.isAuthenticatedWallet) {
+
       return (
         <Route
           {...rest}

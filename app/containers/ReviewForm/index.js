@@ -20,9 +20,14 @@ import ReviewWrite from 'components/ReviewWrite';
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-// import dotenv from 'dotenv';
-
-// import dotenv from 'dotenv';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
 // import SvgIcon from '@material-ui/core/SvgIcon';
 
@@ -130,7 +135,12 @@ const styles = theme => ({
 export class ReviewForm extends React.PureComponent {
   constructor(props) {
     super(props);
+    this.state = {
+      openSuccesPop: false,
+    };
     this.initHandler = this.initHandler.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleMove = this.handleMove.bind(this);
   }
   componentDidMount() {
     // const { loadReview } = this.props;
@@ -141,25 +151,66 @@ export class ReviewForm extends React.PureComponent {
     // }
   }
 
+  validWallet = () => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (accessToken) {
+      const requestURL = `${process.env.API_URL}/user/authInfo`;
+      const token = `Bearer ${accessToken}`;
+      axios({
+        method: 'GET',
+        url: requestURL,
+        headers: {
+          Accept: 'application/json;charset=UTF-8',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          Authorization: token,
+        },
+      }).then(resp => {
+        if (!resp.data.hasWallet) {
+          this.setState({
+            openSuccesPop: true,
+          });
+        }
+      });
+    }
+  };
+
   initHandler() {
     this.props.loadInit();
   }
   componentWillMount() {
-    const { loadReview } = this.props;
-    const reviewId = this.props.match.params.reviewId;
+    // const { loadReview } = this.props;
+    // const reviewId = this.props.match.params.reviewId;
     // console.log(reviewId);
-    if (reviewId) {
-      loadReview(reviewId);
-    }
+    // if (reviewId) {
+    //   loadReview(reviewId);
+    // }
   }
+
+  handleClose = () => {
+    this.setState({
+      openSuccesPop: false,
+    });
+
+    // this.props.history.push('/mypage');
+  };
+  handleMove = () => {
+    this.setState({
+      openSuccesPop: false,
+    });
+
+    this.props.history.push('/mypage');
+  };
   render() {
     const { classes, reviewId, reviews, surveys } = this.props;
     const { reviewform } = this.props;
     const { loading } = reviewform;
+    this.validWallet();
     // console.log(this.props.match.params.reviewId);
-    if (this.props.match.params.reviewId > 0) {
-      this.initHandler();
-    }
+    // if (this.props.match.params.reviewId > 0) {
+    //   this.initHandler();
+    // }
 
     // console.log(reviews);
     // console.log(surveys);
@@ -182,6 +233,41 @@ export class ReviewForm extends React.PureComponent {
           reviews={reviews}
           surveys={surveys}
         />
+        <Dialog
+          open={this.state.openSuccesPop}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          className={classes.popWrap}
+          fullWidth="true"
+          // maxWidth="false"
+          classes={{
+            root: classes.popRoot,
+            paper: classes.popPaper,
+          }}
+        >
+          <DialogTitle id="alert-dialog-title">
+            {/* {"Use Google's location service?"} */}
+          </DialogTitle>
+
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              이메일 인증이 필요한 서비스 입니다.
+            </DialogContentText>
+          </DialogContent>
+          <Divider />
+          <DialogActions
+            // className={classes.popFooter}
+            classes={{
+              root: classes.popRoot,
+              // paper: classes.popFooter,
+            }}
+          >
+            <Button onClick={this.handleMove} color="secondary">
+              확인
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }

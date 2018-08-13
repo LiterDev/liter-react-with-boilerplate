@@ -154,7 +154,7 @@ class ReviewTopTag extends React.PureComponent {
               {Boolean(reviewFirst) ? (
                 <Avatar
                   alt="Adelle Charles"
-                  src={reviewFirst.mediaCollection[0]}
+                  src={reviewFirst.mediaCollection[0].fullPath}
                   className={classNames(classes.avatar, classes.bigAvatar)}
                   onClick={() => this.handleTag(-9)}
                 />

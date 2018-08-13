@@ -156,7 +156,9 @@ class ReviewTopTag extends React.PureComponent {
                   alt="Adelle Charles"
                   src={
                     reviewFirst.mediaCollection[0].mediaType === 'YOUTUBE'
-                      ? `http://img.youtube.com/vi/${reviewFirst.mediaCollection[0].movieKey}/1.jpg`
+                      ? `http://img.youtube.com/vi/${
+                          reviewFirst.mediaCollection[0].movieKey
+                        }/1.jpg`
                       : reviewFirst.mediaCollection[0].fullPath
                   }
                   className={classNames(classes.avatar, classes.bigAvatar)}
@@ -188,7 +190,11 @@ class ReviewTopTag extends React.PureComponent {
                 <div className={classes.avawrap} key={item.categoryId}>
                   <Avatar
                     alt="Adelle Charles"
-                    src={item.fullPath}
+                    src={
+                      item === 'YOUTUBE'
+                        ? `http://img.youtube.com/vi/${item.movieKey}/1.jpg`
+                        : item.fullPath
+                    }
                     className={classNames(classes.avatar, classes.bigAvatar)}
                     onClick={() => this.handleTag(item.categoryId)}
                   />

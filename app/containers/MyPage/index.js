@@ -180,7 +180,6 @@ export class MyPage extends React.PureComponent {
 
   handleNickChange = userNickName => {
     const { changeUserNick } = this.props;
-    console.log('handleNickChange');
     changeUserNick(userNickName);
     this.setState({
       nickChangePop: false,
@@ -239,6 +238,9 @@ export class MyPage extends React.PureComponent {
     } = this.props;
     const { havingWallet } = this.state;
 
+    const literCoin =
+      myPages.userData.literCoin > 0 ? myPages.userData.literCoin : 0;
+
     /* TODO:: 현재대로 라면  리렌더링 시 팔로워, 팔로잉 재조회 처리됨.
       load state 나 firstload 등 스테이트 추가 해서 페이지 로딩시에만 처리되도로 수정해야함.
       render 포함 시킨 이유는 selectUserData 의  userId가 필요하나 componentDidMount시 호출하면
@@ -257,9 +259,7 @@ export class MyPage extends React.PureComponent {
           callbackFunc={this.props.selectUserData}
         />
         <div className={classes.container}>
-          <Header
-            headerTitle={<FormattedMessage {...messages.header} />}
-          />
+          <Header headerTitle={<FormattedMessage {...messages.header} />} />
         </div>
         <div className={classes.panel}>
           <div className={classes.row}>
@@ -309,7 +309,7 @@ export class MyPage extends React.PureComponent {
                     />
                   </g>
                 </svg>
-                {myPages.userData.literCoin}
+                {literCoin}
               </Typography>
             ) : (
               <Button
@@ -417,8 +417,9 @@ function mapDispatchToProps(dispatch) {
       dispatch(actions.loadUserData());
     },
     changeUserNick: userNickName => {
-      console.log(`load User Nick Name --  call!!! --- ${userNickName}`);
-      dispatch(actions.changeNickNameAction());
+      // console.log(`load User Nick Name --  call!!! --- ${userNickName}`);
+      // console.log(userNickName);
+      dispatch(actions.changeNickNameAction(userNickName));
     },
   };
 }

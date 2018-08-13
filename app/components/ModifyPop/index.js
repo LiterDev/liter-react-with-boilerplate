@@ -60,13 +60,14 @@ class ModifyPop extends React.PureComponent {
     this.setState({
       userNickName: this.props.defaultValue,
     });
-    console.log(
-      `reset [${this.state.userNickName}] ---> [${this.props.defaultValue}]`,
-    );
+    // console.log(
+    //   `reset [${this.state.userNickName}] ---> [${this.props.defaultValue}]`,
+    // );
   };
 
   handleSubmit = () => {
     const { submitHandler } = this.props;
+    // console.log(this.state.userNickName);
     submitHandler(this.state.userNickName);
   };
 
@@ -122,7 +123,7 @@ class ModifyPop extends React.PureComponent {
             </Button> */}
             <Button
               className={classes.okBtn}
-              onClick={submitHandler}
+              onClick={this.handleSubmit}
               color="secondary"
               autoFocus
             >

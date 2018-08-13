@@ -168,9 +168,10 @@ export function loadFollowingCountFailure(error) {
   };
 }
 
-export function changeNickNameAction() {
+export function changeNickNameAction(userNickName) {
   return {
     type: CHANGE_NICK_NAME_ACTION,
+    userNickName,
   };
 }
 

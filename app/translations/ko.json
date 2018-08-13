@@ -58,12 +58,21 @@
   "app.containers.SignUp.username": "사용자 이름",
   "app.containers.SignUp.password": "비밀번호",
   "app.containers.SignUp.passwordRepeat": "비밀번호 확인",
+  "app.containers.SignUp.termOfUseAgree": "약관 확인",
   "app.containers.SignUp.info1":
     "회원님의 정보는 암호화되어 안전하게 관리됩니다.",
   "app.containers.SignUp.info2":
     "LITER는 회원님의 소중한 정보를 지켜드리기 위해 최선을 다할 것입니다.",
   "app.containers.SignUp.next": "다음",
   "app.containers.SignUp.emailvalid": "올바른 이메일형식이 아닙니다",
+
+  "app.containers.SignUp.emailEmpty": "이메일을 입력해주세요",
+  "app.containers.SignUp.emailExists": "사용중인 이메일입니다",
+  "app.containers.SignUp.usernameEmpty": "사용자명을 입력해주세요",
+  "app.containers.SignUp.passwordValid": "올바른패스워드방식이 아닙니다",
+  "app.containers.SignUp.passwordEmpty": "패스워드를 입력해주세요",
+  "app.containers.SignUp.passwordPatternValid": "패스워드 형식이 틀립니다",
+  "app.containers.SignUp.passwordNotEqual": "패스워드가 일치하지 않습니다.",
 
   "app.containers.SignIn.bodytext": "경험을 나누고 보상을 받으세요",
   "app.containers.SignIn.login": "로그인",
@@ -75,6 +84,7 @@
   "app.components.ReviewCard.sharing": "공유하기",
   "app.component.ReviewHeader.helpEmailAddress": "help@literproject.com",
   "app.containers.EmailValid.header": "이메일 인증",
+  "app.containers.MyPage.defaultUserNickName": "닉네임",
 
   "app.components.ReviewCardBottomBarView.rewardActive": "진행중",
   "app.components.FollowAjxButton.unButtonTitle": "팔로잉",

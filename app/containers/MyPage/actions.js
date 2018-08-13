@@ -23,6 +23,9 @@ import {
   LOAD_USER_DATA,
   LOAD_USER_SUCCESS,
   LOAD_USER_ERROR,
+  CHANGE_NICK_NAME_ACTION,
+  CHANGE_NICK_NAME_SUCCESS,
+  CHANGE_NICK_NAME_FAILURE,
 } from './constants';
 
 export function loadUserData() {
@@ -161,6 +164,25 @@ export function loadFollowingCountFailure(error) {
   console.log('loadFollowingCountFailure');
   return {
     type: FOLLOWING_COUNT_FAILURE,
+    error,
+  };
+}
+
+export function changeNickNameAction() {
+  return {
+    type: CHANGE_NICK_NAME_ACTION,
+  };
+}
+
+export function changeNickNameSuccess(data) {
+  return {
+    type: CHANGE_NICK_NAME_SUCCESS,
+    data,
+  };
+}
+export function changeNickNameFailure(error) {
+  return {
+    type: CHANGE_NICK_NAME_FAILURE,
     error,
   };
 }

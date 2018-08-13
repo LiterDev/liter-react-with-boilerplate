@@ -30,7 +30,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
 
-
 // import Button from '@material-ui/core/Button';
 // import BottomNavigation from '@material-ui/core/BottomNavigation';
 
@@ -155,6 +154,18 @@ export const validateEmail = email => {
   return false;
 };
 
+export const validatePassword = password => {
+  if (
+    new RegExp('^(?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,20}$').test(
+      password,
+    )
+  ) {
+    return true;
+  }
+  // alert('You have entered an invalid email address!');
+  return false;
+};
+
 /* eslint-disable react/prefer-stateless-function */
 export class SignUp extends React.PureComponent {
   constructor(props) {
@@ -169,6 +180,7 @@ export class SignUp extends React.PureComponent {
     };
     this.onSubmitFormInit = this.onSubmitFormInit.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.validationResult = this.validationResult.bind(this);
   }
 
   handleClose = () => {
@@ -226,6 +238,22 @@ export class SignUp extends React.PureComponent {
       });
     }
 
+    if (!validatePassword(password)) {
+      errors.push(500102);
+    } else {
+      this.setState({
+        passwordError: false,
+      });
+    }
+
+    if (password !== passwordRepeat) {
+      errors.push(500105);
+    } else {
+      this.setState({
+        passwordRepeatError: false,
+      });
+    }
+
     if (errors.length > 0) {
       for (let i = 0; i < errors.length; i += 1) {
         this.validationResult(errors[i]);
@@ -252,14 +280,20 @@ export class SignUp extends React.PureComponent {
     // USER_NAME_IS_ALREADY_EXISTS(500107, "Username is already exists"),
     // USER_EMAIL_IS_EMPTY(500108, "Email is empty"),
     // USER_EMAIL_IS_ALREADY_EXISTS(500109, "Email is already exists"),
-    if (errorCode === 500108 || errorCode === 500109) {
+    if (errorCode === 500108) {
       this.setState({
-        emailError: <FormattedMessage {...messages.email} />,
+        emailError: <FormattedMessage {...messages.emailEmpty} />,
       });
     }
+    if (errorCode === 500109) {
+      this.setState({
+        emailError: <FormattedMessage {...messages.emailExists} />,
+      });
+    }
+
     if (errorCode === 500106) {
       this.setState({
-        usernameError: <FormattedMessage {...messages.username} />,
+        usernameError: <FormattedMessage {...messages.usernameEmpty} />,
       });
     }
     if (errorCode === 500110) {
@@ -267,25 +301,49 @@ export class SignUp extends React.PureComponent {
         emailError: <FormattedMessage {...messages.emailvalid} />,
       });
     }
-    if (
-      errorCode === 500100 ||
-      errorCode === 500101 ||
-      errorCode === 500102 ||
-      errorCode === 500105
-    ) {
+
+    if (errorCode === 500100) {
       this.setState({
-        passwordError: <FormattedMessage {...messages.password} />,
+        passwordError: <FormattedMessage {...messages.passwordValid} />,
       });
     }
-    if (errorCode === 500103 || errorCode === 500104 || errorCode === 500105) {
+
+    if (errorCode === 500101) {
+      this.setState({
+        passwordError: <FormattedMessage {...messages.passwordEmpty} />,
+      });
+    }
+    if (errorCode === 500102) {
+      this.setState({
+        passwordError: <FormattedMessage {...messages.passwordPatternValid} />,
+      });
+    }
+    if (errorCode === 500103 || errorCode === 500104) {
       this.setState({
         passwordRepeatError: <FormattedMessage {...messages.passwordRepeat} />,
       });
     }
+    if (errorCode === 500105) {
+      this.setState({
+        passwordError: <FormattedMessage {...messages.passwordNotEqual} />,
+      });
+      this.setState({
+        passwordRepeatError: (
+          <FormattedMessage {...messages.passwordNotEqual} />
+        ),
+      });
+    }
   }
 
+  componentWillMount() {
+    // console.log(this.props.error);
+    // if (this.props.error) {
+    // this.validationResult(this.props.error.response.data.code);
+    // }
+  }
   render() {
     const { classes, error, signupRes } = this.props;
+
     // const reposListProps = {
     //   loading,
     //   error,
@@ -296,17 +354,20 @@ export class SignUp extends React.PureComponent {
     // console.log(error);
     if (error) {
       // console.log(error);
-
       if (error.response) {
-        error.response
-          .json()
-          .then(data => {
-            // console.log(data);
-            this.validationResult(data.code);
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        // console.log(error.response.data);
+        // console.log(error.response);
+        // this.validationResult(error.response.data.code);
+        // error.response
+        //   // .json()
+        //   .then(data => {
+        //     console.log(data);
+        //     this.validationResult(data.code);
+        //   })
+        //   .catch(err => {
+        //     console.log(err);
+        //   });
+        // this.props.error = false;
       }
     }
     console.log(signupRes);

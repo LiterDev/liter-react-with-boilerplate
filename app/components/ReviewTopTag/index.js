@@ -113,11 +113,11 @@ const styles = theme => ({
 });
 const cateName = [
   '뷰티',
-  '라이프',
+  '리빙',
   '푸드',
   '패션',
-  '유아',
-  '취미',
+  '유아/아동',
+  '여가',
   '맛집',
   '펫',
   '그외',
@@ -147,10 +147,10 @@ class ReviewTopTag extends React.PureComponent {
       swipeToSlide: true,
     };
     // console.log(reviewFirst);
-    if (Boolean(reviewFirst)) {
-      console.log(reviewFirst.mediaCollection);
-      console.log(reviewFirst.mediaCollection[0]);
-    }
+    // if (Boolean(reviewFirst)) {
+    //   console.log(reviewFirst.mediaCollection);
+    //   console.log(reviewFirst.mediaCollection[0]);
+    // }
 
     return (
       <div className={classes.root}>

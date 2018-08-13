@@ -273,7 +273,7 @@ const cateList = [
     selImg: LifeSel,
 
     active: 0,
-    name: '라이프',
+    name: '리빙',
   },
   {
     cateIndex: 2,
@@ -294,14 +294,14 @@ const cateList = [
     selImg: BabySel,
 
     active: 0,
-    name: '유아',
+    name: '유아/아동',
   },
   {
     cateIndex: 5,
     selImg: hobbySel,
 
     active: 0,
-    name: '취미',
+    name: '여가',
   },
   {
     cateIndex: 6,

@@ -16,8 +16,11 @@ import {
 
 import makeSelectReviews from './selectors';
 
-export function* getReviews() {
-  const requestURL = `${process.env.API_URL}/review/latestList?page=1`;
+export function* getReviews(data) {
+  console.log(`saga getReviews === [ ${data.cateValue} ]`);
+  const requestURL = `${
+    process.env.API_URL
+  }/review/latestList?page=1&categoryId=${data.cateValue}`;
   const accessToken = localStorage.getItem('accessToken');
   // console.log(`accessToken========[ ${accessToken}]`);
   let token = null;
@@ -55,10 +58,12 @@ export function* getReviews() {
   }
 }
 
-export function* getReviewMore() {
+export function* getReviewMore(data) {
   const reviews = yield select(makeSelectReviews());
   const curPage = reviews.page + 1;
-  const requestURL = `${process.env.API_URL}/review/latestList?page=${curPage}`;
+  const requestURL = `${
+    process.env.API_URL
+  }/review/latestList?page=${curPage}&categoryId=${data.cateValue}`;
   const accessToken = localStorage.getItem('accessToken');
   const token = `Bearer ${accessToken}`;
   const options = {

@@ -261,6 +261,7 @@ export class SignIn extends React.PureComponent {
     // console.log('will mound');
   }
   handleResponse = data => {
+    
     // console.log(data);
     this.props.signinFacebook(
       data.profile.id,

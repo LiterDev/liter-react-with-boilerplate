@@ -119,7 +119,8 @@ const styles = theme => ({
     right: 6.4,
   },
   panel: {
-    height: '160px',
+    // height: '160px',
+    height: '100px',
     marginLeft: '40px',
     marginBottom: '18px',
   },
@@ -300,21 +301,28 @@ function AppDrawer(props) {
       </div>
       <div className={classes.panel}>
         <div className={classes.row}>
-          <div className={classes.avatarDiv}>
-            <Avatar
-              alt=""
-              src={
-                avatarDefault
-              }
-              className={classNames(classes.avatar, classes.bigAvatar)}
-            />
-          </div>
+            <div className={classes.avatarDiv}>
+              <Avatar
+                alt=""
+                src={
+                  localStorage.getItem('profileImageUrl')
+                }
+                className={classNames(classes.avatar, classes.bigAvatar)}
+              />
+            </div>
         </div>
         <div className={classNames(classes.row, classes.rowPaddingName)}>
-          <span className={classes.userName}>{localStorage.getItem('username')}</span>
+           <Link
+            to="/mypage"
+            onClick={onClose}
+            role="button"
+            className={classes.link}
+          >
+            <span className={classes.userName}>{localStorage.getItem('username')}</span>
+          </Link>
           <span className={classes.userLevel}>Lv 1</span>
         </div>
-        <div className={classNames(classes.row, classes.rowPaddingFollow)}>
+        {/* <div className={classNames(classes.row, classes.rowPaddingFollow)}>
           <span className={classes.userContent}>팔로워</span>
           <span className={classes.userContentNum}>123</span>
           <span className={classes.userContent}>팔로잉</span>
@@ -322,9 +330,8 @@ function AppDrawer(props) {
         </div>
         <div className={classNames(classes.row, classes.rowPaddingLiterCube)}>
           <span className={classes.userContent}>나의 총 보유량</span>
-
           <span className={classes.userLiterCube}>{LiterCubeIcon} 662</span>
-        </div>
+        </div> */}
       </div>
       <Divider />
       {/* {renderNavItems({ props, pages: context.pages, activePage: context.activePage, depth: 0 })} */}

@@ -290,7 +290,7 @@ export class MyPage extends React.PureComponent {
             </IconButton>
           </div>
           <div className={classes.row}>
-            {havingWallet ? (
+            {localStorage.getItem('hasWallet') ? (
               <Typography variant="headline" className={classes.userCoin}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

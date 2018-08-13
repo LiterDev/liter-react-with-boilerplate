@@ -56,9 +56,9 @@ function checkStatus(response) {
  * @return {object}           The response data
  */
 export default function request(url, options) {
-  console.log(options.method);
+  // console.log(options.method);
   // console.log(options.data);
-  console.log(options.headers);
+  // console.log(options.headers);
 
   // const accessToken = localStorage.getItem('accessToken');
   // const token = `Bearer ${accessToken}`;

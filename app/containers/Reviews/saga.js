@@ -19,7 +19,7 @@ import makeSelectReviews from './selectors';
 export function* getReviews() {
   const requestURL = `${process.env.API_URL}/review/latestList?page=1`;
   const accessToken = localStorage.getItem('accessToken');
-  console.log(`accessToken========[ ${accessToken}]`);
+  // console.log(`accessToken========[ ${accessToken}]`);
   let token = null;
   let options = null;
   if (accessToken) {
@@ -92,8 +92,8 @@ export function* getCategorys() {
     // Call our request helper (see 'utils/request')
 
     const reqContents = yield call(request, requestURL, options);
-    console.log('category');
-    console.log(reqContents);
+    // console.log('category');
+    // console.log(reqContents);
     yield put(categoryLoaded(reqContents));
   } catch (err) {
     yield put(reviewListLoadingError(err));

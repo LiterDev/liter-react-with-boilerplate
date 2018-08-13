@@ -19,6 +19,7 @@ import { FormattedMessage } from 'react-intl';
 
 import messages from './messages';
 import Cola from '../../images/Coca-Cola-Logo 2.png';
+import request from 'utils/request';
 
 const styles = theme => ({
   root: {
@@ -110,15 +111,32 @@ const styles = theme => ({
   //     animation: rotation 4s infinite linear;
   // }
 });
+const cateName = [
+  '뷰티',
+  '라이프',
+  '푸드',
+  '패션',
+  '유아',
+  '취미',
+  '맛집',
+  '펫',
+  '그외',
+];
+
 /* eslint-disable react/prefer-stateless-function */
 class ReviewTopTag extends React.PureComponent {
+
+  componentDidMount() {
+
+  }
+
   handleTag = value => {
     // console.log(value);
     this.props.loadValue(value);
   };
   render() {
-    const { classes, categorys } = this.props;
-    console.log(`categorys ====[ ${categorys}]`);
+    const { classes, categorys, reviewFirst } = this.props;
+    // console.log(`categorys ====[ ${categorys}]`);
     const settings = {
       dots: false,
       className: 'center',
@@ -128,39 +146,67 @@ class ReviewTopTag extends React.PureComponent {
       slidesToScroll: 1,
       swipeToSlide: true,
     };
+    // console.log(reviewFirst);
+    if (Boolean(reviewFirst)) {
+      console.log(reviewFirst.mediaCollection);
+      console.log(reviewFirst.mediaCollection[0]);
+    }
+
     return (
       <div className={classes.root}>
         <div className={classes.row}>
           <Slider {...settings}>
             <div className={classes.avawrap}>
-              <Avatar
-                alt="Adelle Charles"
-                src={Cola}
-                className={classNames(classes.avatar, classes.bigAvatar)}
-                onClick={() => this.handleTag(-9)}
-              />
+              {Boolean(reviewFirst) ? (
+                <Avatar
+                  alt="Adelle Charles"
+                  src={
+                    reviewFirst.mediaCollection[0].mediaType === 'YOUTUBE'
+                      ? `http://img.youtube.com/vi/${
+                          reviewFirst.mediaCollection[0].movieKey
+                        }/1.jpg`
+                      : reviewFirst.mediaCollection[0].fullPath
+                  }
+                  className={classNames(classes.avatar, classes.bigAvatar)}
+                  onClick={() => this.handleTag(-9)}
+                />
+              ) : (
+                <Avatar
+                  alt="Adelle Charles"
+                  src={Cola}
+                  // src={reviewFirst.mediaCollection[0]}
+                  className={classNames(classes.avatar, classes.bigAvatar)}
+                  onClick={() => this.handleTag(-9)}
+                />
+              )}
               <p className={classes.text}>#최신</p>
             </div>
-            <div className={classes.avawrap}>
+            {/* <div className={classes.avawrap}>
               <Avatar
                 alt="Adelle Charles"
                 src={Cola}
                 className={classNames(classes.avatar, classes.bigAvatar)}
                 onClick={() => this.handleTag(-1)}
               />
-              <p className={classes.text}>#최신</p>
-            </div>
-            
+              <p className={classes.text}>#인기</p>
+            </div> */}
+
+{/* <img alt="Adelle Charles" src="https://youtu.be/761ae_KDg_Q" class="jss99"> */}
             {categorys &&
               categorys.map(item => (
                 <div className={classes.avawrap} key={item.categoryId}>
                   <Avatar
                     alt="Adelle Charles"
-                    src={item.fullPath}
+                    src={
+                      item.fullPath.includes('https://www.youtube') ||
+                      item.fullPath.includes('https://youtu.be')
+                        ? `http://img.youtube.com/vi/${item.movieKey}/1.jpg`
+                        : item.fullPath
+                    }
                     className={classNames(classes.avatar, classes.bigAvatar)}
                     onClick={() => this.handleTag(item.categoryId)}
                   />
-                  <p className={classes.text}>#최신</p>
+                  <p className={classes.text}>#{cateName[item.categoryId]}</p>
                 </div>
               ))}
 
@@ -210,6 +256,7 @@ class ReviewTopTag extends React.PureComponent {
 ReviewTopTag.propTypes = {
   loadValue: PropTypes.func.isRequired,
   categorys: PropTypes.object,
+  reviewFirst: PropTypes.object,
 };
 
 // export default ReviewTopTag;

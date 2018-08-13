@@ -24,7 +24,7 @@ import AlertDialog from 'components/AlertDialog';
 import SelfieControl from 'components/SelfieControl';
 
 import Button from 'components/Button';
-import MyPageHeader from 'components/MyPageHeader';
+import Header from 'components/Header';
 import TabList from 'components/TabList';
 import EmailAuthPop from '../EmailAuthPop';
 import messages from './messages';
@@ -36,7 +36,6 @@ import * as selectors from './selectors';
 
 import reducer from './reducer';
 import saga from './saga';
-import InputWithHelper from '../../components/InputWithHelper';
 
 const styles = {
   container: {
@@ -237,9 +236,7 @@ export class MyPage extends React.PureComponent {
           callbackFunc={this.props.selectUserData}
         />
         <div className={classes.container}>
-          <MyPageHeader
-            headerTitle={<FormattedMessage {...messages.header} />}
-          />
+          <Header headerTitle={<FormattedMessage {...messages.header} />} />
         </div>
         <div className={classes.panel}>
           <div className={classes.row}>
@@ -257,13 +254,7 @@ export class MyPage extends React.PureComponent {
               <span className={classes.levelTagInner}>Lv 1</span>
             </div>
           </div>
-          <div className={classes.row}>
-            <InputWithHelper
-              type="text"
-              inputName="userNickName"
-              value={localStorage.getItem('userNickName')}
-            />
-          </div>
+          <div className={classes.row}>{localStorage.getItem('username')}</div>
           <div className={classes.row}>
             {havingWallet ? (
               <Typography variant="headline" className={classes.userCoin}>

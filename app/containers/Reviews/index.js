@@ -76,13 +76,13 @@ export class Reviews extends React.PureComponent {
     });
   }
   loadValue = value => {
-    console.log(value);
+    // console.log(value);
   };
   render() {
     // const { classes } = this.props;
     const { reviews, classes } = this.props;
 
-    console.log(reviews);
+    // console.log(reviews.reviews[0]);
     // console.log(this.props.categorys);
     return (
       <div>
@@ -94,6 +94,7 @@ export class Reviews extends React.PureComponent {
         <ReviewTopTag
           loadValue={this.loadValue}
           categorys={reviews.categorys}
+          reviewFirst={reviews.reviews[0]}
         />
         <div className={classes.reviewList}>
           <ReviewList reviews={reviews} />

@@ -61,7 +61,7 @@ const styles = theme => ({
   },
   passwordForm: {
     marginTop: 10,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   textForm: {
     // width: 315,
@@ -139,6 +139,18 @@ const styles = theme => ({
   button: {
     // margin: 'auto',
     // display: 'block',
+  },
+  passText: {
+    fontFamily: 'AppleSDGothicNeo',
+    fontSize: 12,
+    fontWeight: 300,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 1.67,
+    letterSpacing: 'normal',
+    color: 'rgb(124, 124, 124)',
+    marginBottom: 10,
+    textAlign: 'left',
   },
 });
 
@@ -411,6 +423,7 @@ export class SignUp extends React.PureComponent {
                 inputName="username"
               />
             </div>
+
             {/* <div className={classes.divade} /> */}
             <Divider />
             <div className={classes.passwordForm}>
@@ -426,6 +439,9 @@ export class SignUp extends React.PureComponent {
                 type="password"
                 inputName="passwordRepeat"
               />
+            </div>
+            <div className={classes.passText}>
+              10자 이상 영문 대소문자, 숫자, 특수문자를 조합하여 사용하세요.
             </div>
             <Divider />
             <div className={classes.textForm}>

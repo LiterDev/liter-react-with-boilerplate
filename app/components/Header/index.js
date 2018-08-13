@@ -14,6 +14,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import AppDrawer from './AppDrawer';
+import MenuIcon from '../../images/ic-round-menu.png';
+import messages from './messages';
 
 const styles = theme => ({
   root: {
@@ -174,6 +176,11 @@ class Header extends React.Component {
     this.setState({ mobileOpen: false });
   };
 
+  handleHelp = () => {
+    window.location.href = `mailto:${messages.helpEmailAddress.defaultMessage}`;
+    this.handleDrawerOpen();
+  };
+
   moveHome = () => {
     // console.log('home');
     // return <Redirect to="/login" />;
@@ -189,6 +196,7 @@ class Header extends React.Component {
   render() {
     const { classes, headerTitle, searchBar } = this.props;
     // console.log(searchBar);
+
     return (
       <div>
         <AppBar position="fixed" className={classes.top_box}>
@@ -235,9 +243,10 @@ class Header extends React.Component {
               aria-label="Menu"
               onClick={this.handleDrawerOpen}
             >
-              {/* <MenuIcon /> */}
-              <MoreVertIcon className={classes.icon} />
+              <img src={MenuIcon} />
+              {/* <MoreVertIcon className={classes.icon} /> */}
             </IconButton>
+
           </Toolbar>
         </AppBar>
         <AppDrawer
@@ -247,6 +256,7 @@ class Header extends React.Component {
           onOpen={this.handleDrawerOpen}
           mobileOpen={this.state.mobileOpen}
           logout={this.logout}
+          onHelp={this.handleHelp}
         />
         {/* <A href="https://twitter.com/mxstbr">
           <Img src={Banner} alt="react-boilerplate - Logo" />

@@ -204,7 +204,7 @@ class MyPageHeader extends React.Component {
               className={classes.ic_round_home}
               color="inherit"
               aria-label="Menu"
-              onClick={this.moveBack}
+              onClick={this.moveHome}
             >
               {/* <MenuIcon /> */}
               {/* <Link to="/"> */}

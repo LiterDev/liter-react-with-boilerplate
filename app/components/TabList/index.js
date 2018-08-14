@@ -104,10 +104,22 @@ const styles = theme => ({
     paddingLeft: '10px',
     flex: 3,
   },
+  estimatedSnackbar: {
+    width: '100%',
+    height: '53px',
+    backgroundColor: 'rgba(0,0,0,0.85)',
+  },
   newRewardSnackbar: {
     width: '100%',
     height: '53px',
     backgroundColor: 'rgba(0,0,0,0.85)',
+  },
+  estimatedSnackbarContent: {
+    width: '100%',
+    lineHeight: '53px',    
+    height: '53px',
+    color: '#fff',
+    textAlign: 'center',
   },
   newRewardSnackbarContent: {
     marginTop: '-35px',
@@ -159,6 +171,8 @@ class TabList extends React.Component {
   state = {
     value: 0,
     newReward: false,
+    estimatedReward: false,
+    bottomHeight: 0,
   };
 
   componentDidMount = () => {
@@ -166,10 +180,24 @@ class TabList extends React.Component {
        
     console.log("]----------- myPage::componentDidMount:data ---------[");
     console.log(this.props.data);
-    if(Boolean(this.props.data.acquire) && this.props.data.acquire > 0) {
-      this.setState({ newReward: true });
-    }
+
+    // if(Boolean(this.props.data.estimated) && this.props.data.estimated > 0) {
+    //   this.setState({ estimatedReward: true });
+    // }
+    
+    // if(Boolean(this.props.data.acquire) && this.props.data.acquire > 0) {
+    //   this.setState({ newReward: true, bottomHeight: 53 });      
+    // }
   };
+
+  componentWillReceiveProps = (nextProps) => {
+    if(Boolean(nextProps.data.estimated) && nextProps.data.estimated > 0) {
+      this.setState({ estimatedReward: true });
+    }    
+    if(Boolean(nextProps.data.acquire) && nextProps.data.acquire > 0) {
+      this.setState({ newReward: true, bottomHeight: 53 });
+    }
+  }
 
   handleChange = (event, value) => {
     const { tabListHandler } = this.props;
@@ -188,9 +216,20 @@ class TabList extends React.Component {
     ));
   }
 
+  handleClose = (type) => {
+    switch(type) {
+      case 'estimated':
+        this.setState({'estimatedReward': false});
+      break;
+      case 'acquire':
+        this.setState({'newReward': false});
+      break;
+    }
+  }
+
   renderContainer() {
     const { data, tabs } = this.props;
-    const { value, newReward } = this.state;
+    const { value, newReward, estimatedReward } = this.state;
     const { classes } = this.props;
 
     const result = [];
@@ -238,11 +277,27 @@ class TabList extends React.Component {
               <span className={classes.rewardHeaderTotal}>총액</span>
             </div>
           </ListItem>
-
+          <Snackbar
+            className={classes.estimatedSnackbar}
+            style={{'bottom': this.state.bottomHeight}}
+            open={this.state.estimatedReward}
+            onClose={() => this.handleClose('estimated')}
+            onClick={() => this.handleClose('estimated')} >
+            <div className={classes.estimatedSnackbarContent}>
+              <span className={classes.newRewardSnackBarCaption}>
+                예상 보상 내역 (추후 변동될 수 있습니다.)
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="21" viewBox="0 0 10 21" >
+                <g fill="none" fillRule="evenodd"><path d="M-155-201h375v667h-375z" /><path fill="#fff" fillRule="nonzero" stroke="#fff" strokeWidth=".1"d="M7.886 6.502l.114.1v.972l-.034.072-.142.08A3.67 3.67 0 0 0 4.776 9.37l3.108.048.116.106-.059 1.022-.12.096-3.388-.042c-.018.139-.027.26-.027.376l.001.075v.028c.003.104.003.174-.002.233l3.48.05.115.105-.059 1.023-.12.096-3-.067c.596 1.045 1.747 1.71 3.066 1.757l.113.107-.059 1.022-.117.096c-2.01 0-3.798-1.186-4.44-2.918l-1.272-.048L2 12.428l.059-1.022.125-.096.861.048a4.1 4.1 0 0 1-.018-.383c0-.14.01-.25.037-.341l-.953-.043L2 10.485l.059-1.023.121-.096 1.153.033c.704-1.78 2.504-2.948 4.553-2.897z" /></g>
+              </svg>
+              <span className={classes.newRewardSnackBarCoin}>{data.estimated}</span>
+            </div>
+          </Snackbar>
           <Snackbar
             className={classes.newRewardSnackbar}
             open={this.state.newReward}
-            onClose={this.handleReceiveClose} >
+            onClose={this.handleReceiveClose}
+            onClick={() => this.handleClose('acquire')} >
             <div className={classes.newRewardSnackbarContent}>
               <span className={classes.newRewardSnackBarCaption}>
                 지금 받을 수 있는 신규보상
@@ -254,7 +309,7 @@ class TabList extends React.Component {
               <button className={classes.newRewardSnackBarBtn}>보상받기</button>
             </div>
           </Snackbar>
-          
+
           { this.renderRewardRow(tabItem.type, data.rewards) }
         </List>,
       );
@@ -291,8 +346,8 @@ class TabList extends React.Component {
 
   renderRewardRow(type, data) {
     const { classes } = this.props;
-    console.log('####');
-    console.log(Boolean(data));
+    // console.log('####');
+    // console.log(Boolean(data));
       //console.log(Object.values(data));
     // return <div>11</div>;
 
@@ -322,6 +377,7 @@ class TabList extends React.Component {
   render() {
     const { classes } = this.props;
     const { value } = this.state;
+
     return (
       <div className={classes.root}>
         <AppBar position="static">

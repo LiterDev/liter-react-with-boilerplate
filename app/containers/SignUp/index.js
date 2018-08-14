@@ -179,7 +179,7 @@ export const validatePassword = password => {
 };
 
 /* eslint-disable react/prefer-stateless-function */
-export class SignUp extends React.PureComponent {
+export class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -355,12 +355,15 @@ export class SignUp extends React.PureComponent {
   }
 
   componentWillUpdate() {
-    if (this.props.error) {
-      console.log(this.props.error);
-      if (this.props.error.response) {
-        this.validationResult(this.props.error.response.data.code);
-      }
-    }
+    // if (this.props.error) {
+    //   console.log(this.props.error);
+    //   if (this.props.error.response) {
+    //     this.validationResult(this.props.error.response.data.code);
+    //   }
+    // }
+  }
+  componentDidCatch(error, info) {
+    console.log(error);
   }
   render() {
     const { classes, error, signupRes } = this.props;

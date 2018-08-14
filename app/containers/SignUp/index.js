@@ -7,16 +7,16 @@
 import React from 'react';
 // import Input from '@material-ui/core/Input';
 // import Button from '@material-ui/core/Button';
-import {Link} from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 // import { Helmet } from 'react-helmet';
-import {FormattedMessage} from 'react-intl';
-import {createStructuredSelector} from 'reselect';
-import {compose} from 'redux';
+import { FormattedMessage } from 'react-intl';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import {withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Header from 'components/Header';
 // import SignInput from 'components/SignInput';
@@ -30,18 +30,20 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
+
+// import Button from '@material-ui/core/Button';
+// import BottomNavigation from '@material-ui/core/BottomNavigation';
+
 // import Typography from '@material-ui/core/Typography';
-import {makeSelectLoading} from 'containers/App/selectors';
-import {makeSelectSignUpError, makeSelectSignUpRes} from './selectors';
+import { makeSelectLoading } from 'containers/App/selectors';
+import { makeSelectSignUpRes, makeSelectSignUpError } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
 import messages from './messages';
-import {signupAction} from './actions';
-
-// import Button from '@material-ui/core/Button';
-// import BottomNavigation from '@material-ui/core/BottomNavigation';
 // import Form from './Form';
+
+import { signupAction } from './actions';
 
 const styles = theme => ({
   container: {
@@ -60,7 +62,7 @@ const styles = theme => ({
   },
   passwordForm: {
     marginTop: 10,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   textForm: {
     // width: 315,
@@ -139,6 +141,18 @@ const styles = theme => ({
     // margin: 'auto',
     // display: 'block',
   },
+  passText: {
+    fontFamily: 'AppleSDGothicNeo',
+    fontSize: 12,
+    fontWeight: 300,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 1.67,
+    letterSpacing: 'normal',
+    color: 'rgb(124, 124, 124)',
+    marginBottom: 10,
+    textAlign: 'left',
+  },
 });
 
 // function Transition(props) {
@@ -153,8 +167,20 @@ export const validateEmail = email => {
   return false;
 };
 
+export const validatePassword = password => {
+  if (
+    new RegExp('^(?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,20}$').test(
+      password,
+    )
+  ) {
+    return true;
+  }
+  // alert('You have entered an invalid email address!');
+  return false;
+};
+
 /* eslint-disable react/prefer-stateless-function */
-export class SignUp extends React.PureComponent {
+export class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -167,9 +193,9 @@ export class SignUp extends React.PureComponent {
       openAgreePop: false,
       openSuccesPop: false,
     };
-
     this.onSubmitFormInit = this.onSubmitFormInit.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.validationResult = this.validationResult.bind(this);
   }
 
   handleClose = () => {
@@ -210,48 +236,64 @@ export class SignUp extends React.PureComponent {
     const password = event.target.password.value;
     const passwordRepeat = event.target.passwordRepeat.value;
     const errors = [];
-    // if (!email) {
-    //   errors.push(500108);
-    // } else {
-    //   this.setState({
-    //     emailError: false,
-    //   });
-    // }
-    // if (!validateEmail(email)) {
-    //   errors.push(500110);
-    // } else {
-    //   this.setState({
-    //     emailError: false,
-    //   });
-    // }
-    // if (!username) {
-    //   errors.push(500106);
-    // } else {
-    //   this.setState({
-    //     usernameError: false,
-    //   });
-    // }
-    // if (!password) {
-    //   errors.push(500100);
-    // } else {
-    //   this.setState({
-    //     passwordError: false,
-    //   });
-    // }
-    // if (!passwordRepeat) {
-    //   errors.push(500103);
-    // } else {
-    //   this.setState({
-    //     passwordRepeatError: false,
-    //   });
-    // }
+    if (!email) {
+      errors.push(500108);
+    } else {
+      this.setState({
+        emailError: false,
+      });
+    }
+    if (!validateEmail(email)) {
+      errors.push(500110);
+    } else {
+      this.setState({
+        emailError: false,
+      });
+    }
+    if (!username) {
+      errors.push(500106);
+    } else {
+      this.setState({
+        usernameError: false,
+      });
+    }
+    if (!password) {
+      errors.push(500100);
+    } else {
+      this.setState({
+        passwordError: false,
+      });
+    }
+    if (!passwordRepeat) {
+      errors.push(500103);
+    } else {
+      this.setState({
+        passwordRepeatError: false,
+      });
+    }
 
-    // if (errors.length > 0) {
-    //   for (let i = 0; i < errors.length; i += 1) {
-    //     this.validationResult(errors[i]);
-    //   }
-    //   return false;
-    // }
+    if (!validatePassword(password)) {
+      errors.push(500102);
+    } else {
+      this.setState({
+        passwordError: false,
+      });
+    }
+
+    if (password !== passwordRepeat) {
+      errors.push(500105);
+    } else {
+      this.setState({
+        passwordRepeatError: false,
+      });
+    }
+
+    if (errors.length > 0) {
+      for (let i = 0; i < errors.length; i += 1) {
+        this.validationResult(errors[i]);
+      }
+      return false;
+    }
 
     this.setState({
       complete: true,
@@ -260,7 +302,6 @@ export class SignUp extends React.PureComponent {
     // const data = new FormData(event.target);
     // this.props.signupForm(data);
     console.log('submit');
-    // return true;
     return false;
   }
 
@@ -275,14 +316,20 @@ export class SignUp extends React.PureComponent {
     // USER_NAME_IS_ALREADY_EXISTS(500107, "Username is already exists"),
     // USER_EMAIL_IS_EMPTY(500108, "Email is empty"),
     // USER_EMAIL_IS_ALREADY_EXISTS(500109, "Email is already exists"),
-    if (errorCode === 500108 || errorCode === 500109) {
+    if (errorCode === 500108) {
       this.setState({
-        emailError: <FormattedMessage {...messages.email} />,
+        emailError: <FormattedMessage {...messages.emailEmpty} />,
       });
     }
+    if (errorCode === 500109) {
+      this.setState({
+        emailError: <FormattedMessage {...messages.emailExists} />,
+      });
+    }
+
     if (errorCode === 500106) {
       this.setState({
-        usernameError: <FormattedMessage {...messages.username} />,
+        usernameError: <FormattedMessage {...messages.usernameEmpty} />,
       });
     }
     if (errorCode === 500110) {
@@ -290,25 +337,61 @@ export class SignUp extends React.PureComponent {
         emailError: <FormattedMessage {...messages.emailvalid} />,
       });
     }
-    if (
-      errorCode === 500100 ||
-      errorCode === 500101 ||
-      errorCode === 500102 ||
-      errorCode === 500105
-    ) {
+
+    if (errorCode === 500100) {
       this.setState({
-        passwordError: <FormattedMessage {...messages.password} />,
+        passwordError: <FormattedMessage {...messages.passwordValid} />,
       });
     }
-    if (errorCode === 500103 || errorCode === 500104 || errorCode === 500105) {
+
+    if (errorCode === 500101) {
+      this.setState({
+        passwordError: <FormattedMessage {...messages.passwordEmpty} />,
+      });
+    }
+    if (errorCode === 500102) {
+      this.setState({
+        passwordError: <FormattedMessage {...messages.passwordPatternValid} />,
+      });
+    }
+    if (errorCode === 500103 || errorCode === 500104) {
       this.setState({
         passwordRepeatError: <FormattedMessage {...messages.passwordRepeat} />,
       });
     }
+    if (errorCode === 500105) {
+      this.setState({
+        passwordError: <FormattedMessage {...messages.passwordNotEqual} />,
+      });
+      this.setState({
+        passwordRepeatError: (
+          <FormattedMessage {...messages.passwordNotEqual} />
+        ),
+      });
+    }
   }
 
+  componentWillMount() {
+    // console.log(this.props.error);
+    // if (this.props.error) {
+    // this.validationResult(this.props.error.response.data.code);
+    // }
+  }
+
+  componentWillUpdate() {
+    // if (this.props.error) {
+    //   console.log(this.props.error);
+    //   if (this.props.error.response) {
+    //     this.validationResult(this.props.error.response.data.code);
+    //   }
+    // }
+  }
+  componentDidCatch(error, info) {
+    console.log(error);
+  }
   render() {
     const { classes, error, signupRes } = this.props;
+
     // const reposListProps = {
     //   loading,
     //   error,
@@ -317,22 +400,25 @@ export class SignUp extends React.PureComponent {
     // console.log(signupRes);
     // console.log(loading);
     // console.log(error);
-    if (error) {
-      // console.log(error);
-
-      if (error.response) {
-        error.response
-          .json()
-          .then(data => {
-            // console.log(data);
-            this.validationResult(data.code);
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      }
-    }
-    console.log(signupRes);
+    // if (error) {
+    // console.log(error);
+    // if (error.response) {
+    // console.log(error.response.data);
+    // console.log(error.response);
+    // this.validationResult(error.response.data.code);
+    // error.response
+    //   // .json()
+    //   .then(data => {
+    //     console.log(data);
+    //     this.validationResult(data.code);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
+    // this.props.error = false;
+    // }
+    // }
+    // console.log(signupRes);
     if (signupRes) {
       this.setState({
         openSuccesPop: true,
@@ -374,6 +460,7 @@ export class SignUp extends React.PureComponent {
                 inputName="username"
               />
             </div>
+
             {/* <div className={classes.divade} /> */}
             <Divider />
             <div className={classes.passwordForm}>
@@ -390,6 +477,9 @@ export class SignUp extends React.PureComponent {
                 inputName="passwordRepeat"
               />
             </div>
+            <div className={classes.passText}>
+              10자 이상 영문 대소문자, 숫자, 특수문자를 조합하여 사용하세요.
+            </div>
             <Divider />
             <div className={classes.textForm}>
               {/* <Typography gutterBottom> */}
@@ -400,17 +490,13 @@ export class SignUp extends React.PureComponent {
             </div>
             <div className={classes.buttonForm}>
               <BlueButton
-                btnType="submit"
-                // onClickFunc={this.handleopenAgreePop}
-                complete={this.state.complete}
                 btnName={<FormattedMessage {...messages.next} />}
                 onClickFunc={this.submitForm}
+                complete={this.state.complete}
+                btnType="submit"
                 // onClick={this.submitForm}
               />
             </div>
-            {/* <div>
-              <input name="termOfUseAgree" type="hidden" />
-            </div> */}
           </form>
         </div>
 
@@ -429,7 +515,7 @@ export class SignUp extends React.PureComponent {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
           className={classes.popWrap}
-          // fullWidth
+          fullWidth
           // maxWidth="false"
           classes={{
             root: classes.popRoot,

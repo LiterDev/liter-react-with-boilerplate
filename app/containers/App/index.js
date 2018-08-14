@@ -275,9 +275,9 @@ axios.interceptors.response.use(
     if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
+      // console.log(error.response.data);
+      // console.log(error.response.status);
+      // console.log(error.response.headers);
     } else if (error.request) {
       // The request was made but no response was received
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
@@ -300,8 +300,9 @@ axios.interceptors.response.use(
         localStorage.removeItem('validStatus');
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
-        window.location.href = '/signin';
+        
       }
+      window.location.href = '/signin';
 
       // browserHistory.push('/signin');
       // window.location.href = '/signin';

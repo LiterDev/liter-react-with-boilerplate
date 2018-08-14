@@ -180,7 +180,7 @@ export const validatePassword = password => {
 };
 
 /* eslint-disable react/prefer-stateless-function */
-export class SignUp extends React.Component {
+export class SignUp extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -192,6 +192,7 @@ export class SignUp extends React.Component {
       passwordRepeatError: false,
       openAgreePop: false,
       openSuccesPop: false,
+      error: false,
     };
     this.onSubmitFormInit = this.onSubmitFormInit.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -371,27 +372,49 @@ export class SignUp extends React.Component {
     }
   }
 
-  componentWillMount() {
-    // console.log(this.props.error);
-    // if (this.props.error) {
-    // this.validationResult(this.props.error.response.data.code);
-    // }
-  }
+  // componentWillMount() {
+  //   console.log(this.props.error);
+  //   if (this.props.error) {
+  //     this.validationResult(this.props.error.response.data.code);
+  //   }
+  // }
 
-  componentWillUpdate() {
-    // if (this.props.error) {
-    //   console.log(this.props.error);
-    //   if (this.props.error.response) {
-    //     this.validationResult(this.props.error.response.data.code);
+  // componentWillUpdate() {
+  //   if (this.props.error) {
+  //     console.log(this.props.error);
+  //     if (this.props.error.response) {
+  //       this.validationResult(this.props.error.response.data.code);
+  //     }
+  //   }
+  // }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log(props);
+    // console.log(state);
+    console.log(props.error);
+    if (props.error) {
+      // console.log(this.props.error);
+      if (props.error.response) {
+        this.validationResult(props.error.response.data.code);
+      }
+    }
+    // if (current_state.value !== props.value) {
+    //   return {
+    //     value: props.value,
+    //     // computed_prop: heavy_computation(props.value)
     //   }
     // }
+    // return null;
   }
-  componentDidCatch(error, info) {
-    console.log(error);
-  }
+
   render() {
     const { classes, error, signupRes } = this.props;
 
+    // console.log(error);
+    if (error) {
+      console.log(error);
+      this.state.error = true;
+    }
     // const reposListProps = {
     //   loading,
     //   error,

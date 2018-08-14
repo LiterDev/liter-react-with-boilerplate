@@ -7,8 +7,8 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  header: {
-    id: 'app.components.AgreePop.header',
-    defaultMessage: 'This is the AgreePop component !',
+  termTitle: {
+    id: 'app.components.AgreePop.termTitle',
+    defaultMessage: '약관 동의',
   },
 });

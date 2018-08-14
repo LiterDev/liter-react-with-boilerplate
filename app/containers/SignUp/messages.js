@@ -15,38 +15,6 @@ export default defineMessages({
     id: 'app.containers.SignUp.email',
     defaultMessage: 'email',
   },
-
-  emailEmpty: {
-    id: 'app.containers.SignUp.emailEmpty',
-    defaultMessage: 'email',
-  },
-  emailExists: {
-    id: 'app.containers.SignUp.emailExists',
-    defaultMessage: 'emailExists',
-  },
-  usernameEmpty: {
-    id: 'app.containers.SignUp.usernameEmpty',
-    defaultMessage: 'usernameEmpty',
-  },
-  
-  passwordValid: {
-    id: 'app.containers.SignUp.passwordValid',
-    defaultMessage: 'passwordValid',
-  },
-  passwordEmpty: {
-    id: 'app.containers.SignUp.passwordEmpty',
-    defaultMessage: 'passwordEmpty',
-  },
-  passwordPatternValid: {
-    id: 'app.containers.SignUp.passwordPatternValid',
-    defaultMessage: 'passwordPatternValid',
-  },
-  passwordNotEqual: {
-    id: 'app.containers.SignUp.passwordNotEqual',
-    defaultMessage: 'passwordNotEqual',
-  },
-
-
   username: {
     id: 'app.containers.SignUp.username',
     defaultMessage: 'username',
@@ -74,5 +42,9 @@ export default defineMessages({
   emailvalid: {
     id: 'app.containers.SignUp.emailvalid',
     defaultMessage: '이메일 형식',
+  },
+  termOfUseAgree: {
+    id: 'app.containers.SignUp.termOfUseAgree',
+    defaultMessage: '약관 동의',
   },
 });

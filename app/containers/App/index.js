@@ -289,16 +289,22 @@ axios.interceptors.response.use(
     }
     if (error.response.status === 401) {
       // doRefreshToken();
-      alert("토큰이 만료되었습니다.");
-      localStorage.removeItem('username');
-      localStorage.removeItem('userNickName');
-      localStorage.removeItem('profileImageUrl');
-      localStorage.removeItem('hasWallet');
-      localStorage.removeItem('validStatus');
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      browserHistory.push('/signin');
-      window.location.href = '/signin';
+      // alert("토큰이 만료되었습니다.");
+      const accessToken = localStorage.getItem('accessToken');
+
+      if (accessToken) {
+        localStorage.removeItem('username');
+        localStorage.removeItem('userNickName');
+        localStorage.removeItem('profileImageUrl');
+        localStorage.removeItem('hasWallet');
+        localStorage.removeItem('validStatus');
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        window.location.href = '/signin';
+      }
+
+      // browserHistory.push('/signin');
+      // window.location.href = '/signin';
     }
     // console.log(error.config);
     return Promise.reject(error);

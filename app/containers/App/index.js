@@ -132,7 +132,7 @@ function App(props) {
         <Route path="/review/:reviewId" component={ReviewDetailResolver} />
         <Route path="/slide" component={SlideTest} />
         {/* <PrivateRoute path="/valid/:validString" component={EmailValid} /> */}
-        <Route path="/valid" component={EmailValid} />
+        <PrivateRoute path="/valid" component={EmailValid} />
         <Route path="/about" component={About} />
 
         <Route path="" component={NotFoundPage} />

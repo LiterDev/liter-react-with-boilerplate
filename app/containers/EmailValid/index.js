@@ -84,7 +84,7 @@ export class EmailValid extends React.PureComponent {
         <Redirect
           to={{
             pathname: pathLink,
-            // state: { from: this.props.location },
+            state: { from: this.props.location },
           }}
         />
       );

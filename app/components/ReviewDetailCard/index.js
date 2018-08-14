@@ -490,6 +490,10 @@ class ReviewDetailCard extends React.PureComponent {
                     <Map
                       google={this.props.google}
                       zoom={15}
+                      initialCenter={{
+                        lat: review.storeLat,
+                        lng: review.storeLng,
+                      }}
                       center={{
                         lat: review.storeLat,
                         lng: review.storeLng,

@@ -210,7 +210,6 @@ class SelfieControl extends React.PureComponent {
           className={classes.inputfile} 
           type="file" 
           accept="image/*" 
-          capture="camera" 
           id="camera"
           onChange={this.handleAppend}
           name="media"

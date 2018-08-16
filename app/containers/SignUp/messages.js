@@ -72,41 +72,13 @@ export default defineMessages({
     id: 'app.containers.SignUp.passwordNotEqual',
     defaultMessage: 'passwordNotEqual',
   },
-<<<<<<< HEAD
   nicknameExists: {
     id: 'app.containers.SignUp.nicknameExists',
     defaultMessage: 'nicknameExists',
   },
 
-
-  username: {
-    id: 'app.containers.SignUp.username',
-    defaultMessage: 'username',
-  },
-  password: {
-    id: 'app.containers.SignUp.password',
-    defaultMessage: 'password',
-  },
-  passwordRepeat: {
-    id: 'app.containers.SignUp.passwordRepeat',
-    defaultMessage: 'passwordRepeat',
-  },
-  info1: {
-    id: 'app.containers.SignUp.info1',
-    defaultMessage: 'info1',
-  },
-  info2: {
-    id: 'app.containers.SignUp.info2',
-    defaultMessage: 'info2',
-  },
-  next: {
-    id: 'app.containers.SignUp.next',
-    defaultMessage: 'next',
-  },
   emailvalid: {
     id: 'app.containers.SignUp.emailvalid',
     defaultMessage: '이메일 형식',
   },
-=======
->>>>>>> 85cc275dcb879cdddc10e3aeb6ba4d60a8cdb414
 });

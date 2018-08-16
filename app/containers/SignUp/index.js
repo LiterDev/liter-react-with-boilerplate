@@ -381,18 +381,7 @@ export class SignUp extends React.PureComponent {
       });
     }
   }
-  // componentWillUpdate(nextProps, nextState) {
-  //   console.log(nextProps);
-  //   console.log(nextState);
-  //   console.log(nextProps.error);
-  //   console.log(this.props.error);
-  //   if (nextProps.error !== this.props.error) {
-  //     console.log('validationResultvalidationResult');
-  //     this.validationResult(nextProps.error.response.data.code);
-  //     // nextState.error = true;
-  //   }
-  // }
-<<<<<<< HEAD
+
   componentWillReceiveProps(nextProps) {
     // this.props 는 아직 바뀌지 않은 상태
     // console.log(nextProps);
@@ -402,99 +391,13 @@ export class SignUp extends React.PureComponent {
       // console.log('validationResultvalidationResult');
       if (nextProps.error.response) {
         this.validationResult(nextProps.error.response.data.code);
-=======
-
-  // componentWillUpdate() {
-  //   if (this.props.error) {
-  //     console.log(this.props.error);
-  //     if (this.props.error.response) {
-  //       this.validationResult(this.props.error.response.data.code);
-  //     }
-  //   }
-  // }
-
-  static getDerivedStateFromProps(props, state) {
-    console.log(props);
-    console.log(this);
-    console.log(props.error);
-    if (props.error) {
-      // console.log(this.props.error);
-      if (props.error.response) {
-        console.log(props.error.response);
-        // this.validationResult(props.error.response.data.code);
->>>>>>> 85cc275dcb879cdddc10e3aeb6ba4d60a8cdb414
       }
-
-      // nextState.error = true;
     }
-<<<<<<< HEAD
-=======
-    // if (current_state.value !== props.value) {
-    //   return {
-    //     value: props.value,
-    //     // computed_prop: heavy_computation(props.value)
-    //   }
-    // }
-    return null;
->>>>>>> 85cc275dcb879cdddc10e3aeb6ba4d60a8cdb414
   }
 
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   // 여기서는 setState 를 하는 것이 아니라
-  //   // 특정 props 가 바뀔 때 설정하고 설정하고 싶은 state 값을 리턴하는 형태로
-  //   // 사용됩니다.
-
-  //   // console.log(nextProps.error);
-  //   // console.log(prevState.error);
-  //   if (nextProps.error !== prevState.error) {
-  //     this.validationResult(nextProps.error.response.data.code);
-  //     return { error: nextProps.error };
-  //   }
-  //   return { error: false }; // null 을 리턴하면 따로 업데이트 할 것은 없다라는 의미
-  // }
-
   render() {
-    const { classes, error, signupRes } = this.props;
+    const { classes, signupRes } = this.props;
 
-    console.log(error);
-    console.log(error.response);
-    // console.log(this.state.error);
-    // if (this.state.error) {
-    //   console.log('this.state.error');
-    //   this.validationResult(this.state.error.response.data.code);
-    // }
-    // console.log(this.state.error);
-    // if (error !== this.state.error) {
-    //   this.validationResult(error.response.data.code);
-    //   // this.validationResult(500100);
-    // }
-    // const reposListProps = {
-    //   loading,
-    //   error,
-    //   repos,
-    // };
-    // console.log(signupRes);
-    // console.log(loading);
-    // console.log(error);
-    // if (error) {
-    // console.log(error);
-    // if (error.response) {
-    // console.log(error.response.data);
-    // console.log(error.response);
-    // this.validationResult(error.response.data.code);
-    // error.response
-    //   // .json()
-    //   .then(data => {
-    //     console.log(data);
-    //     this.validationResult(data.code);
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
-    // this.props.error = false;
-    // }
-    // }
-    // console.log(signupRes);
     if (signupRes) {
       this.setState({
         openSuccesPop: true,

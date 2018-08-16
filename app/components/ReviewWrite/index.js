@@ -479,7 +479,7 @@ class ReviewWrite extends React.PureComponent {
     );
 
     // Validation 1.Title
-    if (!data.get('title')) {
+    if (!data.get('title').trim()) {
       this.setState({ validationContent: '제목이 없습니다.' });
       this.handleAlertOpen();
       return false;
@@ -509,12 +509,12 @@ class ReviewWrite extends React.PureComponent {
       case 0:
         // TabOnline
         console.log('TabOnline');
-        if (!Boolean(data.get('productName'))) {
+        if (!Boolean(data.get('productName').trim())) {
           this.setState({ validationContent: '상품명을 입력해 주세요.' });
           this.handleAlertOpen();
           return false;
         }
-        if (!Boolean(data.get('buyLink'))) {
+        if (!Boolean(data.get('buyLink').trim())) {
           this.setState({ validationContent: '구매처를 입력해 주세요' });
           this.handleAlertOpen();
           return false;
@@ -528,7 +528,7 @@ class ReviewWrite extends React.PureComponent {
       case 1:
         // TabOffline
         console.log('TabOffline');
-        if (!Boolean(data.get('productName'))) {
+        if (!Boolean(data.get('productName').trim())) {
           this.setState({ validationContent: '상품명을 입력해 주세요.' });
           this.handleAlertOpen();
           return false;
@@ -550,12 +550,12 @@ class ReviewWrite extends React.PureComponent {
       case 2:
         // TabEtc
         console.log('TabEtc');
-        if (!Boolean(data.get('productName'))) {
+        if (!Boolean(data.get('productName').trim())) {
           this.setState({ validationContent: '상품명을 입력해 주세요.' });
           this.handleAlertOpen();
           return false;
         }
-        if (!Boolean(data.get('ectInfo'))) {
+        if (!Boolean(data.get('buyLink').trim())) {
           this.setState({ validationContent: '구매 정보를 입력해주세요' });
           this.handleAlertOpen();
           return false;

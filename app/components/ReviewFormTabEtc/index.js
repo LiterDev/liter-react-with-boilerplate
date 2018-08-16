@@ -198,7 +198,7 @@ class ReviewFormTabEtc extends React.PureComponent {
             <input
               className={classes.input}
               placeholder="구매 정보(어플의 이름 또는 기타사항)"
-              name="ectInfo"
+              name="buyLink"
             />
           </div>
         </div>

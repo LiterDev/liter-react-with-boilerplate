@@ -110,6 +110,7 @@ const styles = theme => ({
     width: '6px',
     height: '10px',
     objectFit: 'contain',
+    marginBottom: '2px',
   },
   popFooter: {
     textAlign: 'center',
@@ -309,14 +310,14 @@ class ReviewCardBottomBarView extends React.PureComponent {
         break;
       case 'LIMIT':
         currentStatus = (
-          <span
+          <div
             className={classNames(curReviewing.styleClass, classes.reviewing)}
           >
-            <img alt="큐브종료" src={CubeEndIcon} className={classes.cubeEnd} />
+            <img alt="EndCube" src={CubeEndIcon} className={classes.cubeEnd} />
             <span className={curReviewing.styleClass}>
               {review.rewardLitercube}
             </span>
-          </span>
+          </div>
         );
         break;
       default:
@@ -450,11 +451,24 @@ class ReviewCardBottomBarView extends React.PureComponent {
       <div className={classes.root}>
         <div className={classes.actions}>
           <div className={classes.activeStatus}>
-            <img alt="좋아요" src={curVote.selImg} className={classes.icons} />
-            <span className={curVote.styleClass}>
-              {/* <FormattedMessage {...messages.votingActive} /> */}
-              좋아요
-            </span>
+            <Button
+              color="inherit"
+              onClick={() => {
+                this.handleVoting(this.props.reviewId);
+              }}
+              aria-label="service"
+              className={classes.votingIcon}
+            >
+              <img
+                alt="좋아요"
+                src={curVote.selImg}
+                className={classes.icons}
+              />
+              <span className={curVote.styleClass}>
+                {/* <FormattedMessage {...messages.votingActive} /> */}
+                좋아요
+              </span>
+            </Button>
           </div>
           <div className={classes.activeStatus}>
             {/* <span className={curReviewing.styleClass}>               */}

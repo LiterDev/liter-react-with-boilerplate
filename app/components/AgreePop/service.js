@@ -43,7 +43,8 @@ const styles = {
 // class Service(props) {
 class Service extends React.Component {
   state = {
-    scrollComplate: false,
+    // 스크롤 기능 제외 필요할 경우 하단 state : false
+    scrollComplate: true,
   };
 
   handleScrolll = () => {
@@ -75,21 +76,22 @@ class Service extends React.Component {
             서비스 이용약관
           </DialogTitle>
           <DialogContent
-            onScroll={e => {
-              if (
-                e.target.scrollTop /
-                  (e.target.scrollHeight - e.target.clientHeight) >
-                0.95
-              ) {
-                this.handleScrolll();
-              }
-              // console.log(
-              //   `heigth:${e.target.clientHeight},
-              //  scrollHeight:${e.target.scrollHeight},
-              //  top::${e.target.scrollTop},
-              //  per::${sRate}`,
-              // );
-            }}
+          // 스크롤 기능 제외 필요할 경우 하단 주석 제거
+          // onScroll={e => {
+          //   if (
+          //     e.target.scrollTop /
+          //       (e.target.scrollHeight - e.target.clientHeight) >
+          //     0.95
+          //   ) {
+          //     this.handleScrolll();
+          //   }
+          // console.log(
+          //   `heigth:${e.target.clientHeight},
+          //  scrollHeight:${e.target.scrollHeight},
+          //  top::${e.target.scrollTop},
+          //  per::${sRate}`,
+          // );
+          // }}
           >
             <DialogContentText
               className={classes.dialogContent}

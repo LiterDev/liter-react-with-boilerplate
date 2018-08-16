@@ -16,6 +16,7 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
+import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
@@ -158,22 +159,22 @@ const styles = theme => ({
   },
   snackbar: {
     width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0,0,0,0.4)',
-  },
-  snackbarContent: {
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
-    opacity: 1,
-    filter: 'alpha(opacity=100)',
-    backgroundColor: 'rgba(255,255,255,1)',
-    color: '#000000'
-  },
-  snackbarActionButton: {
-    border: '0.5px solid rgba(184,184,184,0.3)',    
+    border: '0.5px solid rgba(184,184,184,0.3)',
     height: '56px',
-    lineHeight: '56px',
+  },
+  // snackbarContent: {
+  //   position: 'absolute',
+  //   bottom: 0,
+  //   width: '100%',
+  //   opacity: 1,
+  //   filter: 'alpha(opacity=100)',
+  //   backgroundColor: 'rgba(255,255,255,1)',
+  //   color: '#000000',
+  // },
+  snackbarActionButton: {
+    // paddingTop: '5px',
+    width: '100%',
+    height: '100%',
     backgroundColor: 'rgba(255,255,255,1)',
     fonFamily: 'AppleSDGothicNeo',
     fontSize: '15px',
@@ -183,10 +184,11 @@ const styles = theme => ({
     letterSpacing: 'normal',
     textAlign: 'center',
     color: 'rgba(110,110,110,1)',
+    borderRadius: '0%',
   },
   cautionCaption: {
     color: '#ff2424',
-  }
+  },
 });
 
 function HomeIcon(props) {
@@ -214,7 +216,7 @@ class ReviewHeader extends React.Component {
   handleReport = () => {
     // console.log(messages.helpEmailAddress.defaultMessage);
     window.location.href = `mailto:${messages.helpEmailAddress.defaultMessage}`;
-  }
+  };
 
   handleDrawerOpen = () => {
     // this.props.dispatch(increment());
@@ -290,28 +292,60 @@ class ReviewHeader extends React.Component {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Snackbar
-            open={this.state.openSnackbar}
-            onClose={this.handleSnackbarClose}            
-            // action={
-            //   <Button color="inherit" size="small" >
-            //     닫기
-            //   </Button>
-            // }
-            className={classes.snackbar}
+        <Drawer
+          anchor="bottom"
+          open={this.state.openSnackbar}
+          onClose={this.handleSnackbarClose}
         >
-        <div className={classes.snackbarContent}>
-          <div
-            className={classNames(classes.cautionCaption, classes.snackbarActionButton)} onClick={this.handleReport}>
-            리뷰 신고하기
+          <div className={classes.snackbar}>
+            <IconButton
+              className={classNames(
+                classes.cautionCaption,
+                classes.snackbarActionButton,
+              )}
+              onClick={() => this.handleReport()}
+            >
+              리뷰 신고하기
+            </IconButton>
           </div>
-          <div
-            className={classes.snackbarActionButton} onClick={this.handleSnackbarClose}>
-            취소
+          <div className={classes.snackbar}>
+            <IconButton
+              className={classes.snackbarActionButton}
+              onClick={this.handleSnackbarClose}
+            >
+              취소
+            </IconButton>
           </div>
-            
-        </div>
-        </Snackbar>
+        </Drawer>
+        {/* <Snackbar
+          open={this.state.openSnackbar}
+          onClose={this.handleSnackbarClose}
+          // action={
+          //   <Button color="inherit" size="small" >
+          //     닫기
+          //   </Button>
+          // }
+          className={classes.snackbar}
+        >
+          <div className={classes.snackbarContent}>
+            <div className={classes.backLayer} />
+            <div
+              className={classNames(
+                classes.cautionCaption,
+                classes.snackbarActionButton,
+              )}
+              onClick={this.handleReport}
+            >
+              리뷰 신고하기
+            </div>
+            <div
+              className={classes.snackbarActionButton}
+              onClick={this.handleSnackbarClose}
+            >
+              취소
+            </div>
+          </div>
+        </Snackbar> */}
       </div>
     );
   }

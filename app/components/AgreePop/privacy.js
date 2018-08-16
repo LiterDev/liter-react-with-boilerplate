@@ -42,7 +42,8 @@ const styles = {
 
 class Privacy extends React.Component {
   state = {
-    scrollComplate: false,
+    // 스크롤 기능 제외 필요할 경우 하단 state : false
+    scrollComplate: true,
   };
 
   handleScrolll = () => {
@@ -73,21 +74,22 @@ class Privacy extends React.Component {
             개인 정보 보호 정책
           </DialogTitle>
           <DialogContent
-            onScroll={e => {
-              if (
-                e.target.scrollTop /
-                  (e.target.scrollHeight - e.target.clientHeight) >
-                0.95
-              ) {
-                this.handleScrolll();
-              }
-              // console.log(
-              //   `heigth:${e.target.clientHeight},
-              //  scrollHeight:${e.target.scrollHeight},
-              //  top::${e.target.scrollTop},
-              //  per::${sRate}`,
-              // );
-            }}
+          // 스크롤 기능 제외 필요할 경우 하단 주석 제거
+          // onScroll={e => {
+          //   if (
+          //     e.target.scrollTop /
+          //       (e.target.scrollHeight - e.target.clientHeight) >
+          //     0.95
+          //   ) {
+          //     this.handleScrolll();
+          //   }
+          // console.log(
+          //   `heigth:${e.target.clientHeight},
+          //  scrollHeight:${e.target.scrollHeight},
+          //  top::${e.target.scrollTop},
+          //  per::${sRate}`,
+          // );
+          // }}
           >
             <DialogContentText
               className={classes.dialogContent}

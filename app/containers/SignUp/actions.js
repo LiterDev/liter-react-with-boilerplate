@@ -32,7 +32,7 @@ export function signupLoaded(data) {
 }
 
 export function signupError(data) {
-  console.log(data);
+  // console.log(data);
   return {
     type: SIGNUP_ERROR,
     data,

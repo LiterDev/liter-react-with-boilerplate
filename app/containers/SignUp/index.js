@@ -310,6 +310,7 @@ export class SignUp extends React.PureComponent {
   }
 
   validationResult(errorCode) {
+    console.log(errorCode);
     // USER_PASSWORD_IS_NOT_ALLOWED(500100, "Password is not valid"),
     // USER_PASSWORD_IS_EMPTY(500101, "Password is empty"),
     // USER_PASSWORD_PATTERN_IS_NOT_ALLOWED(500102, "Password pattern is not allowed."),
@@ -373,79 +374,30 @@ export class SignUp extends React.PureComponent {
         ),
       });
     }
+
+    if (errorCode === 500113) {
+      this.setState({
+        usernameError: <FormattedMessage {...messages.nicknameExists} />,
+      });
+    }
   }
 
-  // componentWillMount() {
-  //   console.log(this.props.error);
-  //   if (this.props.error) {
-  //     this.validationResult(this.props.error.response.data.code);
-  //   }
-  // }
-
-  // componentWillUpdate() {
-  //   if (this.props.error) {
-  //     console.log(this.props.error);
-  //     if (this.props.error.response) {
-  //       this.validationResult(this.props.error.response.data.code);
-  //     }
-  //   }
-  // }
-
-  static getDerivedStateFromProps(props, state) {
-    console.log(props);
-    console.log(this);
-    console.log(props.error);
-    if (props.error) {
-      // console.log(this.props.error);
-      if (props.error.response) {
-        console.log(props.error.response);
-        // this.validationResult(props.error.response.data.code);
+  componentWillReceiveProps(nextProps) {
+    // this.props 는 아직 바뀌지 않은 상태
+    // console.log(nextProps);
+    // console.log(nextProps.error);
+    // console.log(this.props.error);
+    if (nextProps.error !== this.props.error) {
+      // console.log('validationResultvalidationResult');
+      if (nextProps.error.response) {
+        this.validationResult(nextProps.error.response.data.code);
       }
     }
-    // if (current_state.value !== props.value) {
-    //   return {
-    //     value: props.value,
-    //     // computed_prop: heavy_computation(props.value)
-    //   }
-    // }
-    return null;
   }
 
   render() {
-    const { classes, error, signupRes } = this.props;
+    const { classes, signupRes } = this.props;
 
-    // console.log(error);
-    if (error) {
-      console.log(error);
-      this.state.error = true;
-    }
-    // const reposListProps = {
-    //   loading,
-    //   error,
-    //   repos,
-    // };
-    // console.log(signupRes);
-    // console.log(loading);
-    // console.log(error);
-    // if (error) {
-    // console.log(error);
-    // if (error.response) {
-    // console.log(error.response.data);
-    // console.log(error.response);
-    // this.validationResult(error.response.data.code);
-    // error.response
-    //   // .json()
-    //   .then(data => {
-    //     console.log(data);
-    //     this.validationResult(data.code);
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
-    // this.props.error = false;
-    // }
-    // }
-    // console.log(signupRes);
     if (signupRes) {
       this.setState({
         openSuccesPop: true,

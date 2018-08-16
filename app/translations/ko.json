@@ -73,6 +73,7 @@
   "app.containers.SignUp.passwordEmpty": "패스워드를 입력해주세요",
   "app.containers.SignUp.passwordPatternValid": "패스워드 형식이 틀립니다",
   "app.containers.SignUp.passwordNotEqual": "패스워드가 일치하지 않습니다.",
+  "app.containers.SignUp.nicknameExists": "사용중인 닉네임 입니다.",
 
   "app.containers.SignIn.bodytext": "경험을 나누고 보상을 받으세요",
   "app.containers.SignIn.login": "로그인",

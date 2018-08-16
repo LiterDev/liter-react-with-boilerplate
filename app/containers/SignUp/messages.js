@@ -72,4 +72,13 @@ export default defineMessages({
     id: 'app.containers.SignUp.passwordNotEqual',
     defaultMessage: 'passwordNotEqual',
   },
+  nicknameExists: {
+    id: 'app.containers.SignUp.nicknameExists',
+    defaultMessage: 'nicknameExists',
+  },
+
+  emailvalid: {
+    id: 'app.containers.SignUp.emailvalid',
+    defaultMessage: '이메일 형식',
+  },
 });

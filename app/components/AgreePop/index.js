@@ -7,7 +7,8 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
+import BlueButton from 'components/BlueButton';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -16,7 +17,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
-import Check from '@material-ui/icons/Check';
+// import Check from '@material-ui/icons/Check';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 import Card from '@material-ui/core/Card';
@@ -76,7 +77,7 @@ const styles = {
 };
 
 /* eslint-disable react/prefer-stateless-function */
-class AgreePop extends React.PureComponent {
+class AgreePop extends React.Component {
   state = {
     serviceOpen: false,
     serviceAgree: false,
@@ -167,7 +168,7 @@ class AgreePop extends React.PureComponent {
             <CloseIcon />
           </IconButton>
           <DialogTitle className={classes.dialogTitle} id="alert-dialog-title">
-            {<FormattedMessage {...messages.termTitle} />}
+            {<FormattedMessage {...messages.agreeTitle} />}
           </DialogTitle>
           <DialogContent>
             <Card className={classes.card}>
@@ -242,16 +243,24 @@ class AgreePop extends React.PureComponent {
             {/* <Button onClick={handleClose} color="primary">
               Disagree
             </Button> */}
-            <Button
+            <BlueButton
+              btnType="button"
+              // onClickFunc={this.handleopenAgreePop}
+              complete={serviceAgree * privacyAgree ? true : false}
+              btnName="확인"
+              onClickFunc={this.handleAgreeCheck}
+              // onClick={this.submitForm}
+            />
+            {/* <Button
               className={classes.okBtn}
               onClick={this.handleAgreeCheck}
               color="secondary"
               disabled={serviceAgree * privacyAgree ? false : true}
               autoFocus
-            >
-              {/* {<FormattedMessage {...messages.ok} />} */}
-              확인
-            </Button>
+            > */}
+            {/* {<FormattedMessage {...messages.ok} />} */}
+            {/* 확인
+            </Button> */}
           </DialogActions>
         </Dialog>
         <Service

@@ -1,14 +1,14 @@
 /*
- * AgreePop Messages
+ * AgreeDetailPop Messages
  *
- * This contains all the text for the AgreePop component.
+ * This contains all the text for the AgreeDetailPop component.
  */
 
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  termTitle: {
-    id: 'app.components.AgreePop.termTitle',
-    defaultMessage: '약관 동의',
+  agreeTitle: {
+    id: 'app.components.AgreePop.agreeTitle',
+    defaultMessage: 'Agree',
   },
 });

@@ -37,12 +37,14 @@ import About from 'components/About/Loadable';
 // import { PrivateRoute, PrivateWalletRoute } from 'containers/Auth';
 import SignUp from 'containers/SignUp/Loadable';
 import SignIn from 'containers/SignIn/Loadable';
+import * as utils from 'utils/commonFunc';
 import { withStyles } from '@material-ui/core/styles';
 import withRoot from 'withRoot';
 import axios from 'axios';
 
 import PrivateWalletRoute from 'components/PrivateWalletRoute';
 import { showInfo, showSMessage } from './Message';
+
 // import axios from 'axios';
 
 // const AppWrapper = styled.div`
@@ -293,14 +295,7 @@ axios.interceptors.response.use(
       const accessToken = localStorage.getItem('accessToken');
 
       if (accessToken) {
-        localStorage.removeItem('username');
-        localStorage.removeItem('userNickName');
-        localStorage.removeItem('profileImageUrl');
-        localStorage.removeItem('hasWallet');
-        localStorage.removeItem('validStatus');
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        
+        utils.removeLocalStorage();
       }
       window.location.href = '/signin';
 

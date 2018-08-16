@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import * as utils from 'utils/commonFunc';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -15,6 +16,7 @@ import BackArrowIcon from '@material-ui/icons/KeyboardArrowLeft';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import AppDrawer from './AppDrawer';
+
 
 import MenuIcon from '../../images/ic-round-menu.png';
 
@@ -179,7 +181,7 @@ class MyPageHeader extends React.Component {
 
   moveBack = () => {
     this.props.history.go(-1);
-  }
+  };
 
   moveHome = () => {
     // console.log('home');
@@ -188,9 +190,7 @@ class MyPageHeader extends React.Component {
   };
   logout = () => {
     // TODO : auth로 옮길것
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('username');
+    utils.removeLocalStorage();
     this.props.history.push('/');
   };
   render() {

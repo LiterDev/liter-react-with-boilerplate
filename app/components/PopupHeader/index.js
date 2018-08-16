@@ -12,6 +12,7 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import SearchIcon from '@material-ui/icons/Search';
 // import { Link } from 'react-router-dom';
 import BackArrowIcon from '@material-ui/icons/KeyboardArrowLeft';
+import * as utils from 'utils/commonFunc';
 
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
@@ -187,9 +188,7 @@ class PopupHeader extends React.Component {
   };
   logout = () => {
     // TODO : auth로 옮길것
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('username');
+    utils.removeLocalStorage();
     this.props.history.push('/');
   };
   render() {

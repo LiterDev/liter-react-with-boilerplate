@@ -40,7 +40,7 @@ const styles = {
   },
 };
 
-class Privacy extends React.PureComponent {
+class Privacy extends React.Component {
   state = {
     scrollComplate: false,
   };

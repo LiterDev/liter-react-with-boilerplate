@@ -193,6 +193,7 @@ export class SignUp extends React.PureComponent {
       openAgreePop: false,
       openSuccesPop: false,
       error: false,
+      formData: [],
     };
     this.onSubmitFormInit = this.onSubmitFormInit.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -213,17 +214,11 @@ export class SignUp extends React.PureComponent {
   };
   handleAgree = () => {
     this.setState({
+      openAgreePop: false,
       agreeComplete: true,
     });
+    this.props.signupForm(this.state.formData);
   };
-  handleopenAgreePop(event) {
-    alert('handleopenAgreePop');
-    this.setState({
-      openAgreePop: false,
-      openSuccesPop: true,
-    });
-    return false;
-  }
 
   onSubmitFormInit(event) {
     event.preventDefault();
@@ -296,13 +291,21 @@ export class SignUp extends React.PureComponent {
       return false;
     }
 
+    if (!this.state.agreeComplete) {
+      this.setState({
+        openAgreePop: true,
+      });
+      this.state.formData = new FormData(event.target);
+      return false;
+    }
+
     this.setState({
       complete: true,
       openAgreePop: true,
     });
     // const data = new FormData(event.target);
     // this.props.signupForm(data);
-    console.log('submit');
+    // console.log('submit');
     return false;
   }
 
@@ -335,7 +338,7 @@ export class SignUp extends React.PureComponent {
     }
     if (errorCode === 500110) {
       this.setState({
-        emailError: <FormattedMessage {...messages.emailvalid} />,
+        emailError: <FormattedMessage {...messages.usernameEmpty} />,
       });
     }
 
@@ -390,12 +393,13 @@ export class SignUp extends React.PureComponent {
 
   static getDerivedStateFromProps(props, state) {
     console.log(props);
-    // console.log(state);
+    console.log(this);
     console.log(props.error);
     if (props.error) {
       // console.log(this.props.error);
       if (props.error.response) {
-        this.validationResult(props.error.response.data.code);
+        console.log(props.error.response);
+        // this.validationResult(props.error.response.data.code);
       }
     }
     // if (current_state.value !== props.value) {
@@ -404,7 +408,7 @@ export class SignUp extends React.PureComponent {
     //     // computed_prop: heavy_computation(props.value)
     //   }
     // }
-    // return null;
+    return null;
   }
 
   render() {

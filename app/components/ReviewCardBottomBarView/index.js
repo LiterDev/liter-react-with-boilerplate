@@ -24,6 +24,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
 import axios from 'axios';
 
 import VoteNonIcon from '../../images/ic-voting-non.png';
@@ -34,6 +36,7 @@ import FacebookProvider, { Share } from 'react-facebook';
 import CubeEndIcon from '../../images/ic-cube-end.png';
 
 import { FormattedMessage } from 'react-intl';
+
 import messages from './messages';
 
 const styles = theme => ({
@@ -47,7 +50,7 @@ const styles = theme => ({
   },
   rootBottom: {},
   actions: {
-    paddingTop: '12px',
+    paddingTop: '8px',
     bottom: '0',
     width: '100%',
     display: 'block',
@@ -132,6 +135,22 @@ const styles = theme => ({
   button: {
     // margin: 'auto',
     // display: 'block',
+  },
+  closeBtn: {
+    color: '#000000',
+    position: 'absolute',
+    right: 5,
+    top: 5,
+  },
+  dialogContent: {
+    paddingTop: '20px',
+  },
+  votingIcon: {
+    // width: '100px',
+    padding: '0px 0px 0px 0px',
+  },
+  reviewing: {
+    paddingTop: '8px',
   },
 });
 
@@ -248,6 +267,13 @@ class ReviewCardBottomBarView extends React.PureComponent {
 
     this.props.history.push('/mypage');
   };
+  handleSignInMove = () => {
+    this.setState({
+      openLoginPop: false,
+    });
+
+    this.props.history.push('/signin');
+  };
   render() {
     const { classes } = this.props;
     const {
@@ -274,15 +300,19 @@ class ReviewCardBottomBarView extends React.PureComponent {
     switch (review.reviewTimeLimit) {
       case 'UNLIMIT':
         currentStatus = (
-          <span className={curReviewing.styleClass}>
+          <div
+            className={classNames(curReviewing.styleClass, classes.reviewing)}
+          >
             <FormattedMessage {...messages.rewardActive} />
-          </span>
+          </div>
         );
         break;
       case 'LIMIT':
         currentStatus = (
-          <span className={curReviewing.styleClass}>
-            <img src={CubeEndIcon} className={classes.cubeEnd} />
+          <span
+            className={classNames(curReviewing.styleClass, classes.reviewing)}
+          >
+            <img alt="큐브종료" src={CubeEndIcon} className={classes.cubeEnd} />
             <span className={curReviewing.styleClass}>
               {review.rewardLitercube}
             </span>
@@ -298,34 +328,36 @@ class ReviewCardBottomBarView extends React.PureComponent {
         <div className={viewClass}>
           <div className={classes.actions}>
             <div className={classes.activeStatus}>
-              <img
-                src={curVote.selImg}
-                className={classes.icons}
+              <Button
+                color="inherit"
                 onClick={() => {
                   this.handleVoting(this.props.reviewId);
                 }}
-              />
-              <span
-                className={curVote.styleClass}
-                onClick={() => {
-                  this.handleVoting(this.props.reviewId);
-                }}
+                aria-label="service"
+                className={classes.votingIcon}
               >
-                {/* <FormattedMessage {...messages.votingActive} /> */}
-                좋아요
-              </span>
+                <img
+                  alt="좋아요"
+                  src={curVote.selImg}
+                  className={classes.icons}
+                />
+                <span className={curVote.styleClass}>
+                  {/* <FormattedMessage {...messages.votingActive} /> */}
+                  좋아요
+                </span>
+              </Button>
             </div>
-            <div className={classes.activeStatus}>
-              {/* <span className={curReviewing.styleClass}> */}
-              {currentStatus}
-              {/* </span> */}
-            </div>
+            <div className={classes.activeStatus}>{currentStatus}</div>
             <div className={classes.activeRStatus}>
               <FacebookProvider appId={process.env.FACEBOOK_APPID}>
                 <Share href={window.location.href}>
                   {/* <Share href="http://www.facebook.com"> */}
                   <div>
-                    <img src={curShare.selImg} className={classes.shareicons} />
+                    <img
+                      alt="공유하기"
+                      src={curShare.selImg}
+                      className={classes.shareicons}
+                    />
                   </div>
                 </Share>
               </FacebookProvider>
@@ -380,11 +412,19 @@ class ReviewCardBottomBarView extends React.PureComponent {
               paper: classes.popPaper,
             }}
           >
+            <IconButton
+              color="inherit"
+              onClick={this.handleLoginClose}
+              aria-label="Close"
+              className={classes.closeBtn}
+            >
+              <CloseIcon />
+            </IconButton>
             <DialogTitle id="alert-dialog-title">
               {/* {"Use Google's location service?"} */}
             </DialogTitle>
 
-            <DialogContent>
+            <DialogContent className={classes.dialogContent}>
               <DialogContentText id="alert-dialog-description">
                 로그인이 필요한 서비스 입니다.
               </DialogContentText>
@@ -397,78 +437,82 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 // paper: classes.popFooter,
               }}
             >
-              <Button onClick={this.handleLoginClose} color="secondary">
-                확인
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </div>
-      );
-    } else {
-      return (
-        <div className={classes.root}>
-          <div className={classes.actions}>
-            <div className={classes.activeStatus}>
-              <img src={curVote.selImg} className={classes.icons} />
-              <span className={curVote.styleClass}>
-                {/* <FormattedMessage {...messages.votingActive} /> */}
-                좋아요
-              </span>
-            </div>
-            <div className={classes.activeStatus}>
-              {/* <span className={curReviewing.styleClass}>               */}
-              {currentStatus}
-              {/* </span> */}
-            </div>
-            <div className={classes.activeRStatus}>
-              <FacebookProvider appId={process.env.FACEBOOK_APPID}>
-                <Share href={window.location.href}>
-                  {/* <Share href="http://www.facebook.com"> */}
-                  <div>
-                    <img src={curShare.selImg} className={classes.shareicons} />
-                  </div>
-                </Share>
-              </FacebookProvider>
-            </div>
-          </div>
-          <Dialog
-            open={this.state.openSuccesPop}
-            onClose={this.handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-            className={classes.popWrap}
-            fullWidth="true"
-            // maxWidth="false"
-            classes={{
-              root: classes.popRoot,
-              paper: classes.popPaper,
-            }}
-          >
-            <DialogTitle id="alert-dialog-title">
-              {/* {"Use Google's location service?"} */}
-            </DialogTitle>
-
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                이메일 인증이 필요한 서비스 입니다.
-              </DialogContentText>
-            </DialogContent>
-            <Divider />
-            <DialogActions
-              // className={classes.popFooter}
-              classes={{
-                root: classes.popRoot,
-                // paper: classes.popFooter,
-              }}
-            >
-              <Button onClick={this.handleMove} color="secondary">
-                확인
+              <Button onClick={this.handleSignInMove} color="secondary">
+                로그인페이지 이동
               </Button>
             </DialogActions>
           </Dialog>
         </div>
       );
     }
+
+    return (
+      <div className={classes.root}>
+        <div className={classes.actions}>
+          <div className={classes.activeStatus}>
+            <img alt="좋아요" src={curVote.selImg} className={classes.icons} />
+            <span className={curVote.styleClass}>
+              {/* <FormattedMessage {...messages.votingActive} /> */}
+              좋아요
+            </span>
+          </div>
+          <div className={classes.activeStatus}>
+            {/* <span className={curReviewing.styleClass}>               */}
+            {currentStatus}
+            {/* </span> */}
+          </div>
+          <div className={classes.activeRStatus}>
+            <FacebookProvider appId={process.env.FACEBOOK_APPID}>
+              <Share href={window.location.href}>
+                {/* <Share href="http://www.facebook.com"> */}
+                <div>
+                  <img
+                    alt="공유하기"
+                    src={curShare.selImg}
+                    className={classes.shareicons}
+                  />
+                </div>
+              </Share>
+            </FacebookProvider>
+          </div>
+        </div>
+        <Dialog
+          open={this.state.openSuccesPop}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          className={classes.popWrap}
+          fullWidth="true"
+          // maxWidth="false"
+          classes={{
+            root: classes.popRoot,
+            paper: classes.popPaper,
+          }}
+        >
+          <DialogTitle id="alert-dialog-title">
+            {/* {"Use Google's location service?"} */}
+          </DialogTitle>
+
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              이메일 인증이 필요한 서비스 입니다.
+            </DialogContentText>
+          </DialogContent>
+          <Divider />
+          <DialogActions
+            // className={classes.popFooter}
+            classes={{
+              root: classes.popRoot,
+              // paper: classes.popFooter,
+            }}
+          >
+            <Button onClick={this.handleMove} color="secondary">
+              확인
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
   }
 }
 

@@ -169,7 +169,7 @@ export class ActionListContainer extends React.PureComponent {
           <ListItemIcon>
             <div className={classes.row}>
               <Avatar
-                alt={item.username}
+                alt={item.userNickName}
                 src={(item.profileImageUrl) ? item.profileImageUrl: avatarDefault }
                 className={classes.avatar}
               />
@@ -178,7 +178,7 @@ export class ActionListContainer extends React.PureComponent {
           <div className={classes.listItem}>
             <ListItemText>
               <Typography variant="body1" className={classes.nameFont}>
-                {item.username}
+                {item.userNickName}
               </Typography>
               <Typography variant="caption">
                 <FormattedMessage {...messages.reviewCaption} />{' '}

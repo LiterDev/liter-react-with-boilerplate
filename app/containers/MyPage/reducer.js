@@ -11,6 +11,7 @@ export const initialState = fromJS({
   reviews: false,
   rewards: false,
   acquire: 0,
+  estimated: 0,
   followerCount: 0,
   followingCount: 0,
   loading: false,
@@ -40,6 +41,19 @@ function myPageReducer(state = initialState, action) {
         .set('rewards', action.data);
     case constants.MYPAGE_REWARDS_FAILURE:
       return state;
+
+    case constants.REWARDS_ESTIMATED_ACTION:
+      return state.set('loading', true).set('error', false);
+    case constants.REWARDS_ESTIMATED_SUCCESS:
+      console.log('action.data::estimated list -------- reducer mypage');
+      console.log(action.data);
+      return state
+        .set('loading', false)
+        .set('error', false)
+        .set('estimated', action.data);
+    case constants.REWARDS_ESTIMATED_FAILURE:
+      return state;
+
     case constants.REWARDS_ACQUIRE_ACTION:
       return state.set('loading', true).set('error', false);
     case constants.REWARDS_ACQUIRE_SUCCESS:

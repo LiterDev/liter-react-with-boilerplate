@@ -8,6 +8,7 @@ import {
   MYPAGE_REVIEWS_ACTION,
   MYPAGE_REWARDS_ACTION,
   REWARDS_ACQUIRE_ACTION,
+  REWARDS_ESTIMATED_ACTION,
   LOAD_USER_DATA,
   FOLLOWER_COUNT_ACTION,
   FOLLOWING_COUNT_ACTION,
@@ -62,6 +63,30 @@ export function* getMyRewards() {
   }
 }
 
+export function* getEstimated() {
+  const requestURL = `${process.env.API_URL}/reward/estimated`;
+  const accessToken = localStorage.getItem('accessToken');
+  const token = `Bearer ${accessToken}`;
+  try {
+    const options = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        Authorization: token,
+      },
+    };
+    
+    // const req = request(request, requestURL, options);
+    const reqContents = yield call(request, requestURL, options);
+    console.log(']========= getEstimated SAGA ======[');
+    console.log(reqContents);
+    yield put(actions.myRewardsEstimatedSuccess(reqContents));
+  } catch (err) {
+    yield put(actions.myRewardsEstimatedFailure(err));
+  }
+}
+
 export function* getAcquire() {
   const requestURL = `${process.env.API_URL}/reward/acquire`;
   const accessToken = localStorage.getItem('accessToken');
@@ -87,7 +112,7 @@ export function* getAcquire() {
 }
 
 export function* loadFollowerCnt(data) {
-  // console.log(`loadFollowerCnt::${data.userId}`);
+  console.log(`loadFollowerCnt::${data.userId}`);
   const requestURL = `${process.env.API_URL}/follow/follower/count/${
     data.userId
   }`;
@@ -199,6 +224,7 @@ export default function* defaultSaga() {
   yield takeLatest(MYPAGE_REVIEWS_ACTION, getMyReviews);
   yield takeLatest(MYPAGE_REWARDS_ACTION, getMyRewards);
   yield takeLatest(REWARDS_ACQUIRE_ACTION, getAcquire);
+  yield takeLatest(REWARDS_ESTIMATED_ACTION, getEstimated);
   yield takeLatest(LOAD_USER_DATA, getUserData);
   yield takeLatest(FOLLOWER_COUNT_ACTION, loadFollowerCnt);
   yield takeLatest(FOLLOWING_COUNT_ACTION, loadFollowingCnt);

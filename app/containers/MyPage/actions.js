@@ -8,21 +8,31 @@ import {
   MYPAGE_REVIEWS_ACTION,
   MYPAGE_REVIEWS_SUCCESS,
   MYPAGE_REVIEWS_FAILURE,
+
   MYPAGE_REWARDS_ACTION,
   MYPAGE_REWARDS_SUCCESS,
   MYPAGE_REWARDS_FAILURE,
+
+  REWARDS_ESTIMATED_ACTION,
+  REWARDS_ESTIMATED_SUCCESS,
+  REWARDS_ESTIMATED_FAILURE,
+
   REWARDS_ACQUIRE_ACTION,
   REWARDS_ACQUIRE_SUCCESS,
   REWARDS_ACQUIRE_FAILURE,
+
   FOLLOWER_COUNT_ACTION,
   FOLLOWER_COUNT_SUCCESS,
   FOLLOWER_COUNT_FAILURE,
+
   FOLLOWING_COUNT_ACTION,
   FOLLOWING_COUNT_SUCCESS,
   FOLLOWING_COUNT_FAILURE,
+
   LOAD_USER_DATA,
   LOAD_USER_SUCCESS,
   LOAD_USER_ERROR,
+
   CHANGE_NICK_NAME_ACTION,
   CHANGE_NICK_NAME_SUCCESS,
   CHANGE_NICK_NAME_FAILURE,
@@ -91,6 +101,26 @@ export function myRewardsFailure(error) {
   console.log('myReviewFailure');
   return {
     type: MYPAGE_REWARDS_FAILURE,
+    error,
+  };
+}
+
+export function myRewardEstimatedAction() {
+  return {
+    type: REWARDS_ESTIMATED_ACTION,
+  };
+}
+
+export function myRewardsEstimatedSuccess(data) {
+  return {
+    type: REWARDS_ESTIMATED_SUCCESS,
+    data,
+  };
+}
+
+export function myRewardsEstimatedFailure(error) {
+  return {
+    type: REWARDS_ESTIMATED_FAILURE,
     error,
   };
 }

@@ -22,6 +22,7 @@ import Header from 'components/Header';
 // import SignInput from 'components/SignInput';
 import BlueButton from 'components/BlueButton';
 import InputWithHelper from 'components/InputWithHelper';
+import AgreePop from 'components/AgreePop';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -184,12 +185,15 @@ export class SignUp extends React.PureComponent {
     super(props);
     this.state = {
       complete: false,
+      agreeComplete: false,
       emailError: false,
       usernameError: false,
       passwordError: false,
       passwordRepeatError: false,
+      openAgreePop: false,
       openSuccesPop: false,
       error: false,
+      formData: [],
     };
     this.onSubmitFormInit = this.onSubmitFormInit.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -203,6 +207,19 @@ export class SignUp extends React.PureComponent {
 
     this.props.history.push('/signin');
   };
+  handleAgreePopClose = () => {
+    this.setState({
+      openAgreePop: false,
+    });
+  };
+  handleAgree = () => {
+    this.setState({
+      openAgreePop: false,
+      agreeComplete: true,
+    });
+    this.props.signupForm(this.state.formData);
+  };
+
   onSubmitFormInit(event) {
     event.preventDefault();
     // if (!this.state.complete) {
@@ -274,12 +291,22 @@ export class SignUp extends React.PureComponent {
       return false;
     }
 
+    if (!this.state.agreeComplete) {
+      this.setState({
+        openAgreePop: true,
+      });
+      this.state.formData = new FormData(event.target);
+      return false;
+    }
+
     this.setState({
       complete: true,
+      openAgreePop: true,
     });
-    const data = new FormData(event.target);
-    this.props.signupForm(data);
-    return true;
+    // const data = new FormData(event.target);
+    // this.props.signupForm(data);
+    // console.log('submit');
+    return false;
   }
 
   validationResult(errorCode) {
@@ -312,7 +339,7 @@ export class SignUp extends React.PureComponent {
     }
     if (errorCode === 500110) {
       this.setState({
-        emailError: <FormattedMessage {...messages.emailvalid} />,
+        emailError: <FormattedMessage {...messages.usernameEmpty} />,
       });
     }
 
@@ -365,6 +392,7 @@ export class SignUp extends React.PureComponent {
   //     // nextState.error = true;
   //   }
   // }
+<<<<<<< HEAD
   componentWillReceiveProps(nextProps) {
     // this.props 는 아직 바뀌지 않은 상태
     // console.log(nextProps);
@@ -374,10 +402,41 @@ export class SignUp extends React.PureComponent {
       // console.log('validationResultvalidationResult');
       if (nextProps.error.response) {
         this.validationResult(nextProps.error.response.data.code);
+=======
+
+  // componentWillUpdate() {
+  //   if (this.props.error) {
+  //     console.log(this.props.error);
+  //     if (this.props.error.response) {
+  //       this.validationResult(this.props.error.response.data.code);
+  //     }
+  //   }
+  // }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log(props);
+    console.log(this);
+    console.log(props.error);
+    if (props.error) {
+      // console.log(this.props.error);
+      if (props.error.response) {
+        console.log(props.error.response);
+        // this.validationResult(props.error.response.data.code);
+>>>>>>> 85cc275dcb879cdddc10e3aeb6ba4d60a8cdb414
       }
 
       // nextState.error = true;
     }
+<<<<<<< HEAD
+=======
+    // if (current_state.value !== props.value) {
+    //   return {
+    //     value: props.value,
+    //     // computed_prop: heavy_computation(props.value)
+    //   }
+    // }
+    return null;
+>>>>>>> 85cc275dcb879cdddc10e3aeb6ba4d60a8cdb414
   }
 
   // static getDerivedStateFromProps(nextProps, prevState) {
@@ -439,6 +498,7 @@ export class SignUp extends React.PureComponent {
     if (signupRes) {
       this.setState({
         openSuccesPop: true,
+        openAgreePop: false,
       });
       // this.props.signupRes = false;
       // return (
@@ -531,7 +591,7 @@ export class SignUp extends React.PureComponent {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
           className={classes.popWrap}
-          fullWidth="true"
+          fullWidth
           // maxWidth="false"
           classes={{
             root: classes.popRoot,
@@ -560,6 +620,11 @@ export class SignUp extends React.PureComponent {
             </Button>
           </DialogActions>
         </Dialog>
+        <AgreePop
+          open={this.state.openAgreePop}
+          handleAgree={this.handleAgree}
+          onClose={this.handleAgreePopClose}
+        />
       </div>
     );
   }

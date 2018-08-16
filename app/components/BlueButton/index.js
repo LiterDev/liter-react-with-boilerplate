@@ -16,6 +16,9 @@ const styles = theme => ({
   root: {
     paddingTop: theme.spacing.unit * 0,
   },
+  buttonRoot: {
+    width: '100%',
+  },
   button: {
     // margin: theme.spacing.unit,
     backgroundColor: '#b7ddff',
@@ -50,13 +53,14 @@ class BlueButton extends React.PureComponent {
   // }
   render() {
     const { classes, btnName, onClickFunc, complete, btnType } = this.props;
-    // console.log(btnType);
+    console.log(`complete:::${complete}`);
     return (
-      <div>
+      <div className={classes.buttonRoot}>
         {btnType === 'submit' ? (
           <button
             type={btnType}
             className={complete ? classes.buttonComplete : classes.button}
+            // disabled={!complete} 개발 중...
             onClick={onClickFunc}
           >
             <div className={classes.buttonText}>{btnName}</div>
@@ -65,6 +69,7 @@ class BlueButton extends React.PureComponent {
           <button
             type={btnType}
             className={complete ? classes.buttonComplete : classes.button}
+            disabled={!complete}
             onClick={complete ? onClickFunc : null}
           >
             <div className={classes.buttonText}>{btnName}</div>

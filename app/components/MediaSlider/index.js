@@ -57,20 +57,20 @@ const styles = theme => ({
     textAlign: 'center',
     color: '#ffffff',
   },
-})
+});
 
 /* eslint-disable react/prefer-stateless-function */
 class MediaSlider extends React.PureComponent {
   state = {
     currentSlide: 1,
     totalSlide: false,
-  }
+  };
 
   componentDidMount() {
-    if(this.props.media !== false) {
+    if (this.props.media !== false) {
       // this.setState('totoalSlideCount', Object.values(this.props.media).length);
       const totalSlide = Object.values(this.props.media).length;
-      this.setState({'totalSlide': totalSlide});
+      this.setState({ totalSlide: totalSlide });
     }
   }
 
@@ -80,6 +80,7 @@ class MediaSlider extends React.PureComponent {
 
     const settings = {
       dots: false,
+      arrows: true,
       infinite: false,
       speed: 500,
       slidesToShow: 1,
@@ -95,30 +96,34 @@ class MediaSlider extends React.PureComponent {
 
       return (
         <div className={classes.root}>
-          <Slider {...settings}
-              afterChange={
-                (currentSlide) => {
-                  this.setState({ currentSlide: currentSlide + 1 })
-                }
-              }
+          <Slider
+            {...settings}
+            afterChange={currentSlide => {
+              this.setState({ currentSlide: currentSlide + 1 });
+            }}
           >
-              {
-                mediaArray &&
-                mediaArray.map((review, idx) => (
-                  <Media key={idx} fullPath={review.fullPath} mediaType={review.mediaType} description={review.name} idx={review.id} movieKey={review.movieKey} />
-                ))
-              }
+            {mediaArray &&
+              mediaArray.map((review, idx) => (
+                <Media
+                  key={idx}
+                  fullPath={review.fullPath}
+                  mediaType={review.mediaType}
+                  description={review.name}
+                  idx={review.id}
+                  movieKey={review.movieKey}
+                />
+              ))}
           </Slider>
-            <div className={classes.slideCaptionBox}>
-              <span className={classes.slideCaption}>{this.state.currentSlide} / {this.state.totalSlide}</span>
-            </div>
+          <div className={classes.slideCaptionBox}>
+            <span className={classes.slideCaption}>
+              {this.state.currentSlide} / {this.state.totalSlide}
+            </span>
+          </div>
         </div>
       );
     }
 
-    return (
-      <div></div>
-    );    
+    return <div />;
   }
 }
 

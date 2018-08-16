@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import * as utils from 'utils/commonFunc';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -232,9 +233,7 @@ class ReviewHeader extends React.Component {
   };
   logout = () => {
     // TODO : auth로 옮길것
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('username');
+    utils.removeLocalStorage();
     this.props.history.push('/');
   };
   render() {

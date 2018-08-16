@@ -194,7 +194,7 @@ export class MyPage extends React.PureComponent {
   };
 
   tabListHandler = type => {
-    const { selectMyReviews, selectMyRewards, selectAcquire } = this.props;
+    const { selectMyReviews, selectMyRewards, selectAcquire, selectEstimated } = this.props;
     console.log(type);
     switch (type) {
       case 0:
@@ -205,6 +205,7 @@ export class MyPage extends React.PureComponent {
         console.log('REWARD call');
         selectAcquire();
         selectMyRewards();
+        selectEstimated();
         break;
       default:
         selectMyReviews();
@@ -403,6 +404,9 @@ function mapDispatchToProps(dispatch) {
     },
     selectAcquire: () => {
       dispatch(actions.myRewardAcquireAction());
+    },
+    selectEstimated: () => {
+      dispatch(actions.myRewardEstimatedAction());
     },
     selectFollowerCount: userId => {
       // console.log(`load My Review - follower Count call!!! --- ${userId}`);

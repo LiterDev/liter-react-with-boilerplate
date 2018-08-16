@@ -45,6 +45,10 @@ export default defineMessages({
     id: 'app.containers.SignUp.passwordNotEqual',
     defaultMessage: 'passwordNotEqual',
   },
+  nicknameExists: {
+    id: 'app.containers.SignUp.nicknameExists',
+    defaultMessage: 'nicknameExists',
+  },
 
 
   username: {

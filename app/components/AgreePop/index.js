@@ -247,7 +247,7 @@ class AgreePop extends React.Component {
               btnType="button"
               // onClickFunc={this.handleopenAgreePop}
               complete={serviceAgree * privacyAgree ? true : false}
-              btnName="확인"
+              btnName="모두 확인 후 동의합니다."
               onClickFunc={this.handleAgreeCheck}
               // onClick={this.submitForm}
             />

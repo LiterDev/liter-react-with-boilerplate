@@ -37,11 +37,11 @@ import saga from './saga';
 
 const styles = {
   dialogTitle: {
-    marginTop: '100px',
+    marginTop: '80px',
     textAlign: 'center',
   },
   dialogContent: {
-    marginTop: '60px',
+    marginTop: '40px',
     justifyContent: 'center',
     textAlign: 'center',
   },
@@ -76,6 +76,7 @@ export class EmailValid extends React.PureComponent {
     // const validString = this.props.match.params.validString;
     // this.validEmail(validString);
 
+    console.log(validSuccess);
     console.log(validError);
     if (complete) {
       const pathLink = '/';
@@ -87,6 +88,58 @@ export class EmailValid extends React.PureComponent {
             state: { from: this.props.location },
           }}
         />
+      );
+    }
+    if (validError !== false) {
+      return (
+        <div className={classes.header}>
+          <Dialog fullScreen open onClose={this.handleClose}>
+            <DialogTitle
+              className={classes.dialogTitle}
+              id="alert-dialog-title"
+            >
+              <FormattedMessage {...messages.failheader} />
+            </DialogTitle>
+            <DialogContent className={classes.dialogContent}>
+              <DialogContentText id="alert-dialog-description">
+                {localStorage.getItem('username')}
+                <br />
+                <br />
+                이메일 인증 시간(2시간)이 만료되었습니다.<br />
+                지갑을 생성하려면 마이페이지에서<br />
+                인증 이메일을 다시 받으셔야 합니다.
+                <br />
+              </DialogContentText>
+              <br />
+              <Button
+                onClick={this.reDirectHome}
+                className={classes.okBtn}
+                color="secondary"
+                variant="outlined"
+                autoFocus
+              >
+                <FormattedMessage {...messages.goMyPage} />
+              </Button>
+              <br />
+              <br />
+              <br />
+              <br />
+              <DialogContentText id="alert-dialog-description">
+                나중에 인증을 받으시려면
+              </DialogContentText>
+              <br />
+              <Button
+                onClick={this.reDirectHome}
+                className={classes.okBtn}
+                color="secondary"
+                variant="outlined"
+                autoFocus
+              >
+                <FormattedMessage {...messages.goHome} />
+              </Button>
+            </DialogContent>
+          </Dialog>
+        </div>
       );
     }
     return (
@@ -112,7 +165,7 @@ export class EmailValid extends React.PureComponent {
               variant="outlined"
               autoFocus
             >
-              홈페이지로 가기
+              <FormattedMessage {...messages.goHome} />
             </Button>
           </DialogContent>
         </Dialog>

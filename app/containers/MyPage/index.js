@@ -299,13 +299,15 @@ export class MyPage extends React.PureComponent {
   }
 
   navigateFollower = () => {
+    const { myPages } = this.props;
     console.log('Follower');
-    this.props.history.push('/follow');
+    this.props.history.push(`/follow/${myPages.userData.id}`);
   };
 
   navigateFollowing = () => {
+    const { myPages } = this.props;
     console.log('Following');
-    this.props.history.push('/following');
+    this.props.history.push(`/following/${myPages.userData.id}`);
     // this.props.history.pushState('/following');
   };
 

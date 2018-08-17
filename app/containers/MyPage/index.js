@@ -198,14 +198,14 @@ export class MyPage extends React.PureComponent {
       selectAcquire,
       selectEstimated,
     } = this.props;
-    // console.log(type);
+    console.log(type);
     switch (type) {
       case 0:
-        // console.log('REVIEW call');
+        console.log('REVIEW call');
         selectMyReviews();
         break;
       case 1:
-        // console.log('REWARD call');
+        console.log('REWARD call');
         selectAcquire();
         selectMyRewards();
         selectEstimated();
@@ -217,17 +217,22 @@ export class MyPage extends React.PureComponent {
   };
 
   componentWillMount() {
-    // console.log('componentWillMount');
+    console.log('componentWillMount');
     const { selectUserData } = this.props;
     selectUserData();
   }
   componentDidMount() {
-    // console.log('componentDidMount');
+    console.log('componentDidMount');
   }
   componentWillReceiveProps(nextProps) {
+    console.log(`componentWillReceiveProps`);
+    console.log(`this ---`);
+    console.log(this.props.myPages.userData.id);
+    console.log(`next ---`);
+    console.log(nextProps.myPages.userData.id);
     const { myPages, selectFollowerCount, selectFollowingCount } = this.props;
-  
-    if (this.props.myPages.userData.id !== nextProps.myPages.userData.id) {
+    if (this.props.myPages.userData !== nextProps.myPages.userData) {
+      console.log(`change`);
       selectFollowerCount(myPages.userData.id);
       selectFollowingCount(myPages.userData.id);
     }
@@ -245,13 +250,7 @@ export class MyPage extends React.PureComponent {
   };
 
   render() {
-    const {
-      classes,
-      myPages,
-      // selectFollowerCount,
-      // selectFollowingCount,
-    } = this.props;
-    // const { havingWallet } = this.state;
+    const { classes, myPages } = this.props;
 
     const literCoin =
       myPages.userData.literCoin > 0 ? myPages.userData.literCoin : 0;
@@ -412,7 +411,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(actions.myRewardEstimatedAction());
     },
     selectFollowerCount: userId => {
-      // console.log(`load My Review - follower Count call!!! --- ${userId}`);
+      console.log(`load My Review - follower Count call!!! --- ${userId}`);
       dispatch(actions.loadFollowerCountAction(userId));
     },
     selectFollowingCount: userId => {
@@ -420,7 +419,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(actions.loadFollowingCountAction(userId));
     },
     selectUserData: () => {
-      // console.log('selectUserData');
+      console.log('selectUserData');
       dispatch(actions.loadUserData());
     },
     changeUserNick: userNickName => {

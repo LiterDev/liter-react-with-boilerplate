@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 // import { browserHistory } from 'react-router';
 /* material-ui core */
 import AppBar from '@material-ui/core/AppBar';
@@ -71,9 +72,11 @@ const styles = theme => ({
   },
   content: {
     width: '80%',
+    height: '80%',
+    // minHeight: '%',
     left: '10%',
-    position: 'absolute',
-    bottom: '15%',
+    position: 'relative',
+    // bottom: '15%',
   },
   close: {
     position: 'absolute',
@@ -106,7 +109,7 @@ const styles = theme => ({
     marginBottom: 2,
   },
   facebookBtn: {
-    marginTop: 91,
+    // marginTop: 91,
     width: '100%',
     height: 36,
     borderRadius: 3,
@@ -196,8 +199,21 @@ const styles = theme => ({
     fontWeight: 500,
     color: '#6d9fcc',
   },
+  logoLayer: {
+    width: '100%',
+    top: '0px',
+  },
+  inputLayer: {
+    width: '100%',
+    bottom: '0px',
+  },
+  btnLayer: {
+    width: '100%',
+    position: 'absolute',
+    bottom: '0px',
+  },
   blank1: {
-    paddingTop: '35%',
+    paddingTop: '30%',
   },
 });
 
@@ -380,76 +396,84 @@ export class SignIn extends React.PureComponent {
 
         <div className={classes.container}>
           <div className={classes.content}>
-            <div className={classes.litertext}>
-              <img
-                src={LiterLogo}
-                alt="LITER_logo"
-                className={classes.literlogo}
-              />
-            </div>
-            <div className={classes.bodytext}>
-              <FormattedMessage {...messages.bodytext} />
-            </div>
-            <form onSubmit={this.onSubmitFormInit}>
+            <div className={classes.logoLayer}>
               <Collapse in={!inputFormState}>
                 <div className={classes.blank1} />
               </Collapse>
-              <Collapse in={inputFormState}>
-                <div className={classes.signupForm}>
-                  <InputWithHelper
-                    placeholder={<FormattedMessage {...signUpmessages.email} />}
-                    error={this.state.emailError}
-                    type="text"
-                    inputName="email"
-                  />
-                  <InputWithHelper
-                    placeholder={
-                      <FormattedMessage {...signUpmessages.password} />
-                    }
-                    error={this.state.passwordError}
-                    type="password"
-                    inputName="password"
-                  />
-                  <div className={classes.buttonForm}>
-                    <BlueButton
-                      btnName={<FormattedMessage {...messages.login} />}
-                      onClickFunc={this.submitForm}
-                      complete={this.state.complete}
-                      btnType="submit"
-                      // onClick={this.submitForm}
+              <div className={classes.litertext}>
+                <img
+                  src={LiterLogo}
+                  alt="LITER_logo"
+                  className={classes.literlogo}
+                />
+              </div>
+              <div className={classes.bodytext}>
+                <FormattedMessage {...messages.bodytext} />
+              </div>
+            </div>
+            <div className={classes.inputLayer}>
+              <form onSubmit={this.onSubmitFormInit}>
+                <Collapse in={inputFormState}>
+                  <div className={classes.signupForm}>
+                    <InputWithHelper
+                      placeholder={
+                        <FormattedMessage {...signUpmessages.email} />
+                      }
+                      error={this.state.emailError}
+                      type="text"
+                      inputName="email"
                     />
+                    <InputWithHelper
+                      placeholder={
+                        <FormattedMessage {...signUpmessages.password} />
+                      }
+                      error={this.state.passwordError}
+                      type="password"
+                      inputName="password"
+                    />
+                    <div className={classes.buttonForm}>
+                      <BlueButton
+                        btnName={<FormattedMessage {...messages.login} />}
+                        onClickFunc={this.submitForm}
+                        complete={this.state.complete}
+                        btnType="submit"
+                        // onClick={this.submitForm}
+                      />
+                    </div>
+                    <div className={classes.recoverPassword}>
+                      비밀번호가 기억이 나지 않나요?
+                    </div>
                   </div>
-                  <div className={classes.recoverPassword}>
-                    비밀번호가 기억이 나지 않나요?
-                  </div>
-                </div>
-              </Collapse>
-            </form>
-            <div>
-              {signinError && '로그인이 실패하였습니다.'}
-              <FacebookProvider appId={process.env.FACEBOOK_APPID}>
-                <Login
-                  scope="email"
-                  onResponse={this.handleResponse}
-                  onError={this.handleError}
-                >
-                  <button className={classes.facebookBtn}>
-                    <span className={classes.facebookBtnText}>
-                      <FormattedMessage {...messages.facebookSignin} />
+                </Collapse>
+              </form>
+            </div>
+            <div className={classes.btnLayer}>
+              <div>
+                {signinError && '로그인이 실패하였습니다.'}
+                <FacebookProvider appId={process.env.FACEBOOK_APPID}>
+                  <Login
+                    scope="email"
+                    onResponse={this.handleResponse}
+                    onError={this.handleError}
+                  >
+                    <button className={classes.facebookBtn}>
+                      <span className={classes.facebookBtnText}>
+                        <FormattedMessage {...messages.facebookSignin} />
+                      </span>
+                    </button>
+                  </Login>
+                </FacebookProvider>
+                <Collapse in={!inputFormState}>
+                  <button
+                    className={classes.emailBtn}
+                    onClick={this.handleInputForm}
+                  >
+                    <span className={classes.emailBtnText}>
+                      <FormattedMessage {...messages.emailSignin} />
                     </span>
                   </button>
-                </Login>
-              </FacebookProvider>
-              <Collapse in={!inputFormState}>
-                <button
-                  className={classes.emailBtn}
-                  onClick={this.handleInputForm}
-                >
-                  <span className={classes.emailBtnText}>
-                    <FormattedMessage {...messages.emailSignin} />
-                  </span>
-                </button>
-              </Collapse>
+                </Collapse>
+              </div>
             </div>
           </div>
         </div>

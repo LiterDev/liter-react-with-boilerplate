@@ -10,6 +10,8 @@ import StyledLink from 'components/ReviewCard/StyledLink';
 import Media from 'components/Media';
 import TimeAt from 'components/TimeAt';
 
+import LiterCubeIcon from '../../images/ic-cube-end-5.png';
+
 const styles = {
   line: {
     display: 'flex',
@@ -134,6 +136,7 @@ function ReviewContainer(props) {
   const mediaCollection = review ? review.mediaCollection : false;
   const mediaItem = mediaCollection ? mediaCollection[0] : false;
 
+  console.log(review);
   // const timeDiff = '방금전';
   return (
     <div className={classes.line}>
@@ -179,13 +182,26 @@ function ReviewContainer(props) {
           <div className={classNames(classes.left, classes.col1)}>
             <span
               className={
-                review.rewardActive === 'DOING'
+                review.reviewTimeLimit === 'UNLIMIT'
                   ? classes.ingTrue
                   : classes.ingFalse
               }
             >
-              <CheckCircleOutline style={{ fontSize: 13 }} />
-              <span className={classes.leftPadding6}>진행중</span>
+              { (review.reviewTimeLimit === 'UNLIMIT') ? (
+                <div>
+                  <CheckCircleOutline style={{ fontSize: 13 }} />
+                  <span className={classes.leftPadding6}>
+                    진행중
+                  </span>
+                </div>
+              ) : (
+                <div>
+                  <img src={LiterCubeIcon} />
+                  <span className={classes.leftPadding6}>
+                    { review.rewardLitercube.toFixed(2) }
+                  </span>
+                </div>
+              )}              
             </span>
           </div>
           <div className={classNames(classes.right, classes.col3Non)}>

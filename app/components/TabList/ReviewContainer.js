@@ -7,7 +7,7 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Star from '@material-ui/icons/Star';
 
 import StyledLink from 'components/ReviewCard/StyledLink';
-import Media from 'components/Media';
+import MediaThumbnail from 'components/MediaThumbnail';
 import TimeAt from 'components/TimeAt';
 
 import LiterCubeIcon from '../../images/ic-cube-end-5.png';
@@ -127,6 +127,14 @@ const styles = {
   star: {
     color: '#7c7c7c',
   },
+  linkCaption: {
+    fontSize: 14,
+    fontWeight: 500,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: '1.43',
+    color: '#111111',
+  }
 };
 
 function ReviewContainer(props) {
@@ -143,7 +151,7 @@ function ReviewContainer(props) {
       <span className={classes.col}>
         <div className={classes.reviewPhoto}>
           {mediaItem ? (
-            <Media
+            <MediaThumbnail
               fullPath={mediaItem.fullPath}
               mediaType={mediaItem.mediaType}
               description={mediaItem.name}
@@ -176,7 +184,7 @@ function ReviewContainer(props) {
             classes.paddingBottom,
           )}
         >
-          <StyledLink to={`/review/${review.id}`}>{review.title}</StyledLink>
+          <StyledLink className={classes.linkCaption} to={`/review/${review.id}`}>{review.title}</StyledLink>
         </div>
         <div className={classNames(classes.row, classes.fontSize13)}>
           <div className={classNames(classes.left, classes.col1)}>

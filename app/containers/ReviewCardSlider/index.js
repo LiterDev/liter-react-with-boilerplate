@@ -3,7 +3,7 @@
  * ReviewCardSlider
  *
  */
-// default
+/* default */
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSaga from 'utils/injectSaga';
@@ -11,13 +11,14 @@ import injectReducer from 'utils/injectReducer';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-// material-ui
+/* material-ui core */
 // import { withStyles } from '@material-ui/core/styles';
-// containers
-// components
+/* material-ui icon */
+/* containers */
+/* components */
 import ReviewCardSlide from 'components/ReviewCardSlide';
-// image
-// ref
+/* image */
+/* ref */
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import reducer from './reducer';

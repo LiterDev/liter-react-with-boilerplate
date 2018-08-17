@@ -3,7 +3,13 @@
  * ActionListContainer
  *
  */
-
+/* react ref*/
+/* material-ui core */
+/* material-ui icon */
+/* containers */
+/* components */
+/* image */
+/* ref */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -30,7 +36,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
-import PopupHeader from 'components/PopupHeader';
+import PopupHeader from 'components/popups/PopupHeader';
 
 import { loadList, setFollow, setUnFollow } from './actions';
 import { makeSelectList, makeSelectListContents } from './selectors';

@@ -3,42 +3,37 @@
  * Reviews
  *
  */
-// default
-// material-ui
-// containers
-// components
-// image
-// ref
-
+/* default */
 import React from 'react';
-// import ReactDOM from 'react-dom'
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import { Link } from 'react-router-dom';
+/* material-ui core */
+import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-
+/* material-ui icon */
+import AddIcon from '@material-ui/icons/Add';
+/* containers */
+/* components */
 import Header from 'components/Header';
 import ReviewList from 'components/ReviewList';
 import ReviewTopTag from 'components/ReviewTopTag';
-
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-
-import makeSelectReviews from './selectors';
+/* image */
+/* ref */
+import jQuery from 'jquery';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
-
 import { loadList, loadListMore, loadCategory } from './actions';
-import jQuery from 'jquery';
-window.$ = window.jQuery = jQuery;
+import makeSelectReviews from './selectors';
+
+window.$ = jQuery;
+window.jQuery = jQuery;
 
 const styles = theme => ({
   root: {

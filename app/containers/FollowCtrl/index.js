@@ -3,35 +3,30 @@
  * FollowCtrl
  *
  */
-// default
-// material-ui
-// containers
-// components
-// image
-// ref
-
+/* default */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-
 // import injectSaga from 'utils/injectSaga';
 // import injectReducer from 'utils/injectReducer';
-
-// import { makeSelectUserID } from 'containers/ActionListContainer/selectors';
-
+// import { connect } from 'react-redux';
+import { compose } from 'redux';
+// import { createStructuredSelector } from 'reselect';
+/* material-ui core */
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
+/* material-ui icon */
+/* containers */
+// import { makeSelectUserID } from 'containers/ActionListContainer/selectors';
+/* components */
+/* image */
+/* ref */
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 // import { makeSelectIsFollow } from './selectors';
 // import reducer from './reducer';
 // import saga from './saga';
-import messages from './messages';
-
-import { followAction } from './actions';
+// import { followAction } from './actions';
 
 const styles = theme => ({
   buttonStyles: {

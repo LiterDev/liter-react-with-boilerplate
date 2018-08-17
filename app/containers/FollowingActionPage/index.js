@@ -3,38 +3,33 @@
  * FollowingActionPage
  *
  */
-// default
-// material-ui
-// containers
-// components
-// image
-// ref
-
+/* react ref*/
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import { Helmet } from 'react-helmet';
+/* material-ui core */
+/* material-ui icon */
+/* containers */
 import ActionListContainer from 'containers/ActionListContainer';
-
-import { makeSelectFollowingActionPage } from './selectors';
-import { makeSelectPageType } from './selectors';
-
+/* components */
+/* image */
+/* ref */
+// import { FormattedMessage } from 'react-intl';
+// import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
+import { makeSelectFollowingActionPage, makeSelectPageType } from './selectors';
 
 /* eslint-disable react/prefer-stateless-function */
 export class FollowingActionPage extends React.PureComponent {
   render() {
-    const { followType } = this.props;
-    const userId = this.props.match.params.userId;
+    // const { followType } = this.props;
+    // const userId = this.props.match.params.userId;
 
     return (
       <div>

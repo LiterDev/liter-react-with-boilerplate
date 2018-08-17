@@ -3,22 +3,33 @@
  * {{properCase name }}
  *
  */
-
+/* default */
 import React from 'react';
 import PropTypes from 'prop-types';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
 import { connect } from 'react-redux';
-{{#if wantHeaders}}
-import { Helmet } from 'react-helmet';
+import { compose } from 'redux'
+{{#if wantActionsAndReducer}}
+import { createStructuredSelector } from 'reselect';
 {{/if}}
+/* material-ui core */
+/* material-ui icon */
+/* containers */
+/* components */
+/* image */
+/* ref */
 {{#if wantMessages}}
 import { FormattedMessage } from 'react-intl';
 {{/if}}
-{{#if wantActionsAndReducer}}
-import { createStructuredSelector } from 'reselect';
-import makeSelect{{properCase name}} from './selectors';
-{{/if}}
 {{#if wantMessages}}
 import messages from './messages';
+{{/if}}
+{{#if wantHeaders}}
+import { Helmet } from 'react-helmet';
+{{/if}}
+{{#if wantActionsAndReducer}}
+import makeSelect{{properCase name}} from './selectors';
 {{/if}}
 
 /* eslint-disable react/prefer-stateless-function */
@@ -64,3 +75,10 @@ export default connect(mapStateToProps, mapDispatchToProps)({{ properCase name }
 {{else}}
 export default connect(null, mapDispatchToProps)({{ properCase name }});
 {{/if}}
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+  withStyles(styles),
+)({{ properCase name }});

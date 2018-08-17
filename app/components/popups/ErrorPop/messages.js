@@ -8,7 +8,7 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
   header: {
-    id: 'app.components.ErrorPop.header',
+    id: 'app.components.popups.ErrorPop.header',
     defaultMessage: 'This is the ErrorPop component !',
   },
 });

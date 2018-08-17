@@ -3,28 +3,26 @@
  * ReviewDetailResolver
  *
  */
-// default
-// material-ui
-// containers
-// components
-// image
-// ref
-
+/* react ref*/
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-
-import ReviewDetailPage from 'containers/ReviewDetailPage';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import makeSelectReviewDetailResolver from './selectors';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+/* material-ui core */
+/* material-ui icon */
+/* containers */
+import ReviewDetailPage from 'containers/ReviewDetailPage';
+/* components */
+/* image */
+/* ref */
+// import { FormattedMessage } from 'react-intl';
+// import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
+import makeSelectReviewDetailResolver from './selectors';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ReviewDetailResolver extends React.PureComponent {

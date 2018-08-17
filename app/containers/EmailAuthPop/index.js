@@ -3,43 +3,39 @@
  * EmailAuthPop
  *
  */
-// default
-// material-ui
-// containers
-// components
-// image
-// ref
-
+/* react ref*/
 import React from 'react';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+// import styled from 'styled-components';
+/* material-ui core */
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import CloseIcon from '@material-ui/icons/Close';
 import Dialog from '@material-ui/core/Dialog';
-import IconButton from '@material-ui/core/IconButton';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+/* material-ui icon */
+import CloseIcon from '@material-ui/icons/Close';
+/* containers */
+/* components */
 import Timer from 'components/Timer';
-
+/* image */
+/* ref */
+// import { FormattedMessage } from 'react-intl';
+// import messages from './messages';
 import { sendEmailAuth } from './actions';
 import makeSelectEmailAuthPop from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-
-// import styled from 'styled-components';
-
-// import { FormattedMessage } from 'react-intl';
-// import messages from './messages';
 
 const styles = {
   dialogTitle: {

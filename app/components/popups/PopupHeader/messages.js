@@ -7,11 +7,11 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
   home: {
-    id: 'boilerplate.components.PopupHeader.home',
+    id: 'boilerplate.components.popups.PopupHeader.home',
     defaultMessage: 'Home',
   },
   features: {
-    id: 'boilerplate.components.PopupHeader.features',
+    id: 'boilerplate.components.popups.PopupHeader.features',
     defaultMessage: 'Features',
   },
 });

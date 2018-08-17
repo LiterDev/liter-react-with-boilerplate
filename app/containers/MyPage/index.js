@@ -3,7 +3,7 @@
  * MyPage
  *
  */
-// default
+/* react ref*/
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSaga from 'utils/injectSaga';
@@ -12,29 +12,30 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-// material-ui
+/* material-ui core */
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-// containers
+import Typography from '@material-ui/core/Typography';
+/* material-ui icon */
+/* containers */
 import EmailAuthPop from 'containers/EmailAuthPop';
-// components
-import AlertDialog from 'components/AlertDialog';
-import SelfieControl from 'components/SelfieControl';
+/* components */
+import AlertDialog from 'components/popups/AlertDialog';
 import Button from 'components/Button';
 import Header from 'components/Header';
+import ModifyPop from 'components/popups/ModifyPop';
+import SelfieControl from 'components/SelfieControl';
 import TabList from 'components/TabList';
-import ModifyPop from 'components/ModifyPop';
-// image
+/* image */
 import avatarDefault from 'images/ic-avatar.png';
-// ref
+/* ref */
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
-import * as actions from './actions';
-import * as selectors from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import * as actions from './actions';
+import * as selectors from './selectors';
 
 const styles = {
   container: {

@@ -3,27 +3,25 @@
  * FollowController
  *
  */
-// default
-// material-ui
-// containers
-// components
-// image
-// ref
-
+/* react ref*/
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import makeSelectFollowController from './selectors';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+/* material-ui core */
+/* material-ui icon */
+/* containers */
+/* components */
+/* image */
+/* ref */
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
-
+import makeSelectFollowController from './selectors';
 import { handleFollow } from './actions';
 
 /* eslint-disable react/prefer-stateless-function */

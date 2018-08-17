@@ -3,21 +3,20 @@
  *
  * Lists the name and the issue count of a repository
  */
-// default
-// material-ui
-// containers
-// components
-// image
-// ref
-
+/* react ref*/
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { FormattedNumber } from 'react-intl';
-
+/* material-ui core */
+/* material-ui icon */
+/* containers */
 import { makeSelectCurrentUser } from 'containers/App/selectors';
+/* components */
 import ListItem from 'components/ListItem';
+/* image */
+/* ref */
+import { FormattedNumber } from 'react-intl';
 import IssueIcon from './IssueIcon';
 import IssueLink from './IssueLink';
 import RepoLink from './RepoLink';

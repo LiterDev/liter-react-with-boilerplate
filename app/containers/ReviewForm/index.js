@@ -3,55 +3,47 @@
  * ReviewForm
  *
  */
-// default
-// material-ui
-// containers
-// components
-// image
-// ref
-
+/* react ref*/
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import Header from 'components/Header';
-
-import ReviewWrite from 'components/ReviewWrite';
-
-import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+/* material-ui core */
+import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
-import axios from 'axios';
-
 // import SvgIcon from '@material-ui/core/SvgIcon';
-
 // import Button from '@material-ui/core/Button';
-
 // import Upload from 'material-ui-upload/Upload';
-
+import { withStyles } from '@material-ui/core/styles';
+/* material-ui icon */
+/* containers */
+/* components */
+import Header from 'components/Header';
+import ReviewWrite from 'components/ReviewWrite';
+/* image */
+/* ref */
+import axios from 'axios';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
+import reducer from './reducer';
+import saga from './saga';
+import { postAction, loadAction, loadInit } from './actions';
 import {
   makeSelectReviewForm,
   makeSelectReviews,
-  makeSelectReviewId,
+  // makeSelectReviewId,
   makeSelectSurveys,
   makeSelectError,
 } from './selectors';
-import reducer from './reducer';
-import saga from './saga';
-import messages from './messages';
-import { postAction, loadAction, loadInit } from './actions';
 
 const styles = theme => ({
   containerWrap: {

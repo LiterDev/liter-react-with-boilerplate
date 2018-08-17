@@ -3,7 +3,7 @@
  * ReviewDetailPage
  *
  */
-// default
+/* default */
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSaga from 'utils/injectSaga';
@@ -12,15 +12,15 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 // import { Redirect } from 'react-router-dom';
-// material-ui
+/* material-ui core */
 import { withStyles } from '@material-ui/core/styles';
-// containers
-// components
+/* material-ui icon */
+/* containers */
+/* components */
 import ReviewHeader from 'components/ReviewHeader';
 import ReviewDetailCard from 'components/ReviewDetailCard';
-// image
-// ref
-// import axios from 'axios';
+/* image */
+/* ref */
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
 import reducer from './reducer';
@@ -32,6 +32,7 @@ import {
   makeSelectSurveys,
   makeSelectError,
 } from './selectors';
+// import axios from 'axios';
 
 const styles = theme => ({
   root: {

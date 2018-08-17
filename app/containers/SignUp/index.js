@@ -3,7 +3,7 @@
  * SignUp
  *
  */
-// default
+/* react ref*/
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSaga from 'utils/injectSaga';
@@ -13,8 +13,7 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
 // import { Helmet } from 'react-helmet';
-// material-ui
-import { withStyles } from '@material-ui/core/styles';
+/* material-ui core */
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -22,27 +21,24 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
-// import Input from '@material-ui/core/Input';
-// import Button from '@material-ui/core/Button';
-// import Button from '@material-ui/core/Button';
-// import BottomNavigation from '@material-ui/core/BottomNavigation';
-// import Typography from '@material-ui/core/Typography';
-// containers
+import { withStyles } from '@material-ui/core/styles';
+/* material-ui icon */
+/* containers */
 import { makeSelectLoading } from 'containers/App/selectors';
-// components
-import Header from 'components/Header';
+/* components */
+import AgreePop from 'components/popups/AgreePop';
 import BlueButton from 'components/BlueButton';
+import Header from 'components/Header';
 import InputWithHelper from 'components/InputWithHelper';
-import AgreePop from 'components/Popups/AgreePop';
 // import SignInput from 'components/SignInput';
-// image
-// ref
+/* image */
+/* ref */
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
-import { makeSelectSignUpRes, makeSelectSignUpError } from './selectors';
-import { signupAction } from './actions';
 import reducer from './reducer';
 import saga from './saga';
+import { signupAction } from './actions';
+import { makeSelectSignUpRes, makeSelectSignUpError } from './selectors';
 // import Form from './Form';
 
 const styles = theme => ({

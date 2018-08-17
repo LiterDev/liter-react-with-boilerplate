@@ -8,7 +8,7 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
   agreeTitle: {
-    id: 'app.components.AgreePop.agreeTitle',
+    id: 'app.components.popups.AgreePop.agreeTitle',
     defaultMessage: 'Agree',
   },
 });

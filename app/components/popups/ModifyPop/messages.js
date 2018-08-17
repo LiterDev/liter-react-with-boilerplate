@@ -8,7 +8,7 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
   header: {
-    id: 'app.components.ModifyPop.header',
+    id: 'app.components.popups.ModifyPop.header',
     defaultMessage: 'This is the ModifyPop component !',
   },
 });

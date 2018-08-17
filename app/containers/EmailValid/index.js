@@ -3,43 +3,37 @@
  * EmailValid
  *
  */
-// default
-// material-ui
-// containers
-// components
-// image
-// ref
-
+/* react ref*/
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-import { Redirect } from 'react-router-dom';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-
-import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import { Redirect } from 'react-router-dom';
+/* material-ui core */
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Divider from '@material-ui/core/Divider';
-
+import { withStyles } from '@material-ui/core/styles';
+/* material-ui icon */
+/* containers */
+/* components */
+/* image */
+/* ref */
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 import {
   makeSelectEmailValid,
   makeSelectEmailValidSuccess,
   makeSelectEmailValidError,
 } from './selectors';
 import reducer from './reducer';
+import { validAction } from './actions';
 import saga from './saga';
-import messages from './messages';
-
-import { validAction, signinSuccess, signinError } from './actions';
 
 const styles = {
   dialogTitle: {

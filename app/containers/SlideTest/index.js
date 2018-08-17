@@ -3,28 +3,29 @@
  * SlideTest
  *
  */
-// default
+/* default */
 import React from 'react';
 import PropTypes from 'prop-types';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
-// material-ui
-import { withStyles } from '@material-ui/core/styles';
-import Icon from '@material-ui/core/Icon';
-// containers
-// components
-import Header from 'components/Header';
-// image
-// ref
-// import { FormattedMessage } from 'react-intl';
 import Slider from 'react-slick';
+/* material-ui core */
+import { withStyles } from '@material-ui/core/styles';
+/* material-ui icon */
+import Icon from '@material-ui/core/Icon';
+/* containers */
+/* components */
+import Header from 'components/Header';
+/* image */
+/* ref */
+// import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
-import makeSelectSlideTest from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import makeSelectSlideTest from './selectors';
 
 const styles = {
   flex: {

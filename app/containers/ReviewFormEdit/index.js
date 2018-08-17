@@ -3,33 +3,29 @@
  * ReviewFormEdit
  *
  */
-// default
-// material-ui
-// containers
-// components
-// image
-// ref
-
+/* default */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+/* material-ui core */
+// import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
+/* material-ui icon */
+/* containers */
+/* components */
 import Header from 'components/Header';
-
 import ReviewWrite from 'components/ReviewWrite';
-
-import makeSelectReviewFormEdit from './selectors';
+/* image */
+/* ref */
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
+import makeSelectReviewFormEdit from './selectors';
 
 const styles = theme => ({
   containerWrap: {

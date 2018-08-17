@@ -3,55 +3,52 @@
  * SignIn
  *
  */
-// default
-// material-ui
-// containers
-// components
-// image
-// ref
-
+/* react ref*/
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-import { browserHistory } from 'react-router';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-// import Header from 'components/Header';
-import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import { Link } from 'react-router-dom';
+// import { browserHistory } from 'react-router';
+/* material-ui core */
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 import Button from '@material-ui/core/Button';
-import InputWithHelper from 'components/InputWithHelper';
-import BlueButton from 'components/BlueButton';
-import { Redirect, Link } from 'react-router-dom';
-import FacebookProvider, { Login } from 'react-facebook';
-
-import { validateEmail } from 'containers/SignUp';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
-
-// import ErrorPop from 'components/ErrorPop';
+import IconButton from '@material-ui/core/IconButton';
+import Toolbar from '@material-ui/core/Toolbar';
+import { withStyles } from '@material-ui/core/styles';
+/* material-ui icon */
+import CloseIcon from '@material-ui/icons/Close';
+/* containers */
+import { validateEmail } from 'containers/SignUp';
+/* components */
+import InputWithHelper from 'components/InputWithHelper';
+import BlueButton from 'components/BlueButton';
+// import ErrorPop from 'components/popups/ErrorPop';
+// import Header from 'components/Header';
+/* image */
+import LiterLogo from 'images/liter-logo@3x.png';
+/* ref */
+import FacebookProvider, { Login } from 'react-facebook';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
+import signUpmessages from '../SignUp/messages';
+import reducer from './reducer';
+import saga from './saga';
+import { signinAction, signinInit, signinFacebookAction } from './actions';
 import {
   makeSelectSignIn,
   makeSelectSignInSuccess,
   makeSelectSignInError,
 } from './selectors';
-import reducer from './reducer';
-import saga from './saga';
-import messages from './messages';
-import { signinAction, signinInit, signinFacebookAction } from './actions';
-import signUpmessages from '../SignUp/messages';
-import LiterLogo from '../../images/liter-logo@3x.png';
 
 const styles = theme => ({
   appBar: {
@@ -267,7 +264,6 @@ export class SignIn extends React.PureComponent {
     // console.log('will mound');
   }
   handleResponse = data => {
-    
     // console.log(data);
     this.props.signinFacebook(
       data.profile.id,
@@ -296,7 +292,7 @@ export class SignIn extends React.PureComponent {
       localStorage.setItem('username', signinSuccess.username);
       // this.props.loadUserData(signinSuccess.username);
       this.props.signinEnd();
-      let pathLink = '/';
+      const pathLink = '/';
       // console.log(this.props.location);
       // console.log(this.props.location.state);
       // if (this.props.location.state) {
@@ -445,7 +441,7 @@ export class SignIn extends React.PureComponent {
           }}
         >
           <DialogTitle id="alert-dialog-title">
-            ‘LITER’가 'facebook.com'을<br/> 사용하여 로그인하려고 합니다.
+            ‘LITER’가 'facebook.com'을<br /> 사용하여 로그인하려고 합니다.
           </DialogTitle>
 
           <DialogContent>

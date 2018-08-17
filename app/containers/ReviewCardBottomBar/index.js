@@ -3,7 +3,7 @@
  * ReviewCardBottomBar
  *
  */
-// default
+/* react ref*/
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSaga from 'utils/injectSaga';
@@ -14,15 +14,17 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 // import { bindActionCreators } from 'redux';
 // material-ui
+/* material-ui core */
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-// containers
-// components
-import ReviewCardBottomBarView from 'components/ReviewCardBottomBarView';
-// image
-// ref
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+// import Button from '@material-ui/core/Button';
+/* material-ui icon */
+/* containers */
+/* components */
+// import ReviewCardBottomBarView from 'components/ReviewCardBottomBarView';
+/* image */
+/* ref */
+// import { FormattedMessage } from 'react-intl';
+// import messages from './messages';
 import makeSelectReviewCardBottomBar from './selectors';
 import reducer from './reducer';
 import saga from './saga';

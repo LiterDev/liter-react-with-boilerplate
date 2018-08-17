@@ -216,20 +216,19 @@ export class MyPage extends React.PureComponent {
   };
 
   componentWillMount() {
-    console.log('componentWillMount');
+    // console.log('componentWillMount');
     const { selectUserData } = this.props;
     selectUserData();
   }
   componentDidMount() {
-    console.log('componentDidMount');
+    // console.log('componentDidMount');
   }
   componentWillReceiveProps(nextProps) {
-    console.log(`componentWillReceiveProps`);
-    console.log(`this --- ${this.props.myPages.userData.id}`);
-    console.log(`next --- ${nextProps.myPages.userData.id}`);
+    // console.log(`componentWillReceiveProps`);
+    // console.log(`this --- ${this.props.myPages.userData.id}`);
+    // console.log(`next --- ${nextProps.myPages.userData.id}`);
     const { selectFollowerCount, selectFollowingCount } = this.props;
     if (this.props.myPages.userData.id !== nextProps.myPages.userData.id) {
-      console.log(`change--${nextProps.myPages.userData.id}`);
       selectFollowerCount(nextProps.myPages.userData.id);
       selectFollowingCount(nextProps.myPages.userData.id);
     }

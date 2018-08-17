@@ -198,14 +198,14 @@ export class MyPage extends React.PureComponent {
       selectAcquire,
       selectEstimated,
     } = this.props;
-    console.log(type);
+    // console.log(type);
     switch (type) {
       case 0:
-        console.log('REVIEW call');
+        // console.log('REVIEW call');
         selectMyReviews();
         break;
       case 1:
-        console.log('REWARD call');
+        // console.log('REWARD call');
         selectAcquire();
         selectMyRewards();
         selectEstimated();
@@ -216,10 +216,21 @@ export class MyPage extends React.PureComponent {
     }
   };
 
-  componentDidMount() {
+  componentWillMount() {
+    // console.log('componentWillMount');
     const { selectUserData } = this.props;
-
     selectUserData();
+  }
+  componentDidMount() {
+    // console.log('componentDidMount');
+  }
+  componentWillReceiveProps(nextProps) {
+    const { myPages, selectFollowerCount, selectFollowingCount } = this.props;
+  
+    if (this.props.myPages.userData.id !== nextProps.myPages.userData.id) {
+      selectFollowerCount(myPages.userData.id);
+      selectFollowingCount(myPages.userData.id);
+    }
   }
 
   navigateFollower = () => {
@@ -237,25 +248,14 @@ export class MyPage extends React.PureComponent {
     const {
       classes,
       myPages,
-      selectFollowerCount,
-      selectFollowingCount,
+      // selectFollowerCount,
+      // selectFollowingCount,
     } = this.props;
-    const { havingWallet } = this.state;
+    // const { havingWallet } = this.state;
 
     const literCoin =
       myPages.userData.literCoin > 0 ? myPages.userData.literCoin : 0;
 
-    /* TODO:: 현재대로 라면  리렌더링 시 팔로워, 팔로잉 재조회 처리됨.
-      load state 나 firstload 등 스테이트 추가 해서 페이지 로딩시에만 처리되도로 수정해야함.
-      render 포함 시킨 이유는 selectUserData 의  userId가 필요하나 componentDidMount시 호출하면
-      비동기로 처리되어 userData가 팔로워 건수보다 늦게 결과가 도착하여 userId값을 가져오지 못함.
-    */
-
-    if (myPages.userData) {
-      selectFollowerCount(myPages.userData.id);
-      selectFollowingCount(myPages.userData.id);
-    }
-    // 임시코드
     return (
       <div>
         <SelfieControl
@@ -420,7 +420,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(actions.loadFollowingCountAction(userId));
     },
     selectUserData: () => {
-      // console.log('signinUserData');
+      // console.log('selectUserData');
       dispatch(actions.loadUserData());
     },
     changeUserNick: userNickName => {

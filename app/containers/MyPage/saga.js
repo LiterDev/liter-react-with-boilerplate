@@ -32,7 +32,7 @@ export function* getMyReviews() {
     };
     // const req = request(request, requestURL, options);
     const reqContents = yield call(request, requestURL, options);
-    console.log(reqContents);
+    // console.log(reqContents);
     yield put(actions.myReviewsSuccess(reqContents));
   } catch (err) {
     yield put(actions.myReviewsFailure(err));
@@ -112,7 +112,7 @@ export function* getAcquire() {
 }
 
 export function* loadFollowerCnt(data) {
-  console.log(`loadFollowerCnt::${data.userId}`);
+  // console.log(`loadFollowerCnt by id(${data.userId})`);
   const requestURL = `${process.env.API_URL}/follow/follower/count/${
     data.userId
   }`;
@@ -179,7 +179,7 @@ export function* getUserData() {
     };
 
     const reqContents = yield call(request, requestURL, options);
-    // console.log(reqContents);
+    // console.slog('loadUserSuccess');
     yield put(actions.loadUserSuccess(reqContents));
   } catch (err) {
     yield put(actions.loadUserError(err));

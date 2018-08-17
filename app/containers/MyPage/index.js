@@ -3,41 +3,38 @@
  * MyPage
  *
  */
-
+// default
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-
-import { FormattedMessage, FormatHTMLMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
+import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-
+import { createStructuredSelector } from 'reselect';
+// material-ui
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-
-import classNames from 'classnames';
-
+// containers
+import EmailAuthPop from 'containers/EmailAuthPop';
+// components
 import AlertDialog from 'components/AlertDialog';
 import SelfieControl from 'components/SelfieControl';
-
 import Button from 'components/Button';
 import Header from 'components/Header';
 import TabList from 'components/TabList';
-import EmailAuthPop from '../EmailAuthPop';
+import ModifyPop from 'components/ModifyPop';
+// image
+import avatarDefault from 'images/ic-avatar.png';
+// ref
+import { FormattedMessage } from 'react-intl';
 import messages from './messages';
-
-import avatarDefault from '../../images/ic-avatar.png';
-
 import * as actions from './actions';
 import * as selectors from './selectors';
-
 import reducer from './reducer';
 import saga from './saga';
-import ModifyPop from '../../components/ModifyPop';
 
 const styles = {
   container: {
@@ -194,7 +191,12 @@ export class MyPage extends React.PureComponent {
   };
 
   tabListHandler = type => {
-    const { selectMyReviews, selectMyRewards, selectAcquire, selectEstimated } = this.props;
+    const {
+      selectMyReviews,
+      selectMyRewards,
+      selectAcquire,
+      selectEstimated,
+    } = this.props;
     console.log(type);
     switch (type) {
       case 0:

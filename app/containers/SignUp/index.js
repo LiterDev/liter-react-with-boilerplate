@@ -3,47 +3,47 @@
  * SignUp
  *
  */
-
+// default
 import React from 'react';
-// import Input from '@material-ui/core/Input';
-// import Button from '@material-ui/core/Button';
-import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-// import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import { Link } from 'react-router-dom';
+// import { Helmet } from 'react-helmet';
+// material-ui
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Header from 'components/Header';
-// import SignInput from 'components/SignInput';
-import BlueButton from 'components/BlueButton';
-import InputWithHelper from 'components/InputWithHelper';
-import AgreePop from 'components/AgreePop';
-
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
-
+// import Input from '@material-ui/core/Input';
+// import Button from '@material-ui/core/Button';
 // import Button from '@material-ui/core/Button';
 // import BottomNavigation from '@material-ui/core/BottomNavigation';
-
 // import Typography from '@material-ui/core/Typography';
+// containers
 import { makeSelectLoading } from 'containers/App/selectors';
+// components
+import Header from 'components/Header';
+import BlueButton from 'components/BlueButton';
+import InputWithHelper from 'components/InputWithHelper';
+import AgreePop from 'components/Popups/AgreePop';
+// import SignInput from 'components/SignInput';
+// image
+// ref
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 import { makeSelectSignUpRes, makeSelectSignUpError } from './selectors';
+import { signupAction } from './actions';
 import reducer from './reducer';
 import saga from './saga';
-
-import messages from './messages';
 // import Form from './Form';
-
-import { signupAction } from './actions';
 
 const styles = theme => ({
   container: {

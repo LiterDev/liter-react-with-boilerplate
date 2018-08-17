@@ -3,24 +3,29 @@
  * SlideTest
  *
  */
-
+// default
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-
+import { createStructuredSelector } from 'reselect';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import Header from 'components/Header';
-import Slider from 'react-slick';
+// material-ui
 import { withStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
+// containers
+// components
+import Header from 'components/Header';
+// image
+// ref
+// import { FormattedMessage } from 'react-intl';
+import Slider from 'react-slick';
+// import messages from './messages';
 import makeSelectSlideTest from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-// import messages from './messages';
+
 const styles = {
   flex: {
     flex: 1,

@@ -3,24 +3,28 @@
  * ReviewCardSlider
  *
  */
-
+// default
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+// material-ui
+// import { withStyles } from '@material-ui/core/styles';
+// containers
+// components
 import ReviewCardSlide from 'components/ReviewCardSlide';
-
-import makeSelectReviewCardSlider from './selectors';
+// image
+// ref
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
-import { withStyles } from '@material-ui/core/styles';
+import makeSelectReviewCardSlider from './selectors';
+
+
 
 import { loadList } from './actions';
 

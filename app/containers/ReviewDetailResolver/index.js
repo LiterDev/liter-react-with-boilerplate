@@ -3,6 +3,12 @@
  * ReviewDetailResolver
  *
  */
+// default
+// material-ui
+// containers
+// components
+// image
+// ref
 
 import React from 'react';
 import PropTypes from 'prop-types';

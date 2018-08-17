@@ -3,34 +3,35 @@
  * ReviewDetailPage
  *
  */
-
+// default
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-import axios from 'axios';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+// import { Redirect } from 'react-router-dom';
+// material-ui
+import { withStyles } from '@material-ui/core/styles';
+// containers
+// components
 import ReviewHeader from 'components/ReviewHeader';
 import ReviewDetailCard from 'components/ReviewDetailCard';
-
-import { withStyles } from '@material-ui/core/styles';
-
+// image
+// ref
+// import axios from 'axios';
+// import { FormattedMessage } from 'react-intl';
+// import messages from './messages';
+import reducer from './reducer';
+import { loadAction, followAction, voteAction } from './actions';
+import saga from './saga';
 import {
   makeSelectReviews,
-  makeSelectReviewId,
+  // makeSelectReviewId,
   makeSelectSurveys,
   makeSelectError,
 } from './selectors';
-
-import reducer from './reducer';
-import saga from './saga';
-import messages from './messages';
-import { loadAction, followAction, voteAction } from './actions';
 
 const styles = theme => ({
   root: {

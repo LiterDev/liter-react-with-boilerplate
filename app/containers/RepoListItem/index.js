@@ -3,6 +3,12 @@
  *
  * Lists the name and the issue count of a repository
  */
+// default
+// material-ui
+// containers
+// components
+// image
+// ref
 
 import React from 'react';
 import PropTypes from 'prop-types';

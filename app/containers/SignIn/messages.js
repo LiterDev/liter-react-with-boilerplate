@@ -19,4 +19,12 @@ export default defineMessages({
     id: 'app.containers.SignIn.login',
     defaultMessage: '로그인',
   },
+  facebookSignin: {
+    id: 'app.containers.SignIn.facebookSignin',
+    defaultMessage: 'Facdbook으로 로그인',
+  },
+  emailSignin: {
+    id: 'app.containers.SignIn.emailSignin',
+    defaultMessage: '이메일로 로그인',
+  },
 });

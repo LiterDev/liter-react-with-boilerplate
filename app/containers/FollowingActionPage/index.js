@@ -28,8 +28,8 @@ import { makeSelectFollowingActionPage, makeSelectPageType } from './selectors';
 /* eslint-disable react/prefer-stateless-function */
 export class FollowingActionPage extends React.PureComponent {
   render() {
-    // const { followType } = this.props;
-    // const userId = this.props.match.params.userId;
+    const { followType } = this.props;
+    const userId = this.props.match.params.userId;
 
     return (
       <div>

@@ -30,7 +30,7 @@ export class FollowActionPage extends React.PureComponent {
   render() {
     const { followType } = this.props;
     const userId = this.props.match.params.userId;
-
+    console.log(userId);
     return (
       <div>
         <Helmet>

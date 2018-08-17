@@ -37,6 +37,8 @@ import saga from './saga';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
+import axios from 'axios';
+
 const styles = {
   container: {
     display: 'flex',
@@ -122,6 +124,7 @@ export class MyPage extends React.PureComponent {
       makeWalletPopOpen: false,
       emailSuccessPop: false,
       nickChangePop: false,
+      totalLiterCube: 0
     };
 
     this.handleCreateWallet = this.handleCreateWallet.bind(this);
@@ -138,6 +141,50 @@ export class MyPage extends React.PureComponent {
   //     // userId: e.target.value,
   //   });
   // };
+  
+  requestAjx = (method, sendType, requestURL, data, options) => {
+    const self = this;
+    axios({
+      'method': sendType,
+      'headers': options,
+      'url': requestURL,
+      'data': data,
+    })
+    .then(function (response) {
+      if(method == 'getClaim') {
+        console.log(self);
+        self.props.selectAcquire();
+        self.props.selectMyRewards();
+
+        console.log("]] **)*)*)*)*) getClaim Response (*(*(*(*(*(*(* [[");
+        console.log(response);
+
+        self.setState({
+          'totalLiterCube': response.data.totalLiterCube
+        });
+
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  handleRewardClaim = () => {
+    console.log("Claim");
+    const requestURL = `${process.env.API_URL}/reward/claim`;
+    const accessToken = localStorage.getItem('accessToken');
+    const token = `Bearer ${accessToken}`;
+    const options = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': token,
+    };
+    const data = {};
+    this.requestAjx('getClaim', 'GET', requestURL, data, options);
+  }
+
   handleSubmit = e => {
     const { resendEmailAuth } = this.props;
     this.setState({
@@ -158,6 +205,23 @@ export class MyPage extends React.PureComponent {
     console.log('email ok');
     e.preventDefault();
   };
+
+  handleInitInfo = () => {
+    // PrivateRoute
+        
+    // console.log("Init");
+    // const requestURL = `${process.env.API_URL}/user/authInfo`;
+    // const accessToken = localStorage.getItem('accessToken');
+    // const token = `Bearer ${accessToken}`;
+    // const options = {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //     'Access-Control-Allow-Origin': '*',
+    //     'Authorization': token,
+    // };
+    // const data = {};
+    // this.requestAjx('getClaim', 'GET', requestURL, data, options);
+  }
 
   handleCreateWallet = () => {
     console.log('makeWallet');
@@ -220,8 +284,8 @@ export class MyPage extends React.PureComponent {
     const { selectUserData } = this.props;
     selectUserData();
   }
-  componentDidMount() {
-    // console.log('componentDidMount');
+  componentDidMount() {    
+    this.setState({'totalLiterCube': (Boolean(localStorage.getItem('literCube')) && localStorage.getItem('literCube') != 'null')?localStorage.getItem('literCube'):0 });
   }
   componentWillReceiveProps(nextProps) {
     // console.log(`componentWillReceiveProps`);
@@ -235,28 +299,31 @@ export class MyPage extends React.PureComponent {
   }
 
   navigateFollower = () => {
+    const { myPages } = this.props;
     console.log('Follower');
-    this.props.history.push('/follow');
+    this.props.history.push(`/follow/${myPages.userData.id}`);
   };
 
   navigateFollowing = () => {
+    const { myPages } = this.props;
     console.log('Following');
-    this.props.history.push('/following');
+    this.props.history.push(`/following/${myPages.userData.id}`);
     // this.props.history.pushState('/following');
   };
 
   render() {
     const { classes, myPages } = this.props;
 
-    const literCoin =
-      myPages.userData.literCoin > 0 ? myPages.userData.literCoin : 0;
+    // const literCoin =
+    //   myPages.userData.literCoin > 0 ? myPages.userData.literCoin : 0;
+    const literCoin = parseFloat(Boolean(this.state.totalLiterCube)? this.state.totalLiterCube:0).toFixed(2);
 
     return (
       <div>
         <SelfieControl
           changeSelfie={click => (this.changeSelfie = click)}
           callbackFunc={this.props.selectUserData}
-        />
+        /> 
         <div className={classes.container}>
           <Header headerTitle={<FormattedMessage {...messages.header} />} />
         </div>
@@ -343,6 +410,7 @@ export class MyPage extends React.PureComponent {
           tabs={this.state.tabs}
           data={myPages}
           tabListHandler={this.tabListHandler}
+          handleRewardClaim={this.handleRewardClaim}
         />
         <AlertDialog
           onClose={this.handleClose}

@@ -49,6 +49,7 @@ import {
   makeSelectSignInSuccess,
   makeSelectSignInError,
 } from './selectors';
+import { Collapse } from '../../../node_modules/@material-ui/core';
 
 const styles = theme => ({
   appBar: {
@@ -62,10 +63,17 @@ const styles = theme => ({
     backgroundColor: '#ffffff',
     textAlign: 'center',
     height: '100vh',
-    paddingLeft: 30,
-    paddingRight: 30,
+    // paddingLeft: 30,
+    // paddingRight: 30,
+
     // display: 'flex',
     // flexWrap: 'wrap',
+  },
+  content: {
+    width: '80%',
+    left: '10%',
+    position: 'absolute',
+    bottom: '15%',
   },
   close: {
     position: 'absolute',
@@ -94,7 +102,7 @@ const styles = theme => ({
     color: '#111111',
   },
   signupForm: {
-    paddingTop: 94,
+    paddingTop: 60,
     marginBottom: 2,
   },
   facebookBtn: {
@@ -114,6 +122,24 @@ const styles = theme => ({
     letterSpacing: 'normal',
     textAlign: 'center',
     color: 'rgb(57, 103, 175)',
+  },
+  emailBtn: {
+    marginTop: 10,
+    width: '100%',
+    height: 36,
+    borderRadius: 3,
+    border: 'solid 0.5px #7c7c7c',
+  },
+  emailBtnText: {
+    fontFamily: 'SFProText',
+    fontSize: 13,
+    fontWeight: 600,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    textAlign: 'center',
+    color: '#7c7c7c',
   },
   footer: {
     position: 'fixed',
@@ -161,6 +187,18 @@ const styles = theme => ({
     // margin: 'auto',
     // display: 'block',
   },
+  buttonForm: {
+    marginTop: '15px',
+  },
+  recoverPassword: {
+    marginTop: '15px',
+    fontSize: '13px',
+    fontWeight: 500,
+    color: '#6d9fcc',
+  },
+  blank1: {
+    paddingTop: '35%',
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -168,6 +206,7 @@ export class SignIn extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      inputFormState: false,
       complete: false,
       emailError: false,
       passwordError: false,
@@ -277,7 +316,14 @@ export class SignIn extends React.PureComponent {
     // this.setState({ error });
   };
 
+  handleInputForm = () => {
+    this.setState({
+      inputFormState: true,
+    });
+  };
+
   render() {
+    const { inputFormState } = this.state;
     const { classes, signinSuccess, signinError } = this.props;
     // console.log(signinSuccess);
     // console.log(signinEnd);
@@ -333,39 +379,53 @@ export class SignIn extends React.PureComponent {
         </AppBar>
 
         <div className={classes.container}>
-          <div className={classes.litertext}>
-            <img
-              src={LiterLogo}
-              alt="LITER_logo"
-              className={classes.literlogo}
-            />
-          </div>
-          <div className={classes.bodytext}>
-            <FormattedMessage {...messages.bodytext} />
-          </div>
-          <form onSubmit={this.onSubmitFormInit}>
-            <div className={classes.signupForm}>
-              <InputWithHelper
-                placeholder={<FormattedMessage {...signUpmessages.email} />}
-                error={this.state.emailError}
-                type="text"
-                inputName="email"
+          <div className={classes.content}>
+            <div className={classes.litertext}>
+              <img
+                src={LiterLogo}
+                alt="LITER_logo"
+                className={classes.literlogo}
               />
-              <InputWithHelper
-                placeholder={<FormattedMessage {...signUpmessages.password} />}
-                error={this.state.passwordError}
-                type="password"
-                inputName="password"
-              />
-              <div className={classes.buttonForm}>
-                <BlueButton
-                  btnName={<FormattedMessage {...messages.login} />}
-                  onClickFunc={this.submitForm}
-                  complete={this.state.complete}
-                  btnType="submit"
-                  // onClick={this.submitForm}
-                />
-              </div>
+            </div>
+            <div className={classes.bodytext}>
+              <FormattedMessage {...messages.bodytext} />
+            </div>
+            <form onSubmit={this.onSubmitFormInit}>
+              <Collapse in={!inputFormState}>
+                <div className={classes.blank1} />
+              </Collapse>
+              <Collapse in={inputFormState}>
+                <div className={classes.signupForm}>
+                  <InputWithHelper
+                    placeholder={<FormattedMessage {...signUpmessages.email} />}
+                    error={this.state.emailError}
+                    type="text"
+                    inputName="email"
+                  />
+                  <InputWithHelper
+                    placeholder={
+                      <FormattedMessage {...signUpmessages.password} />
+                    }
+                    error={this.state.passwordError}
+                    type="password"
+                    inputName="password"
+                  />
+                  <div className={classes.buttonForm}>
+                    <BlueButton
+                      btnName={<FormattedMessage {...messages.login} />}
+                      onClickFunc={this.submitForm}
+                      complete={this.state.complete}
+                      btnType="submit"
+                      // onClick={this.submitForm}
+                    />
+                  </div>
+                  <div className={classes.recoverPassword}>
+                    비밀번호가 기억이 나지 않나요?
+                  </div>
+                </div>
+              </Collapse>
+            </form>
+            <div>
               {signinError && '로그인이 실패하였습니다.'}
               <FacebookProvider appId={process.env.FACEBOOK_APPID}>
                 <Login
@@ -375,14 +435,25 @@ export class SignIn extends React.PureComponent {
                 >
                   <button className={classes.facebookBtn}>
                     <span className={classes.facebookBtnText}>
-                      Facebook으로 로그인
+                      <FormattedMessage {...messages.facebookSignin} />
                     </span>
                   </button>
                 </Login>
               </FacebookProvider>
+              <Collapse in={!inputFormState}>
+                <button
+                  className={classes.emailBtn}
+                  onClick={this.handleInputForm}
+                >
+                  <span className={classes.emailBtnText}>
+                    <FormattedMessage {...messages.emailSignin} />
+                  </span>
+                </button>
+              </Collapse>
             </div>
-          </form>
+          </div>
         </div>
+
         <footer className={classes.footer}>
           <span className={classes.footerText}>
             아직 회원이 아니신가요?

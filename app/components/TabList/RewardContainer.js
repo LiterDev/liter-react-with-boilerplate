@@ -84,7 +84,7 @@ function RewardContainer(props) {
               />
             </g>
           </svg>
-          {reward.rewardLiterCube}
+          {reward.claimLiterCube}
         </span>
         <span className={classNames(classes.totalCol)}>
           <svg
@@ -102,7 +102,7 @@ function RewardContainer(props) {
               />
             </g>
           </svg>
-          {reward.rewardLiterCube}
+          {reward.totalLiterCube}
         </span>
       </ListItem>
       {/* <ListItem className={classes.tableRow}>

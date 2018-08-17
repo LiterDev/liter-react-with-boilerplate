@@ -41,12 +41,22 @@ function Media(props) {
   switch (props.mediaType) {
     case 'IMAGE':
       return (
-        <div className={classes.iContainer}>
-          <img
+        <div
+          className={classes.iContainer}
+          style={{
+            backgroundImage: `url(${props.fullPath})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+
+            width: '100%',
+            height: 280,
+          }}
+        >
+          {/* <img
             className={classes.iMediaSize}
             src={props.fullPath}
             alt={props.description}
-          />
+          /> */}
         </div>
       );
     case 'YOUTUBE':

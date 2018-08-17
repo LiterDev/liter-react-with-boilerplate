@@ -153,7 +153,7 @@ const styles = theme => ({
   followButton: {
     display: 'block',
     border: '1px solid red',
-  }
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -203,16 +203,15 @@ class ReviewCard extends React.PureComponent {
               action={
                 // <FollowButton
                 //   followYn={review.followYn}
-                //   onViewFollow={this.props.handleFollow} 
+                //   onViewFollow={this.props.handleFollow}
                 //   followId={review.user.id}>
                 // </FollowButton>
 
                 <FollowAjxButton
                   followEmail={review.user.username}
                   followYn={review.followYn}
-                  followId={review.user.id}>
-                </FollowAjxButton>
-
+                  followId={review.user.id}
+                />
               }
               title={review.user.userNickName}
               // subheader={timeDiff}
@@ -244,9 +243,12 @@ class ReviewCard extends React.PureComponent {
           </div>
 
           {/* <ReviewCardBottomBar ref={`card${idx}`} prKey={`card${idx}`} reviewId={review.id} /> */}
-          <ReviewCardBottomBarView likeYn={review.likeYn} onViewVote={false} review={review} />
-          
-       </Card>
+          <ReviewCardBottomBarView
+            likeYn={review.likeYn}
+            onViewVote={false}
+            review={review}
+          />
+        </Card>
       </div>
     );
   }

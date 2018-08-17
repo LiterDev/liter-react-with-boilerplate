@@ -231,10 +231,10 @@ export class MyPage extends React.PureComponent {
     console.log(`next ---`);
     console.log(nextProps.myPages.userData.id);
     const { myPages, selectFollowerCount, selectFollowingCount } = this.props;
-    if (this.props.myPages.userData !== nextProps.myPages.userData) {
+    if (myPages.userData.id !== nextProps.myPages.userData.id) {
       console.log(`change`);
-      selectFollowerCount(myPages.userData.id);
-      selectFollowingCount(myPages.userData.id);
+      selectFollowerCount(nextProps.myPages.userData.id);
+      selectFollowingCount(nextProps.myPages.userData.id);
     }
   }
 
@@ -415,7 +415,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(actions.loadFollowerCountAction(userId));
     },
     selectFollowingCount: userId => {
-      // console.log(`load My Review - following Count call!!! --- ${userId}`);
+      console.log(`load My Review - following Count call!!! --- ${userId}`);
       dispatch(actions.loadFollowingCountAction(userId));
     },
     selectUserData: () => {

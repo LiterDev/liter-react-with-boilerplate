@@ -11,7 +11,6 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import SearchIcon from '@material-ui/icons/Search';
 // import { Link } from 'react-router-dom';
-import * as utils from 'utils/commonFunc';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import AppDrawer from './AppDrawer';
@@ -189,7 +188,9 @@ class Header extends React.Component {
   };
   logout = () => {
     // TODO : auth로 옮길것
-    utils.removeLocalStorage();
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('username');
     this.props.history.push('/');
   };
   render() {
@@ -245,6 +246,7 @@ class Header extends React.Component {
               <img src={MenuIcon} />
               {/* <MoreVertIcon className={classes.icon} /> */}
             </IconButton>
+
           </Toolbar>
         </AppBar>
         <AppDrawer

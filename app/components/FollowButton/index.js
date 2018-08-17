@@ -47,7 +47,7 @@ const styles = theme => ({
   },
 });
 
-/* eslint-disable react/prefer-stateless-function */
+/* eslint-disable react/prefer-stateless- */
 class FollowButton extends React.PureComponent {
 
   handleSetFollow = (evt) => {

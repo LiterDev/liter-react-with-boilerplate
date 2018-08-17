@@ -225,10 +225,8 @@ export class MyPage extends React.PureComponent {
   }
   componentWillReceiveProps(nextProps) {
     console.log(`componentWillReceiveProps`);
-    console.log(`this ---`);
-    console.log(this.props.myPages.userData.id);
-    console.log(`next ---`);
-    console.log(nextProps.myPages.userData.id);
+    console.log(`this --- ${this.props.myPages.userData.id}`);
+    console.log(`next --- ${nextProps.myPages.userData.id}`);
     const { selectFollowerCount, selectFollowingCount } = this.props;
     if (this.props.myPages.userData.id !== nextProps.myPages.userData.id) {
       console.log(`change--${nextProps.myPages.userData.id}`);

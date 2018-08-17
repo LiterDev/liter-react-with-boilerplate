@@ -65,16 +65,40 @@ export function* getReviewMore(data) {
     process.env.API_URL
   }/review/latestList?page=${curPage}&categoryId=${data.cateValue}`;
   const accessToken = localStorage.getItem('accessToken');
-  const token = `Bearer ${accessToken}`;
-  const options = {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json;charset=UTF-8',
-      'Content-Type': 'application/json;charset=UTF-8',
-      'Access-Control-Allow-Origin': '*',
-      Authorization: token,
-    },
-  };
+  // const token = `Bearer ${accessToken}`;
+  // const options = {
+  //   method: 'GET',
+  //   headers: {
+  //     Accept: 'application/json;charset=UTF-8',
+  //     'Content-Type': 'application/json;charset=UTF-8',
+  //     'Access-Control-Allow-Origin': '*',
+  //     Authorization: token,
+  //   },
+  // };
+
+  let token = null;
+  let options = null;
+  if (accessToken) {
+    token = `Bearer ${accessToken}`;
+    options = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        Authorization: token,
+      },
+    };
+  } else {
+    options = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+      },
+    };
+  }
   try {
     // const reqContents = yield call(request, requestURL);
     const reqContents = yield call(request, requestURL, options);

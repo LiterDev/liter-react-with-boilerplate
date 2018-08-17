@@ -407,11 +407,11 @@ function mapDispatchToProps(dispatch) {
       dispatch(actions.myRewardEstimatedAction());
     },
     selectFollowerCount: userId => {
-      console.log(`load My Review - follower Count call!!! --- ${userId}`);
+      // console.log(`load My Review - follower Count call!!! --- ${userId}`);
       dispatch(actions.loadFollowerCountAction(userId));
     },
     selectFollowingCount: userId => {
-      console.log(`load My Review - following Count call!!! --- ${userId}`);
+      // console.log(`load My Review - following Count call!!! --- ${userId}`);
       dispatch(actions.loadFollowingCountAction(userId));
     },
     selectUserData: () => {

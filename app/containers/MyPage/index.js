@@ -122,7 +122,6 @@ export class MyPage extends React.PureComponent {
       makeWalletPopOpen: false,
       emailSuccessPop: false,
       nickChangePop: false,
-      havingWallet: false,
     };
 
     this.handleCreateWallet = this.handleCreateWallet.bind(this);
@@ -232,7 +231,7 @@ export class MyPage extends React.PureComponent {
     console.log(nextProps.myPages.userData.id);
     const { myPages, selectFollowerCount, selectFollowingCount } = this.props;
     if (myPages.userData.id !== nextProps.myPages.userData.id) {
-      console.log(`change`);
+      console.log(`change--${nextProps.myPages.userData.id}`);
       selectFollowerCount(nextProps.myPages.userData.id);
       selectFollowingCount(nextProps.myPages.userData.id);
     }

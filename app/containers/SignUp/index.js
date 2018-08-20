@@ -53,7 +53,7 @@ const styles = theme => ({
     // flexWrap: 'wrap',
   },
   signupForm: {
-    paddingTop: 66,
+    paddingTop: '10%',
     marginBottom: 2,
   },
   passwordForm: {
@@ -75,7 +75,7 @@ const styles = theme => ({
     marginTop: 20,
   },
   buttonForm: {
-    marginTop: 58,
+    marginTop: '1%',
   },
   button: {
     // margin: theme.spacing.unit,

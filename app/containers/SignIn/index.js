@@ -71,7 +71,7 @@ const styles = theme => ({
     // flexWrap: 'wrap',
   },
   content: {
-    top: '70px',
+    top: '10px',
     width: '80%',
     height: '75%',
     // minHeight: '%',

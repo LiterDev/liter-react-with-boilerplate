@@ -53,7 +53,7 @@ class BlueButton extends React.PureComponent {
   // }
   render() {
     const { classes, btnName, onClickFunc, complete, btnType } = this.props;
-    console.log(`complete:::${complete}`);
+    // console.log(`complete:::${complete}`);
     return (
       <div className={classes.buttonRoot}>
         {btnType === 'submit' ? (

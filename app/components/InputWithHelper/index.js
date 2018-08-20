@@ -77,6 +77,30 @@ class InputWithHelper extends React.PureComponent {
     };
   }
 
+  handleChange = e => {
+    this.setState({ value: e.target.value });
+    // console.log(e);
+    if (this.props.onChange) {
+      this.props.onChange(e);
+    }
+  };
+
+  handelBlur = e => {
+    // console.log(e);
+    if (this.props.onBlur) {
+      this.props.onBlur(e);
+    }
+  };
+
+  handleFocus = () => {
+    // console.log(this.props.onFocusClear);
+    if (this.props.onFocusClear) {
+      this.setState({
+        value: '',
+      });
+    }
+  };
+  // {e => this.setState({ value: e.target.value })
   render() {
     const { classes, placeholder, error, type, inputName } = this.props;
     // console.log(placeholder);
@@ -95,7 +119,9 @@ class InputWithHelper extends React.PureComponent {
             >
               <Input
                 value={this.state.value}
-                onChange={e => this.setState({ value: e.target.value })}
+                onChange={e => this.handleChange(e)}
+                onBlur={e => this.handelBlur(e)}
+                onFocus={this.handleFocus}
                 className={classes.input}
                 type={type}
                 name={inputName}

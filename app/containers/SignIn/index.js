@@ -71,12 +71,29 @@ const styles = theme => ({
     // flexWrap: 'wrap',
   },
   content: {
+    top: '70px',
     width: '80%',
-    height: '80%',
+    height: '75%',
     // minHeight: '%',
     left: '10%',
     position: 'relative',
     // bottom: '15%',
+  },
+  logoLayer: {
+    width: '100%',
+    top: '0px',
+  },
+  inputLayer: {
+    width: '100%',
+    bottom: '0px',
+  },
+  btnLayer: {
+    width: '100%',
+    position: 'absolute',
+    bottom: '0px',
+  },
+  blank1: {
+    paddingTop: '30%',
   },
   close: {
     position: 'absolute',
@@ -105,7 +122,7 @@ const styles = theme => ({
     color: '#111111',
   },
   signupForm: {
-    paddingTop: 60,
+    paddingTop: 50,
     marginBottom: 2,
   },
   facebookBtn: {
@@ -198,22 +215,6 @@ const styles = theme => ({
     fontSize: '13px',
     fontWeight: 500,
     color: '#6d9fcc',
-  },
-  logoLayer: {
-    width: '100%',
-    top: '0px',
-  },
-  inputLayer: {
-    width: '100%',
-    bottom: '0px',
-  },
-  btnLayer: {
-    width: '100%',
-    position: 'absolute',
-    bottom: '0px',
-  },
-  blank1: {
-    paddingTop: '30%',
   },
 });
 

@@ -96,6 +96,7 @@ function App(props) {
       localStorage.setItem('profileImageUrl', resp.data.profileImageUrl);
       localStorage.setItem('hasWallet', resp.data.hasWallet);
       localStorage.setItem('validStatus', resp.data.validStatus);
+      localStorage.setItem('literCube', resp.data.literCube);
     });
   }
 

@@ -296,6 +296,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
     // const curReviewing = reviewingIcons.non;
     // const curReviewing = reviewingIcons.sel;
 
+    
     // current status for campaign
     let currentStatus = null;
     switch (review.reviewTimeLimit) {

@@ -74,12 +74,13 @@ class InputWithHelper extends React.PureComponent {
     super(props);
     this.state = {
       value: '',
+      errorState: this.props.error,
     };
   }
 
   handleChange = e => {
     this.setState({ value: e.target.value });
-    // console.log(e);
+
     if (this.props.onChange) {
       this.props.onChange(e);
     }
@@ -103,7 +104,6 @@ class InputWithHelper extends React.PureComponent {
   // {e => this.setState({ value: e.target.value })
   render() {
     const { classes, placeholder, error, type, inputName } = this.props;
-    // console.log(placeholder);
     // console.log(placeholder.props.id);
     // const textField = new MDCTextField(
     //   document.querySelector('.mdc-text-field'),

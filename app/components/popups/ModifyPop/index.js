@@ -18,7 +18,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
 import PropTypes from 'prop-types';
 import Input from '@material-ui/core/Input';
-import Cancel from '@material-ui/icons/Cancel';
+import Replay from '@material-ui/icons/Replay';
+
 // import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 // import FormattedMessage from 'react-intl';
@@ -41,6 +42,13 @@ const styles = {
   },
   dialogAction: {
     justifyContent: 'center',
+  },
+  input: {
+    width: '85%',
+  },
+  resetBtn: {
+    color: '#8a8a8a',
+    fontSize: '16px',
   },
 };
 
@@ -112,9 +120,10 @@ class ModifyPop extends React.PureComponent {
               className={classes.input}
               inputProps={{
                 'aria-label': 'Description',
+                maxLength: 15,
               }}
             />
-            <Cancel onClick={this.handelReset} />
+            <Replay className={classes.resetBtn} onClick={this.handelReset} />
           </DialogContent>
           <Divider />
           <DialogActions className={classes.dialogAction}>

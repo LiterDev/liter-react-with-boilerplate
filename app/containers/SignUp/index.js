@@ -28,6 +28,7 @@ import { makeSelectLoading } from 'containers/App/selectors';
 /* components */
 import AgreePop from 'components/popups/AgreePop';
 import BlueButton from 'components/BlueButton';
+import { ErrorMessages, ErrorCodes } from 'components/ErrorMessages';
 import Header from 'components/Header';
 import InputWithHelper from 'components/InputWithHelper';
 // import SignInput from 'components/SignInput';
@@ -150,7 +151,6 @@ const styles = theme => ({
     textAlign: 'left',
   },
 });
-
 // function Transition(props) {
 //   return <Slide direction="left" {...props} />;
 // }
@@ -193,7 +193,7 @@ export class SignUp extends React.PureComponent {
     };
     this.onSubmitFormInit = this.onSubmitFormInit.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.validationResult = this.validationResult.bind(this);
+    // this.validationResult = this.validationResult.bind(this);
   }
 
   handleClose = () => {
@@ -215,7 +215,29 @@ export class SignUp extends React.PureComponent {
     });
     this.props.signupForm(this.state.formData);
   };
-
+  handleOnChange = e => {
+    if (e.target.name === 'email') {
+      this.setState({
+        emailError: false,
+      });
+    }
+    if (e.target.name === 'username') {
+      this.setState({
+        usernameError: false,
+      });
+    }
+    if (e.target.name === 'password') {
+      this.setState({
+        passwordError: false,
+      });
+    }
+    if (e.target.name === 'passwordRepeat') {
+      this.setState({
+        passwordRepeatError: false,
+      });
+    }
+    console.log(e.target.name);
+  };
   onSubmitFormInit(event) {
     event.preventDefault();
     // if (!this.state.complete) {
@@ -229,61 +251,74 @@ export class SignUp extends React.PureComponent {
     const passwordRepeat = event.target.passwordRepeat.value;
     const errors = [];
     if (!email) {
-      errors.push(500108);
+      errors.push(ErrorCodes.EMAIL_EMPTY);
+      this.setState({
+        emailError: ErrorCodes.EMAIL_EMPTY,
+      });
     } else {
       this.setState({
         emailError: false,
       });
     }
     if (!validateEmail(email)) {
-      errors.push(500110);
+      errors.push(ErrorCodes.EMAIL_VALID);
+      this.setState({
+        emailError: ErrorCodes.EMAIL_VALID,
+      });
     } else {
       this.setState({
         emailError: false,
       });
     }
     if (!username) {
-      errors.push(500106);
+      errors.push(ErrorCodes.USER_NAME_EMPTY);
+      this.setState({
+        usernameError: ErrorCodes.USER_NAME_EMPTY,
+      });
     } else {
       this.setState({
         usernameError: false,
       });
     }
     if (!password) {
-      errors.push(500100);
+      errors.push(ErrorCodes.PASSWORD_EMPTY);
+      this.setState({
+        passwordError: ErrorCodes.PASSWORD_EMPTY,
+      });
+    } else {
+      this.setState({
+        passwordError: false,
+      });
+    }
+    if (!validatePassword(password)) {
+      errors.push(ErrorCodes.PASSWORD_VALID);
+      this.setState({
+        passwordError: ErrorCodes.PASSWORD_VALID,
+      });
     } else {
       this.setState({
         passwordError: false,
       });
     }
     if (!passwordRepeat) {
-      errors.push(500103);
+      errors.push(ErrorCodes.PASSWORD_REPEAT_EMPTY);
+      this.setState({
+        passwordRepeatError: ErrorCodes.PASSWORD_REPEAT_EMPTY,
+      });
+    } else if (password !== passwordRepeat) {
+      errors.push(ErrorCodes.PASSWORD_NOT_EQUAL);
+      this.setState({
+        passwordRepeatError: ErrorCodes.PASSWORD_NOT_EQUAL,
+      });
     } else {
       this.setState({
         passwordRepeatError: false,
       });
     }
-
-    if (!validatePassword(password)) {
-      errors.push(500102);
-    } else {
-      this.setState({
-        passwordError: false,
-      });
-    }
-
-    if (password !== passwordRepeat) {
-      errors.push(500105);
-    } else {
-      this.setState({
-        passwordRepeatError: false,
-      });
-    }
-
     if (errors.length > 0) {
-      for (let i = 0; i < errors.length; i += 1) {
-        this.validationResult(errors[i]);
-      }
+      // for (let i = 0; i < errors.length; i += 1) {
+      //   this.validationResult(errors[i]);
+      // }
       return false;
     }
 
@@ -305,90 +340,126 @@ export class SignUp extends React.PureComponent {
     return false;
   }
 
-  validationResult(errorCode) {
-    console.log(errorCode);
-    // USER_PASSWORD_IS_NOT_ALLOWED(500100, "Password is not valid"),
-    // USER_PASSWORD_IS_EMPTY(500101, "Password is empty"),
-    // USER_PASSWORD_PATTERN_IS_NOT_ALLOWED(500102, "Password pattern is not allowed."),
-    // USER_PASSWORD_REPEAT_IS_EMPTY(500103, "Password is not valid"),
-    // USER_PASSWORD_REPEAT_PATTERN_IS_NOT_ALLOWED(500104, "PasswordRepeat pattern is not allowed."),
-    // USER_PASSWORD_IS_NOT_EQUALS(500105, "Password is not equals."),
-    // USER_NAME_IS_EMPTY(500106, "Username is empty"),
-    // USER_NAME_IS_ALREADY_EXISTS(500107, "Username is already exists"),
-    // USER_EMAIL_IS_EMPTY(500108, "Email is empty"),
-    // USER_EMAIL_IS_ALREADY_EXISTS(500109, "Email is already exists"),
-    if (errorCode === 500108) {
-      this.setState({
-        emailError: <FormattedMessage {...messages.emailEmpty} />,
-      });
+  validationMessage(errorCode) {
+    if (!errorCode) {
+      console.log(errorCode);
+      return '';
     }
-    if (errorCode === 500109) {
-      this.setState({
-        emailError: <FormattedMessage {...messages.emailExists} />,
-      });
-    }
-
-    if (errorCode === 500106) {
-      this.setState({
-        usernameError: <FormattedMessage {...messages.usernameEmpty} />,
-      });
-    }
-    if (errorCode === 500110) {
-      this.setState({
-        emailError: <FormattedMessage {...messages.usernameEmpty} />,
-      });
-    }
-
-    if (errorCode === 500100) {
-      this.setState({
-        passwordError: <FormattedMessage {...messages.passwordValid} />,
-      });
-    }
-
-    if (errorCode === 500101) {
-      this.setState({
-        passwordError: <FormattedMessage {...messages.passwordEmpty} />,
-      });
-    }
-    if (errorCode === 500102) {
-      this.setState({
-        passwordError: <FormattedMessage {...messages.passwordPatternValid} />,
-      });
-    }
-    if (errorCode === 500103 || errorCode === 500104) {
-      this.setState({
-        passwordRepeatError: <FormattedMessage {...messages.passwordRepeat} />,
-      });
-    }
-    if (errorCode === 500105) {
-      this.setState({
-        passwordError: <FormattedMessage {...messages.passwordNotEqual} />,
-      });
-      this.setState({
-        passwordRepeatError: (
-          <FormattedMessage {...messages.passwordNotEqual} />
-        ),
-      });
-    }
-
-    if (errorCode === 500113) {
-      this.setState({
-        usernameError: <FormattedMessage {...messages.nicknameExists} />,
-      });
-    }
+    // console.log(ErrorCodes.messages[errorCode].code);
+    return (
+      <FormattedMessage {...messages[ErrorCodes.messages[errorCode].code]} />
+    );
   }
+
+  // validationResult(errorCode) {
+  //   console.log(errorCode);
+  //   // falls through
+  //   switch (errorCode) {
+  //     case ErrorCodes.EMAIL_EMPTY:
+  //       console.log('ErrorCodes.EMAIL_EMPTY');
+  //       this.setState({
+  //         emailError: (
+  //           <FormattedMessage
+  //             {...messages[ErrorCodes.messages[ErrorCodes.EMAIL_EMPTY].code]}
+  //           />
+  //         ),
+  //       });
+  //       break;
+  //     case ErrorCodes.EMAIL_VALID:
+  //       console.log('ErrorCodes.EMAIL_VALID');
+  //       this.setState({
+  //         emailError: (
+  //           <FormattedMessage
+  //             {...messages[ErrorCodes.messages[ErrorCodes.EMAIL_EMPTY].code]}
+  //           />
+  //         ),
+  //       });
+  //       break;
+  //     case ErrorCodes.EMAIL_EXISTS:
+  //       console.log('ErrorCodes.EMAIL_EXISTS');
+  //       this.setState({
+  //         emailError: (
+  //           <FormattedMessage
+  //             {...messages[ErrorCodes.messages[ErrorCodes.EMAIL_EMPTY].code]}
+  //           />
+  //         ),
+  //       });
+  //       break;
+  //     case ErrorCodes.USER_NAME_EMPTY:
+  //       console.log('ErrorCodes.USER_NAME_EMPTY');
+  //       this.setState({
+  //         emailError: (
+  //           <FormattedMessage
+  //             {...messages[ErrorCodes.messages[ErrorCodes.EMAIL_EMPTY].code]}
+  //           />
+  //         ),
+  //       });
+  //       break;
+  //     case ErrorCodes.PASSWORD_EMPTY:
+  //       console.log('ErrorCodes.PASSWORD_EMPTY');
+  //       this.setState({
+  //         emailError: (
+  //           <FormattedMessage
+  //             {...messages[ErrorCodes.messages[ErrorCodes.EMAIL_EMPTY].code]}
+  //           />
+  //         ),
+  //       });
+  //       break;
+  //     case ErrorCodes.PASSWORD_VALID:
+  //       console.log('ErrorCodes.PASSWORD_VALID');
+  //       this.setState({
+  //         emailError: (
+  //           <FormattedMessage
+  //             {...messages[ErrorCodes.messages[ErrorCodes.EMAIL_EMPTY].code]}
+  //           />
+  //         ),
+  //       });
+  //       break;
+  //     // case 500102:
+  //     //   this.setState({
+  //     //     passwordError: (
+  //     //       <FormattedMessage {...messages.passwordPatternValid} />
+  //     //     ),
+  //     //   });
+  //     //   break;
+  //     // case 500103:
+  //     // falls through
+  //     case ErrorCodes.PASSWORD_REPEAT_EMPTY:
+  //       this.setState({
+  //         emailError: (
+  //           <FormattedMessage
+  //             {...messages[ErrorCodes.messages[ErrorCodes.EMAIL_EMPTY].code]}
+  //           />
+  //         ),
+  //       });
+  //       break;
+  //     case ErrorCodes.PASSWORD_NOT_EQUAL:
+  //       this.setState({
+  //         passwordRepeatError: (
+  //           <FormattedMessage {...messages.passwordNotEqual} />
+  //         ),
+  //       });
+  //       break;
+  //     // case 500113:
+  //     //   this.setState({
+  //     //     usernameError: <FormattedMessage {...messages.nicknameExists} />,
+  //     //   });
+  //     //   break;
+  //     default:
+  //   }
+  // }
 
   componentWillReceiveProps(nextProps) {
     // this.props 는 아직 바뀌지 않은 상태
     // console.log(nextProps);
     // console.log(nextProps.error);
     // console.log(this.props.error);
-    if (nextProps.error !== this.props.error) {
-      // console.log('validationResultvalidationResult');
-      if (nextProps.error.response) {
-        this.validationResult(nextProps.error.response.data.code);
-      }
-    }
+    // if (nextProps.error !== this.props.error) {
+    // console.log('validationResultvalidationResult');
+    // if (nextProps.error.response) {
+    //   this.validationResult(nextProps.error.response.data.code);
+    // }
+    // }
   }
 
   render() {
@@ -424,13 +495,15 @@ export class SignUp extends React.PureComponent {
 
               <InputWithHelper
                 placeholder={<FormattedMessage {...messages.email} />}
-                error={this.state.emailError}
+                error={this.validationMessage(this.state.emailError)}
+                onChange={this.handleOnChange}
                 type="text"
                 inputName="email"
               />
               <InputWithHelper
                 placeholder={<FormattedMessage {...messages.username} />}
-                error={this.state.usernameError}
+                error={this.validationMessage(this.state.usernameError)}
+                onChange={this.handleOnChange}
                 type="text"
                 inputName="username"
               />
@@ -442,12 +515,14 @@ export class SignUp extends React.PureComponent {
               <InputWithHelper
                 placeholder={<FormattedMessage {...messages.password} />}
                 type="password"
-                error={this.state.passwordError}
+                error={this.validationMessage(this.state.passwordError)}
+                onChange={this.handleOnChange}
                 inputName="password"
               />
               <InputWithHelper
                 placeholder={<FormattedMessage {...messages.passwordRepeat} />}
-                error={this.state.passwordRepeatError}
+                error={this.validationMessage(this.state.passwordRepeatError)}
+                onChange={this.handleOnChange}
                 type="password"
                 inputName="passwordRepeat"
               />

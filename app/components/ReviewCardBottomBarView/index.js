@@ -4,36 +4,44 @@
  *
  */
 
+/* react ref*/
 import React from 'react';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import { createStructuredSelector } from 'reselect';
-import { voteAction } from 'containers/ReviewCardBottomBar/actions';
-import makeSelectReviewCardBottomBar from 'containers/ReviewCardBottomBar/selectors';
+import classNames from 'classnames';
 
+/* material-ui core */
+import Button from '@material-ui/core/Button';
+import CloseIcon from '@material-ui/icons/Close';
+import Checkbox from '@material-ui/core/Checkbox';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
-import CloseIcon from '@material-ui/icons/Close';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import IconButton from '@material-ui/core/IconButton';
+import { withStyles } from '@material-ui/core/styles';
+
+/* material-ui icon */
+import ThumbUpOutlined from '@material-ui/icons/ThumbUpOutlined';
+
+/* containers */
+import { voteAction } from 'containers/ReviewCardBottomBar/actions';
+import makeSelectReviewCardBottomBar from 'containers/ReviewCardBottomBar/selectors';
+/* components */
+
 import axios from 'axios';
 
-import VoteNonIcon from '../../images/ic-voting-non.png';
-import VoteSelIcon from '../../images/ic-voting-sel.png';
-import ShareNonIcon from '../../images/ic-share-non.png';
+import VoteNonIcon from 'images/ic-voting-non.png';
+import VoteSelIcon from 'images/ic-voting-sel.png';
+import ShareNonIcon from 'images/ic-share-non.png';
 import FacebookProvider, { Share } from 'react-facebook';
 
-import CubeEndIcon from '../../images/ic-cube-end.png';
+import CubeEndIcon from 'images/ic-cube-end.png';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -296,7 +304,6 @@ class ReviewCardBottomBarView extends React.PureComponent {
     // const curReviewing = reviewingIcons.non;
     // const curReviewing = reviewingIcons.sel;
 
-    
     // current status for campaign
     let currentStatus = null;
     switch (review.reviewTimeLimit) {
@@ -338,14 +345,15 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 aria-label="service"
                 className={classes.votingIcon}
               >
-                <img
+                <ThumbUpOutlined className={classes.icons}/>
+                {/* <img
                   alt="좋아요"
                   src={curVote.selImg}
                   className={classes.icons}
-                />
+                /> */}
                 <span className={curVote.styleClass}>
                   {/* <FormattedMessage {...messages.votingActive} /> */}
-                  좋아요
+                  {likeYn}
                 </span>
               </Button>
             </div>
@@ -460,14 +468,15 @@ class ReviewCardBottomBarView extends React.PureComponent {
               aria-label="service"
               className={classes.votingIcon}
             >
-              <img
+              {/* <img
                 alt="좋아요"
                 src={curVote.selImg}
                 className={classes.icons}
-              />
+              /> */}
+              <ThumbUpOutlined className={classes.icons}/>
               <span className={curVote.styleClass}>
                 {/* <FormattedMessage {...messages.votingActive} /> */}
-                좋아요
+                {likeYn}
               </span>
             </Button>
           </div>

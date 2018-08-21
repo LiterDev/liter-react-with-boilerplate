@@ -112,7 +112,7 @@ const styles = {
   },
   nickNameButtion: {
     width: '100%',
-    borderRadius: '0',
+    borderRadius: 'unset',
   },
 };
 

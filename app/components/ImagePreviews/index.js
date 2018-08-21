@@ -85,6 +85,8 @@ class ImagePreviews extends React.PureComponent {
   }
   render() {
     const { classes } = this.props;
+    const imageClick = () => {
+    }
     return (
       <div className={classes.previewWrap}>
         <div className={classes.previewDiv}>
@@ -94,6 +96,7 @@ class ImagePreviews extends React.PureComponent {
                 src={RemoveIcon}
                 className={classes.ic_close_photo}
                 alt="previewImg"
+               // onClick={() => imageClick()}
               />
             </IconButton>
             <button onClick={() => this.remove('test')}>TEST</button>
@@ -103,6 +106,7 @@ class ImagePreviews extends React.PureComponent {
               className={classes.previewimg}
               src={this.props.src}
               alt={this.props.alt}
+              onClick={() => imageClick()}
             />
           ) : (
             <div className={classes.video}>

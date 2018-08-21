@@ -102,7 +102,7 @@ class FollowAjxButton extends React.PureComponent {
       }
       return response;
     })
-    .catch( (error) {
+    .catch( (error) { 
       console.log(error);
       return error;
     });

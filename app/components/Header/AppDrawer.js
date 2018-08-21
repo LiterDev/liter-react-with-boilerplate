@@ -26,7 +26,7 @@ import avatarDefault from '../../images/ic-avatar.png';
 
 const styles = theme => ({
   paper: {
-    width: '70%',
+    width: '85%',
     maxWidth: '300px',
     backgroundColor: theme.palette.background.paper,
   },

@@ -64,6 +64,10 @@ export default defineMessages({
     id: 'app.containers.SignUp.passwordEmpty',
     defaultMessage: 'passwordEmpty',
   },
+  passwordRepeatEmpty: {
+    id: 'app.containers.SignUp.passwordRepeatEmpty',
+    defaultMessage: 'passwordRepeatEmpty',
+  },
   passwordPatternValid: {
     id: 'app.containers.SignUp.passwordPatternValid',
     defaultMessage: 'passwordPatternValid',
@@ -76,9 +80,8 @@ export default defineMessages({
     id: 'app.containers.SignUp.nicknameExists',
     defaultMessage: 'nicknameExists',
   },
-
-  emailvalid: {
-    id: 'app.containers.SignUp.emailvalid',
-    defaultMessage: '이메일 형식',
+  emailValid: {
+    id: 'app.containers.SignUp.emailValid',
+    defaultMessage: 'emailValid',
   },
 });

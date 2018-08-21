@@ -68,7 +68,7 @@ function myPageReducer(state = initialState, action) {
     case constants.FOLLOWER_COUNT_ACTION:
       return state;
     case constants.FOLLOWER_COUNT_SUCCESS:
-      // console.log(action);
+      console.log('FOLLOWER_COUNT_SUCCESS');
       return state
         .set('loading', false)
         .set('error', false)
@@ -78,6 +78,7 @@ function myPageReducer(state = initialState, action) {
     case constants.FOLLOWING_COUNT_ACTION:
       return state;
     case constants.FOLLOWING_COUNT_SUCCESS:
+      console.log('FOLLOWING_COUNT_SUCCESS');
       return state
         .set('loading', false)
         .set('error', false)

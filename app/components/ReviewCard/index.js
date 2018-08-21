@@ -173,7 +173,7 @@ class ReviewCard extends React.PureComponent {
     const mediaCollection = review ? review.mediaCollection : false;
     const mediaItem = mediaCollection ? mediaCollection[0] : false;
     // let mainImageUrl = mediaCollection.length > 0 ? '/' + mediaCollection[0].path + '/' + mediaCollection[0].uuid + mediaCollection[0].name : '';
-    const avatarImageUrl = review.user.profileImageUrl;
+    const avatarImageUrl = review.user.profileImageSmallUrl;
     // temp date
     // call time-diff function (6 level)
     const timeDiff = '방금전';

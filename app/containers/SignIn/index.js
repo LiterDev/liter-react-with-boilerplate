@@ -73,7 +73,7 @@ const styles = theme => ({
   content: {
     top: '10px',
     width: '80%',
-    height: '75vh',
+    height: '70vh',
     // minHeight: '%',
     left: '10%',
     position: 'relative',

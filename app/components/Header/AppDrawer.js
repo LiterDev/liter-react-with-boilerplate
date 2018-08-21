@@ -26,7 +26,7 @@ import avatarDefault from '../../images/ic-avatar.png';
 
 const styles = theme => ({
   paper: {
-    width: '70%',
+    width: '85%',
     maxWidth: '300px',
     backgroundColor: theme.palette.background.paper,
   },
@@ -285,7 +285,7 @@ function AppDrawer(props) {
     </div>
   );
 
-  const avatarImg = (Boolean(localStorage.getItem('profileImageUrl') && localStorage.getItem('profileImageUrl') != 'null')? localStorage.getItem('profileImageUrl') : avatarDefault);
+  const avatarImg = (Boolean(localStorage.getItem('profileImageSmallUrl') && localStorage.getItem('profileImageSmallUrl') != 'null')? localStorage.getItem('profileImageSmallUrl') : avatarDefault);
   const LiterCubeIcon = (
     <svg xmlns="http://www.w3.org/2000/svg" width="10" height="21" viewBox="0 0 10 21" >
       <g fill="none" fillRule="evenodd"><path d="M-155-201h375v667h-375z" /><path fill="#fff" fillRule="nonzero" stroke="#fff" strokeWidth=".1"d="M7.886 6.502l.114.1v.972l-.034.072-.142.08A3.67 3.67 0 0 0 4.776 9.37l3.108.048.116.106-.059 1.022-.12.096-3.388-.042c-.018.139-.027.26-.027.376l.001.075v.028c.003.104.003.174-.002.233l3.48.05.115.105-.059 1.023-.12.096-3-.067c.596 1.045 1.747 1.71 3.066 1.757l.113.107-.059 1.022-.117.096c-2.01 0-3.798-1.186-4.44-2.918l-1.272-.048L2 12.428l.059-1.022.125-.096.861.048a4.1 4.1 0 0 1-.018-.383c0-.14.01-.25.037-.341l-.953-.043L2 10.485l.059-1.023.121-.096 1.153.033c.704-1.78 2.504-2.948 4.553-2.897z" /></g>

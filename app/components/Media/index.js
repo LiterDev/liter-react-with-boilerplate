@@ -48,7 +48,7 @@ function Media(props) {
     case 'IMAGE':
       return (
         <div>
-          {Boolean(props.idx) ? (
+          {Boolean(props.reviewId) ? (
             <StyledLink to={`/review/${props.reviewId}`}>
               <div
                 className={classes.iContainer}

@@ -89,7 +89,7 @@ class FollowAjxButton extends React.PureComponent {
       'url': requestURL,
       'data': data,
     })
-    .then( (response) {
+    .then( (response) => { 
       if(method == 'setFollow') {
         console.log(self);
         self.setState({
@@ -102,7 +102,7 @@ class FollowAjxButton extends React.PureComponent {
       }
       return response;
     })
-    .catch( (error) { 
+    .catch( (error) => { 
       console.log(error);
       return error;
     });

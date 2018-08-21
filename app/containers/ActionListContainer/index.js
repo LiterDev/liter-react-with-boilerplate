@@ -66,7 +66,7 @@ const styles = theme => ({
     width: '100%',
   },
   nameFont: {
-    width: '51px',
+    width: '100%',
     height: '17px',
     fontFamily: 'AppleSDGothicNeo',
     fontSize: '14px',
@@ -176,7 +176,7 @@ export class ActionListContainer extends React.PureComponent {
             <div className={classes.row}>
               <Avatar
                 alt={item.userNickName}
-                src={(item.profileImageUrl) ? item.profileImageUrl: avatarDefault }
+                src={(item.profileImageSmallUrl) ? item.profileImageSmallUrl: avatarDefault }
                 className={classes.avatar}
               />
             </div>

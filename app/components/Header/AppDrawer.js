@@ -140,7 +140,7 @@ const styles = theme => ({
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
-    width: '150px',
+    width: '180px',
     fontFamily: 'SFProDisplay',
     fontSize: '24px',
     fontWeight: '600',

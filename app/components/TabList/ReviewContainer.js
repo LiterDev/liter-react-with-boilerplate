@@ -134,7 +134,7 @@ const styles = {
     fontStretch: 'normal',
     lineHeight: '1.43',
     color: '#111111',
-  }
+  },
 };
 
 function ReviewContainer(props) {
@@ -144,7 +144,7 @@ function ReviewContainer(props) {
   const mediaCollection = review ? review.mediaCollection : false;
   const mediaItem = mediaCollection ? mediaCollection[0] : false;
 
-  console.log(review);
+  // console.log(review);
   // const timeDiff = '방금전';
   return (
     <div className={classes.line}>
@@ -153,8 +153,13 @@ function ReviewContainer(props) {
           {mediaItem ? (
             <MediaThumbnail
               fullPath={mediaItem.fullPath}
+              fullPathReduce={mediaItem.fullPathReduce}
+              fullPathSmall={mediaItem.fullPathSmall}
+              fullPathMedium={mediaItem.fullPathMedium}
+              imageExt={mediaItem.imageExt}
               mediaType={mediaItem.mediaType}
               description={mediaItem.name}
+              reviewId={review.id}
             />
           ) : (
             <div />
@@ -184,7 +189,12 @@ function ReviewContainer(props) {
             classes.paddingBottom,
           )}
         >
-          <StyledLink className={classes.linkCaption} to={`/review/${review.id}`}>{review.title}</StyledLink>
+          <StyledLink
+            className={classes.linkCaption}
+            to={`/review/${review.id}`}
+          >
+            {review.title}
+          </StyledLink>
         </div>
         <div className={classNames(classes.row, classes.fontSize13)}>
           <div className={classNames(classes.left, classes.col1)}>
@@ -195,21 +205,19 @@ function ReviewContainer(props) {
                   : classes.ingFalse
               }
             >
-              { (review.reviewTimeLimit === 'UNLIMIT') ? (
+              {review.reviewTimeLimit === 'UNLIMIT' ? (
                 <div>
                   <CheckCircleOutline style={{ fontSize: 13 }} />
-                  <span className={classes.leftPadding6}>
-                    진행중
-                  </span>
+                  <span className={classes.leftPadding6}>진행중</span>
                 </div>
               ) : (
                 <div>
                   <img src={LiterCubeIcon} />
                   <span className={classes.leftPadding6}>
-                    { review.rewardLitercube.toFixed(2) }
+                    {review.rewardLitercube.toFixed(2)}
                   </span>
                 </div>
-              )}              
+              )}
             </span>
           </div>
           <div className={classNames(classes.right, classes.col3Non)}>

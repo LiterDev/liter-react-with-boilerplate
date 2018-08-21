@@ -8,6 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
+import StyledLink from 'components/ReviewCard/StyledLink';
 import messages from './messages';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -37,17 +38,21 @@ const styles = theme => ({
 
 function MediaThumbnail(props) {
   const { classes } = props;
-
+  console.log(`fullPathMedium =====[ ${props.fullPathMedium}]`);
+  console.log(`reviewId =====[ ${props.reviewId}]`);
   switch (props.mediaType) {
     case 'IMAGE':
       return (
-        <div
-          className={classes.iContainer}>
-          <img
-            className={classes.iMediaSize}
-            src={props.fullPath}
-            alt={props.description}
-          />
+        <div className={classes.iContainer}>
+          <StyledLink to={`/review/${props.reviewId}`}>
+            <img
+              className={classes.iMediaSize}
+              src={
+                props.imageExt === 'gif' ? props.fullPath : props.fullPathMedium
+              }
+              alt={props.description}
+            />
+          </StyledLink>
         </div>
       );
     case 'YOUTUBE':
@@ -70,6 +75,11 @@ function MediaThumbnail(props) {
 MediaThumbnail.propTypes = {
   fullPath: PropTypes.any,
   mediaType: PropTypes.string,
+  fullPathReduce: PropTypes.any,
+  fullPathMedium: PropTypes.any,
+  fullPathSmall: PropTypes.any,
+  imageExt: PropTypes.any,
+  reviewId: PropTypes.any,
 };
 
 export default withStyles(styles)(MediaThumbnail);

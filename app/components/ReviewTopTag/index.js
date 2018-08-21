@@ -15,13 +15,11 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Slider from 'react-slick';
 
-
 import { FormattedMessage } from 'react-intl';
 
 import messages from './messages';
 import Cola from '../../images/Coca-Cola-Logo 2.png';
 import request from 'utils/request';
-
 
 const styles = theme => ({
   root: {
@@ -84,7 +82,7 @@ const styles = theme => ({
     textAlign: 'center',
     color: 'rgb(17, 17, 17)',
     fontFamily: 'AppleSDGothicNeo',
-    fontSize: 12,
+    fontSize: 11,
     // width: '100%',
   },
   text: {
@@ -127,7 +125,11 @@ const cateName = [
 
 /* eslint-disable react/prefer-stateless-function */
 class ReviewTopTag extends React.PureComponent {
-  componentDidMount() {}
+  constructor(props) {
+    super(props);
+
+    this.handleTag = this.handleTag.bind(this);
+  }
 
   handleTag = value => {
     // console.log(value);

@@ -6,10 +6,10 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 // import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
-import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
   iContainer: {
@@ -44,7 +44,9 @@ function Media(props) {
         <div
           className={classes.iContainer}
           style={{
-            backgroundImage: `url(${props.fullPath})`,
+            backgroundImage: `url(${
+              props.imageExt === 'gif' ? props.fullPathReduce : props.fullPath
+            })`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
 

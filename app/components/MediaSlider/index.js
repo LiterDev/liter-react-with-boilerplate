@@ -113,7 +113,7 @@ class MediaSlider extends React.PureComponent {
                   imageExt={review.imageExt}
                   mediaType={review.mediaType}
                   description={review.name}
-                  idx={reviewId}
+                  reviewId={reviewId}
                   movieKey={review.movieKey}
                 />
               ))}

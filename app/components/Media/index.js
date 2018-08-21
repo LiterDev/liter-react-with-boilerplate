@@ -49,7 +49,7 @@ function Media(props) {
       return (
         <div>
           {Boolean(props.idx) ? (
-            <StyledLink to={`/review/${props.reviewId}`}>
+            <StyledLink to={`/review/${props.idx}`}>
               <div
                 className={classes.iContainer}
                 style={{

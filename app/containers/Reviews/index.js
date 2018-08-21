@@ -93,7 +93,7 @@ export class Reviews extends React.PureComponent {
     this.setState({
       cateValue: value,
     });
-    this.props.loadReviewList(this.state.cateValue);
+    this.props.loadReviewList(value);
     // loadReviewList();
   };
   render() {

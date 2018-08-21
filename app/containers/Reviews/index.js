@@ -89,7 +89,7 @@ export class Reviews extends React.PureComponent {
     });
   }
   loadValue = value => {
-    console.log(value);
+    // console.log(value);
     this.setState({
       cateValue: value,
     });

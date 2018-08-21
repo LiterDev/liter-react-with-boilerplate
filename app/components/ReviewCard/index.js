@@ -223,7 +223,7 @@ class ReviewCard extends React.PureComponent {
 
           {/* { mediaItem ? ( <Media fullPath={mediaItem.fullPath} mediaType={mediaItem.mediaType} description={mediaItem.name} /> ) : ( <div></div> ) } */}
 
-          <MediaSlider media={mediaCollection} />
+          <MediaSlider media={mediaCollection} reviewId={review.id}/>
 
           {/* <CardMedia
             className={classes.media}

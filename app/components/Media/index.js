@@ -7,6 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import StyledLink from 'components/ReviewCard/StyledLink';
 // import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -35,30 +36,60 @@ const styles = theme => ({
   },
 });
 
+function handleClick(e) {
+  // console.log('click media');
+}
 function Media(props) {
   const { classes } = props;
   // console.log(`props.imageExt =====[ ${props.imageExt} ]`);
+  // console.log(`props.idx =====[ ${props.idx} ]`);
+
   switch (props.mediaType) {
     case 'IMAGE':
       return (
-        <div
-          className={classes.iContainer}
-          style={{
-            backgroundImage: `url(${
-              props.imageExt === 'gif' ? props.fullPath : props.fullPathMedium
-            })`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+        <div>
+          {Boolean(props.idx) ? (
+            <StyledLink to={`/review/${props.idx}`}>
+              <div
+                className={classes.iContainer}
+                style={{
+                  backgroundImage: `url(${
+                    props.imageExt === 'gif'
+                      ? props.fullPath
+                      : props.fullPathMedium
+                  })`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
 
-            width: '100%',
-            height: 280,
-          }}
-        >
-          {/* <img
+                  width: '100%',
+                  height: 280,
+                }}
+              />
+            </StyledLink>
+          ) : (
+            <div
+              className={classes.iContainer}
+              style={{
+                backgroundImage: `url(${
+                  props.imageExt === 'gif'
+                    ? props.fullPath
+                    : props.fullPathMedium
+                })`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+
+                width: '100%',
+                height: 280,
+              }}
+              // onClick={handleClick}
+            >
+              {/* <img
             className={classes.iMediaSize}
             src={props.fullPath}
             alt={props.description}
           /> */}
+            </div>
+          )}
         </div>
       );
     case 'YOUTUBE':
@@ -85,6 +116,7 @@ Media.propTypes = {
   fullPathSmall: PropTypes.any,
   imageExt: PropTypes.any,
   mediaType: PropTypes.string,
+  idx: PropTypes.any,
 };
 
 export default withStyles(styles)(Media);

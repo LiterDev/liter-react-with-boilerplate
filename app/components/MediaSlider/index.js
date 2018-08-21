@@ -76,7 +76,7 @@ class MediaSlider extends React.PureComponent {
 
   render() {
     const { classes } = this.props;
-    const { media, user } = this.props;
+    const { media, user, reviewId } = this.props;
 
     const settings = {
       dots: false,
@@ -113,7 +113,7 @@ class MediaSlider extends React.PureComponent {
                   imageExt={review.imageExt}
                   mediaType={review.mediaType}
                   description={review.name}
-                  idx={review.id}
+                  idx={reviewId}
                   movieKey={review.movieKey}
                 />
               ))}

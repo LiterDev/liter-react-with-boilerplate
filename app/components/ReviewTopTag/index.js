@@ -15,11 +15,13 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Slider from 'react-slick';
 
+
 import { FormattedMessage } from 'react-intl';
 
 import messages from './messages';
 import Cola from '../../images/Coca-Cola-Logo 2.png';
 import request from 'utils/request';
+
 
 const styles = theme => ({
   root: {

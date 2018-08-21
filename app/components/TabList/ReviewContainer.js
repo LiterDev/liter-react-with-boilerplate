@@ -7,8 +7,10 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Star from '@material-ui/icons/Star';
 
 import StyledLink from 'components/ReviewCard/StyledLink';
-import Media from 'components/Media';
+import MediaThumbnail from 'components/MediaThumbnail';
 import TimeAt from 'components/TimeAt';
+
+import LiterCubeIcon from '../../images/ic-cube-end-5.png';
 
 const styles = {
   line: {
@@ -125,6 +127,14 @@ const styles = {
   star: {
     color: '#7c7c7c',
   },
+  linkCaption: {
+    fontSize: 14,
+    fontWeight: 500,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: '1.43',
+    color: '#111111',
+  }
 };
 
 function ReviewContainer(props) {
@@ -134,13 +144,14 @@ function ReviewContainer(props) {
   const mediaCollection = review ? review.mediaCollection : false;
   const mediaItem = mediaCollection ? mediaCollection[0] : false;
 
+  console.log(review);
   // const timeDiff = '방금전';
   return (
     <div className={classes.line}>
       <span className={classes.col}>
         <div className={classes.reviewPhoto}>
           {mediaItem ? (
-            <Media
+            <MediaThumbnail
               fullPath={mediaItem.fullPath}
               mediaType={mediaItem.mediaType}
               description={mediaItem.name}
@@ -173,19 +184,32 @@ function ReviewContainer(props) {
             classes.paddingBottom,
           )}
         >
-          <StyledLink to={`/review/${review.id}`}>{review.title}</StyledLink>
+          <StyledLink className={classes.linkCaption} to={`/review/${review.id}`}>{review.title}</StyledLink>
         </div>
         <div className={classNames(classes.row, classes.fontSize13)}>
           <div className={classNames(classes.left, classes.col1)}>
             <span
               className={
-                review.rewardActive === 'DOING'
+                review.reviewTimeLimit === 'UNLIMIT'
                   ? classes.ingTrue
                   : classes.ingFalse
               }
             >
-              <CheckCircleOutline style={{ fontSize: 13 }} />
-              <span className={classes.leftPadding6}>진행중</span>
+              { (review.reviewTimeLimit === 'UNLIMIT') ? (
+                <div>
+                  <CheckCircleOutline style={{ fontSize: 13 }} />
+                  <span className={classes.leftPadding6}>
+                    진행중
+                  </span>
+                </div>
+              ) : (
+                <div>
+                  <img src={LiterCubeIcon} />
+                  <span className={classes.leftPadding6}>
+                    { review.rewardLitercube.toFixed(2) }
+                  </span>
+                </div>
+              )}              
             </span>
           </div>
           <div className={classNames(classes.right, classes.col3Non)}>

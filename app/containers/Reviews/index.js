@@ -38,6 +38,7 @@ window.jQuery = jQuery;
 const styles = theme => ({
   root: {
     paddingTop: theme.spacing.unit * 0,
+    backgroundColor: '#f3f4f6',
   },
   floatBtn: {
     position: 'fixed',
@@ -48,7 +49,8 @@ const styles = theme => ({
     boxShadow: '1px 6px 4px 0 rgba(0, 0, 0, 0.28)',
   },
   reviewList: {
-    marginTop: theme.spacing.unit * 13,
+    marginTop: theme.spacing.unit * 12,
+    paddingTop: theme.spacing.unit * 0.1,
     zIndex: 1100,
   },
 });
@@ -101,7 +103,7 @@ export class Reviews extends React.PureComponent {
     // console.log(reviews);
     // console.log(this.props.categorys);
     return (
-      <div>
+      <div className={classes.root}>
         <Header
           headerTitle={<FormattedMessage {...messages.header} />}
           searchBar="true"

@@ -301,7 +301,11 @@ axios.interceptors.response.use(
       if (accessToken) {
         utils.removeLocalStorage();
       }
-      window.location.href = '/signin';
+      // console.log(window.location.pathname);
+      // console.log('axios interceptors.');
+      if(window.location.pathname !== '/signin') {
+        window.location.href = '/signin';
+      }
 
       // browserHistory.push('/signin');
       // window.location.href = '/signin';

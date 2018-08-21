@@ -12,10 +12,12 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 // import { browserHistory } from 'react-router';
 /* material-ui core */
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
+import Collapse from '@material-ui/core/Collapse';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -49,7 +51,6 @@ import {
   makeSelectSignInSuccess,
   makeSelectSignInError,
 } from './selectors';
-import { Collapse } from '../../../node_modules/@material-ui/core';
 
 const styles = theme => ({
   appBar: {
@@ -62,7 +63,7 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 0,
     backgroundColor: '#ffffff',
     textAlign: 'center',
-    height: '100vh',
+    // height: '100vh',
     // paddingLeft: 30,
     // paddingRight: 30,
 
@@ -70,10 +71,29 @@ const styles = theme => ({
     // flexWrap: 'wrap',
   },
   content: {
+    top: '10px',
     width: '80%',
+    height: '75vh',
+    // minHeight: '%',
     left: '10%',
+    position: 'relative',
+    // bottom: '15%',
+  },
+  logoLayer: {
+    width: '100%',
+    top: '0px',
+  },
+  inputLayer: {
+    width: '100%',
+    bottom: '0px',
+  },
+  btnLayer: {
+    width: '100%',
     position: 'absolute',
-    bottom: '15%',
+    bottom: '0px',
+  },
+  blank1: {
+    paddingTop: '30%',
   },
   close: {
     position: 'absolute',
@@ -102,11 +122,11 @@ const styles = theme => ({
     color: '#111111',
   },
   signupForm: {
-    paddingTop: 60,
+    paddingTop: '10%',
     marginBottom: 2,
   },
   facebookBtn: {
-    marginTop: 91,
+    // marginTop: 91,
     width: '100%',
     height: 36,
     borderRadius: 3,
@@ -196,8 +216,12 @@ const styles = theme => ({
     fontWeight: 500,
     color: '#6d9fcc',
   },
-  blank1: {
-    paddingTop: '35%',
+  signinFail: {
+    color: '#ff5e4d',
+    fontSize: '12px',
+    fontWeight: 500,
+    textAlign: 'left',
+    paddingTop: '10px',
   },
 });
 
@@ -207,15 +231,20 @@ export class SignIn extends React.PureComponent {
     super(props);
     this.state = {
       inputFormState: false,
+      emailComplete: false,
+      passwordComplete: false,
+      inputChanging: false,
       complete: false,
       emailError: false,
       passwordError: false,
       openSuccesPop: false,
+      errors: [],
     };
     this.onSubmitFormInit = this.onSubmitFormInit.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
   handleClose = () => {
+    console.log('handel Close');
     this.setState({
       openSuccesPop: false,
     });
@@ -234,21 +263,13 @@ export class SignIn extends React.PureComponent {
   onSubmitFormInit(event) {
     event.preventDefault();
     const email = event.target.email.value;
-
     const password = event.target.password.value;
-    const errors = [];
+    const { errors } = this.state;
 
     // console.log(validateEmail(email));
 
-    if (!email) {
-      errors.push(500108);
-    } else {
-      this.setState({
-        emailError: false,
-      });
-    }
-    if (!validateEmail(email)) {
-      errors.push(500110);
+    if (!this.validationEmailCheck(email)) {
+      return false;
     }
     if (!password) {
       errors.push(500100);
@@ -258,18 +279,47 @@ export class SignIn extends React.PureComponent {
       });
     }
 
+    if (!this.errorsPrint()) {
+      return false;
+    }
+
+    this.setState({
+      complete: true,
+      inputChanging: false,
+    });
+    // const data = new FormData(event.target);
+    this.props.signinForm(email, password);
+    return false;
+  }
+
+  errorsPrint() {
+    const { errors } = this.state;
     if (errors.length > 0) {
       for (let i = 0; i < errors.length; i += 1) {
         this.validationResult(errors[i]);
       }
       return false;
     }
+    return true;
+  }
+
+  validationEmailCheck(email) {
+    const { errors } = this.state;
+
+    if (!email) {
+      errors.push(500108);
+      return false;
+    }
+    if (!validateEmail(email)) {
+      errors.push(500110);
+      return false;
+    }
 
     this.setState({
-      complete: true,
+      emailError: false,
+      errors: [],
     });
-    // const data = new FormData(event.target);
-    this.props.signinForm(email, password);
+
     return true;
   }
 
@@ -300,7 +350,7 @@ export class SignIn extends React.PureComponent {
   //   this.props.defaultAction();
   // }
   componentWillMount() {
-    // console.log('will mound');
+    console.log('will mound');
   }
   handleResponse = data => {
     // console.log(data);
@@ -322,6 +372,59 @@ export class SignIn extends React.PureComponent {
     });
   };
 
+  handleOnChange = e => {
+    // console.log(e);
+    if (e !== undefined) {
+      this.setState({ inputChanging: true });
+      if (e.target.name === 'email') {
+        if (this.validationEmailCheck(e.target.value)) {
+          this.setState({ emailComplete: true });
+        }
+      }
+      if (e.target.name === 'password') {
+        if (e.target.value.length >= 10) {
+          this.setState({ passwordComplete: true });
+        } else {
+          this.setState({
+            passwordComplete: false,
+          });
+        }
+      }
+    }
+    // console.log(`this.state.emailComplete::${this.state.emailComplete}`);
+    // console.log(`this.state.passwordComplete::${this.state.passwordComplete}`);
+    if (this.state.emailComplete && this.state.passwordComplete) {
+      this.setState({
+        complete: true,
+      });
+    } else {
+      this.setState({
+        complete: false,
+      });
+    }
+    // console.log(`this.state.complete::${this.state.complete}`);
+  };
+
+  handleOnBlur = e => {
+    this.validationEmailCheck(e.target.value);
+    this.errorsPrint();
+  };
+
+  resetInputState = () => {
+    console.log(`handle props signError :: ${this.props.signinError}`);
+    console.log(`handle onFocus :: ${this.props.signinError !== false}`);
+    if (this.props.signinError !== false) {
+      console.log('clear');
+      return true;
+    }
+    return false;
+  };
+
+  componentDidUpdate() {
+    /* 브라우저 자동의 완성의 경우 폼데이터 체크 후 로그인 버튼 활성 */
+    this.handleOnChange();
+  }
+
   render() {
     const { inputFormState } = this.state;
     const { classes, signinSuccess, signinError } = this.props;
@@ -338,7 +441,7 @@ export class SignIn extends React.PureComponent {
       localStorage.setItem('username', signinSuccess.username);
       // this.props.loadUserData(signinSuccess.username);
       this.props.signinEnd();
-      const pathLink = '/';
+      // const pathLink = '/';
       // console.log(this.props.location);
       // console.log(this.props.location.state);
       // if (this.props.location.state) {
@@ -380,76 +483,98 @@ export class SignIn extends React.PureComponent {
 
         <div className={classes.container}>
           <div className={classes.content}>
-            <div className={classes.litertext}>
-              <img
-                src={LiterLogo}
-                alt="LITER_logo"
-                className={classes.literlogo}
-              />
-            </div>
-            <div className={classes.bodytext}>
-              <FormattedMessage {...messages.bodytext} />
-            </div>
-            <form onSubmit={this.onSubmitFormInit}>
+            <div className={classes.logoLayer}>
               <Collapse in={!inputFormState}>
                 <div className={classes.blank1} />
               </Collapse>
-              <Collapse in={inputFormState}>
-                <div className={classes.signupForm}>
-                  <InputWithHelper
-                    placeholder={<FormattedMessage {...signUpmessages.email} />}
-                    error={this.state.emailError}
-                    type="text"
-                    inputName="email"
-                  />
-                  <InputWithHelper
-                    placeholder={
-                      <FormattedMessage {...signUpmessages.password} />
-                    }
-                    error={this.state.passwordError}
-                    type="password"
-                    inputName="password"
-                  />
-                  <div className={classes.buttonForm}>
-                    <BlueButton
-                      btnName={<FormattedMessage {...messages.login} />}
-                      onClickFunc={this.submitForm}
-                      complete={this.state.complete}
-                      btnType="submit"
-                      // onClick={this.submitForm}
+              <div className={classes.litertext}>
+                <img
+                  src={LiterLogo}
+                  alt="LITER_logo"
+                  className={classes.literlogo}
+                />
+              </div>
+              <div className={classes.bodytext}>
+                <FormattedMessage {...messages.bodytext} />
+              </div>
+            </div>
+            <div className={classes.inputLayer}>
+              <form onSubmit={this.onSubmitFormInit}>
+                <Collapse in={inputFormState}>
+                  <div className={classes.signupForm}>
+                    <InputWithHelper
+                      placeholder={
+                        <FormattedMessage {...signUpmessages.email} />
+                      }
+                      error={this.state.emailError}
+                      type="text"
+                      inputName="email"
+                      onChange={this.handleOnChange}
+                      onBlur={this.handleOnBlur}
+                      onFocusClear={this.resetInputState()}
                     />
+                    <InputWithHelper
+                      placeholder={
+                        <FormattedMessage {...signUpmessages.password} />
+                      }
+                      error={this.state.passwordError}
+                      type="password"
+                      inputName="password"
+                      onChange={this.handleOnChange}
+                      onFocusClear={this.resetInputState()}
+                    />
+                    <div className={classes.buttonForm}>
+                      <BlueButton
+                        btnName={<FormattedMessage {...messages.login} />}
+                        onClickFunc={this.submitForm}
+                        complete={this.state.complete}
+                        btnType="submit"
+                        // onClick={this.submitForm}
+                      />
+                    </div>
+                    {/* <div className={classes.recoverPassword}>
+                      비밀번호가 기억이 나지 않나요?
+                    </div> */}
                   </div>
-                  <div className={classes.recoverPassword}>
-                    비밀번호가 기억이 나지 않나요?
-                  </div>
-                </div>
-              </Collapse>
-            </form>
-            <div>
-              {signinError && '로그인이 실패하였습니다.'}
-              <FacebookProvider appId={process.env.FACEBOOK_APPID}>
-                <Login
-                  scope="email"
-                  onResponse={this.handleResponse}
-                  onError={this.handleError}
-                >
-                  <button className={classes.facebookBtn}>
-                    <span className={classes.facebookBtnText}>
-                      <FormattedMessage {...messages.facebookSignin} />
+                  {/* {console.log(this.state.inputComplete)} */}
+                  {signinError && !this.state.inputChanging ? (
+                    <div className={classes.signinFail}>
+                      아이디 또는 비밀번호를 다시 확인하세요.<br />
+                      등록되지 않은 이메일이거나, 이메일 또는 비밀번호를 잘못
+                      입력하셨습니다.
+                    </div>
+                  ) : (
+                    ''
+                  )}
+                </Collapse>
+              </form>
+            </div>
+            <div className={classes.btnLayer}>
+              <div>
+                <FacebookProvider appId={process.env.FACEBOOK_APPID}>
+                  <Login
+                    scope="email"
+                    onResponse={this.handleResponse}
+                    onError={this.handleError}
+                  >
+                    <button className={classes.facebookBtn}>
+                      <span className={classes.facebookBtnText}>
+                        <FormattedMessage {...messages.facebookSignin} />
+                      </span>
+                    </button>
+                  </Login>
+                </FacebookProvider>
+                <Collapse in={!inputFormState}>
+                  <button
+                    className={classes.emailBtn}
+                    onClick={this.handleInputForm}
+                  >
+                    <span className={classes.emailBtnText}>
+                      <FormattedMessage {...messages.emailSignin} />
                     </span>
                   </button>
-                </Login>
-              </FacebookProvider>
-              <Collapse in={!inputFormState}>
-                <button
-                  className={classes.emailBtn}
-                  onClick={this.handleInputForm}
-                >
-                  <span className={classes.emailBtnText}>
-                    <FormattedMessage {...messages.emailSignin} />
-                  </span>
-                </button>
-              </Collapse>
+                </Collapse>
+              </div>
             </div>
           </div>
         </div>
@@ -557,6 +682,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     signinForm: (email, password) => {
+      // console.log('signinForm');
       dispatch(signinAction(email, password));
     },
     signinFacebook: (userId, email, accessToken) => {

@@ -21,7 +21,7 @@ export default defineMessages({
   },
   facebookSignin: {
     id: 'app.containers.SignIn.facebookSignin',
-    defaultMessage: 'Facdbook으로 로그인',
+    defaultMessage: 'Facebook으로 로그인',
   },
   emailSignin: {
     id: 'app.containers.SignIn.emailSignin',

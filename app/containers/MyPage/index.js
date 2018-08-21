@@ -333,8 +333,8 @@ export class MyPage extends React.PureComponent {
               <Avatar
                 alt=""
                 src={
-                  myPages.userData.profileImageUrl
-                    ? myPages.userData.profileImageUrl
+                  myPages.userData.profileImageSmallUrl
+                    ? myPages.userData.profileImageSmallUrl
                     : avatarDefault
                 }
                 className={classNames(classes.avatar, classes.bigAvatar)}

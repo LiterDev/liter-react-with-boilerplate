@@ -321,11 +321,11 @@ class ReviewDetailCard extends React.PureComponent {
     // console.log(window.location.href);
 
     // this.props.location.state.from.pathname
-    // const avatarImageUrl = review.user.profileImageUrl;
+    // const avatarImageUrl = review.user.profileImageSmallUrl;
     const totalNewReview = 1;
     const mediaCollection = review ? review.mediaCollection : false;
     // const mainImageUrl = mediaCollection.length > 0 ? '/' + mediaCollection[0].path + '/' + mediaCollection[0].uuid : '';
-    const avatarImageUrl = review.user.profileImageUrl;
+    const avatarImageUrl = review.user.profileImageSmallUrl;
     const timeDiff = '방금전';
 
     const elAvatar =

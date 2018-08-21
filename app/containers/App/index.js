@@ -93,7 +93,7 @@ function App(props) {
       // localStorage.setItem('refreshToken', resp.data.refreshToken);
       localStorage.setItem('username', resp.data.username);
       localStorage.setItem('userNickName', resp.data.userNickName);
-      localStorage.setItem('profileImageUrl', resp.data.profileImageUrl);
+      localStorage.setItem('profileImageSmallUrl', resp.data.profileImageSmallUrl);
       localStorage.setItem('hasWallet', resp.data.hasWallet);
       localStorage.setItem('validStatus', resp.data.validStatus);
       localStorage.setItem('literCube', resp.data.literCube);

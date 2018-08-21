@@ -137,10 +137,10 @@ const styles = theme => ({
   userName: {
     display: 'inline-block',
     wordWrap: 'normal',
+    maxWidth: '150px',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
-    width: '180px',
     fontFamily: 'SFProDisplay',
     fontSize: '24px',
     fontWeight: '600',

@@ -37,7 +37,7 @@ const styles = theme => ({
 
 function Media(props) {
   const { classes } = props;
-  console.log(`props.imageExt =====[ ${props.imageExt} ]`);
+  // console.log(`props.imageExt =====[ ${props.imageExt} ]`);
   switch (props.mediaType) {
     case 'IMAGE':
       return (

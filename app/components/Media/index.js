@@ -49,7 +49,7 @@ function Media(props) {
       return (
         <div>
           {Boolean(props.idx) ? (
-            <StyledLink to={`/review/${props.idx}`}>
+            <StyledLink to={`/review/${props.reviewId}`}>
               <div
                 className={classes.iContainer}
                 style={{
@@ -116,7 +116,7 @@ Media.propTypes = {
   fullPathSmall: PropTypes.any,
   imageExt: PropTypes.any,
   mediaType: PropTypes.string,
-  idx: PropTypes.any,
+  reviewId: PropTypes.any,
 };
 
 export default withStyles(styles)(Media);

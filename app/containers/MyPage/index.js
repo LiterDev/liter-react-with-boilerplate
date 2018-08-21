@@ -110,6 +110,10 @@ const styles = {
     width: '1px',
     height: '35%',
   },
+  nickNameButtion: {
+    width: '100%',
+    borderRadius: '0',
+  },
 };
 
 /* eslint-disable react/prefer-stateless-function */
@@ -121,10 +125,11 @@ export class MyPage extends React.PureComponent {
         { tabLabel: '리뷰', type: 'REVIEW' },
         { tabLabel: '보상 내역', type: 'REWARD' },
       ],
+      pageLoading: false,
       makeWalletPopOpen: false,
       emailSuccessPop: false,
       nickChangePop: false,
-      totalLiterCube: 0
+      totalLiterCube: 0,
     };
 
     this.handleCreateWallet = this.handleCreateWallet.bind(this);
@@ -141,49 +146,48 @@ export class MyPage extends React.PureComponent {
   //     // userId: e.target.value,
   //   });
   // };
-  
+
   requestAjx = (method, sendType, requestURL, data, options) => {
     const self = this;
     axios({
-      'method': sendType,
-      'headers': options,
-      'url': requestURL,
-      'data': data,
+      method: sendType,
+      headers: options,
+      url: requestURL,
+      data: data,
     })
-    .then(function (response) {
-      if(method == 'getClaim') {
-        console.log(self);
-        self.props.selectAcquire();
-        self.props.selectMyRewards();
+      .then(function(response) {
+        if (method == 'getClaim') {
+          console.log(self);
+          self.props.selectAcquire();
+          self.props.selectMyRewards();
 
-        console.log("]] **)*)*)*)*) getClaim Response (*(*(*(*(*(*(* [[");
-        console.log(response);
+          console.log(']] **)*)*)*)*) getClaim Response (*(*(*(*(*(*(* [[');
+          console.log(response);
 
-        self.setState({
-          'totalLiterCube': response.data.totalLiterCube
-        });
-
-      }
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
+          self.setState({
+            totalLiterCube: response.data.totalLiterCube,
+          });
+        }
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
 
   handleRewardClaim = () => {
-    console.log("Claim");
+    console.log('Claim');
     const requestURL = `${process.env.API_URL}/reward/claim`;
     const accessToken = localStorage.getItem('accessToken');
     const token = `Bearer ${accessToken}`;
     const options = {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': token,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      Authorization: token,
     };
     const data = {};
     this.requestAjx('getClaim', 'GET', requestURL, data, options);
-  }
+  };
 
   handleSubmit = e => {
     const { resendEmailAuth } = this.props;
@@ -208,7 +212,6 @@ export class MyPage extends React.PureComponent {
 
   handleInitInfo = () => {
     // PrivateRoute
-        
     // console.log("Init");
     // const requestURL = `${process.env.API_URL}/user/authInfo`;
     // const accessToken = localStorage.getItem('accessToken');
@@ -221,7 +224,7 @@ export class MyPage extends React.PureComponent {
     // };
     // const data = {};
     // this.requestAjx('getClaim', 'GET', requestURL, data, options);
-  }
+  };
 
   handleCreateWallet = () => {
     console.log('makeWallet');
@@ -282,19 +285,41 @@ export class MyPage extends React.PureComponent {
   componentWillMount() {
     // console.log('componentWillMount');
     const { selectUserData } = this.props;
+    const { pageLoading } = this.state;
+    console.log(`pageLoading::: ${pageLoading}`);
+    this.setState({
+      pageLoading: true,
+    });
     selectUserData();
   }
-  componentDidMount() {    
-    this.setState({'totalLiterCube': (Boolean(localStorage.getItem('literCube')) && localStorage.getItem('literCube') != 'null')?localStorage.getItem('literCube'):0 });
+  componentDidMount() {
+    this.setState({
+      totalLiterCube:
+        Boolean(localStorage.getItem('literCube')) &&
+        localStorage.getItem('literCube') != 'null'
+          ? localStorage.getItem('literCube')
+          : 0,
+    });
   }
   componentWillReceiveProps(nextProps) {
     // console.log(`componentWillReceiveProps`);
     // console.log(`this --- ${this.props.myPages.userData.id}`);
     // console.log(`next --- ${nextProps.myPages.userData.id}`);
+
     const { selectFollowerCount, selectFollowingCount } = this.props;
-    if (this.props.myPages.userData.id !== nextProps.myPages.userData.id) {
-      selectFollowerCount(nextProps.myPages.userData.id);
-      selectFollowingCount(nextProps.myPages.userData.id);
+    const { pageLoading } = this.state;
+    // console.log(
+    //   `pageLoading::: ${pageLoading}=== ${nextProps.myPages.userData.id}`,
+    // );
+
+    if (nextProps.myPages.userData.id) {
+      if (pageLoading) {
+        selectFollowerCount(nextProps.myPages.userData.id);
+        selectFollowingCount(nextProps.myPages.userData.id);
+        this.setState({
+          pageLoading: false,
+        });
+      }
     }
   }
 
@@ -316,14 +341,16 @@ export class MyPage extends React.PureComponent {
 
     // const literCoin =
     //   myPages.userData.literCoin > 0 ? myPages.userData.literCoin : 0;
-    const literCoin = parseFloat(Boolean(this.state.totalLiterCube)? this.state.totalLiterCube:0).toFixed(2);
+    const literCoin = parseFloat(
+      Boolean(this.state.totalLiterCube) ? this.state.totalLiterCube : 0,
+    ).toFixed(2);
 
     return (
       <div>
         <SelfieControl
           changeSelfie={click => (this.changeSelfie = click)}
           callbackFunc={this.props.selectUserData}
-        /> 
+        />
         <div className={classes.container}>
           <Header headerTitle={<FormattedMessage {...messages.header} />} />
         </div>
@@ -346,8 +373,10 @@ export class MyPage extends React.PureComponent {
           <div className={classes.row}>
             <IconButton
               color="inherit"
-              aria-label="Close"
-              className={classes.close}
+              aria-label="nickName"
+              classes={{
+                root: classes.nickNameButtion,
+              }}
               onClick={() => {
                 this.openUserNickChange();
               }}

@@ -37,7 +37,7 @@ const styles = theme => ({
 
 function Media(props) {
   const { classes } = props;
-
+  console.log(`props.imageExt =====[ ${props.imageExt} ]`);
   switch (props.mediaType) {
     case 'IMAGE':
       return (
@@ -45,7 +45,9 @@ function Media(props) {
           className={classes.iContainer}
           style={{
             backgroundImage: `url(${
-              props.imageExt === 'gif' ? props.fullPathReduce : props.fullPath
+              props.imageExt === 'gif'
+                ? props.fullPathReduce
+                : props.fullPathMedium
             })`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
@@ -80,6 +82,10 @@ function Media(props) {
 
 Media.propTypes = {
   fullPath: PropTypes.any,
+  fullPathReduce: PropTypes.any,
+  fullPathMedium: PropTypes.any,
+  fullPathSmall: PropTypes.any,
+  imageExt: PropTypes.any,
   mediaType: PropTypes.string,
 };
 

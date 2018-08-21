@@ -107,6 +107,10 @@ class MediaSlider extends React.PureComponent {
                 <Media
                   key={idx}
                   fullPath={review.fullPath}
+                  fullPathReduce={review.fullPathReduce}
+                  fullPathSmall={review.fullPathSmall}
+                  fullPathMedium={review.fullPathMedium}
+                  imageExt={review.imageExt}
                   mediaType={review.mediaType}
                   description={review.name}
                   idx={review.id}

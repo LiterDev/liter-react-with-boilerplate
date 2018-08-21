@@ -17,6 +17,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import FeaturePage from 'containers/FeaturePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import MyPage from 'containers/MyPage/Loadable';
+import UserGrade from 'components/UserGrade';
 import ReviewForm from 'containers/ReviewForm/Loadable';
 
 import SlideTest from 'containers/SlideTest/Loadable';
@@ -117,6 +118,7 @@ function App(props) {
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />
         <PrivateRoute path="/mypage" component={MyPage} />
+        <Route path = "/usergrade" component={UserGrade} />
         <Route exact path="/follow" component={FollowActionPage} />
         <Route path="/follow/:userId" component={FollowActionPage} />
         <Route exact path="/following" component={FollowingActionPage} />
@@ -139,6 +141,7 @@ function App(props) {
         <Route path="/about" component={About} />
 
         <Route path="" component={NotFoundPage} />
+
       </Switch>
       {/* <Auth /> */}
       {/* <Footer /> */}

@@ -48,7 +48,7 @@ const styles = theme => ({
   },
 });
 
-/* eslint-disable react/prefer-stateless-function */
+/* eslint-disable react/prefer-stateless- */
 class FollowAjxButton extends React.PureComponent {
 
   constructor(props) {
@@ -89,7 +89,7 @@ class FollowAjxButton extends React.PureComponent {
       'url': requestURL,
       'data': data,
     })
-    .then(function (response) {
+    .then( (response) => { 
       if(method == 'setFollow') {
         console.log(self);
         self.setState({
@@ -102,7 +102,7 @@ class FollowAjxButton extends React.PureComponent {
       }
       return response;
     })
-    .catch(function (error) {
+    .catch( (error) => { 
       console.log(error);
       return error;
     });

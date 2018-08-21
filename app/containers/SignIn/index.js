@@ -63,7 +63,7 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 0,
     backgroundColor: '#ffffff',
     textAlign: 'center',
-    height: '100vh',
+    // height: '100vh',
     // paddingLeft: 30,
     // paddingRight: 30,
 
@@ -73,7 +73,7 @@ const styles = theme => ({
   content: {
     top: '10px',
     width: '80%',
-    height: '75%',
+    height: '75vh',
     // minHeight: '%',
     left: '10%',
     position: 'relative',
@@ -122,7 +122,7 @@ const styles = theme => ({
     color: '#111111',
   },
   signupForm: {
-    paddingTop: 50,
+    paddingTop: '10%',
     marginBottom: 2,
   },
   facebookBtn: {

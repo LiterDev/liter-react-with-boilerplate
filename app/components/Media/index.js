@@ -45,9 +45,7 @@ function Media(props) {
           className={classes.iContainer}
           style={{
             backgroundImage: `url(${
-              props.imageExt === 'gif'
-                ? props.fullPathReduce
-                : props.fullPathMedium
+              props.imageExt === 'gif' ? props.fullPath : props.fullPathMedium
             })`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',

@@ -29,6 +29,8 @@ import { withStyles } from '@material-ui/core/styles';
 /* material-ui icon */
 import ThumbUpOutlined from '@material-ui/icons/ThumbUpOutlined';
 
+import LikeList from 'components/LikeList';
+
 /* containers */
 import { voteAction } from 'containers/ReviewCardBottomBar/actions';
 import makeSelectReviewCardBottomBar from 'containers/ReviewCardBottomBar/selectors';
@@ -42,9 +44,7 @@ import ShareNonIcon from 'images/ic-share-non.png';
 import FacebookProvider, { Share } from 'react-facebook';
 
 import CubeEndIcon from 'images/ic-cube-end.png';
-
 import { FormattedMessage } from 'react-intl';
-
 import messages from './messages';
 
 const styles = theme => ({
@@ -193,6 +193,10 @@ const shareIcons = {
   },
 };
 
+function Transition(props) {
+  return <Slide direction="up" {...props} />;
+}
+
 /* eslint-disable react/prefer-stateless-function */
 class ReviewCardBottomBarView extends React.PureComponent {
   state = {
@@ -201,6 +205,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
     sharing: false,
     openSuccesPop: false,
     openLoginPop: false,
+    totalLikeCount: 0,
   };
   constructor(props) {
     super(props);
@@ -219,9 +224,15 @@ class ReviewCardBottomBarView extends React.PureComponent {
       : this.props.classes.rootBottom;
   }
 
+  sendVoting = reviewId => {
+    
+  }
+
   handleVoting = reviewId => {
     // console.log('handleVoting in detail');
-    // console.log(`this.props.likeYn =====[ ${this.props.likeYn}]`);
+    console.log(`this.props.likeYn =====[ ${this.props.likeYn}]`);
+    console.log(this.props.likeYn);
+
     if (this.props.likeYn > 0) {
       this.props.onViewVote(reviewId);
     } else {
@@ -255,6 +266,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
       }
     }
   };
+
   handleClose = () => {
     this.setState({
       openSuccesPop: false,
@@ -283,6 +295,11 @@ class ReviewCardBottomBarView extends React.PureComponent {
 
     this.props.history.push('/signin');
   };
+
+  componentDidMount() {
+    this.setState({'totalLikeCount': this.props.review.likeCount});
+  }
+
   render() {
     const { classes } = this.props;
     const {
@@ -293,17 +310,18 @@ class ReviewCardBottomBarView extends React.PureComponent {
       likeYn,
       review,
     } = this.props;
-    const { voting, reviewing, sharing, viewClass } = this.state;
+    const { voting, reviewing, sharing, viewClass, totalLikeCount } = this.state;
 
     const curVote = likeYn ? votingIcons.sel : votingIcons.non;
     const curReviewing = campaign ? reviewingIcons.sel : reviewingIcons.non;
     const curShare = shareIcons.non;
+
     // const curVote = votingIcons.sel;
     // const curVote = votingIcons.non;
     // const curShare = shareIcons.non;
     // const curReviewing = reviewingIcons.non;
     // const curReviewing = reviewingIcons.sel;
-
+    
     // current status for campaign
     let currentStatus = null;
     switch (review.reviewTimeLimit) {
@@ -353,7 +371,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 /> */}
                 <span className={curVote.styleClass}>
                   {/* <FormattedMessage {...messages.votingActive} /> */}
-                  {likeYn}
+                  {totalLikeCount}
                 </span>
               </Button>
             </div>
@@ -372,6 +390,11 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 </Share>
               </FacebookProvider>
             </div>
+
+          {/* ]]---------  LikeList Popup :: START --------[[ */}
+          <LikeList />
+          {/* ]]---------  LikeList Popup :: END  --------[[ */}
+
           </div>
           <Dialog
             open={this.state.openSuccesPop}
@@ -476,7 +499,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
               <ThumbUpOutlined className={classes.icons}/>
               <span className={curVote.styleClass}>
                 {/* <FormattedMessage {...messages.votingActive} /> */}
-                {likeYn}
+                {totalLikeCount}
               </span>
             </Button>
           </div>
@@ -499,6 +522,11 @@ class ReviewCardBottomBarView extends React.PureComponent {
               </Share>
             </FacebookProvider>
           </div>
+
+          {/* ]]---------  LikeList Popup :: START --------[[ */}
+          <LikeList />
+          {/* ]]---------  LikeList Popup :: END  --------[[ */}
+
         </div>
         <Dialog
           open={this.state.openSuccesPop}

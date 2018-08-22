@@ -247,6 +247,7 @@ class ReviewCard extends React.PureComponent {
             likeYn={review.likeYn}
             onViewVote={false}
             review={review}
+            reviewId={review.id}
           />
         </Card>
       </div>

@@ -38,6 +38,7 @@ import About from 'components/About/Loadable';
 // import { PrivateRoute, PrivateWalletRoute } from 'containers/Auth';
 import SignUp from 'containers/SignUp/Loadable';
 import SignIn from 'containers/SignIn/Loadable';
+import ProfilePage from 'containers/ProfilePage/Loadable';
 import * as utils from 'utils/commonFunc';
 import { withStyles } from '@material-ui/core/styles';
 import withRoot from 'withRoot';
@@ -139,6 +140,7 @@ function App(props) {
         {/* <PrivateRoute path="/valid/:validString" component={EmailValid} /> */}
         <PrivateRoute path="/valid" component={EmailValid} />
         <Route path="/about" component={About} />
+        <Route path="/profile" component={ProfilePage} />
 
         <Route path="" component={NotFoundPage} />
 

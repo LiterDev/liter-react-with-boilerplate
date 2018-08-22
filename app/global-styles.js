@@ -10,12 +10,12 @@ injectGlobal`
     background-color: #ffffff;
   }
 
-  body {
+  body {    
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
   body.fontLoaded {
-    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'SF Pro Text', 'SF Pro Icons', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
   #app {

@@ -14,7 +14,7 @@ import classNames from 'classnames';
 
 /* material-ui core */
 import Button from '@material-ui/core/Button';
-import CloseIcon from '@material-ui/icons/Close';
+
 import Checkbox from '@material-ui/core/Checkbox';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -27,7 +27,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 
 /* material-ui icon */
-import ThumbUpOutlined from '@material-ui/icons/ThumbUpOutlined';
+import CloseIcon from '@material-ui/icons/Close';
 
 /* containers */
 import { voteAction } from 'containers/ReviewCardBottomBar/actions';
@@ -39,6 +39,9 @@ import axios from 'axios';
 import VoteNonIcon from 'images/ic-voting-non.png';
 import VoteSelIcon from 'images/ic-voting-sel.png';
 import ShareNonIcon from 'images/ic-share-non.png';
+import LikeIcon from 'images/ic-feed-like.png';
+import CommentIcon from 'images/ic-feed-comment.png';
+import ShareIcon from 'images/ic-feed-share.png';
 import FacebookProvider, { Share } from 'react-facebook';
 
 import CubeEndIcon from 'images/ic-cube-end.png';
@@ -57,15 +60,24 @@ const styles = theme => ({
     boxShadow: `0 -1px 7px 0 rgba(0, 0, 0, 0.1)`,
   },
   rootBottom: {},
+  rootButton: {
+    minWidth: '50px',
+  },
+
   actions: {
     paddingTop: '8px',
+    // marginLeft: '10px',
     bottom: '0',
     width: '100%',
     display: 'block',
     height: '52px',
   },
+  activeStatusFirst: {
+    paddingLeft: '1vh',
+    float: 'left',
+  },
   activeStatus: {
-    padding: '0 0 0 16px',
+    paddingLeft: '4vh',
     float: 'left',
   },
   activeRStatus: {
@@ -81,12 +93,12 @@ const styles = theme => ({
     height: '19px',
   },
   icons: {
-    width: '19px',
-    height: '19px',
+    width: '24px',
+    height: '24px',
   },
   captionNText: {
-    padding: '0 0 0 5px',
-    fontSize: '15px',
+    padding: '0 0 0 10px',
+    fontSize: '17px',
     fontWeight: '500',
     fontStyle: 'normal',
     fontStretch: 'normal',
@@ -95,8 +107,8 @@ const styles = theme => ({
     color: '#7c7c7c',
   },
   captionSText: {
-    padding: '0 0 0 5px',
-    fontSize: '15px',
+    padding: '0 0 0 10px',
+    fontSize: '17px',
     fontWeight: '500',
     fontStyle: 'normal',
     fontStretch: 'normal',
@@ -336,6 +348,24 @@ class ReviewCardBottomBarView extends React.PureComponent {
       return (
         <div className={viewClass}>
           <div className={classes.actions}>
+            <div className={classes.activeStatusFirst}>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  this.handleVoting(this.props.reviewId);
+                }}
+                aria-label="service"
+                className={classes.votingIcon}
+                classes={{
+                  root: classes.rootButton,
+                }}
+              >
+                <img src={LikeIcon} alt="like" className={classes.icons} />
+                <span className={curVote.styleClass}>
+                  {review.likeCount ? review.likeCount : 0}
+                </span>
+              </Button>
+            </div>
             <div className={classes.activeStatus}>
               <Button
                 color="inherit"
@@ -344,20 +374,39 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 }}
                 aria-label="service"
                 className={classes.votingIcon}
+                classes={{
+                  root: classes.rootButton,
+                }}
               >
-                <ThumbUpOutlined className={classes.icons}/>
-                {/* <img
-                  alt="좋아요"
-                  src={curVote.selImg}
+                <img
+                  src={CommentIcon}
+                  alt="comment"
                   className={classes.icons}
-                /> */}
+                />
                 <span className={curVote.styleClass}>
-                  {/* <FormattedMessage {...messages.votingActive} /> */}
                   {review.likeCount ? review.likeCount : 0}
                 </span>
               </Button>
             </div>
-            <div className={classes.activeStatus}>{currentStatus}</div>
+            <div className={classes.activeStatus}>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  this.handleVoting(this.props.reviewId);
+                }}
+                aria-label="service"
+                className={classes.votingIcon}
+                classes={{
+                  root: classes.rootButton,
+                }}
+              >
+                <img src={ShareIcon} alt="share" className={classes.icons} />
+                <span className={curVote.styleClass}>
+                  {review.likeCount ? review.likeCount : 0}
+                </span>
+              </Button>
+            </div>
+            {/* <div className={classes.activeStatus}>{currentStatus}</div> */}
             <div className={classes.activeRStatus}>
               <FacebookProvider appId={process.env.FACEBOOK_APPID}>
                 <Share href={window.location.href}>
@@ -459,21 +508,37 @@ class ReviewCardBottomBarView extends React.PureComponent {
     return (
       <div className={classes.root}>
         <div className={classes.actions}>
+          <div className={classes.activeStatusFirst}>
+            <Button
+              color="inherit"
+              onClick={() => {
+                this.handleVoting(this.props.reviewId);
+              }}
+              aria-label="like"
+              className={classes.votingIcon}
+              classes={{
+                root: classes.rootButton,
+              }}
+            >
+              <img src={LikeIcon} alt="like" className={classes.icons} />
+              <span className={curVote.styleClass}>
+                {review.likeCount ? review.likeCount : 0}
+              </span>
+            </Button>
+          </div>
           <div className={classes.activeStatus}>
             <Button
               color="inherit"
               onClick={() => {
                 this.handleVoting(this.props.reviewId);
               }}
-              aria-label="service"
+              aria-label="comment"
               className={classes.votingIcon}
+              classes={{
+                root: classes.rootButton,
+              }}
             >
-              {/* <img
-                alt="좋아요"
-                src={curVote.selImg}
-                className={classes.icons}
-              /> */}
-              <ThumbUpOutlined className={classes.icons}/>
+              <img src={CommentIcon} alt="comment" className={classes.icons} />
               <span className={curVote.styleClass}>
                 {/* <FormattedMessage {...messages.votingActive} /> */}
                 {review.likeCount ? review.likeCount : 0}
@@ -481,10 +546,29 @@ class ReviewCardBottomBarView extends React.PureComponent {
             </Button>
           </div>
           <div className={classes.activeStatus}>
-            {/* <span className={curReviewing.styleClass}>               */}
-            {currentStatus}
-            {/* </span> */}
+            <Button
+              color="inherit"
+              onClick={() => {
+                this.handleVoting(this.props.reviewId);
+              }}
+              aria-label="share"
+              className={classes.votingIcon}
+              classes={{
+                root: classes.rootButton,
+              }}
+            >
+              <img src={ShareIcon} alt="share" className={classes.icons} />
+              <span className={curVote.styleClass}>
+                {review.likeCount ? review.likeCount : 0}
+              </span>
+            </Button>
           </div>
+
+          {/* <div className={classes.activeStatus}> */}
+          {/* <span className={curReviewing.styleClass}>               */}
+          {/* {currentStatus} */}
+          {/* </span> */}
+          {/* </div> */}
           <div className={classes.activeRStatus}>
             <FacebookProvider appId={process.env.FACEBOOK_APPID}>
               <Share href={window.location.href}>

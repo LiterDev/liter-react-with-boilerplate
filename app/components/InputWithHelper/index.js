@@ -6,6 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 
 import TextField, { Input } from '@material/react-text-field';
@@ -66,6 +67,10 @@ const styles = theme => ({
     top: '42%',
     transform: 'translateY(-42%)',
   },
+  inputOnFocus: {
+    borderRadius: '3px !important',
+    border: 'solid 0.5px #1591ff !important',
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -74,6 +79,7 @@ class InputWithHelper extends React.PureComponent {
     super(props);
     this.state = {
       value: '',
+      inputState: false,
       errorState: this.props.error,
     };
   }
@@ -95,15 +101,20 @@ class InputWithHelper extends React.PureComponent {
 
   handleFocus = () => {
     // console.log(this.props.onFocusClear);
+    console.log(this.states.inputState);
     if (this.props.onFocusClear) {
       this.setState({
         value: '',
       });
     }
+    this.setState({
+      inputState: true,
+    });
   };
   // {e => this.setState({ value: e.target.value })
   render() {
     const { classes, placeholder, error, type, inputName } = this.props;
+    const { inputState } = this.state;
     // console.log(placeholder.props.id);
     // const textField = new MDCTextField(
     //   document.querySelector('.mdc-text-field'),
@@ -115,14 +126,20 @@ class InputWithHelper extends React.PureComponent {
             <TextField
               label={message}
               box
-              className={error ? classes.inputWrapError : classes.inputWrap}
+              className={classNames(
+                error ? classes.inputWrapError : classes.inputWrap,
+                inputState ? classes.inputOnFocus : '',
+              )}
             >
               <Input
                 value={this.state.value}
                 onChange={e => this.handleChange(e)}
                 onBlur={e => this.handelBlur(e)}
                 onFocus={this.handleFocus}
-                className={classes.input}
+                className={classNames(
+                  classes.input,
+                  this.state.input ? classes.inputOnFocus : '',
+                )}
                 type={type}
                 name={inputName}
               />

@@ -315,8 +315,8 @@ class ReviewDetailCard extends React.PureComponent {
   render() {
     const { classes, reviews, surveys, history } = this.props;
     const review = reviews;
-    console.log(reviews);
-    console.log(surveys);
+    // console.log(reviews);
+    // console.log(surveys);
     // console.log(window.location.href);
 
     // this.props.location.state.from.pathname
@@ -441,7 +441,7 @@ class ReviewDetailCard extends React.PureComponent {
       break;
     }
 
-    console.log(review.store);
+    // console.log(review.store);
 
     return (
       <div>

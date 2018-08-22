@@ -164,8 +164,11 @@ class ReviewCard extends React.PureComponent {
     this.setState(state => ({ expanded: !state.expanded }));
   };
 
+  
+
   render() {
     // console.log(window.location.href);
+    // console.log(this.props.history);
     const { classes } = this.props;
     const { idx, review, viewType } = this.props;
     const { handleVoting } = this.props;
@@ -223,7 +226,7 @@ class ReviewCard extends React.PureComponent {
 
           {/* { mediaItem ? ( <Media fullPath={mediaItem.fullPath} mediaType={mediaItem.mediaType} description={mediaItem.name} /> ) : ( <div></div> ) } */}
 
-          <MediaSlider media={mediaCollection} reviewId={review.id}/>
+          <MediaSlider media={mediaCollection} reviewId={review.id} />
 
           {/* <CardMedia
             className={classes.media}

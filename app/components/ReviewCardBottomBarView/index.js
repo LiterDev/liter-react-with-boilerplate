@@ -273,8 +273,9 @@ class ReviewCardBottomBarView extends React.PureComponent {
   handleResponse = res => {
     console.log(`handleResponse:::${res}`);
   };
-  handleReady = reviewId => {
-    console.log(`handleReady:::${reviewId}`);
+  handleReady = req => {
+    console.log(req);
+    console.log(req.options);
   };
   handleError = res => {
     console.log(`handleError:::${res}`);

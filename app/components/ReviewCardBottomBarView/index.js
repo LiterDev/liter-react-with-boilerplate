@@ -128,7 +128,7 @@ const styles = theme => ({
     fontStretch: 'normal',
     lineHeight: '1.27',
     letterSpacing: 'normal',
-    color: '#aaaaaa',
+    color: '#7c7c7c',
   },
   cubeEnd: {
     width: '6px',
@@ -374,8 +374,6 @@ class ReviewCardBottomBarView extends React.PureComponent {
     const curReviewing = campaign ? reviewingIcons.sel : reviewingIcons.non;
     const curShare = shareIcons.non;
 
-
-
     // const curVote = votingIcons.sel;
     // const curVote = votingIcons.non;
     // const curShare = shareIcons.non;
@@ -426,7 +424,8 @@ class ReviewCardBottomBarView extends React.PureComponent {
                   root: classes.rootButton,
                 }}
               >
-                <img src={LikeIcon} alt="like" className={classes.icons} />
+                {/* <img src={LikeIcon} alt="like" className={classes.icons} /> */}
+                <img src={curVote.selImg} alt="like" className={classes.icons} />
                 <span className={classNames(classes.numCaption, curVote.styleClass)}>
                   {review.likeCount ? review.likeCount : 0}
                 </span>        
@@ -450,7 +449,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
                   alt="comment"
                   className={classes.icons}
                 />
-                <span className={classNames(classes.numCaption, curVote.styleClass)}>
+                <span className={classNames(classes.numCaption, curReviewing.styleClass)}>
                   {review.likeCount ? review.likeCount : 0}
                 </span>
               </Button>
@@ -465,7 +464,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
                       alt="share"
                       className={classes.icons}
                     />
-                    <span className={classNames(classes.numCaption, curVote.styleClass)}>
+                    <span className={classNames(classes.numCaption, curShare.styleClass)}>
                       {review.shareCount ? review.shareCount : 0}
                     </span>
                   </div>
@@ -604,7 +603,8 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 root: classes.rootButton,
               }}
             >
-              <img src={LikeIcon} alt="like" className={classes.icons} />
+              {/* <img src={LikeIcon} alt="like" className={classes.icons} /> */}
+              <img src={curVote.selImg} alt="like" className={classes.icons} />
               <span className={classNames(classes.numCaption, curVote.styleClass)}>
                 {review.likeCount ? review.likeCount : 0}
               </span>
@@ -623,7 +623,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
               }}
             >
               <img src={CommentIcon} alt="comment" className={classes.icons} />
-              <span className={classNames(classes.numCaption, curVote.styleClass)}>
+              <span className={classNames(classes.numCaption, curReviewing.styleClass)}>
                 {/* <FormattedMessage {...messages.votingActive} /> */}
                 {review.likeCount ? review.likeCount : 0}
 
@@ -650,7 +650,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
                   }}
                 >
                   <img src={ShareIcon} alt="share" className={classes.icons} />
-                  <span className={classNames(classes.numCaption, curVote.styleClass)}>
+                  <span className={classNames(classes.numCaption, curShare.styleClass)}>
                     {review.shareCount ? review.shareCount : 0}
                   </span>
                 </Button>

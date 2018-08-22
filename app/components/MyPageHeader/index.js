@@ -159,7 +159,9 @@ const styles = theme => ({
 function HomeIcon(props) {
   return (
     <SvgIcon {...props}>
-      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+      />
+  
     </SvgIcon>
   );
 }
@@ -185,7 +187,7 @@ class MyPageHeader extends React.Component {
 
   moveHome = () => {
     // console.log('home');
-    // return <Redirect to="/login" />;
+    //return <Redirect to="/login" />;
     this.props.history.push('/');
   };
   logout = () => {
@@ -204,11 +206,11 @@ class MyPageHeader extends React.Component {
               className={classes.ic_round_home}
               color="inherit"
               aria-label="Menu"
-              onClick={this.moveHome}
+             onClick={this.moveHome}
             >
               {/* <MenuIcon /> */}
               {/* <Link to="/"> */}
-              <HomeIcon className={classes.icon} />
+             <HomeIcon className={classes.icon}/>
 
               {/* </Link> */}
             </IconButton>

@@ -80,7 +80,7 @@ const styles = theme => ({
   },
   cardHeader: {
     title: {
-      backgroundColor: 'black',
+     backgroundColor: 'black',
     },
   },
   reviewTitle: {
@@ -91,7 +91,7 @@ const styles = theme => ({
     fontStretch: 'normal',
     lineHeight: '1.44',
     letterSpacing: 'normal',
-    color: ' #333333',
+    color: '#333333',
   },
   divider: {
     margin: 'auto',
@@ -164,8 +164,11 @@ class ReviewCard extends React.PureComponent {
     this.setState(state => ({ expanded: !state.expanded }));
   };
 
+  
+
   render() {
     // console.log(window.location.href);
+    // console.log(this.props.history);
     const { classes } = this.props;
     const { idx, review, viewType } = this.props;
     const { handleVoting } = this.props;
@@ -223,14 +226,20 @@ class ReviewCard extends React.PureComponent {
 
           {/* { mediaItem ? ( <Media fullPath={mediaItem.fullPath} mediaType={mediaItem.mediaType} description={mediaItem.name} /> ) : ( <div></div> ) } */}
 
-          <MediaSlider media={mediaCollection} reviewId={review.id}/>
+          <MediaSlider media={mediaCollection} reviewId={review.id} />
 
           {/* <CardMedia
             className={classes.media}
             image={mainImageUrl}
             title={review.username}
           /> */}
-
+          <ReviewCardBottomBarView
+            likeYn={review.likeYn}
+            onViewVote={false}
+            review={review}
+            reviewId={review.id}
+          />
+          <Divider className={classes.divider} light />
           <CardContent>
             <StyledLink to={`/review/${review.id}`}>
               <Typography className={classes.reviewTitle} component="p">
@@ -241,14 +250,6 @@ class ReviewCard extends React.PureComponent {
           <div>
             <Divider className={classes.divider} light />
           </div>
-
-          {/* <ReviewCardBottomBar ref={`card${idx}`} prKey={`card${idx}`} reviewId={review.id} /> */}
-          <ReviewCardBottomBarView
-            likeYn={review.likeYn}
-            onViewVote={false}
-            review={review}
-            reviewId={review.id}
-          />
         </Card>
       </div>
     );

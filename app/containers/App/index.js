@@ -125,8 +125,7 @@ function App(props) {
         <Route exact path="/following" component={FollowingActionPage} />
         <Route path="/following/:userId" component={FollowingActionPage} />
         <PrivateRoute
-          exact
-          path="/review/write"
+          exact path="/review/write"
           component={ReviewForm}
           // authenticated={this.state.isAuthenticatedWallet}
         />

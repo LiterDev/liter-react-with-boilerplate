@@ -142,14 +142,14 @@ const styles = theme => ({
     height: 40,
   },
   rowdiv: {
-    width: '70%',
+    width: '88%',
     backgroundColor: '#ffffff',
     // paddingBottom: 16,
     // paddingLeft: 16,
     // paddingRight: 16,
     // paddingTop: 1,
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    // marginLeft: 'auto',
+    // marginRight: 'auto',
   },
 });
 
@@ -201,18 +201,12 @@ class Header extends React.Component {
       <div>
         <AppBar position="fixed" className={classes.top_box}>
           <Toolbar className={classes.toolbar}>
-            <IconButton
+            {/* <IconButton
               className={classes.ic_round_home}
               color="inherit"
               aria-label="Menu"
               onClick={this.moveHome}
             >
-              {/* <MenuIcon /> */}
-              {/* <Link to="/"> */}
-              <HomeIcon className={classes.icon} />
-
-              {/* </Link> */}
-            </IconButton>
             {searchBar === 'true' ? (
               <div className={classes.rowdiv}>
                 <div className={classes.inputWrap}>
@@ -246,7 +240,6 @@ class Header extends React.Component {
               <img src={MenuIcon} />
               {/* <MoreVertIcon className={classes.icon} /> */}
             </IconButton>
-
           </Toolbar>
         </AppBar>
         <AppDrawer

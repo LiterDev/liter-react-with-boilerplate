@@ -72,13 +72,35 @@ const styles = {
     fontStretch: 'normal',
     letterSpacing: 'normal',
     color: '#1591ff',
+  },
+  totalLiterCube: {
+    paddingRight: 30,
+    float: 'right',
+    fontFamily: 'SFProDisplay',
+    fontSize: 15,
+    fontWeight: 500,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    letterSpacing: 'normal',
+    color: '#1591ff',
+  },
+  totalLiterCubeNon: {
+    paddingRight: 30,
+    paddingTop: 10,
+    float: 'right',
+    fontFamily: 'SFProDisplay',
+    fontSize: 15,
+    fontWeight: 500,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    letterSpacing: 'normal',
+    color: '#1591ff',
   }
 };
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
-
 
 /* eslint-disable react/prefer-stateless-function */
 class LikeList extends React.PureComponent {
@@ -88,8 +110,7 @@ class LikeList extends React.PureComponent {
 
   state = {
     open: false,
-    // reviewId: false,
-    reviewId: 116,
+    reviewId: false,
     totalReward: 0,
     likelist: null,
     loading: false,
@@ -98,11 +119,12 @@ class LikeList extends React.PureComponent {
   };
 
   handleClickOpen = () => {
-    console.log(this.state.reviewId);
-    // this.loadLikeList(this.props.reviewId);
-    // this.loadTotalReward(this.props.reviewId);
-    this.loadLikeList(this.state.reviewId);
-    this.loadTotalReward(this.state.reviewId);
+    // console.log(this.state.reviewId);
+    console.log(this.props.reviewId);
+    this.loadLikeList(this.props.reviewId);
+    this.loadTotalReward(this.props.reviewId);
+    // this.loadLikeList(this.state.reviewId);
+    // this.loadTotalReward(this.state.reviewId);
     this.setState({ open: true });
   };
 
@@ -113,7 +135,7 @@ class LikeList extends React.PureComponent {
   handleScroll = (e) => {
     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
     if (bottom) {
-      this.loadLikeMore(this.state.reviewId);
+      this.loadLikeMore(this.props.reviewId);
     }
   };
 
@@ -136,6 +158,7 @@ class LikeList extends React.PureComponent {
       }).then(resp => {
         if(Boolean(resp.data)) {
           console.log(']]]-------------load TotalReward-------------[[[');
+          console.log(resp.data);
           this.setState({'totalReward': resp.data});
           this.setState({'loading': false});
         }
@@ -227,12 +250,17 @@ class LikeList extends React.PureComponent {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, reviewId, rewardLitercube } = this.props;
     const { totalReward, likelist } = this.state;
 
     return (
       <div onScroll={this.handleScroll}>
-        <Button onClick={this.handleClickOpen}>Open full-screen dialog</Button>
+        {(rewardLitercube && rewardLitercube > 0)?(
+          <Button className={classes.totalLiterCube} onClick={this.handleClickOpen}>{rewardLitercube} LCB</Button>
+        ):(
+          <span className={classes.totalLiterCubeNon} >{rewardLitercube} LCB</span>
+        )}
+
         <Dialog
           fullScreen
           open={this.state.open}

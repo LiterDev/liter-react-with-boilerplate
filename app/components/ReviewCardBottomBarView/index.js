@@ -14,7 +14,7 @@ import classNames from 'classnames';
 
 /* material-ui core */
 import Button from '@material-ui/core/Button';
-import CloseIcon from '@material-ui/icons/Close';
+
 import Checkbox from '@material-ui/core/Checkbox';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -27,7 +27,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 
 /* material-ui icon */
-import ThumbUpOutlined from '@material-ui/icons/ThumbUpOutlined';
+import CloseIcon from '@material-ui/icons/Close';
 
 import LikeList from 'components/LikeList';
 
@@ -41,6 +41,10 @@ import axios from 'axios';
 import VoteNonIcon from 'images/ic-voting-non.png';
 import VoteSelIcon from 'images/ic-voting-sel.png';
 import ShareNonIcon from 'images/ic-share-non.png';
+import LikeIcon from 'images/ic-feed-like.png';
+import LikeSelIcon from 'images/ic-feed-like-sel.png';
+import CommentIcon from 'images/ic-feed-comment.png';
+import ShareIcon from 'images/ic-feed-share.png';
 import FacebookProvider, { Share } from 'react-facebook';
 
 import CubeEndIcon from 'images/ic-cube-end.png';
@@ -57,15 +61,27 @@ const styles = theme => ({
     boxShadow: `0 -1px 7px 0 rgba(0, 0, 0, 0.1)`,
   },
   rootBottom: {},
+  rootButton: {
+    display: 'inline-flex',
+    minWidth: '50px',
+    minHeight: '36px',
+    alignItems: 'center',
+  },
+
   actions: {
     paddingTop: '8px',
+    // marginLeft: '10px',
     bottom: '0',
     width: '100%',
     display: 'block',
     height: '52px',
   },
+  activeStatusFirst: {
+    paddingLeft: '2vh',
+    float: 'left',
+  },
   activeStatus: {
-    padding: '0 0 0 16px',
+    paddingLeft: '4vh',
     float: 'left',
   },
   activeRStatus: {
@@ -81,12 +97,12 @@ const styles = theme => ({
     height: '19px',
   },
   icons: {
-    width: '19px',
-    height: '19px',
+    width: '24px',
+    height: '24px',
   },
   captionNText: {
-    padding: '0 0 0 5px',
-    fontSize: '15px',
+    padding: '0 0 0 10px',
+    fontSize: '17px',
     fontWeight: '500',
     fontStyle: 'normal',
     fontStretch: 'normal',
@@ -95,8 +111,8 @@ const styles = theme => ({
     color: '#7c7c7c',
   },
   captionSText: {
-    padding: '0 0 0 5px',
-    fontSize: '15px',
+    padding: '0 0 0 10px',
+    fontSize: '17px',
     fontWeight: '500',
     fontStyle: 'normal',
     fontStretch: 'normal',
@@ -161,16 +177,28 @@ const styles = theme => ({
   reviewing: {
     paddingTop: '8px',
   },
+  numCaption: {
+    paddingTop: 5,
+    fontFamily: 'SFProDisplay',
+    fontSize: 16,
+    fontWeight: 500,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    letterSpacing: 'normal',
+  },
+  captionWrapper: {
+    paddingTop: 6,
+  }
 });
 
 const votingIcons = {
   non: {
-    selImg: VoteNonIcon,
+    selImg: LikeIcon,
     styleClass: null,
     caption: '좋아요',
   },
   sel: {
-    selImg: VoteSelIcon,
+    selImg: LikeSelIcon,
     styleClass: null,
     caption: '좋아요',
   },
@@ -206,6 +234,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
     openSuccesPop: false,
     openLoginPop: false,
     totalLikeCount: 0,
+    shareCount: 0,
   };
   constructor(props) {
     super(props);
@@ -260,11 +289,42 @@ class ReviewCardBottomBarView extends React.PureComponent {
           }
         });
       } else {
+        // console.log(`this.props.likeYn =====[ ${this.props.likeYn}]`);
         this.setState({
           openLoginPop: true,
         });
       }
     }
+  };
+  handleResponse = res => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      const requestURL = `${process.env.API_URL}/share/${this.props.review.id}`;
+      const token = `Bearer ${accessToken}`;
+      axios({
+        method: 'POST',
+        url: requestURL,
+        headers: {
+          Accept: 'application/json;charset=UTF-8',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          Authorization: token,
+        },
+      }).then(resp => {
+        console.log(`resp::${resp}`);
+      });
+    } else {
+      this.setState({
+        openLoginPop: true,
+      });
+    }
+  };
+  handleReady = req => {
+    console.log(this.props.review.id);
+    console.log(req.options);
+  };
+  handleError = res => {
+    console.log(`handleError:::${res}`);
   };
 
   handleClose = () => {
@@ -286,18 +346,25 @@ class ReviewCardBottomBarView extends React.PureComponent {
       openSuccesPop: false,
     });
 
-    this.props.history.push('/mypage');
+    // this.props.history.push('/mypage');
+    this.context.router.history.push(`/mypage`);
   };
   handleSignInMove = () => {
     this.setState({
       openLoginPop: false,
     });
+    this.context.router.history.push(`/signin`);
+    // this.props.history.push('/signin');
+  };
 
-    this.props.history.push('/signin');
+  static contextTypes = {
+    router: PropTypes.object,
+  };
+  redirectToTarget = () => {
+    this.context.router.history.push(`/target`);
   };
 
   componentDidMount() {
-    this.setState({'totalLikeCount': this.props.review.likeCount});
   }
 
   render() {
@@ -315,6 +382,8 @@ class ReviewCardBottomBarView extends React.PureComponent {
     const curVote = likeYn ? votingIcons.sel : votingIcons.non;
     const curReviewing = campaign ? reviewingIcons.sel : reviewingIcons.non;
     const curShare = shareIcons.non;
+
+
 
     // const curVote = votingIcons.sel;
     // const curVote = votingIcons.non;
@@ -349,11 +418,30 @@ class ReviewCardBottomBarView extends React.PureComponent {
       default:
         break;
     }
-
+    // 좋아요 가능
     if (onViewVote !== false) {
       return (
         <div className={viewClass}>
           <div className={classes.actions}>
+            <div className={classes.activeStatusFirst}>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  this.handleVoting(this.props.reviewId);
+                }}
+                aria-label="service"
+                className={classes.votingIcon}
+                classes={{
+                  root: classes.rootButton,
+                }}
+              >
+                <img src={LikeIcon} alt="like" className={classes.icons} />
+                <span className={classNames(classes.numCaption, curVote.styleClass)}>
+                  {review.likeCount ? review.likeCount : 0}
+                </span>        
+              </Button>
+              
+            </div>
             <div className={classes.activeStatus}>
               <Button
                 color="inherit"
@@ -362,24 +450,57 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 }}
                 aria-label="service"
                 className={classes.votingIcon}
+                classes={{
+                  root: classes.rootButton,
+                }}
               >
-                <ThumbUpOutlined className={classes.icons}/>
-                {/* <img
-                  alt="좋아요"
-                  src={curVote.selImg}
+                <img
+                  src={CommentIcon}
+                  alt="comment"
                   className={classes.icons}
-                /> */}
-                <span className={curVote.styleClass}>
-                  {/* <FormattedMessage {...messages.votingActive} /> */}
-                  {totalLikeCount}
+                />
+                <span className={classNames(classes.numCaption, curVote.styleClass)}>
+                  {review.likeCount ? review.likeCount : 0}
                 </span>
               </Button>
             </div>
-            <div className={classes.activeStatus}>{currentStatus}</div>
-            <div className={classes.activeRStatus}>
+            <div className={classes.activeStatus}>
               <FacebookProvider appId={process.env.FACEBOOK_APPID}>
                 <Share href={window.location.href}>
                   {/* <Share href="http://www.facebook.com"> */}
+                  <div className={classes.captionWrapper}>
+                    <img
+                      src={ShareIcon}
+                      alt="share"
+                      className={classes.icons}
+                    />
+                    <span className={classNames(classes.numCaption, curVote.styleClass)}>
+                      {review.shareCount ? review.shareCount : 0}
+                    </span>
+                  </div>
+                </Share>
+              </FacebookProvider>
+              {/* <Button
+                color="inherit"
+                onClick={() => {
+                  this.handleVoting(this.props.reviewId);
+                }}
+                aria-label="service"
+                className={classes.votingIcon}
+                classes={{
+                  root: classes.rootButton,
+                }}
+              >
+                <img src={ShareIcon} alt="share" className={classes.icons} />
+                <span className={curVote.styleClass}>
+                  {review.linkCount ? review.linkCount : 0}
+                </span>
+              </Button> */}
+            </div>
+            {/* <div className={classes.activeStatus}>{currentStatus}</div> */}
+            {/* <div className={classes.activeRStatus}>
+              <FacebookProvider appId={process.env.FACEBOOK_APPID}>
+                <Share href={window.location.href}>
                   <div>
                     <img
                       alt="공유하기"
@@ -389,12 +510,10 @@ class ReviewCardBottomBarView extends React.PureComponent {
                   </div>
                 </Share>
               </FacebookProvider>
-            </div>
-
-          {/* ]]---------  LikeList Popup :: START --------[[ */}
-          <LikeList />
-          {/* ]]---------  LikeList Popup :: END  --------[[ */}
-
+            </div> */}
+            {/* ]]---------  LikeList Popup :: START --------[[ */}
+            <LikeList reviewId={reviewId} rewardLitercube={review.rewardLitercube}/>
+            {/* ]]---------  LikeList Popup :: END  --------[[ */}
           </div>
           <Dialog
             open={this.state.openSuccesPop}
@@ -478,40 +597,90 @@ class ReviewCardBottomBarView extends React.PureComponent {
         </div>
       );
     }
-
+    // 좋아요 시 로그인
     return (
-      <div className={classes.root}>
+      <div className={viewClass}>
         <div className={classes.actions}>
+          <div className={classes.activeStatusFirst}>
+            <Button
+              color="inherit"
+              onClick={() => {
+                this.handleVoting(this.props.reviewId);
+              }}
+              aria-label="like"
+              className={classes.votingIcon}
+              classes={{
+                root: classes.rootButton,
+              }}
+            >
+              <img src={LikeIcon} alt="like" className={classes.icons} />
+              <span className={classNames(classes.numCaption, curVote.styleClass)}>
+                {review.likeCount ? review.likeCount : 0}
+              </span>
+            </Button>
+          </div>
           <div className={classes.activeStatus}>
             <Button
               color="inherit"
               onClick={() => {
                 this.handleVoting(this.props.reviewId);
               }}
-              aria-label="service"
+              aria-label="comment"
               className={classes.votingIcon}
+              classes={{
+                root: classes.rootButton,
+              }}
             >
-              {/* <img
-                alt="좋아요"
-                src={curVote.selImg}
-                className={classes.icons}
-              /> */}
-              <ThumbUpOutlined className={classes.icons}/>
-              <span className={curVote.styleClass}>
+              <img src={CommentIcon} alt="comment" className={classes.icons} />
+              <span className={classNames(classes.numCaption, curVote.styleClass)}>
                 {/* <FormattedMessage {...messages.votingActive} /> */}
-                {totalLikeCount}
+                {review.likeCount ? review.likeCount : 0}
+
               </span>
             </Button>
           </div>
           <div className={classes.activeStatus}>
-            {/* <span className={curReviewing.styleClass}>               */}
-            {currentStatus}
-            {/* </span> */}
+            <FacebookProvider appId={process.env.FACEBOOK_APPID}>
+              <Share
+                href={window.location.href}
+                onReady={this.handleReady}
+                onResponse={this.handleResponse}
+                onError={this.handleError}
+              >
+                <Button
+                  color="inherit"
+                  onClick={() => {
+                    this.handleShare(this.props.reviewId);
+                  }}
+                  aria-label="comment"
+                  className={classes.votingIcon}
+                  classes={{
+                    root: classes.rootButton,
+                  }}
+                >
+                  <img src={ShareIcon} alt="share" className={classes.icons} />
+                  <span className={classNames(classes.numCaption, curVote.styleClass)}>
+                    {review.shareCount ? review.shareCount : 0}
+                  </span>
+                </Button>
+                {/* <div className={classes.rootButton}>
+                  <img src={ShareIcon} alt="share" className={classes.icons} />
+                  <span className={curVote.styleClass}>
+                    {review.shareCount ? review.shareCount : 0}
+                  </span>
+                </div> */}
+              </Share>
+            </FacebookProvider>
           </div>
-          <div className={classes.activeRStatus}>
+
+          {/* <div className={classes.activeStatus}> */}
+          {/* <span className={curReviewing.styleClass}>               */}
+          {/* {currentStatus} */}
+          {/* </span> */}
+          {/* </div> */}
+          {/* <div className={classes.activeRStatus}>
             <FacebookProvider appId={process.env.FACEBOOK_APPID}>
               <Share href={window.location.href}>
-                {/* <Share href="http://www.facebook.com"> */}
                 <div>
                   <img
                     alt="공유하기"
@@ -521,12 +690,10 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 </div>
               </Share>
             </FacebookProvider>
-          </div>
-
+          </div> */}
           {/* ]]---------  LikeList Popup :: START --------[[ */}
-          <LikeList />
+          <LikeList reviewId={reviewId} rewardLitercube={review.rewardLitercube}/>
           {/* ]]---------  LikeList Popup :: END  --------[[ */}
-
         </div>
         <Dialog
           open={this.state.openSuccesPop}
@@ -563,8 +730,135 @@ class ReviewCardBottomBarView extends React.PureComponent {
             </Button>
           </DialogActions>
         </Dialog>
+
+        <Dialog
+          open={this.state.openLoginPop}
+          onClose={this.handleLoginClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          className={classes.popWrap}
+          fullWidth="true"
+          // maxWidth="false"
+          classes={{
+            root: classes.popRoot,
+            paper: classes.popPaper,
+          }}
+        >
+          <IconButton
+            color="inherit"
+            onClick={this.handleLoginClose}
+            aria-label="Close"
+            className={classes.closeBtn}
+          >
+            <CloseIcon />
+          </IconButton>
+          <DialogTitle id="alert-dialog-title">
+            {/* {"Use Google's location service?"} */}
+          </DialogTitle>
+
+          <DialogContent className={classes.dialogContent}>
+            <DialogContentText id="alert-dialog-description">
+              로그인이 필요한 서비스 입니다.
+            </DialogContentText>
+          </DialogContent>
+          <Divider />
+          <DialogActions
+            // className={classes.popFooter}
+            classes={{
+              root: classes.popRoot,
+              // paper: classes.popFooter,
+            }}
+          >
+            <Button onClick={this.handleSignInMove} color="secondary">
+              로그인페이지 이동
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
+    // }
+
+    // return (
+    //   <div className={classes.root}>
+    //     <div className={classes.actions}>
+    //       <div className={classes.activeStatus}>
+    //         <Button
+    //           color="inherit"
+    //           onClick={() => {
+    //             this.handleVoting(this.props.reviewId);
+    //           }}
+    //           aria-label="service"
+    //           className={classes.votingIcon}
+    //         >
+    //           {/* <img
+    //             alt="좋아요"
+    //             src={curVote.selImg}
+    //             className={classes.icons}
+    //           /> */}
+    //           <ThumbUpOutlined className={classes.icons} />
+    //           <span className={curVote.styleClass}>
+    //             {/* <FormattedMessage {...messages.votingActive} /> */}
+    //             {likeYn}
+    //           </span>
+    //         </Button>
+    //       </div>
+    //       <div className={classes.activeStatus}>
+    //         {/* <span className={curReviewing.styleClass}>               */}
+    //         {currentStatus}
+    //         {/* </span> */}
+    //       </div>
+    //       <div className={classes.activeRStatus}>
+    //         <FacebookProvider appId={process.env.FACEBOOK_APPID}>
+    //           <Share href={window.location.href}>
+    //             {/* <Share href="http://www.facebook.com"> */}
+    //             <div>
+    //               <img
+    //                 alt="공유하기"
+    //                 src={curShare.selImg}
+    //                 className={classes.shareicons}
+    //               />
+    //             </div>
+    //           </Share>
+    //         </FacebookProvider>
+    //       </div>
+    //     </div>
+    //     <Dialog
+    //       open={this.state.openSuccesPop}
+    //       onClose={this.handleClose}
+    //       aria-labelledby="alert-dialog-title"
+    //       aria-describedby="alert-dialog-description"
+    //       className={classes.popWrap}
+    //       fullWidth="true"
+    //       // maxWidth="false"
+    //       classes={{
+    //         root: classes.popRoot,
+    //         paper: classes.popPaper,
+    //       }}
+    //     >
+    //       <DialogTitle id="alert-dialog-title">
+    //         {/* {"Use Google's location service?"} */}
+    //       </DialogTitle>
+
+    //       <DialogContent>
+    //         <DialogContentText id="alert-dialog-description">
+    //           이메일 인증이 필요한 서비스 입니다.
+    //         </DialogContentText>
+    //       </DialogContent>
+    //       <Divider />
+    //       <DialogActions
+    //         // className={classes.popFooter}
+    //         classes={{
+    //           root: classes.popRoot,
+    //           // paper: classes.popFooter,
+    //         }}
+    //       >
+    //         <Button onClick={this.handleMove} color="secondary">
+    //           확인
+    //         </Button>
+    //       </DialogActions>
+    //     </Dialog>
+    //   </div>
+    // );
   }
 }
 

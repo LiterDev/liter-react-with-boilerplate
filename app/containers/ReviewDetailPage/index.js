@@ -63,19 +63,19 @@ export class ReviewDetailPage extends React.PureComponent {
   };
 
   handleFollow = followId => {
-    console.log('handleVoting in detail');
-    console.log(followId);
+    // console.log('handleVoting in detail');
+    // console.log(followId);
     this.props.doFollow(followId);
   };
 
   render() {
     // reviewId - detail index
     const { reviews, reviewId, surveys, error, classes, history } = this.props;
-    console.log(history);
+    // console.log(history);
     // this.props.history.push('/follow');
-    console.log(']----detail page render ----[');
+    // console.log(']----detail page render ----[');
     // console.log(surveys);
-    console.log(error);
+    // console.log(error);
 
     if (reviews !== false) {
       return (

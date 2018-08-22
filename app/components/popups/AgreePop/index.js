@@ -183,22 +183,26 @@ class AgreePop extends React.Component {
                     : classes.disagreeSubTitle
                 }
               >
-                <span>
-                  {serviceAgree ? <CheckCircle /> : <CheckCircleOutline />}
-                </span>
-                <span className={classes.subTitle}>서비스 이용약관 동의</span>
-                <span className={classes.moreSub}>
-                  <IconButton
-                    color="inherit"
-                    onClick={() => {
-                      this.handleDetail('SERVICE');
-                    }}
-                    aria-label="service"
-                    className={classes.moreBtn}
-                  >
-                    자세히 보기
-                  </IconButton>
-                </span>
+                <div>
+                  <span>
+                    {serviceAgree ? <CheckCircle /> : <CheckCircleOutline />}
+                  </span>
+                  <span className={classes.subTitle}>서비스 이용약관 동의</span>
+                </div>
+                <div>
+                  <span className={classes.moreSub}>
+                    <IconButton
+                      color="inherit"
+                      onClick={() => {
+                        this.handleDetail('SERVICE');
+                      }}
+                      aria-label="service"
+                      className={classes.moreBtn}
+                    >
+                      자세히 보기
+                    </IconButton>
+                  </span>
+                </div>
               </CardContent>
               <CardContent>
                 <Typography gutterBottom variant="body2">

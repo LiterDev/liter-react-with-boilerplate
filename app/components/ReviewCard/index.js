@@ -230,7 +230,12 @@ class ReviewCard extends React.PureComponent {
             image={mainImageUrl}
             title={review.username}
           /> */}
-
+          <ReviewCardBottomBarView
+            likeYn={review.likeYn}
+            onViewVote={false}
+            review={review}
+          />
+          <Divider className={classes.divider} light />
           <CardContent>
             <StyledLink to={`/review/${review.id}`}>
               <Typography className={classes.reviewTitle} component="p">
@@ -241,13 +246,6 @@ class ReviewCard extends React.PureComponent {
           <div>
             <Divider className={classes.divider} light />
           </div>
-
-          {/* <ReviewCardBottomBar ref={`card${idx}`} prKey={`card${idx}`} reviewId={review.id} /> */}
-          <ReviewCardBottomBarView
-            likeYn={review.likeYn}
-            onViewVote={false}
-            review={review}
-          />
         </Card>
       </div>
     );

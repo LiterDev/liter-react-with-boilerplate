@@ -293,7 +293,9 @@ export class SignIn extends React.PureComponent {
   }
 
   errorsPrint() {
+    // console.log('errorPring');
     const { errors } = this.state;
+
     if (errors.length > 0) {
       for (let i = 0; i < errors.length; i += 1) {
         this.validationResult(errors[i]);
@@ -304,6 +306,7 @@ export class SignIn extends React.PureComponent {
   }
 
   validationEmailCheck(email) {
+    // console.log('validationEmailCheck');
     const { errors } = this.state;
 
     if (!email) {
@@ -324,13 +327,14 @@ export class SignIn extends React.PureComponent {
   }
 
   validationResult(errorCode) {
+    // console.log(`validationResult:::${errorCode}`);
     if (errorCode === 500108 || errorCode === 500109) {
       this.setState({
         emailError: <FormattedMessage {...signUpmessages.email} />,
       });
     } else if (errorCode === 500110) {
       this.setState({
-        emailError: <FormattedMessage {...signUpmessages.emailvalid} />,
+        emailError: <FormattedMessage {...signUpmessages.emailValid} />,
       });
     } else if (
       errorCode === 500100 ||

@@ -139,7 +139,7 @@ function App(props) {
         {/* <PrivateRoute path="/valid/:validString" component={EmailValid} /> */}
         <PrivateRoute path="/valid" component={EmailValid} />
         <Route path="/about" component={About} />
-        <Route path="/profile" component={ProfilePage} />
+        <Route path="/profile/:userId" component={ProfilePage} />
 
         <Route path="" component={NotFoundPage} />
 

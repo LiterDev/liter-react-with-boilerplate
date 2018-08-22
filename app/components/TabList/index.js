@@ -245,8 +245,8 @@ class TabList extends React.Component {
     const result = [];
     const tabItem = tabs[value];
 
-    // console.log("]----------- myPage::renderContainer:data ---------[");
-    // console.log(data);
+    console.log("]----------- myPage::renderContainer:data ---------[");
+    console.log(data);
 
     if (tabItem.type === 'REVIEW') {
       result.push(

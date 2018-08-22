@@ -42,23 +42,31 @@
   "boilerplate.containers.LocaleToggle.de": "de",
   "boilerplate.containers.LocaleToggle.en": "en",
   "boilerplate.containers.NotFoundPage.header": "Page not found.",
+
   "app.containers.App.header": "App Title",
-  "app.components.popups.AlertDialog.ok": "확인",
+
+  "app.containers.EmailValid.header": "이메일 인증",
+
   "app.containers.MyPage.header": "마이 페이지",
   "app.containers.MyPage.createWallet": "지갑 생성하기",
+  "app.containers.MyPage.defaultUserNickName": "닉네임",
   "app.containers.MyPage.requiredWalletMsg":
     "이메일 인증으로 지갑을 만들어주세요.",
   "app.containers.MyPage.emailAuthTitle": "이메일 인증을 하시겠습니까?",
   "app.containers.MyPage.emailAuthMsg":
     "회원님의 활동에 따른 보상을 회원님의 지갑으로 지급해 드리고 있습니다. \n보상을 받으려면 이메일 인증을 통해 지갑을 생성해야 합니다.",
 
+  "app.containers.Reviews.header": "리뷰",
   "app.containers.ReviewForm.header": "리뷰작성",
+
+  "app.containers.SignIn.bodytext": "경험을 나누고 보상을 받으세요",
+  "app.containers.SignIn.login": "로그인",
+
   "app.containers.SignUp.header": "SignUp",
   "app.containers.SignUp.email": "이메일 주소",
   "app.containers.SignUp.username": "사용자 이름",
   "app.containers.SignUp.password": "비밀번호",
   "app.containers.SignUp.passwordRepeat": "비밀번호 확인",
-  "app.components.popups.AgreePop.agreeTitle": "약관 동의",
   "app.containers.SignUp.info1":
     "회원님의 정보는 암호화되어 안전하게 관리됩니다.",
   "app.containers.SignUp.info2":
@@ -70,24 +78,20 @@
   "app.containers.SignUp.usernameEmpty": "사용자명을 입력해주세요",
   "app.containers.SignUp.passwordValid": "올바른 비밀번호 방식이 아닙니다",
   "app.containers.SignUp.passwordEmpty": "비밀번호를 입력해주세요",
-  "app.containers.SignUp.passwordRepeatEmpty": "비밀번호를 입력해주세요",
+  "app.containers.SignUp.passwordRepeatEmpty": "비밀번호 확인을 입력해주세요",
   "app.containers.SignUp.passwordPatternValid": "비밀번호 형식이 틀립니다",
   "app.containers.SignUp.passwordNotEqual": "비밀번호와 불일치",
   "app.containers.SignUp.nicknameExists": "사용중인 닉네임 입니다.",
 
-  "app.containers.SignIn.bodytext": "경험을 나누고 보상을 받으세요",
-  "app.containers.SignIn.login": "로그인",
-
-  "app.containers.Reviews.header": "리뷰",
+  "app.components.FollowAjxButton.unButtonTitle": "팔로잉",
+  "app.components.FollowAjxButton.buttonTitle": "팔로우",
 
   "app.components.ReviewCard.followText": "팔로우",
   "app.components.ReviewCard.rewardActive": "진행중",
   "app.components.ReviewCard.sharing": "공유하기",
-  "app.component.ReviewHeader.helpEmailAddress": "help@literproject.com",
-  "app.containers.EmailValid.header": "이메일 인증",
-  "app.containers.MyPage.defaultUserNickName": "닉네임",
-
+  "app.components.ReviewHeader.helpEmailAddress": "help@literproject.com",
   "app.components.ReviewCardBottomBarView.rewardActive": "진행중",
-  "app.components.FollowAjxButton.unButtonTitle": "팔로잉",
-  "app.components.FollowAjxButton.buttonTitle": "팔로우"
+
+  "app.components.popups.AlertDialog.ok": "확인",
+  "app.components.popups.AgreePop.agreeTitle": "약관 동의"
 }

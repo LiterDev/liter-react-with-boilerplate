@@ -20,6 +20,7 @@ import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
+import { Redirect } from 'react-router-dom';
 
 import messages from './messages';
 
@@ -50,8 +51,9 @@ const styles = theme => ({
     text: {
       align: 'center',
     },
-    color: '#111111',
+    color: '#111111', 
   },
+
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
@@ -191,9 +193,10 @@ const styles = theme => ({
   },
 });
 
+
 function HomeIcon(props) {
   return (
-    <SvgIcon {...props}>
+    <SvgIcon >
       <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
     </SvgIcon>
   );
@@ -230,17 +233,26 @@ class ReviewHeader extends React.Component {
 
   moveHome = () => {
     // console.log('home');
-    // return <Redirect to="/login" />;
+    //return <Redirect to="/login" />;
     this.props.history.push('/');
-  };
+   };
+
   logout = () => {
     // TODO : auth로 옮길것
     utils.removeLocalStorage();
     this.props.history.push('/');
   };
+
+ 
+onLogout() {
+    Accounts.logout();
+    this.setState({isAuthenticated: false});
+}
   render() {
     const { classes, headerTitle, searchBar } = this.props;
 
+  
+    
     return (
       <div>
         <AppBar position="fixed" className={classes.top_box}>

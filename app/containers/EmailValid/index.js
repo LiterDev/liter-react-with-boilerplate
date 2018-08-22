@@ -179,7 +179,7 @@ EmailValid.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  emailvalid: makeSelectEmailValid(),
+  // emailvalid: makeSelectEmailValid(),
   validSuccess: makeSelectEmailValidSuccess(),
   validError: makeSelectEmailValidError(),
 });

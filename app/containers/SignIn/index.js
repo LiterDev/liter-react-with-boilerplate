@@ -71,7 +71,7 @@ const styles = theme => ({
     // flexWrap: 'wrap',
   },
   content: {
-    top: '10px',
+    // top: '10px',
     width: '80%',
     height: '70vh',
     // minHeight: '%',
@@ -93,7 +93,7 @@ const styles = theme => ({
     bottom: '0px',
   },
   blank1: {
-    paddingTop: '30%',
+    paddingTop: '25%',
   },
   close: {
     position: 'absolute',
@@ -293,7 +293,9 @@ export class SignIn extends React.PureComponent {
   }
 
   errorsPrint() {
+    // console.log('errorPring');
     const { errors } = this.state;
+
     if (errors.length > 0) {
       for (let i = 0; i < errors.length; i += 1) {
         this.validationResult(errors[i]);
@@ -304,6 +306,7 @@ export class SignIn extends React.PureComponent {
   }
 
   validationEmailCheck(email) {
+    // console.log('validationEmailCheck');
     const { errors } = this.state;
 
     if (!email) {
@@ -324,13 +327,14 @@ export class SignIn extends React.PureComponent {
   }
 
   validationResult(errorCode) {
+    // console.log(`validationResult:::${errorCode}`);
     if (errorCode === 500108 || errorCode === 500109) {
       this.setState({
-        emailError: <FormattedMessage {...signUpmessages.email} />,
+        emailError: <FormattedMessage {...signUpmessages.emailEmpty} />,
       });
     } else if (errorCode === 500110) {
       this.setState({
-        emailError: <FormattedMessage {...signUpmessages.emailvalid} />,
+        emailError: <FormattedMessage {...signUpmessages.emailValid} />,
       });
     } else if (
       errorCode === 500100 ||
@@ -374,23 +378,23 @@ export class SignIn extends React.PureComponent {
 
   handleOnChange = e => {
     // console.log(e);
-    if (e !== undefined) {
-      this.setState({ inputChanging: true });
-      if (e.target.name === 'email') {
-        if (this.validationEmailCheck(e.target.value)) {
-          this.setState({ emailComplete: true });
-        }
-      }
-      if (e.target.name === 'password') {
-        if (e.target.value.length >= 10) {
-          this.setState({ passwordComplete: true });
-        } else {
-          this.setState({
-            passwordComplete: false,
-          });
-        }
-      }
-    }
+    // if (e !== undefined) {
+    //   this.setState({ inputChanging: true });
+    //   if (e.target.name === 'email') {
+    //     if (this.validationEmailCheck(e.target.value)) {
+    //       this.setState({ emailComplete: true });
+    //     }
+    //   }
+    //   if (e.target.name === 'password') {
+    //     if (e.target.value.length >= 10) {
+    //       this.setState({ passwordComplete: true });
+    //     } else {
+    //       this.setState({
+    //         passwordComplete: false,
+    //       });
+    //     }
+    //   }
+    // }
     // console.log(`this.state.emailComplete::${this.state.emailComplete}`);
     // console.log(`this.state.passwordComplete::${this.state.passwordComplete}`);
     if (this.state.emailComplete && this.state.passwordComplete) {

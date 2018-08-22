@@ -207,11 +207,6 @@ class Header extends React.Component {
               aria-label="Menu"
               onClick={this.moveHome}
             >
-             
-              <HomeIcon className={classes.icon} />
-
-             
-            </IconButton> */}
             {searchBar === 'true' ? (
               <div className={classes.rowdiv}>
                 <div className={classes.inputWrap}>
@@ -245,7 +240,6 @@ class Header extends React.Component {
               <img src={MenuIcon} />
               {/* <MoreVertIcon className={classes.icon} /> */}
             </IconButton>
-
           </Toolbar>
         </AppBar>
         <AppDrawer

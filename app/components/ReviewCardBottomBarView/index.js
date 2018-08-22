@@ -353,7 +353,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 /> */}
                 <span className={curVote.styleClass}>
                   {/* <FormattedMessage {...messages.votingActive} /> */}
-                  {likeYn}
+                  {review.likeCount ? review.likeCount : 0}
                 </span>
               </Button>
             </div>
@@ -476,7 +476,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
               <ThumbUpOutlined className={classes.icons}/>
               <span className={curVote.styleClass}>
                 {/* <FormattedMessage {...messages.votingActive} /> */}
-                {likeYn}
+                {review.likeCount ? review.likeCount : 0}
               </span>
             </Button>
           </div>

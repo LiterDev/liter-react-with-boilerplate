@@ -76,7 +76,7 @@ const styles = theme => ({
     height: '52px',
   },
   activeStatusFirst: {
-    paddingLeft: '1vh',
+    paddingLeft: '2vh',
     float: 'left',
   },
   activeStatus: {
@@ -270,6 +270,16 @@ class ReviewCardBottomBarView extends React.PureComponent {
       }
     }
   };
+  handleResponse = res => {
+    console.log(`handleResponse:::${res}`);
+  };
+  handleReady = reviewId => {
+    console.log(`handleReady:::${reviewId}`);
+  };
+  handleError = res => {
+    console.log(`handleError:::${res}`);
+  };
+
   handleClose = () => {
     this.setState({
       openSuccesPop: false,
@@ -564,14 +574,34 @@ class ReviewCardBottomBarView extends React.PureComponent {
           </div>
           <div className={classes.activeStatus}>
             <FacebookProvider appId={process.env.FACEBOOK_APPID}>
-              <Share href={window.location.href}>
-                {/* <Share href="http://www.facebook.com"> */}
-                <div className={classes.rootButton}>
+              <Share
+                href={window.location.href}
+                onReady={this.handleReady}
+                onResponse={this.handleResponse}
+                onError={this.handleError}
+              >
+                <Button
+                  color="inherit"
+                  onClick={() => {
+                    this.handleShare(this.props.reviewId);
+                  }}
+                  aria-label="comment"
+                  className={classes.votingIcon}
+                  classes={{
+                    root: classes.rootButton,
+                  }}
+                >
                   <img src={ShareIcon} alt="share" className={classes.icons} />
                   <span className={curVote.styleClass}>
                     {review.shareCount ? review.shareCount : 0}
                   </span>
-                </div>
+                </Button>
+                {/* <div className={classes.rootButton}>
+                  <img src={ShareIcon} alt="share" className={classes.icons} />
+                  <span className={curVote.styleClass}>
+                    {review.shareCount ? review.shareCount : 0}
+                  </span>
+                </div> */}
               </Share>
             </FacebookProvider>
           </div>

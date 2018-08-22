@@ -61,7 +61,10 @@ const styles = theme => ({
   },
   rootBottom: {},
   rootButton: {
+    display: 'inline-flex',
     minWidth: '50px',
+    minHeight: '36px',
+    alignItems: 'center',
   },
 
   actions: {
@@ -343,7 +346,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
       default:
         break;
     }
-
+    // 좋아요 가능
     if (onViewVote !== false) {
       return (
         <div className={viewClass}>
@@ -389,7 +392,22 @@ class ReviewCardBottomBarView extends React.PureComponent {
               </Button>
             </div>
             <div className={classes.activeStatus}>
-              <Button
+              <FacebookProvider appId={process.env.FACEBOOK_APPID}>
+                <Share href={window.location.href}>
+                  {/* <Share href="http://www.facebook.com"> */}
+                  <div>
+                    <img
+                      src={ShareIcon}
+                      alt="share"
+                      className={classes.icons}
+                    />
+                    <span className={curVote.styleClass}>
+                      {review.shareCount ? review.shareCount : 0}
+                    </span>
+                  </div>
+                </Share>
+              </FacebookProvider>
+              {/* <Button
                 color="inherit"
                 onClick={() => {
                   this.handleVoting(this.props.reviewId);
@@ -402,15 +420,14 @@ class ReviewCardBottomBarView extends React.PureComponent {
               >
                 <img src={ShareIcon} alt="share" className={classes.icons} />
                 <span className={curVote.styleClass}>
-                  {review.likeCount ? review.likeCount : 0}
+                  {review.linkCount ? review.linkCount : 0}
                 </span>
-              </Button>
+              </Button> */}
             </div>
             {/* <div className={classes.activeStatus}>{currentStatus}</div> */}
-            <div className={classes.activeRStatus}>
+            {/* <div className={classes.activeRStatus}>
               <FacebookProvider appId={process.env.FACEBOOK_APPID}>
                 <Share href={window.location.href}>
-                  {/* <Share href="http://www.facebook.com"> */}
                   <div>
                     <img
                       alt="공유하기"
@@ -420,7 +437,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
                   </div>
                 </Share>
               </FacebookProvider>
-            </div>
+            </div> */}
           </div>
           <Dialog
             open={this.state.openSuccesPop}
@@ -504,7 +521,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
         </div>
       );
     }
-
+    // 좋아요 시 로그인
     return (
       <div className={classes.root}>
         <div className={classes.actions}>
@@ -546,22 +563,17 @@ class ReviewCardBottomBarView extends React.PureComponent {
             </Button>
           </div>
           <div className={classes.activeStatus}>
-            <Button
-              color="inherit"
-              onClick={() => {
-                this.handleVoting(this.props.reviewId);
-              }}
-              aria-label="share"
-              className={classes.votingIcon}
-              classes={{
-                root: classes.rootButton,
-              }}
-            >
-              <img src={ShareIcon} alt="share" className={classes.icons} />
-              <span className={curVote.styleClass}>
-                {review.likeCount ? review.likeCount : 0}
-              </span>
-            </Button>
+            <FacebookProvider appId={process.env.FACEBOOK_APPID}>
+              <Share href={window.location.href}>
+                {/* <Share href="http://www.facebook.com"> */}
+                <div className={classes.rootButton}>
+                  <img src={ShareIcon} alt="share" className={classes.icons} />
+                  <span className={curVote.styleClass}>
+                    {review.shareCount ? review.shareCount : 0}
+                  </span>
+                </div>
+              </Share>
+            </FacebookProvider>
           </div>
 
           {/* <div className={classes.activeStatus}> */}
@@ -569,10 +581,9 @@ class ReviewCardBottomBarView extends React.PureComponent {
           {/* {currentStatus} */}
           {/* </span> */}
           {/* </div> */}
-          <div className={classes.activeRStatus}>
+          {/* <div className={classes.activeRStatus}>
             <FacebookProvider appId={process.env.FACEBOOK_APPID}>
               <Share href={window.location.href}>
-                {/* <Share href="http://www.facebook.com"> */}
                 <div>
                   <img
                     alt="공유하기"
@@ -582,7 +593,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 </div>
               </Share>
             </FacebookProvider>
-          </div>
+          </div> */}
         </div>
         <Dialog
           open={this.state.openSuccesPop}

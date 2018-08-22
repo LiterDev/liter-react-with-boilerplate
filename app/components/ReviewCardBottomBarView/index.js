@@ -216,6 +216,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
     sharing: false,
     openSuccesPop: false,
     openLoginPop: false,
+    shareCount: 0,
   };
   constructor(props) {
     super(props);
@@ -271,10 +272,30 @@ class ReviewCardBottomBarView extends React.PureComponent {
     }
   };
   handleResponse = res => {
-    console.log(`handleResponse:::${res}`);
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      const requestURL = `${process.env.API_URL}/share/${this.props.review.id}`;
+      const token = `Bearer ${accessToken}`;
+      axios({
+        method: 'POST',
+        url: requestURL,
+        headers: {
+          Accept: 'application/json;charset=UTF-8',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          Authorization: token,
+        },
+      }).then(resp => {
+        console.log(`resp::${resp}`);
+      });
+    } else {
+      this.setState({
+        openLoginPop: true,
+      });
+    }
   };
   handleReady = req => {
-    console.log(req);
+    console.log(this.props.review.id);
     console.log(req.options);
   };
   handleError = res => {

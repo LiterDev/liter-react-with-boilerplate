@@ -289,7 +289,6 @@ class ReviewCardBottomBarView extends React.PureComponent {
           }
         });
       } else {
-        // console.log(`this.props.likeYn =====[ ${this.props.likeYn}]`);
         this.setState({
           openLoginPop: true,
         });
@@ -346,22 +345,14 @@ class ReviewCardBottomBarView extends React.PureComponent {
       openSuccesPop: false,
     });
 
-    // this.props.history.push('/mypage');
-    this.context.router.history.push(`/mypage`);
+    this.props.history.push('/mypage');
   };
   handleSignInMove = () => {
     this.setState({
       openLoginPop: false,
     });
-    this.context.router.history.push(`/signin`);
-    // this.props.history.push('/signin');
-  };
 
-  static contextTypes = {
-    router: PropTypes.object,
-  };
-  redirectToTarget = () => {
-    this.context.router.history.push(`/target`);
+    this.props.history.push('/signin');
   };
 
   componentDidMount() {
@@ -377,7 +368,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
       likeYn,
       review,
     } = this.props;
-    const { voting, reviewing, sharing, viewClass, totalLikeCount } = this.state;
+    const { voting, reviewing, sharing, viewClass } = this.state;
 
     const curVote = likeYn ? votingIcons.sel : votingIcons.non;
     const curReviewing = campaign ? reviewingIcons.sel : reviewingIcons.non;
@@ -599,7 +590,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
     }
     // 좋아요 시 로그인
     return (
-      <div className={viewClass}>
+      <div className={classes.root}>
         <div className={classes.actions}>
           <div className={classes.activeStatusFirst}>
             <Button
@@ -730,135 +721,8 @@ class ReviewCardBottomBarView extends React.PureComponent {
             </Button>
           </DialogActions>
         </Dialog>
-
-        <Dialog
-          open={this.state.openLoginPop}
-          onClose={this.handleLoginClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          className={classes.popWrap}
-          fullWidth="true"
-          // maxWidth="false"
-          classes={{
-            root: classes.popRoot,
-            paper: classes.popPaper,
-          }}
-        >
-          <IconButton
-            color="inherit"
-            onClick={this.handleLoginClose}
-            aria-label="Close"
-            className={classes.closeBtn}
-          >
-            <CloseIcon />
-          </IconButton>
-          <DialogTitle id="alert-dialog-title">
-            {/* {"Use Google's location service?"} */}
-          </DialogTitle>
-
-          <DialogContent className={classes.dialogContent}>
-            <DialogContentText id="alert-dialog-description">
-              로그인이 필요한 서비스 입니다.
-            </DialogContentText>
-          </DialogContent>
-          <Divider />
-          <DialogActions
-            // className={classes.popFooter}
-            classes={{
-              root: classes.popRoot,
-              // paper: classes.popFooter,
-            }}
-          >
-            <Button onClick={this.handleSignInMove} color="secondary">
-              로그인페이지 이동
-            </Button>
-          </DialogActions>
-        </Dialog>
       </div>
     );
-    // }
-
-    // return (
-    //   <div className={classes.root}>
-    //     <div className={classes.actions}>
-    //       <div className={classes.activeStatus}>
-    //         <Button
-    //           color="inherit"
-    //           onClick={() => {
-    //             this.handleVoting(this.props.reviewId);
-    //           }}
-    //           aria-label="service"
-    //           className={classes.votingIcon}
-    //         >
-    //           {/* <img
-    //             alt="좋아요"
-    //             src={curVote.selImg}
-    //             className={classes.icons}
-    //           /> */}
-    //           <ThumbUpOutlined className={classes.icons} />
-    //           <span className={curVote.styleClass}>
-    //             {/* <FormattedMessage {...messages.votingActive} /> */}
-    //             {likeYn}
-    //           </span>
-    //         </Button>
-    //       </div>
-    //       <div className={classes.activeStatus}>
-    //         {/* <span className={curReviewing.styleClass}>               */}
-    //         {currentStatus}
-    //         {/* </span> */}
-    //       </div>
-    //       <div className={classes.activeRStatus}>
-    //         <FacebookProvider appId={process.env.FACEBOOK_APPID}>
-    //           <Share href={window.location.href}>
-    //             {/* <Share href="http://www.facebook.com"> */}
-    //             <div>
-    //               <img
-    //                 alt="공유하기"
-    //                 src={curShare.selImg}
-    //                 className={classes.shareicons}
-    //               />
-    //             </div>
-    //           </Share>
-    //         </FacebookProvider>
-    //       </div>
-    //     </div>
-    //     <Dialog
-    //       open={this.state.openSuccesPop}
-    //       onClose={this.handleClose}
-    //       aria-labelledby="alert-dialog-title"
-    //       aria-describedby="alert-dialog-description"
-    //       className={classes.popWrap}
-    //       fullWidth="true"
-    //       // maxWidth="false"
-    //       classes={{
-    //         root: classes.popRoot,
-    //         paper: classes.popPaper,
-    //       }}
-    //     >
-    //       <DialogTitle id="alert-dialog-title">
-    //         {/* {"Use Google's location service?"} */}
-    //       </DialogTitle>
-
-    //       <DialogContent>
-    //         <DialogContentText id="alert-dialog-description">
-    //           이메일 인증이 필요한 서비스 입니다.
-    //         </DialogContentText>
-    //       </DialogContent>
-    //       <Divider />
-    //       <DialogActions
-    //         // className={classes.popFooter}
-    //         classes={{
-    //           root: classes.popRoot,
-    //           // paper: classes.popFooter,
-    //         }}
-    //       >
-    //         <Button onClick={this.handleMove} color="secondary">
-    //           확인
-    //         </Button>
-    //       </DialogActions>
-    //     </Dialog>
-    //   </div>
-    // );
   }
 }
 

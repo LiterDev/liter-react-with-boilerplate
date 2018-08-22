@@ -87,9 +87,6 @@ const styles = theme => ({
     zIndex: 5,
   },
 });
-imageClick = () => {
-  //console.log('Click!!!!');
-}
 
 function ImagePreview(props) {
   

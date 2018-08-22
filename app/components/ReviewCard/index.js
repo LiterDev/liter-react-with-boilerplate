@@ -80,7 +80,7 @@ const styles = theme => ({
   },
   cardHeader: {
     title: {
-      backgroundColor: 'black',
+     backgroundColor: 'black',
     },
   },
   reviewTitle: {
@@ -91,7 +91,7 @@ const styles = theme => ({
     fontStretch: 'normal',
     lineHeight: '1.44',
     letterSpacing: 'normal',
-    color: ' #333333',
+    color: '#333333',
   },
   divider: {
     margin: 'auto',

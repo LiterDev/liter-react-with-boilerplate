@@ -132,8 +132,37 @@ export class ProfilePage extends React.PureComponent {
       followerCount: 100,
       followingCount: 150,
       reviewCount: 50,
-      reviews: [],
-    }
+    },
+    reviews: [],
+  }
+
+  loadUserInfo = (userId) => {
+    const requestURL = `${process.env.API_URL}/user/detail/${userId}`;
+    const accessToken = localStorage.getItem('accessToken');
+    const token = `Bearer ${accessToken}`;
+    axios({
+        method: 'GET',
+        url: requestURL,
+        headers: {
+          Accept: 'application/json;charset=UTF-8',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          Authorization: token,
+        },
+      }).then(resp => {
+        if(Boolean(resp.data)) {
+          console.log(']]]-------------load UserInfo-------------[[[');
+          console.log(resp.data);
+          this.setState({'userInfo': resp.data});
+        }
+      }).catch(error => {
+          if(error.response.data.code === 300104) {
+            console.log("no more data");
+          } else if(error.response.data.code === 500000) {
+            console.log("likelist empty > ERROR");  
+          }
+          console.log(error.response);
+      });
   }
 
   loadReviewData = (userId) => {
@@ -152,9 +181,7 @@ export class ProfilePage extends React.PureComponent {
       }).then(resp => {
         if(Boolean(resp.data)) {
           console.log(']]]-------------load TestData-------------[[[');
-          let userInfo = Object.assign({}, this.state.userInfo);
-          userInfo.reviews = resp.data.content;
-          this.setState({userInfo});
+          this.setState({reviews: resp.data.content});
         }
       }).catch(error => {
           if(error.response.data.code === 300104) {
@@ -195,16 +222,16 @@ export class ProfilePage extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.loadReviewData(this.props.userId);
+    const userId = this.props.match.params.userId;
+    this.loadUserInfo(userId);
+    this.loadReviewData(userId);
   }
 
   render() {
     const { classes } = this.props;
     const userId = this.props.match.params.userId;
-    const { userInfo } = this.state;
-
-    console.log(userInfo);
-
+    const { userInfo, reviews } = this.state;
+    
     return (
       <div>
         <div className={classes.container}>
@@ -251,7 +278,7 @@ export class ProfilePage extends React.PureComponent {
             리뷰 {userInfo.reviewCount} 개
           </span>
         </div>
-        {this.renderReviewdRow(userInfo.reviews)}
+        {this.renderReviewdRow(reviews)}
       </div>
     );
   }

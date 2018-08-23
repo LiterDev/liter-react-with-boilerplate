@@ -23,10 +23,6 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 class ReviewList extends React.PureComponent {
-  handleVoting = () => {
-    // console.log('handleVoting clicked--------');
-  };
-
   handleFollow = followId => {
     // console.log('handleFollow clicked--------');
     // console.log(followId);
@@ -51,12 +47,12 @@ class ReviewList extends React.PureComponent {
                   idx={idx}
                   followYn={review.followYn}
                   review={review}
-                  handleVoting={this.handleVoting}
+                  handleVoting={this.props.handleVoting}
                   handleFollow={this.handleFollow}
                 />
               </div>
             ))}
-          <ReviewCardBottomBar />
+          {/* <ReviewCardBottomBar /> */}
         </div>
       );
     }
@@ -72,6 +68,7 @@ class ReviewList extends React.PureComponent {
 }
 
 ReviewList.propTypes = {
+  reviews: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   reviewArray: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
 };
 

@@ -161,7 +161,7 @@ function HomeIcon(props) {
   );
 }
 /* eslint-disable react/prefer-stateless-function */
-class Header extends React.Component {
+class Header extends React.PureComponent {
   state = {
     mobileOpen: false,
   };
@@ -242,7 +242,6 @@ class Header extends React.Component {
               <img src={MenuIcon} />
               {/* <MoreVertIcon className={classes.icon} /> */}
             </IconButton>
-
           </Toolbar>
         </AppBar>
         <AppDrawer
@@ -253,6 +252,7 @@ class Header extends React.Component {
           mobileOpen={this.state.mobileOpen}
           logout={this.logout}
           onHelp={this.handleHelp}
+          location={this.props.location}
         />
         {/* <A href="https://twitter.com/mxstbr">
           <Img src={Banner} alt="react-boilerplate - Logo" />

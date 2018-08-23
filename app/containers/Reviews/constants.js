@@ -14,3 +14,6 @@ export const LOAD_REVIEW_MORE_ERROR = 'app/Reviews/LOAD_REVIEW_MORE_ERROR';
 export const LOAD_CATEGORY = 'app/Reviews/LOAD_CATEGORY';
 export const LOAD_CATEGORY_SUCCESS = 'app/Reviews/LOAD_CATEGORY_SUCCESS';
 
+export const VOTE_ACTION = 'app/Reviews/VOTE_ACTION';
+export const VOTE_SUCCESS = 'app/Reviews/VOTE_SUCCESS';
+export const VOTE_ERROR = 'app/Reviews/VOTE_ERROR';

@@ -237,6 +237,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
     shareCount: 0,
     curLiked: false,
     curLikeCount: 0,
+    literCubeState: 0,
   };
   constructor(props) {
     super(props);
@@ -255,11 +256,37 @@ class ReviewCardBottomBarView extends React.PureComponent {
       : this.props.classes.rootBottom;
 
     this.state.curLikeCount = this.props.review.likeCount;
+    this.state.literCubeState = this.props.review.rewardLitercube;
 
     if(this.props.review.likeYn)
       this.state.curLiked = true;
     else
       this.state.curLiked = false;            
+  }
+
+  loadTotalReward = (reviewId) => {
+    const requestURL = `${process.env.API_URL}/review/reward/${reviewId}`;
+    const accessToken = localStorage.getItem('accessToken');
+    const token = `Bearer ${accessToken}`;
+
+    axios({
+      method: 'GET',
+      url: requestURL,
+      headers: {
+        Accept: 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        Authorization: token,
+      },
+    }).then(resp => {
+      if(Boolean(resp.data)) {
+        console.log(']]]-------------load TotalReward-------------[[[');
+        console.log(resp.data);
+        this.setState({'literCubeState': resp.data.reward});
+      }
+    }).catch(error => {
+        console.log(error);
+    });
   }
 
   sendVoting = reviewId => {
@@ -288,7 +315,8 @@ class ReviewCardBottomBarView extends React.PureComponent {
         this.setState({'curLiked': true});
         tmp = tmp + 1;
       }
-      this.setState({'curLikeCount': tmp});        
+      this.setState({'curLikeCount': tmp});
+      this.loadTotalReward(reviewId); 
     });
   }
 
@@ -422,7 +450,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
   render() {
     const { classes } = this.props;
     const { onViewVote, campaign, viewType, likeYn, review, reviewId } = this.props;
-    const { voting, reviewing, sharing, viewClass, shareCount } = this.state;
+    const { voting, reviewing, sharing, viewClass, shareCount, literCubeState } = this.state;
 
     // const curVote = likeYn ? votingIcons.sel : votingIcons.non;
     const curVote = this.state.curLiked ? votingIcons.sel : votingIcons.non;
@@ -458,7 +486,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
           >
             <img alt="EndCube" src={CubeEndIcon} className={classes.cubeEnd} />
             <span className={curReviewing.styleClass}>
-              {review.rewardLitercube}
+              {this.state.literCubeState}
             </span>
           </div>
         );
@@ -549,7 +577,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
             {/* ]]---------  LikeList Popup :: START --------[[ */}
             <LikeList
               reviewId={this.props.review.id}
-              rewardLitercube={review.rewardLitercube}
+              rewardLitercube={this.state.literCubeState}
             />
             {/* ]]---------  LikeList Popup :: END  --------[[ */}
           </div>
@@ -748,7 +776,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
           {/* ]]---------  LikeList Popup :: START --------[[ */}
           <LikeList
             reviewId={this.props.review.id}
-            rewardLitercube={review.rewardLitercube}
+            rewardLitercube={this.state.literCubeState}
           />
           {/* ]]---------  LikeList Popup :: END  --------[[ */}
         </div>

@@ -295,35 +295,40 @@ class ReviewCardBottomBarView extends React.PureComponent {
   };
   handleResponse = res => {
     console.log(res.error_code);
-    // if(res)
-    const accessToken = localStorage.getItem('accessToken');
-    if (accessToken) {
-      const requestURL = `${process.env.API_URL}/share`;
-      const token = `Bearer ${accessToken}`;
-      axios({
-        method: 'POST',
-        url: requestURL,
-        headers: {
-          Accept: 'application/json;charset=UTF-8',
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Access-Control-Allow-Origin': '*',
-          Authorization: token,
-        },
-        data: JSON.stringify({
-          reviewId: this.props.review.id,
-        }),
-      }).then(resp => {
-        console.log(resp);
-        if (resp) {
-          this.setState({
-            shareCount: resp.data,
-          });
-        }
-      });
+
+    if (res.error_code) {
+      console.log(`facebook share error:::${res.error_code}`);
     } else {
-      this.setState({
-        openLoginPop: true,
-      });
+      const accessToken = localStorage.getItem('accessToken');
+      if (accessToken) {
+        const requestURL = `${process.env.API_URL}/share`;
+        const token = `Bearer ${accessToken}`;
+        axios({
+          method: 'POST',
+          url: requestURL,
+          headers: {
+            Accept: 'application/json;charset=UTF-8',
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Access-Control-Allow-Origin': '*',
+            'X-Frame-Options: SAMEORIGIN',
+            Authorization: token,
+          },
+          data: JSON.stringify({
+            reviewId: this.props.review.id,
+          }),
+        }).then(resp => {
+          console.log(resp);
+          if (resp) {
+            this.setState({
+              shareCount: resp.data,
+            });
+          }
+        });
+      } else {
+        this.setState({
+          openLoginPop: true,
+        });
+      }
     }
   };
   handleReady = req => {
@@ -479,7 +484,8 @@ class ReviewCardBottomBarView extends React.PureComponent {
               <FacebookProvider
                 appId={process.env.FACEBOOK_APPID}
                 mobileIframe
-                hashtag={'#LITER'}Ï
+                hashtag={'#LITER'}
+                Ï
               >
                 <Share href={shareLocation}>
                   {/* <Share href="http://www.facebook.com"> */}
@@ -495,7 +501,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
                         curShare.styleClass,
                       )}
                     >
-                      { shareCount }
+                      {shareCount}
                     </span>
                   </div>
                 </Share>

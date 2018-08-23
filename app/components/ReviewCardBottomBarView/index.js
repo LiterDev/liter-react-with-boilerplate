@@ -397,6 +397,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
     // const curReviewing = reviewingIcons.sel;
 
     // current status for campaign
+    console.log(shareLocation);
     let currentStatus = null;
     switch (review.reviewTimeLimit) {
       case 'UNLIMIT':
@@ -486,7 +487,14 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 mobileIframe
                 hashtag="#LITER"
               >
-                <Share href={shareLocation}>
+                <Share
+                  href={shareLocation}
+                  onReady={this.handleReady}
+                  onResponse={this.handleResponse}
+                  onError={this.handleError}
+                  // mobileIframe
+                  hashtag="#LITER"
+                >
                   {/* <Share href="http://www.facebook.com"> */}
                   <div className={classes.captionWrapper}>
                     <img
@@ -651,7 +659,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 onReady={this.handleReady}
                 onResponse={this.handleResponse}
                 onError={this.handleError}
-                mobileIframe
+                // mobileIframe
                 hashtag="#LITER"
               >
                 <Button

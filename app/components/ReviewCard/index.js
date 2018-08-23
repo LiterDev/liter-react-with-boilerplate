@@ -239,7 +239,6 @@ class ReviewCard extends React.PureComponent {
             likeYn={review.likeYn}
             onViewVote={this.handleVoting}
             review={review}
-            reviewId={review.id}
           />
           <Divider className={classes.divider} light />
           <CardContent>

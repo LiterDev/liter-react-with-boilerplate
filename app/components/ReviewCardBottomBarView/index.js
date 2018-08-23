@@ -188,7 +188,7 @@ const styles = theme => ({
   },
   captionWrapper: {
     paddingTop: 6,
-  }
+  },
 });
 
 const votingIcons = {
@@ -335,31 +335,47 @@ class ReviewCardBottomBarView extends React.PureComponent {
   };
 
   handleResponse = res => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (accessToken) {
-      const requestURL = `${process.env.API_URL}/share/${this.props.review.id}`;
-      const token = `Bearer ${accessToken}`;
+    console.log(res);
+
+    if (res.error_code) {
+      console.log(`facebook share error:::${res.error_code}`);
+    } else {
+      // console.log(`add share +1`);
+      const accessToken = localStorage.getItem('accessToken');
+      const requestURL = `${process.env.API_URL}/share`;
+      const headerText = {
+        Accept: 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+      };
+
+      if (accessToken) {
+        console.log(`accessToken::${accessToken}`);
+        const token = `Bearer ${accessToken}`;
+        headerText.Authorization = token;
+      }
+      // console.log(headerText);
+
       axios({
         method: 'POST',
         url: requestURL,
-        headers: {
-          Accept: 'application/json;charset=UTF-8',
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Access-Control-Allow-Origin': '*',
-          Authorization: token,
-        },
+        headers: headerText,
+        data: JSON.stringify({
+          reviewId: this.props.review.id,
+        }),
       }).then(resp => {
-        console.log(`resp::${resp}`);
-      });
-    } else {
-      this.setState({
-        openLoginPop: true,
+        console.log(resp);
+        if (resp) {
+          this.setState({
+            shareCount: resp.data,
+          });
+        }
       });
     }
   };
   handleReady = req => {
-    console.log(this.props.review.id);
-    console.log(req.options);
+    // console.log(this.props.review.id);
+    // console.log(req);
   };
   handleError = res => {
     console.log(`handleError:::${res}`);
@@ -394,30 +410,36 @@ class ReviewCardBottomBarView extends React.PureComponent {
     this.props.history.push('/signin');
   };
 
+  componentWillMount() {
+    // console.log(this.props.review.shareCount);
+    if (this.props.review.shareCount) {
+      this.setState({
+        shareCount: this.props.review.shareCount,
+      });
+    }
+  }
+
   render() {
     const { classes } = this.props;
-    const {
-      reviewId,
-      onViewVote,
-      campaign,
-      viewType,
-      likeYn,
-      review,
-    } = this.props;
-    const { voting, reviewing, sharing, viewClass } = this.state;
+    const { onViewVote, campaign, viewType, likeYn, review } = this.props;
+    const { voting, reviewing, sharing, viewClass, shareCount } = this.state;
 
     // const curVote = likeYn ? votingIcons.sel : votingIcons.non;
     const curVote = this.state.curLiked ? votingIcons.sel : votingIcons.non;
     const curReviewing = campaign ? reviewingIcons.sel : reviewingIcons.non;
     const curShare = shareIcons.non;
+    const shareLocation = window.location.hostname.concat(
+      `/review/${reviewId}`,
+    );
 
     // const curVote = votingIcons.sel;
     // const curVote = votingIcons.non;
     // const curShare = shareIcons.non;
     // const curReviewing = reviewingIcons.non;
     // const curReviewing = reviewingIcons.sel;
-    
+
     // current status for campaign
+    // console.log(shareLocation);
     let currentStatus = null;
     switch (review.reviewTimeLimit) {
       case 'UNLIMIT':
@@ -453,7 +475,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
               <Button
                 color="inherit"
                 onClick={() => {
-                  this.handleVoting(this.props.reviewId);
+                  this.handleVoting(reviewId);
                 }}
                 aria-label="service"
                 className={classes.votingIcon}
@@ -468,7 +490,6 @@ class ReviewCardBottomBarView extends React.PureComponent {
                   {this.state.curLikeCount ? this.state.curLikeCount : 0}
                 </span>
               </Button>
-              
             </div>
             <div className={classes.activeStatus}>
               <Button
@@ -493,8 +514,19 @@ class ReviewCardBottomBarView extends React.PureComponent {
               </Button>
             </div>
             <div className={classes.activeStatus}>
-              <FacebookProvider appId={process.env.FACEBOOK_APPID}>
-                <Share href={window.location.href}>
+              <FacebookProvider
+                appId={process.env.FACEBOOK_APPID}
+                mobileIframe
+                hashtag="#LITER"
+              >
+                <Share
+                  href={shareLocation}
+                  onReady={this.handleReady}
+                  onResponse={this.handleResponse}
+                  onError={this.handleError}
+                  // mobileIframe
+                  hashtag="#LITER"
+                >
                   {/* <Share href="http://www.facebook.com"> */}
                   <div className={classes.captionWrapper}>
                     <img
@@ -502,45 +534,23 @@ class ReviewCardBottomBarView extends React.PureComponent {
                       alt="share"
                       className={classes.icons}
                     />
-                    <span className={classNames(classes.numCaption, curShare.styleClass)}>
-                      {review.shareCount ? review.shareCount : 0}
+                    <span
+                      className={classNames(
+                        classes.numCaption,
+                        curShare.styleClass,
+                      )}
+                    >
+                      {shareCount}
                     </span>
                   </div>
                 </Share>
               </FacebookProvider>
-              {/* <Button
-                color="inherit"
-                onClick={() => {
-                  this.handleVoting(this.props.reviewId);
-                }}
-                aria-label="service"
-                className={classes.votingIcon}
-                classes={{
-                  root: classes.rootButton,
-                }}
-              >
-                <img src={ShareIcon} alt="share" className={classes.icons} />
-                <span className={curVote.styleClass}>
-                  {review.linkCount ? review.linkCount : 0}
-                </span>
-              </Button> */}
             </div>
-            {/* <div className={classes.activeStatus}>{currentStatus}</div> */}
-            {/* <div className={classes.activeRStatus}>
-              <FacebookProvider appId={process.env.FACEBOOK_APPID}>
-                <Share href={window.location.href}>
-                  <div>
-                    <img
-                      alt="공유하기"
-                      src={curShare.selImg}
-                      className={classes.shareicons}
-                    />
-                  </div>
-                </Share>
-              </FacebookProvider>
-            </div> */}
             {/* ]]---------  LikeList Popup :: START --------[[ */}
-            <LikeList reviewId={reviewId} rewardLitercube={review.rewardLitercube}/>
+            <LikeList
+              reviewId={reviewId}
+              rewardLitercube={review.rewardLitercube}
+            />
             {/* ]]---------  LikeList Popup :: END  --------[[ */}
           </div>
           <Dialog
@@ -633,7 +643,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
             <Button
               color="inherit"
               onClick={() => {
-                this.handleVoting(this.props.reviewId);
+                this.handleVoting(reviewId);
               }}
               aria-label="like"
               className={classes.votingIcon}
@@ -643,7 +653,9 @@ class ReviewCardBottomBarView extends React.PureComponent {
             >
               {/* <img src={LikeIcon} alt="like" className={classes.icons} /> */}
               <img src={curVote.selImg} alt="like" className={classes.icons} />
-              <span className={classNames(classes.numCaption, curVote.styleClass)}>
+              <span
+                className={classNames(classes.numCaption, curVote.styleClass)}
+              >
                 {review.likeCount ? review.likeCount : 0}
                 {this.state.curLikeCount ? this.state.curLikeCount : 0}
               </span>
@@ -662,7 +674,12 @@ class ReviewCardBottomBarView extends React.PureComponent {
               }}
             >
               <img src={CommentIcon} alt="comment" className={classes.icons} />
-              <span className={classNames(classes.numCaption, curReviewing.styleClass)}>
+              <span
+                className={classNames(
+                  classes.numCaption,
+                  curReviewing.styleClass,
+                )}
+              >
                 {/* <FormattedMessage {...messages.votingActive} /> */}
                 {review.replyCount ? review.replyCount : 0}
 
@@ -672,15 +689,17 @@ class ReviewCardBottomBarView extends React.PureComponent {
           <div className={classes.activeStatus}>
             <FacebookProvider appId={process.env.FACEBOOK_APPID}>
               <Share
-                href={window.location.href}
+                href={shareLocation}
                 onReady={this.handleReady}
                 onResponse={this.handleResponse}
                 onError={this.handleError}
+                // mobileIframe
+                hashtag="#LITER"
               >
                 <Button
                   color="inherit"
                   onClick={() => {
-                    this.handleShare(this.props.reviewId);
+                    this.handleShare(reviewId);
                   }}
                   aria-label="comment"
                   className={classes.votingIcon}
@@ -689,8 +708,13 @@ class ReviewCardBottomBarView extends React.PureComponent {
                   }}
                 >
                   <img src={ShareIcon} alt="share" className={classes.icons} />
-                  <span className={classNames(classes.numCaption, curShare.styleClass)}>
-                    {review.shareCount ? review.shareCount : 0}
+                  <span
+                    className={classNames(
+                      classes.numCaption,
+                      curShare.styleClass,
+                    )}
+                  >
+                    {shareCount}
                   </span>
                 </Button>
                 {/* <div className={classes.rootButton}>
@@ -722,7 +746,10 @@ class ReviewCardBottomBarView extends React.PureComponent {
             </FacebookProvider>
           </div> */}
           {/* ]]---------  LikeList Popup :: START --------[[ */}
-          <LikeList reviewId={reviewId} rewardLitercube={review.rewardLitercube}/>
+          <LikeList
+            reviewId={reviewId}
+            rewardLitercube={review.rewardLitercube}
+          />
           {/* ]]---------  LikeList Popup :: END  --------[[ */}
         </div>
         <Dialog

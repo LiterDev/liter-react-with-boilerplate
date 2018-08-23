@@ -43,8 +43,9 @@ import * as utils from 'utils/commonFunc';
 import { withStyles } from '@material-ui/core/styles';
 import withRoot from 'withRoot';
 import axios from 'axios';
+import 'react-router-modal/css/react-router-modal.css';
+import ReviewsMyLike from 'containers/ReviewsMyLike/Loadable';
 
-import PrivateWalletRoute from 'components/PrivateWalletRoute';
 import { showInfo, showSMessage } from './Message';
 
 // import axios from 'axios';
@@ -95,7 +96,10 @@ function App(props) {
       // localStorage.setItem('refreshToken', resp.data.refreshToken);
       localStorage.setItem('username', resp.data.username);
       localStorage.setItem('userNickName', resp.data.userNickName);
-      localStorage.setItem('profileImageSmallUrl', resp.data.profileImageSmallUrl);
+      localStorage.setItem(
+        'profileImageSmallUrl',
+        resp.data.profileImageSmallUrl,
+      );
       localStorage.setItem('hasWallet', resp.data.hasWallet);
       localStorage.setItem('validStatus', resp.data.validStatus);
       localStorage.setItem('literCube', resp.data.literCube);
@@ -119,13 +123,14 @@ function App(props) {
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />
         <PrivateRoute path="/mypage" component={MyPage} />
-        <Route path = "/usergrade" component={UserGrade} />
+        <Route path="/usergrade" component={UserGrade} />
         <Route exact path="/follow" component={FollowActionPage} />
         <Route path="/follow/:userId" component={FollowActionPage} />
         <Route exact path="/following" component={FollowingActionPage} />
         <Route path="/following/:userId" component={FollowingActionPage} />
         <PrivateRoute
-          exact path="/review/write"
+          exact
+          path="/review/write"
           component={ReviewForm}
           // authenticated={this.state.isAuthenticatedWallet}
         />
@@ -140,9 +145,8 @@ function App(props) {
         <PrivateRoute path="/valid" component={EmailValid} />
         <Route path="/about" component={About} />
         <Route path="/profile/:userId" component={ProfilePage} />
-
+        {/* <ModalRoute path="/hello" component={ReviewsMyLike} /> */}
         <Route path="" component={NotFoundPage} />
-
       </Switch>
       {/* <Auth /> */}
       {/* <Footer /> */}
@@ -304,7 +308,7 @@ axios.interceptors.response.use(
       }
       // console.log(window.location.pathname);
       // console.log('axios interceptors.');
-      if(window.location.pathname !== '/signin') {
+      if (window.location.pathname !== '/signin') {
         window.location.href = '/signin';
       }
 

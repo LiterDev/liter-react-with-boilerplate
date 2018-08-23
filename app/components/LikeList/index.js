@@ -35,7 +35,6 @@ import messages from './messages';
 
 import axios from 'axios';
 
-
 const styles = {
   root: {
     borderTopLeftRadius: '18px !important',
@@ -137,7 +136,7 @@ class LikeList extends React.PureComponent {
     this.setState({ open: true });
   };
 
-  handleClose = () => {
+  handleClose = (e) => {
     this.setState({ open: false });
   };
 
@@ -155,15 +154,18 @@ class LikeList extends React.PureComponent {
       const accessToken = localStorage.getItem('accessToken');
       const token = `Bearer ${accessToken}`;
 
+      let headerObj = {
+        'Accept': 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+      }
+      if(accessToken)
+        headerObj.Authorization = token;
+
       axios({
         method: 'GET',
         url: requestURL,
-        headers: {
-          Accept: 'application/json;charset=UTF-8',
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Access-Control-Allow-Origin': '*',
-          Authorization: token,
-        },
+        headers: headerObj,
       }).then(resp => {
         if(Boolean(resp.data)) {
           console.log(']]]-------------load TotalReward-------------[[[');
@@ -185,15 +187,18 @@ class LikeList extends React.PureComponent {
       const accessToken = localStorage.getItem('accessToken');
       const token = `Bearer ${accessToken}`;
 
+      let headerObj = {
+        'Accept': 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+      }
+      if(accessToken)
+        headerObj.Authorization = token;
+
       axios({
         method: 'GET',
         url: requestURL,
-        headers: {
-          Accept: 'application/json;charset=UTF-8',
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Access-Control-Allow-Origin': '*',
-          Authorization: token,
-        },
+        headers: headerObj,
       }).then(resp => {
         if(Boolean(resp.data)) {
           console.log(']]]-------------loaded likelist-------------[[[');
@@ -222,15 +227,18 @@ class LikeList extends React.PureComponent {
       const accessToken = localStorage.getItem('accessToken');
       const token = `Bearer ${accessToken}`;
 
+      let headerObj = {
+        'Accept': 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+      }
+      if(accessToken)
+        headerObj.Authorization = token;
+
       axios({
         method: 'GET',
         url: requestURL,
-        headers: {
-          Accept: 'application/json;charset=UTF-8',
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Access-Control-Allow-Origin': '*',
-          Authorization: token,
-        },
+        headers: headerObj,
       }).then(resp => {
         console.log(resp);
         if(Boolean(resp.data)) {
@@ -268,14 +276,15 @@ class LikeList extends React.PureComponent {
           fullScreen
           open={this.state.open}
           onClose={this.handleClose}
+          scroll="paper"
           TransitionComponent={Transition}
           className={classes.dialogBox}
           classes={{
             root: classes.root,
-            paper: classes.root,
+            // paper: classes.root,
           }}
         >
-          <AppBar className={classes.appBar}>
+          <AppBar className={classes.appBar} position="fixed">
             <Toolbar>
               <Typography variant="title" color="inherit" className={classes.flex}>
                 총 {totalVoter} 명

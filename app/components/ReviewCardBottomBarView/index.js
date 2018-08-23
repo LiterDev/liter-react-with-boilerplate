@@ -295,23 +295,25 @@ class ReviewCardBottomBarView extends React.PureComponent {
   };
   handleResponse = res => {
     console.log(res);
-    const accessToken = localStorage.getItem('accessToken');
-    const headerText = {
-      Accept: 'application/json;charset=UTF-8',
-      'Content-Type': 'application/json;charset=UTF-8',
-      'Access-Control-Allow-Origin': '*',
-    };
+
     if (res.error_code) {
       console.log(`facebook share error:::${res.error_code}`);
     } else {
-      console.log(`add share +1`);
-      console.log(`accessToken::${accessToken}`);
+      // console.log(`add share +1`);
+      const accessToken = localStorage.getItem('accessToken');
       const requestURL = `${process.env.API_URL}/share`;
+      const headerText = {
+        Accept: 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+      };
 
       if (accessToken) {
+        console.log(`accessToken::${accessToken}`);
         const token = `Bearer ${accessToken}`;
-        headerText.push({ Authorization: token });
+        headerText.Authorization = token;
       }
+      // console.log(headerText);
 
       axios({
         method: 'POST',
@@ -320,19 +322,14 @@ class ReviewCardBottomBarView extends React.PureComponent {
         data: JSON.stringify({
           reviewId: this.props.review.id,
         }),
-      })
-        .then(resp => {
-          console.log(resp);
-          if (resp) {
-            this.setState({
-              shareCount: resp.data,
-            });
-          }
-        })
-        .catch(error => {
-          console.log(error);
-          return error;
-        });
+      }).then(resp => {
+        console.log(resp);
+        if (resp) {
+          this.setState({
+            shareCount: resp.data,
+          });
+        }
+      });
     }
   };
   handleReady = req => {
@@ -401,7 +398,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
     // const curReviewing = reviewingIcons.sel;
 
     // current status for campaign
-    console.log(shareLocation);
+    // console.log(shareLocation);
     let currentStatus = null;
     switch (review.reviewTimeLimit) {
       case 'UNLIMIT':

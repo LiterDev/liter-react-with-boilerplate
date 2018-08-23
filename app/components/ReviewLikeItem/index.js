@@ -7,6 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
 /* material-ui core */
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -16,7 +17,12 @@ import Typography from '@material-ui/core/Typography';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
+import TimeAt from 'components/TimeAt';
+import Button from '@material-ui/core/Button';
 /* material-ui icon */
+import LikeIcon from 'images/ic-feed-like.png';
+import LikeSelIcon from 'images/ic-feed-like-sel.png';
+
 /* containers */
 /* components */
 /* image */
@@ -45,8 +51,10 @@ const styles = theme => ({
     height: 90,
   },
   controls: {
-    display: 'flex',
-    alignItems: 'center',
+    position: 'relative',
+    height: 36,
+    // display: 'flex',
+    // alignItems: 'center',
     // paddingLeft: theme.spacing.unit,
     // paddingBottom: theme.spacing.unit,
   },
@@ -60,6 +68,105 @@ const styles = theme => ({
   cardContentRoot: {
     paddingTop: 0,
     paddingBottom: 0,
+    paddingRight: 0,
+  },
+  userNickName: {
+    height: 15,
+    fontFamily: 'AppleSDGothicNeo',
+    fontSize: 12,
+    fontWeight: 500,
+    fontstyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: '1.25',
+    letterSpacing: 'normal',
+    color: 'rgb(124, 124, 124)',
+  },
+  timeAt: {
+    marginLeft: 10,
+    fontFamily: 'AppleSDGothicNeo',
+    fontSize: 12,
+    fontWeight: 300,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: '1.25',
+    letterSpacing: 'normal',
+    color: 'rgb(170, 170, 170)',
+  },
+  flexWarp: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  follow: {
+    position: 'absolute',
+    right: 20,
+    fontFamily: 'AppleSDGothicNeo',
+    fontSize: 12,
+    fontWeight: 300,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: '1.25',
+    letterSpacing: 'normal',
+    color: '#1591ff',
+  },
+  contents: {
+    lineHeight: '1.5em',
+    height: '3em',
+    overflow: 'hidden',
+    fontFamily: 'AppleSDGothicNeo',
+    fontSize: 14,
+    fontWeight: 500,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    letterSpacing: 'normal',
+    color: 'rgb(17, 17, 17)',
+    marginTop: 8,
+    maxWidth: 235,
+  },
+  icons: {
+    width: 16,
+    height: 16,
+    position: 'absolute',
+    left: 0,
+    bottom: 12,
+  },
+  activeStatusFirst: {
+    position: 'absolute',
+    // paddingLeft: '2vh',
+    float: 'left',
+    textAlign: 'left',
+  },
+  votingIcon: {
+    // width: '100px',
+    padding: '0px 0px 0px 0px',
+  },
+  reviewing: {
+    paddingTop: '8px',
+  },
+  numCaption: {
+    // paddingTop: 3,
+    fontFamily: 'SFProDisplay',
+    fontSize: 11,
+    fontWeight: 500,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    letterSpacing: 'normal',
+    color: 'rgb(21, 145, 255)',
+    bottom: 12,
+  },
+  activeStatusLast: {
+    position: 'absolute',
+    fontFamily: 'SFProDisplay',
+    fontSize: 11,
+    fontWeight: 600,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    letterSpacing: 'normal',
+    lineHeight: '1em',
+    right: 0,
+    bottom: 12,
+    display: 'flex',
+    flexDrection: 'column',
+    justifyContent: 'center',
   },
 });
 
@@ -83,11 +190,56 @@ class ReviewLikeItem extends React.PureComponent {
                 root: classes.cardContentRoot,
               }}
             >
-              <Typography variant="subheading" color="textSecondary">
-                Mac Miller
-              </Typography>
-              <Typography variant="headline">Live From Space</Typography>
-              <div className={classes.controls}>DDDD</div>
+              <div className={classes.flexWarp}>
+                <Typography
+                  variant="subheading"
+                  color="textSecondary"
+                  className={classes.userNickName}
+                >
+                  {review.user.userNickName}
+                </Typography>
+                <div className={classes.timeAt}>
+                  <TimeAt date={review.updateAt} />
+                </div>
+                <div className={classes.follow}>팔로우</div>
+              </div>
+              <div>
+                <Typography variant="headline" className={classes.contents}>
+                  Live From SpaceLive From SpaceLive From SpaceLive From
+                  SpaceLive From SpaceLive From SpaceLive From SpaceLive From
+                  SpaceLive From SpaceLive From Space
+                </Typography>
+              </div>
+
+              <div className={classes.controls}>
+                <div className={classes.activeStatusFirst}>
+                  <Button
+                    color="inherit"
+                    onClick={() => {
+                      // this.handleVoting(this.props.review.id);
+                    }}
+                    aria-label="service"
+                    className={classes.votingIcon}
+                    classes={{
+                      root: classes.rootButton,
+                    }}
+                  >
+                    {/* <img src={LikeIcon} alt="like" className={classes.icons} /> */}
+                    <img
+                      src={LikeSelIcon}
+                      alt="like"
+                      className={classes.icons}
+                    />
+                    <span className={classNames(classes.numCaption)}>
+                      {/* {review.likeCount ? review.likeCount : 0} */}
+                      {review.curLikeCount ? review.curLikeCount : 0}
+                    </span>
+                  </Button>
+                </div>
+                <div className={classes.activeStatusLast}>
+                  <div>11.20 LCB</div>
+                </div>
+              </div>
             </CardContent>
           </div>
         </Card>

@@ -265,7 +265,7 @@ const styles = theme => ({
     // float: 'right',
     justifyContent: 'flex-end',
     display: 'flex',
-    width: '60%',
+    width: '58%',
     // right: 0,
   },
   literCubeLcb: {
@@ -501,14 +501,14 @@ class AppDrawer extends React.PureComponent {
             </ListItem>
           )}
 
-          {/* <ListItem className={classes.itemLeaf}>
+          <ListItem className={classes.itemLeaf}>
             <Button
               className={classes.btnCaption}
               onClick={this.reviewListOpen}
             >
               좋아요 리스트 보기
             </Button>
-          </ListItem> */}
+          </ListItem>
 
           <ListItem className={classes.itemLeaf}>
             <Link
@@ -544,6 +544,7 @@ class AppDrawer extends React.PureComponent {
           open={this.state.reviewListOpen}
           onClose={this.handleClose}
           TransitionComponent={Transition}
+          scroll={'paper'}
         >
           <ReviewsMyLike handleClose={this.handleClose} />
         </Dialog>

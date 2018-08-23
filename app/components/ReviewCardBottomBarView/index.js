@@ -299,6 +299,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
     if (res.error_code) {
       console.log(`facebook share error:::${res.error_code}`);
     } else {
+      console.log(`add share +1`);
       const accessToken = localStorage.getItem('accessToken');
       if (accessToken) {
         const requestURL = `${process.env.API_URL}/share`;

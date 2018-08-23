@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { browserHistory } from 'react-router';
 // import styled from 'styled-components';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect} from 'react-router-dom';
 
 // import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
@@ -114,6 +114,7 @@ function App(props) {
       {/* <Header /> */}
 
       <Switch>
+ 
         <Route exact path="/" component={Reviews} />
         <Route path="/features" component={FeaturePage} />
         <Route path="/signup" component={SignUp} />
@@ -164,6 +165,7 @@ const PrivateRoute = ({ component: Component, authenticated, ...rest }) => (
     }
   />
 );
+
 
 // const PrivateWalletRoute = ({
 //   component: Component,

@@ -270,7 +270,10 @@ class ReviewCategory extends React.PureComponent {
         complete: false,
       });
     }
+    
   };
+
+  
   cateComplete = () => {
     // console.log('===========');
     this.props.onClose(this.state.selectedCate);
@@ -337,7 +340,8 @@ class ReviewCategory extends React.PureComponent {
                     }}
                   />
                 )}
-                <div className={classes.cateName}>{cate.name}</div>
+           
+              <div className={classes.cateName}>{cate.name}</div>
               </div>
             ))}
           <div className={classes.btnWrap}>

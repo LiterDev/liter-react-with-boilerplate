@@ -37,10 +37,18 @@ import axios from 'axios';
 
 
 const styles = {
+  root: {
+    borderTopLeftRadius: '18px !important',
+    borderTopRightRadius: '18px !important',
+  },
   dialogBox: {
+    borderTopLeftRadius: '18px !important',
+    borderTopRightRadius: '18px !important',
     top: '50%',
   },
   appBar: {
+    borderTopLeftRadius: '18px',
+    borderTopRightRadius: '18px',
     position: 'relative',
     top: 0,
     // borderRadius: 18,
@@ -78,7 +86,7 @@ const styles = {
     float: 'right',
     fontFamily: 'SFProDisplay',
     fontSize: 15,
-    fontWeight: 500,
+    fontWeight: 600,
     fontStyle: 'normal',
     fontStretch: 'normal',
     letterSpacing: 'normal',
@@ -90,7 +98,7 @@ const styles = {
     float: 'right',
     fontFamily: 'SFProDisplay',
     fontSize: 15,
-    fontWeight: 500,
+    fontWeight: 600,
     fontStyle: 'normal',
     fontStretch: 'normal',
     letterSpacing: 'normal',
@@ -262,6 +270,10 @@ class LikeList extends React.PureComponent {
           onClose={this.handleClose}
           TransitionComponent={Transition}
           className={classes.dialogBox}
+          classes={{
+            root: classes.root,
+            paper: classes.root,
+          }}
         >
           <AppBar className={classes.appBar}>
             <Toolbar>

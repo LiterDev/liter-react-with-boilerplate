@@ -8,6 +8,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
+import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Media from 'components/Media';
 import MediaSlider from 'components/MediaSlider';
@@ -22,6 +23,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
+import Button from '@material-ui/core/Button';
 // import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 // import IconButton from '@material-ui/core/IconButton';
@@ -183,18 +185,41 @@ class ReviewCard extends React.PureComponent {
     // call time-diff function (6 level)
     const timeDiff = '방금전';
 
+    // const elAvatar =
+    //   avatarImageUrl != null ? (
+    //     <Link to={`/profile/${this.props.review.user.id}`}>
+    //     <Avatar
+    //       aria-label="Recipe"
+    //       className={classes.avatar}
+    //       src={avatarImageUrl}
+    //       // onClick={this.moveProfilePage}
+    //     />
+    //     </Link>
+    //   ) : (
+    //     <Link to={`/profile/${this.props.review.user.id}`}>
+    //     <img
+    //       aria-label="Recipe"
+    //       className={classes.avatar}
+    //       src={avatarDefault}
+    //       // onClick={this.moveProfilePage}
+    //     />
+    //     </Link>
+    //   );
+
     const elAvatar =
       avatarImageUrl != null ? (
         <Avatar
           aria-label="Recipe"
           className={classes.avatar}
           src={avatarImageUrl}
+          // onClick={this.moveProfilePage}
         />
       ) : (
         <img
           aria-label="Recipe"
           className={classes.avatar}
           src={avatarDefault}
+          // onClick={this.moveProfilePage}
         />
       );
 
@@ -204,7 +229,7 @@ class ReviewCard extends React.PureComponent {
           {viewType ? (
             <CardHeader
               className={classes.cardHeader}
-              avatar={elAvatar}
+              avatar={elAvatar}              
               action={
                 // <FollowButton
                 //   followYn={review.followYn}

@@ -11,6 +11,7 @@ import injectReducer from 'utils/injectReducer';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import { Helmet } from 'react-helmet';
 // import { Redirect } from 'react-router-dom';
 /* material-ui core */
 import { withStyles } from '@material-ui/core/styles';
@@ -76,10 +77,18 @@ export class ReviewDetailPage extends React.PureComponent {
     // console.log(']----detail page render ----[');
     // console.log(surveys);
     // console.log(error);
-
+    const shareLocation = window.location.hostname.concat(
+      `/review/${reviewId}`,
+    );
     if (reviews !== false) {
       return (
         <div>
+          <Helmet defaultTitle={reviews.title} />
+            {/* <title>{reviews.title}</title> */}
+            {/* <meta name="description" content="{reviews.title}" /> */}
+            {/* <meta property="og:title" content="11111" /> */}
+            {/* <link rel="canonical" href={shareLocation} /> */}
+          {/* </Helmet> */}
           <ReviewHeader headerTitle="" />
           <ReviewDetailCard
             reviews={reviews}

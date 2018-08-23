@@ -475,7 +475,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
               <Button
                 color="inherit"
                 onClick={() => {
-                  this.handleVoting(reviewId);
+                  this.handleVoting(this.props.review.id);
                 }}
                 aria-label="service"
                 className={classes.votingIcon}
@@ -548,7 +548,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
             </div>
             {/* ]]---------  LikeList Popup :: START --------[[ */}
             <LikeList
-              reviewId={reviewId}
+              reviewId={this.props.review.id}
               rewardLitercube={review.rewardLitercube}
             />
             {/* ]]---------  LikeList Popup :: END  --------[[ */}
@@ -643,7 +643,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
             <Button
               color="inherit"
               onClick={() => {
-                this.handleVoting(reviewId);
+                this.handleVoting(this.props.review.id);
               }}
               aria-label="like"
               className={classes.votingIcon}
@@ -699,7 +699,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 <Button
                   color="inherit"
                   onClick={() => {
-                    this.handleShare(reviewId);
+                    this.handleShare(this.props.review.id);
                   }}
                   aria-label="comment"
                   className={classes.votingIcon}
@@ -747,7 +747,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
           </div> */}
           {/* ]]---------  LikeList Popup :: START --------[[ */}
           <LikeList
-            reviewId={reviewId}
+            reviewId={this.props.review.id}
             rewardLitercube={review.rewardLitercube}
           />
           {/* ]]---------  LikeList Popup :: END  --------[[ */}

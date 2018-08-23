@@ -247,7 +247,7 @@ class LikeList extends React.PureComponent {
   render() {
     const { classes, reviewId, rewardLitercube } = this.props;
     const { totalVoter, totalReward, likelist } = this.state;
-
+    
     return (
       <div onScroll={this.handleScroll}>
         {(rewardLitercube && rewardLitercube > 0)?(

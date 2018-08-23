@@ -294,7 +294,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
     }
   };
   handleResponse = res => {
-    console.log(res.error_code);
+    console.log(res);
 
     if (res.error_code) {
       console.log(`facebook share error:::${res.error_code}`);
@@ -311,7 +311,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
             Accept: 'application/json;charset=UTF-8',
             'Content-Type': 'application/json;charset=UTF-8',
             'Access-Control-Allow-Origin': '*',
-            'X-Frame-Options': 'SAMEORIGIN',
+            'X-Frame-Options': 'ALLOW-FROM https://apps.facebook.com',
             Authorization: token,
           },
           data: JSON.stringify({

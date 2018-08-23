@@ -1,11 +1,17 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
 
-import { reviewListLoaded, reviewListLoadingError } from './actions';
+import { 
+  reviewListLoaded, 
+  reviewListLoadingError, 
+  voteSuccess,
+  voteError 
+} from './actions';
 import {
   LOAD_REVIEW_ACTION,
   LOAD_REVIEW_MORE,
   LOAD_CATEGORY,
+  VOTE_ACTION,
 } from './constants';
 
 import {
@@ -106,6 +112,54 @@ export function* getReviewMore(data) {
   } catch (err) {}
 }
 
+export function* sagaVote(data) {
+  console.log(']]]]] saga [[[[[[----------do Vote');
+  console.log(data);
+  const reviewId = data.reviewId;
+
+  const requestURL = `${process.env.API_URL}/engagement`;
+  const accessToken = localStorage.getItem('accessToken');
+  const token = `Bearer ${accessToken}`;
+  try {
+    const options = {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        Authorization: token,
+      },
+      data: JSON.stringify({
+        reviewId: reviewId,
+      }),
+    };
+    const reqContents = yield call(request, requestURL, options);
+    console.log('Vote Success <<<<<<<<<<<<<<<<<<<<');
+    console.log(reqContents);
+
+    ////////////////////////////////////////////////////////////////////////
+    const requestURL2 = `${process.env.API_URL}/review/detail/${reviewId}`;
+    const options2 = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        Authorization: token,
+      },
+    };
+    const review = yield call(request, requestURL2, options2);
+    ////////////////////////////////////////////////////////////////////////
+
+    yield put(voteSuccess(review));
+    // yield put(voteSuccess(reqContents));
+  } catch (err) {
+    yield put(voteError(err));
+    console.log('Vote Failure <<<<<<<<<<<<<<<<<<<<');
+    console.log(err.response.status);
+  }
+}
+
 export function* getCategorys() {
   const requestURL = `${process.env.API_URL}/review/category`;
   const options = {
@@ -135,4 +189,5 @@ export default function* defaultSaga() {
   yield takeLatest(LOAD_REVIEW_ACTION, getReviews);
   yield takeLatest(LOAD_REVIEW_MORE, getReviewMore);
   yield takeLatest(LOAD_CATEGORY, getCategorys);
+  yield takeLatest(VOTE_ACTION, sagaVote);
 }

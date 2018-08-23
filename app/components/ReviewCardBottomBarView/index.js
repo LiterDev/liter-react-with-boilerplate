@@ -258,13 +258,11 @@ class ReviewCardBottomBarView extends React.PureComponent {
     this.state.curLikeCount = this.props.review.likeCount;
     this.state.literCubeState = this.props.review.rewardLitercube;
 
-    if(this.props.review.likeYn)
-      this.state.curLiked = true;
-    else
-      this.state.curLiked = false;            
+    if (this.props.review.likeYn) this.state.curLiked = true;
+    else this.state.curLiked = false;
   }
 
-  loadTotalReward = (reviewId) => {
+  loadTotalReward = reviewId => {
     const requestURL = `${process.env.API_URL}/review/reward/${reviewId}`;
     const accessToken = localStorage.getItem('accessToken');
     const token = `Bearer ${accessToken}`;
@@ -278,16 +276,18 @@ class ReviewCardBottomBarView extends React.PureComponent {
         'Access-Control-Allow-Origin': '*',
         Authorization: token,
       },
-    }).then(resp => {
-      if(Boolean(resp.data)) {
-        console.log(']]]-------------load TotalReward-------------[[[');
-        console.log(resp.data);
-        this.setState({'literCubeState': resp.data.reward});
-      }
-    }).catch(error => {
+    })
+      .then(resp => {
+        if (Boolean(resp.data)) {
+          console.log(']]]-------------load TotalReward-------------[[[');
+          console.log(resp.data);
+          this.setState({ literCubeState: resp.data.reward });
+        }
+      })
+      .catch(error => {
         console.log(error);
-    });
-  }
+      });
+  };
 
   sendVoting = reviewId => {
     const accessToken = localStorage.getItem('accessToken');
@@ -308,17 +308,17 @@ class ReviewCardBottomBarView extends React.PureComponent {
     }).then(resp => {
       // console.log(resp);
       let tmp = this.state.curLikeCount;
-      if(this.state.curLiked) {
-        this.setState({'curLiked': false});
+      if (this.state.curLiked) {
+        this.setState({ curLiked: false });
         tmp = tmp - 1;
       } else {
-        this.setState({'curLiked': true});
+        this.setState({ curLiked: true });
         tmp = tmp + 1;
       }
-      this.setState({'curLikeCount': tmp});
-      this.loadTotalReward(reviewId); 
+      this.setState({ curLikeCount: tmp });
+      this.loadTotalReward(reviewId);
     });
-  }
+  };
 
   handleVoting = reviewId => {
     // console.log(this.state.curLiked);
@@ -448,11 +448,27 @@ class ReviewCardBottomBarView extends React.PureComponent {
       });
     }
   }
-
+  static contextTypes = {
+    router: PropTypes.object,
+  };
   render() {
     const { classes } = this.props;
-    const { onViewVote, campaign, viewType, likeYn, review, reviewId } = this.props;
-    const { voting, reviewing, sharing, viewClass, shareCount, literCubeState } = this.state;
+    const {
+      onViewVote,
+      campaign,
+      viewType,
+      likeYn,
+      review,
+      reviewId,
+    } = this.props;
+    const {
+      voting,
+      reviewing,
+      sharing,
+      viewClass,
+      shareCount,
+      literCubeState,
+    } = this.state;
 
     // const curVote = likeYn ? votingIcons.sel : votingIcons.non;
     const curVote = this.state.curLiked ? votingIcons.sel : votingIcons.non;
@@ -461,6 +477,8 @@ class ReviewCardBottomBarView extends React.PureComponent {
     const shareLocation = window.location.hostname.concat(
       `/review/${reviewId}`,
     );
+
+    // console.log(`router ::: ${this.context.router}`);
 
     // const curVote = votingIcons.sel;
     // const curVote = votingIcons.non;
@@ -514,8 +532,14 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 }}
               >
                 {/* <img src={LikeIcon} alt="like" className={classes.icons} /> */}
-                <img src={curVote.selImg} alt="like" className={classes.icons} />
-                <span className={classNames(classes.numCaption, curVote.styleClass)}>
+                <img
+                  src={curVote.selImg}
+                  alt="like"
+                  className={classes.icons}
+                />
+                <span
+                  className={classNames(classes.numCaption, curVote.styleClass)}
+                >
                   {/* {review.likeCount ? review.likeCount : 0} */}
                   {this.state.curLikeCount ? this.state.curLikeCount : 0}
                 </span>
@@ -538,7 +562,12 @@ class ReviewCardBottomBarView extends React.PureComponent {
                   alt="comment"
                   className={classes.icons}
                 />
-                <span className={classNames(classes.numCaption, curReviewing.styleClass)}>
+                <span
+                  className={classNames(
+                    classes.numCaption,
+                    curReviewing.styleClass,
+                  )}
+                >
                   {review.replyCount ? review.replyCount : 0}
                 </span>
               </Button>
@@ -712,7 +741,6 @@ class ReviewCardBottomBarView extends React.PureComponent {
               >
                 {/* <FormattedMessage {...messages.votingActive} /> */}
                 {review.replyCount ? review.replyCount : 0}
-
               </span>
             </Button>
           </div>
@@ -836,6 +864,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
 
 ReviewCardBottomBarView.propTypes = {
   onClick: PropTypes.func,
+  // router: React.PropTypes.func.isRequired,
 };
 
 const withConnect = connect();

@@ -310,7 +310,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
             Accept: 'application/json;charset=UTF-8',
             'Content-Type': 'application/json;charset=UTF-8',
             'Access-Control-Allow-Origin': '*',
-            'X-Frame-Options: SAMEORIGIN',
+            'X-Frame-Options': 'SAMEORIGIN',
             Authorization: token,
           },
           data: JSON.stringify({

@@ -196,9 +196,12 @@ const styles = theme => ({
 
 function HomeIcon(props) {
   return (
-    <SvgIcon >
-      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+   
+    <SvgIcon{...props}>
+      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />  
+         
     </SvgIcon>
+   
   );
 }
 /* eslint-disable react/prefer-stateless-function */
@@ -233,8 +236,7 @@ class ReviewHeader extends React.Component {
 
   moveHome = () => {
     // console.log('home');
-    //return <Redirect to="/login" />;
-    this.props.history.push('/');
+   this.props.history.push('/');
    };
 
   logout = () => {
@@ -261,12 +263,11 @@ onLogout() {
               className={classes.ic_round_home}
               color="inherit"
               aria-label="Menu"
-              onClick={this.moveHome}
+            onClick={this.moveHome}
             >
               {/* <MenuIcon /> */}
               {/* <Link to="/"> */}
-              <HomeIcon className={classes.icon} />
-
+              <HomeIcon className={classes.icon}/>
               {/* </Link> */}
             </IconButton>
             {searchBar === 'true' ? (

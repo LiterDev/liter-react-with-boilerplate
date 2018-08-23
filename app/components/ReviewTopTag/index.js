@@ -87,6 +87,12 @@ const styles = theme => ({
   },
   text: {
     marginTop: 8,
+    color : "gray",
+   fontWight: "bold",
+   fontSize:13,
+   fontStyle: "oblique",
+
+    
   },
   // display: block;
   // border: solid 1px rgba(0,0,0,.05);
@@ -112,6 +118,17 @@ const styles = theme => ({
   // }
 });
 const cateName = [
+  '뷰티',
+  '리빙',
+  '푸드',
+  '패션',
+  '유아/아동',
+  '여가',
+  '맛집',
+  '펫',
+  '그외',
+];
+const selCateName = [
   '뷰티',
   '리빙',
   '푸드',
@@ -182,7 +199,7 @@ class ReviewTopTag extends React.PureComponent {
                   onClick={() => this.handleTag(-9)}
                 />
               )}
-              <p className={classes.text}>#최신</p>
+              <b><p className={classes.text}>#최신</p></b>
             </div>
             {/* <div className={classes.avawrap}>
               <Avatar
@@ -211,7 +228,7 @@ class ReviewTopTag extends React.PureComponent {
                     className={classNames(classes.avatar, classes.bigAvatar)}
                     onClick={() => this.handleTag(item.categoryId)}
                   />
-                  <p className={classes.text}>#{cateName[item.categoryId]}</p>
+                 <b> <p className={classes.text}>#{cateName[item.categoryId]}</p></b>
                 </div>
               ))}
 

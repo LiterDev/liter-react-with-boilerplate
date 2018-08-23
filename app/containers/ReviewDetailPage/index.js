@@ -83,12 +83,23 @@ export class ReviewDetailPage extends React.PureComponent {
     if (reviews !== false) {
       return (
         <div>
-          <Helmet defaultTitle={reviews.title} />
-            {/* <title>{reviews.title}</title> */}
-            {/* <meta name="description" content="{reviews.title}" /> */}
-            {/* <meta property="og:title" content="11111" /> */}
-            {/* <link rel="canonical" href={shareLocation} /> */}
-          {/* </Helmet> */}
+          <Helmet
+            title={reviews.title}
+            meta={[
+              { property: 'og:title', content: reviews.title },
+              { property: 'og:site_name', content: 'LITER Project' },
+              {
+                property: 'og:url',
+                content: shareLocation,
+              },
+              { property: 'og:description', content: reviews.title },
+              {
+                property: 'og:image',
+                content: reviews.mediaCollection[0].fullPathMedium,
+              },
+              { property: 'og:site_name', content: 'Fishii.shop' },
+            ]}
+          />
           <ReviewHeader headerTitle="" />
           <ReviewDetailCard
             reviews={reviews}

@@ -29,7 +29,7 @@ import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
-import { loadList, loadListMore, loadCategory } from './actions';
+import { loadList, loadListMore, loadCategory, voteAction } from './actions';
 import makeSelectReviews from './selectors';
 
 window.$ = jQuery;
@@ -55,12 +55,14 @@ const styles = theme => ({
   },
 });
 /* eslint-disable react/prefer-stateless-function */
-export class Reviews extends React.PureComponent {
+export class Reviews extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       cateValue: -9,
     };
+
+    this.handleVoting = this.handleVoting.bind(this);
   }
 
   componentDidMount() {
@@ -70,7 +72,9 @@ export class Reviews extends React.PureComponent {
       loadMore,
       last,
       loadCategoryList,
+      reviews,
     } = this.props;
+    
     loadReviewList(this.state.cateValue);
     loadCategoryList();
 
@@ -88,6 +92,7 @@ export class Reviews extends React.PureComponent {
       }
     });
   }
+  
   loadValue = value => {
     // console.log(value);
     this.setState({
@@ -96,12 +101,15 @@ export class Reviews extends React.PureComponent {
     this.props.loadReviewList(value);
     // loadReviewList();
   };
+
+  handleVoting = reviewId => {
+    this.props.doVoting(reviewId);
+  };
+
   render() {
     // const { classes } = this.props;
     const { reviews, classes } = this.props;
 
-    // console.log(reviews);
-    // console.log(this.props.categorys);
     return (
       <div className={classes.root}>
         <Header
@@ -115,7 +123,7 @@ export class Reviews extends React.PureComponent {
           reviewFirst={reviews.reviews[0]}
         />
         <div className={classes.reviewList}>
-          <ReviewList reviews={reviews} />
+          <ReviewList reviews={reviews} handleVoting={this.handleVoting}/>
         </div>
         <Link
           to="/review/write"
@@ -137,6 +145,7 @@ Reviews.propTypes = {
   loadCategoryList: PropTypes.func,
   loadReviewListMore: PropTypes.func,
   reviews: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  doVoting: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -159,6 +168,9 @@ function mapDispatchToProps(dispatch) {
     loadReviewListWithCategory: value => {},
     loadCategoryList: () => {
       dispatch(loadCategory());
+    },
+    doVoting: userId => {
+      dispatch(voteAction(userId));
     },
   };
 }

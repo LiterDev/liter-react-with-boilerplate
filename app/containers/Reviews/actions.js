@@ -13,6 +13,9 @@ import {
   LOAD_REVIEW_MORE_ERROR,
   LOAD_CATEGORY,
   LOAD_CATEGORY_SUCCESS,
+  VOTE_ACTION,
+  VOTE_SUCCESS,
+  VOTE_ERROR
 } from './constants';
 
 export function loadList(cateValue) {
@@ -69,5 +72,26 @@ export function categoryLoaded(data) {
   return {
     type: LOAD_CATEGORY_SUCCESS,
     data,
+  };
+}
+
+export function voteAction(reviewId) {
+  return {
+    type: VOTE_ACTION,
+    reviewId
+  };
+}
+
+export function voteSuccess(data) {
+  return {
+    type: VOTE_SUCCESS,
+    data
+  };
+}
+
+export function voteError(error) {
+  return {
+    type: VOTE_ERROR,
+    error
   };
 }

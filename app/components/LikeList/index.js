@@ -116,6 +116,7 @@ class LikeList extends React.PureComponent {
     loading: false,
     curPage: 1,
     loadEnd: false,
+    totalVoter: 0,
   };
 
   handleClickOpen = () => {
@@ -159,18 +160,12 @@ class LikeList extends React.PureComponent {
         if(Boolean(resp.data)) {
           console.log(']]]-------------load TotalReward-------------[[[');
           console.log(resp.data);
-          this.setState({'totalReward': resp.data});
+          this.setState({'totalReward': resp.data.reward});
+          this.setState({'totalVoter': resp.data.totalCcount});
           this.setState({'loading': false});
         }
       }).catch(error => {
-          if(error.response.data.code === 300104) {
-            console.log("no more data");
-            this.setState({'loading': false});
-          } else if(error.response.data.code === 500000) {
-            console.log("likelist empty > ERROR");  
-            this.setState({'loading': false});
-          }
-          console.log(error.response);
+          console.log(error);
       });
     }
   }
@@ -251,8 +246,8 @@ class LikeList extends React.PureComponent {
 
   render() {
     const { classes, reviewId, rewardLitercube } = this.props;
-    const { totalReward, likelist } = this.state;
-
+    const { totalVoter, totalReward, likelist } = this.state;
+    
     return (
       <div onScroll={this.handleScroll}>
         {(rewardLitercube && rewardLitercube > 0)?(
@@ -271,7 +266,7 @@ class LikeList extends React.PureComponent {
           <AppBar className={classes.appBar}>
             <Toolbar>
               <Typography variant="title" color="inherit" className={classes.flex}>
-                총 명
+                총 {totalVoter} 명
               </Typography>
               <div className={classes.cubeCaption}>
                 {totalReward} LCB

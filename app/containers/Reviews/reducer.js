@@ -13,7 +13,10 @@ import {
   LOAD_REVIEW_MORE_SUCCESS,
   LOAD_REVIEW_MORE_ERROR,
   LOAD_CATEGORY,
-  LOAD_CATEGORY_SUCCESS,
+  LOAD_CATEGORY_SUCCESS,  
+  VOTE_ACTION,
+  VOTE_SUCCESS,
+  VOTE_ERROR,
 } from './constants';
 
 export const initialState = fromJS({
@@ -57,6 +60,17 @@ function reviewsReducer(state = initialState, action) {
       return state;
     case LOAD_CATEGORY_SUCCESS:
       return state.set('categorys', action.data);
+    case VOTE_ACTION:
+      return state;
+    case VOTE_SUCCESS:
+        let oriReviews = state.get('reviews');
+        oriReviews.filter(item => item.id === action.data.id).map(tt => {
+          tt.likeCount = action.data.likeCount;
+        });
+      return state
+        .set('reviews', oriReviews);
+    case VOTE_ERROR:
+      return state.set('error', action.error);
     default:
       return state;
   }

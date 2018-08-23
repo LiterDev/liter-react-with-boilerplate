@@ -109,8 +109,8 @@ function App(props) {
   return (
     <div className={classes.root}>
       <Helmet
-        titleTemplate="%s - 세상의 모든 리뷰, LITER"
-        defaultTitle="세상의 모든 리뷰, LITER"
+        titleTemplate="세상의 모든 리뷰, LITER - %s"
+        defaultTitle="세상의 모든 리뷰, LITER1"
       >
         {/* <meta name="description" content="A React.js Boilerplate application" />
         <script type="text/javascript" src={naverMapUrl} /> */}

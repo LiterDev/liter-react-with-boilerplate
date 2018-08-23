@@ -160,11 +160,13 @@ const styles = theme => ({
 class ReviewCard extends React.PureComponent {
   // state = { expanded: false };
 
+  handleVoting = (reviewId) => {
+    this.props.handleVoting(reviewId);
+  };
+
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
-
-  
 
   render() {
     // console.log(window.location.href);
@@ -235,7 +237,7 @@ class ReviewCard extends React.PureComponent {
           /> */}
           <ReviewCardBottomBarView
             likeYn={review.likeYn}
-            onViewVote={false}
+            onViewVote={this.handleVoting}
             review={review}
           />
           <Divider className={classes.divider} light />

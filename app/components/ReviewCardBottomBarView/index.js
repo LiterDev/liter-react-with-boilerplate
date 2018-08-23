@@ -188,7 +188,7 @@ const styles = theme => ({
   },
   captionWrapper: {
     paddingTop: 6,
-  }
+  },
 });
 
 const votingIcons = {
@@ -253,9 +253,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
       : this.props.classes.rootBottom;
   }
 
-  sendVoting = reviewId => {
-    
-  }
+  sendVoting = reviewId => {};
 
   handleVoting = reviewId => {
     // console.log('handleVoting in detail');
@@ -355,8 +353,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
     this.props.history.push('/signin');
   };
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   render() {
     const { classes } = this.props;
@@ -379,7 +376,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
     // const curShare = shareIcons.non;
     // const curReviewing = reviewingIcons.non;
     // const curReviewing = reviewingIcons.sel;
-    
+
     // current status for campaign
     let currentStatus = null;
     switch (review.reviewTimeLimit) {
@@ -425,12 +422,17 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 }}
               >
                 {/* <img src={LikeIcon} alt="like" className={classes.icons} /> */}
-                <img src={curVote.selImg} alt="like" className={classes.icons} />
-                <span className={classNames(classes.numCaption, curVote.styleClass)}>
+                <img
+                  src={curVote.selImg}
+                  alt="like"
+                  className={classes.icons}
+                />
+                <span
+                  className={classNames(classes.numCaption, curVote.styleClass)}
+                >
                   {review.likeCount ? review.likeCount : 0}
-                </span>        
+                </span>
               </Button>
-              
             </div>
             <div className={classes.activeStatus}>
               <Button
@@ -449,13 +451,22 @@ class ReviewCardBottomBarView extends React.PureComponent {
                   alt="comment"
                   className={classes.icons}
                 />
-                <span className={classNames(classes.numCaption, curReviewing.styleClass)}>
+                <span
+                  className={classNames(
+                    classes.numCaption,
+                    curReviewing.styleClass,
+                  )}
+                >
                   {review.likeCount ? review.likeCount : 0}
                 </span>
               </Button>
             </div>
             <div className={classes.activeStatus}>
-              <FacebookProvider appId={process.env.FACEBOOK_APPID}>
+              <FacebookProvider
+                appId={process.env.FACEBOOK_APPID}
+                mobileIframe={true}
+                hashtag={'#LITER'}
+              >
                 <Share href={window.location.href}>
                   {/* <Share href="http://www.facebook.com"> */}
                   <div className={classes.captionWrapper}>
@@ -464,7 +475,12 @@ class ReviewCardBottomBarView extends React.PureComponent {
                       alt="share"
                       className={classes.icons}
                     />
-                    <span className={classNames(classes.numCaption, curShare.styleClass)}>
+                    <span
+                      className={classNames(
+                        classes.numCaption,
+                        curShare.styleClass,
+                      )}
+                    >
                       {review.shareCount ? review.shareCount : 0}
                     </span>
                   </div>
@@ -502,7 +518,10 @@ class ReviewCardBottomBarView extends React.PureComponent {
               </FacebookProvider>
             </div> */}
             {/* ]]---------  LikeList Popup :: START --------[[ */}
-            <LikeList reviewId={reviewId} rewardLitercube={review.rewardLitercube}/>
+            <LikeList
+              reviewId={reviewId}
+              rewardLitercube={review.rewardLitercube}
+            />
             {/* ]]---------  LikeList Popup :: END  --------[[ */}
           </div>
           <Dialog
@@ -605,7 +624,9 @@ class ReviewCardBottomBarView extends React.PureComponent {
             >
               {/* <img src={LikeIcon} alt="like" className={classes.icons} /> */}
               <img src={curVote.selImg} alt="like" className={classes.icons} />
-              <span className={classNames(classes.numCaption, curVote.styleClass)}>
+              <span
+                className={classNames(classes.numCaption, curVote.styleClass)}
+              >
                 {review.likeCount ? review.likeCount : 0}
               </span>
             </Button>
@@ -623,10 +644,14 @@ class ReviewCardBottomBarView extends React.PureComponent {
               }}
             >
               <img src={CommentIcon} alt="comment" className={classes.icons} />
-              <span className={classNames(classes.numCaption, curReviewing.styleClass)}>
+              <span
+                className={classNames(
+                  classes.numCaption,
+                  curReviewing.styleClass,
+                )}
+              >
                 {/* <FormattedMessage {...messages.votingActive} /> */}
                 {review.likeCount ? review.likeCount : 0}
-
               </span>
             </Button>
           </div>
@@ -637,6 +662,8 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 onReady={this.handleReady}
                 onResponse={this.handleResponse}
                 onError={this.handleError}
+                mobileIframe={true}
+                hashtag={'#LITER'}
               >
                 <Button
                   color="inherit"
@@ -650,7 +677,12 @@ class ReviewCardBottomBarView extends React.PureComponent {
                   }}
                 >
                   <img src={ShareIcon} alt="share" className={classes.icons} />
-                  <span className={classNames(classes.numCaption, curShare.styleClass)}>
+                  <span
+                    className={classNames(
+                      classes.numCaption,
+                      curShare.styleClass,
+                    )}
+                  >
                     {review.shareCount ? review.shareCount : 0}
                   </span>
                 </Button>
@@ -683,7 +715,10 @@ class ReviewCardBottomBarView extends React.PureComponent {
             </FacebookProvider>
           </div> */}
           {/* ]]---------  LikeList Popup :: START --------[[ */}
-          <LikeList reviewId={reviewId} rewardLitercube={review.rewardLitercube}/>
+          <LikeList
+            reviewId={reviewId}
+            rewardLitercube={review.rewardLitercube}
+          />
           {/* ]]---------  LikeList Popup :: END  --------[[ */}
         </div>
         <Dialog

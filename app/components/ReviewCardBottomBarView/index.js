@@ -296,41 +296,43 @@ class ReviewCardBottomBarView extends React.PureComponent {
   handleResponse = res => {
     console.log(res);
     const accessToken = localStorage.getItem('accessToken');
-
+    const headerText = {
+      Accept: 'application/json;charset=UTF-8',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': '*',
+    };
     if (res.error_code) {
       console.log(`facebook share error:::${res.error_code}`);
     } else {
       console.log(`add share +1`);
       console.log(`accessToken::${accessToken}`);
+      const requestURL = `${process.env.API_URL}/share`;
 
       if (accessToken) {
-        const requestURL = `${process.env.API_URL}/share`;
-        const token = `Bearer ${accessToken}`;        
-        axios({
-          method: 'POST',
-          url: requestURL,
-          headers: {
-            Accept: 'application/json;charset=UTF-8',
-            'Content-Type': 'application/json;charset=UTF-8',
-            'Access-Control-Allow-Origin': '*',
-            Authorization: token,
-          },
-          data: JSON.stringify({
-            reviewId: this.props.review.id,
-          }),
-        }).then(resp => {
+        const token = `Bearer ${accessToken}`;
+        headerText.push({ Authorization: token });
+      }
+
+      axios({
+        method: 'POST',
+        url: requestURL,
+        headers: headerText,
+        data: JSON.stringify({
+          reviewId: this.props.review.id,
+        }),
+      })
+        .then(resp => {
           console.log(resp);
           if (resp) {
             this.setState({
               shareCount: resp.data,
             });
           }
+        })
+        .catch(error => {
+          console.log(error);
+          return error;
         });
-      } else {
-        this.setState({
-          openLoginPop: true,
-        });
-      }
     }
   };
   handleReady = req => {

@@ -235,6 +235,8 @@ class ReviewCardBottomBarView extends React.PureComponent {
     openLoginPop: false,
     totalLikeCount: 0,
     shareCount: 0,
+    curLiked: false,
+    curLikeCount: 0,
   };
   constructor(props) {
     super(props);
@@ -251,19 +253,54 @@ class ReviewCardBottomBarView extends React.PureComponent {
     this.state.viewClass = props.viewType
       ? this.props.classes.rootFix
       : this.props.classes.rootBottom;
+
+    this.state.curLikeCount = this.props.review.likeCount;
+
+    if(this.props.review.likeYn)
+      this.state.curLiked = true;
+    else
+      this.state.curLiked = false;            
   }
 
   sendVoting = reviewId => {
-    
+    const accessToken = localStorage.getItem('accessToken');
+    const requestURL = `${process.env.API_URL}/engagement`;
+    const token = `Bearer ${accessToken}`;
+    axios({
+      method: 'POST',
+      url: requestURL,
+      headers: {
+        Accept: 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        Authorization: token,
+      },
+      data: JSON.stringify({
+        reviewId: reviewId,
+      }),
+    }).then(resp => {
+      // console.log(resp);
+      let tmp = this.state.curLikeCount;
+      if(this.state.curLiked) {
+        this.setState({'curLiked': false});
+        tmp = tmp - 1;
+      } else {
+        this.setState({'curLiked': true});
+        tmp = tmp + 1;
+      }
+      this.setState({'curLikeCount': tmp});        
+    });
   }
 
   handleVoting = reviewId => {
+    // console.log(this.state.curLiked);
     // console.log('handleVoting in detail');
-    console.log(`this.props.likeYn =====[ ${this.props.likeYn}]`);
-    console.log(this.props.likeYn);
+    // console.log(`this.props.likeYn =====[ ${this.props.likeYn}]`);
+    // console.log(this.props.likeYn);
 
     if (this.props.likeYn > 0) {
-      this.props.onViewVote(reviewId);
+      // this.props.onViewVote(reviewId);
+      this.sendVoting(reviewId);
     } else {
       const accessToken = localStorage.getItem('accessToken');
 
@@ -285,7 +322,8 @@ class ReviewCardBottomBarView extends React.PureComponent {
               openSuccesPop: true,
             });
           } else {
-            this.props.onViewVote(reviewId);
+            // this.props.onViewVote(reviewId);
+            this.sendVoting(reviewId);
           }
         });
       } else {
@@ -295,6 +333,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
       }
     }
   };
+
   handleResponse = res => {
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
@@ -355,9 +394,6 @@ class ReviewCardBottomBarView extends React.PureComponent {
     this.props.history.push('/signin');
   };
 
-  componentDidMount() {
-  }
-
   render() {
     const { classes } = this.props;
     const {
@@ -370,7 +406,8 @@ class ReviewCardBottomBarView extends React.PureComponent {
     } = this.props;
     const { voting, reviewing, sharing, viewClass } = this.state;
 
-    const curVote = likeYn ? votingIcons.sel : votingIcons.non;
+    // const curVote = likeYn ? votingIcons.sel : votingIcons.non;
+    const curVote = this.state.curLiked ? votingIcons.sel : votingIcons.non;
     const curReviewing = campaign ? reviewingIcons.sel : reviewingIcons.non;
     const curShare = shareIcons.non;
 
@@ -427,17 +464,18 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 {/* <img src={LikeIcon} alt="like" className={classes.icons} /> */}
                 <img src={curVote.selImg} alt="like" className={classes.icons} />
                 <span className={classNames(classes.numCaption, curVote.styleClass)}>
-                  {review.likeCount ? review.likeCount : 0}
-                </span>        
+                  {/* {review.likeCount ? review.likeCount : 0} */}
+                  {this.state.curLikeCount ? this.state.curLikeCount : 0}
+                </span>
               </Button>
               
             </div>
             <div className={classes.activeStatus}>
               <Button
                 color="inherit"
-                onClick={() => {
-                  this.handleVoting(this.props.reviewId);
-                }}
+                // onClick={() => {
+                //   this.handleVoting(this.props.reviewId);
+                // }}
                 aria-label="service"
                 className={classes.votingIcon}
                 classes={{
@@ -450,7 +488,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
                   className={classes.icons}
                 />
                 <span className={classNames(classes.numCaption, curReviewing.styleClass)}>
-                  {review.likeCount ? review.likeCount : 0}
+                  {review.replyCount ? review.replyCount : 0}
                 </span>
               </Button>
             </div>
@@ -607,15 +645,16 @@ class ReviewCardBottomBarView extends React.PureComponent {
               <img src={curVote.selImg} alt="like" className={classes.icons} />
               <span className={classNames(classes.numCaption, curVote.styleClass)}>
                 {review.likeCount ? review.likeCount : 0}
+                {this.state.curLikeCount ? this.state.curLikeCount : 0}
               </span>
             </Button>
           </div>
           <div className={classes.activeStatus}>
             <Button
               color="inherit"
-              onClick={() => {
-                this.handleVoting(this.props.reviewId);
-              }}
+              // onClick={() => {
+              //   this.handleVoting(this.props.reviewId);
+              // }}
               aria-label="comment"
               className={classes.votingIcon}
               classes={{
@@ -625,7 +664,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
               <img src={CommentIcon} alt="comment" className={classes.icons} />
               <span className={classNames(classes.numCaption, curReviewing.styleClass)}>
                 {/* <FormattedMessage {...messages.votingActive} /> */}
-                {review.likeCount ? review.likeCount : 0}
+                {review.replyCount ? review.replyCount : 0}
 
               </span>
             </Button>

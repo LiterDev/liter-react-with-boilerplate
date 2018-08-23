@@ -485,8 +485,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
               <FacebookProvider
                 appId={process.env.FACEBOOK_APPID}
                 mobileIframe
-                hashtag={'#LITER'}
-                Ï
+                hashtag="#LITER"
               >
                 <Share href={shareLocation}>
                   {/* <Share href="http://www.facebook.com"> */}
@@ -654,7 +653,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 onResponse={this.handleResponse}
                 onError={this.handleError}
                 mobileIframe
-                hashtag={'#LITER'}
+                hashtag="#LITER"
               >
                 <Button
                   color="inherit"

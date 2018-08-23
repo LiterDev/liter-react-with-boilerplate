@@ -88,6 +88,7 @@ const styles = {
     backgroundColor: '#6a88a5',
     color: '#ffffff',
     paddingRight: '8px',
+    border: 'solid 1px rgb(255, 255, 255)',
   },
   userCoin: {
     color: '#1591ff',
@@ -157,12 +158,12 @@ export class MyPage extends React.PureComponent {
     })
       .then(function(response) {
         if (method == 'getClaim') {
-          console.log(self);
+          // console.log(self);
           self.props.selectAcquire();
           self.props.selectMyRewards();
 
-          console.log(']] **)*)*)*)*) getClaim Response (*(*(*(*(*(*(* [[');
-          console.log(response);
+          // console.log(']] **)*)*)*)*) getClaim Response (*(*(*(*(*(*(* [[');
+          // console.log(response);
 
           self.setState({
             totalLiterCube: response.data.totalLiterCube,
@@ -175,7 +176,7 @@ export class MyPage extends React.PureComponent {
   };
 
   handleRewardClaim = () => {
-    console.log('Claim');
+    // console.log('Claim');
     const requestURL = `${process.env.API_URL}/reward/claim`;
     const accessToken = localStorage.getItem('accessToken');
     const token = `Bearer ${accessToken}`;

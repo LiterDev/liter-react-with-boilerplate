@@ -17,6 +17,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Avatar from '@material-ui/core/Avatar';
+import Badge from '@material-ui/core/Badge';
 
 import avatarDefault from '../../images/ic-avatar.png';
 
@@ -121,18 +122,41 @@ const styles = theme => ({
   },
   panel: {
     // height: '160px',
-    height: '100px',
-    marginLeft: '40px',
-    marginBottom: '18px',
+    height: 94,
+    marginLeft: '10px',
+    // marginBottom: '18px',
   },
   avatar: {
     margin: 10,
+    border: 'solid 2px rgb(55, 161, 255)',
   },
   bigAvatar: {
     width: 50,
     height: 50,
   },
-  avatarDiv: {},
+  avatarDiv: {
+    float: 'left',
+    textAlign: 'left',
+  },
+  userNickName: {
+    display: 'inline-block',
+    wordWrap: 'normal',
+    maxWidth: '150px',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    fontFamily: 'SFProDisplay',
+    fontSize: '18px',
+    fontWeight: '600',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    // lineHeight: '1.2',
+    letterSpacing: '-0.2px',
+    color: '#111111',
+    marginTop: 10,
+    marginLeft: 14,
+    height: 22,
+  },
   userName: {
     display: 'inline-block',
     wordWrap: 'normal',
@@ -141,13 +165,16 @@ const styles = theme => ({
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     fontFamily: 'SFProDisplay',
-    fontSize: '24px',
+    fontSize: '12px',
     fontWeight: '600',
     fontStyle: 'normal',
     fontStretch: 'normal',
-    lineHeight: '1.2',
-    letterSpacing: '-0.2px',
-    color: '#111111',
+    letterSpacing: '-0.1px',
+    // lineHeight: '1.2',
+    color: 'rgb(153, 153, 153)',
+    marginTop: 0,
+    marginLeft: 14,
+    height: 22,
   },
   userLevel: {
     paddingLeft: '6px',
@@ -200,6 +227,46 @@ const styles = theme => ({
   },
   rowPaddingLiterCube: {
     paddingTop: '10px',
+  },
+
+  badge: {
+    // position: 'absolute',
+    top: 40,
+    right: -5,
+    // The border color match the background color.
+    // border: `2px solid ${
+    //   theme.palette.type === 'light'
+    //     ? theme.palette.grey[200]
+    //     : theme.palette.grey[900]
+    // }`,
+    borderRadius: '10.5px',
+    backgroundColor: 'rgb(125, 154, 180)',
+    border: 'solid 1px rgb(255, 255, 255)',
+    color: '#ffffff',
+    width: 33,
+    height: 21,
+  },
+  literCube: {
+    // position: 'aboslute',
+    height: 16,
+    fontFamily: 'SFProText',
+    fontSize: 16,
+    fontWeight: 500,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: -0.2,
+    textAlign: 'right',
+    color: 'rgb(21, 145, 255)',
+    // float: 'right',
+    justifyContent: 'flex-end',
+    display: 'flex',
+    width: '60%',
+    // right: 0,
+  },
+  literCubeLcb: {
+    fontWeight: 300,
+    marginLeft: 5,
   },
 });
 
@@ -309,25 +376,36 @@ function AppDrawer(props) {
       <div className={classes.panel}>
         <div className={classes.row}>
           <div className={classes.avatarDiv}>
-            <Avatar
-              alt=""
-              src={avatarImg}
-              className={classNames(classes.avatar, classes.bigAvatar)}
-            />
+            <Badge
+              badgeContent={'Lv 1'}
+              color="primary"
+              classes={{ badge: classes.badge }}
+            >
+              <Avatar
+                alt=""
+                src={avatarImg}
+                className={classNames(classes.avatar, classes.bigAvatar)}
+              />
+            </Badge>
           </div>
         </div>
         <div className={classNames(classes.row, classes.rowPaddingName)}>
-          <Link
+          {/* <Link
             to="/mypage"
             onClick={onClose}
             role="button"
             className={classes.link}
-          >
-            <span className={classes.userName}>
+          > */}
+          <div>
+            <div className={classes.userNickName}>
               {localStorage.getItem('userNickName')}
-            </span>
-          </Link>
-          <span className={classes.userLevel}>Lv 1</span>
+            </div>
+            {/* </Link> */}
+            <div className={classes.userName}>
+              {localStorage.getItem('username')}
+            </div>
+          </div>
+          {/* <span className={classes.userLevel}>Lv 1</span> */}
         </div>
         {/* <div className={classNames(classes.row, classes.rowPaddingFollow)}>
           <span className={classes.userContent}>팔로워</span>
@@ -346,6 +424,14 @@ function AppDrawer(props) {
         <FormattedMessage {...messages.features} />
       </HeaderLink> */}
       <List>
+        <ListItem className={classes.itemLeaf}>
+          <Button className={classes.btnCaption}>나의 보상</Button>
+          <div className={classes.literCube}>
+            <span>{localStorage.getItem('literCube')}</span>
+            <span className={classes.literCubeLcb}>LCB</span>
+          </div>
+          <div style={{ clear: 'both' }} />
+        </ListItem>
         <ListItem className={classes.itemLeaf}>
           {
             // eslint-disable-next-line anchor-is-valid
@@ -390,6 +476,11 @@ function AppDrawer(props) {
             <Button className={classes.btnCaption}>문의하기</Button>
           </div>
           {/* </Link> */}
+        </ListItem>
+        <ListItem className={classes.itemLeaf}>
+          <Link to="/" onClick={onClose} role="button" className={classes.link}>
+            <Button className={classes.btnCaption}>메인</Button>
+          </Link>
         </ListItem>
         <ListItem className={classes.itemLeaf}>
           <div className={classes.link} onClick={logout}>

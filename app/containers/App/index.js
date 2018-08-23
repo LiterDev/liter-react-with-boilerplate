@@ -43,7 +43,7 @@ import * as utils from 'utils/commonFunc';
 import { withStyles } from '@material-ui/core/styles';
 import withRoot from 'withRoot';
 import axios from 'axios';
-import 'react-router-modal/css/react-router-modal.css';
+
 import ReviewsMyLike from 'containers/ReviewsMyLike/Loadable';
 
 import { showInfo, showSMessage } from './Message';

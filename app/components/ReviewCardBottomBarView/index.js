@@ -476,7 +476,11 @@ class ReviewCardBottomBarView extends React.PureComponent {
               </Button>
             </div>
             <div className={classes.activeStatus}>
-              <FacebookProvider appId={process.env.FACEBOOK_APPID}>
+              <FacebookProvider
+                appId={process.env.FACEBOOK_APPID}
+                mobileIframe
+                hashtag={'#LITER'}Ï
+              >
                 <Share href={shareLocation}>
                   {/* <Share href="http://www.facebook.com"> */}
                   <div className={classes.captionWrapper}>
@@ -491,7 +495,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
                         curShare.styleClass,
                       )}
                     >
-                      {review.shareCount ? review.shareCount : 0}
+                      { shareCount }
                     </span>
                   </div>
                 </Share>
@@ -642,6 +646,8 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 onReady={this.handleReady}
                 onResponse={this.handleResponse}
                 onError={this.handleError}
+                mobileIframe
+                hashtag={'#LITER'}
               >
                 <Button
                   color="inherit"

@@ -112,7 +112,8 @@ export class EmailAuthPop extends React.PureComponent {
               <br />
               <br />
             </DialogContentText>
-            <Timer />
+            {/* */}
+            <Timer limit={'20m'} />
             (인증 남은 시간)
             <br />
             <br />

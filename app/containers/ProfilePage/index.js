@@ -30,6 +30,12 @@ import ReviewContainer from './ReviewContainer';
 import axios from 'axios';
 
 const styles = {
+  containerWrapper: {
+    position: 'fixed',
+    width: '100%',
+    margin: 'auto',
+    zIndex: 1000,
+  },
   container: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -38,6 +44,9 @@ const styles = {
   panel: {
     flexGrow: 1,
     backgroundColor: '#fbfbfb',
+  },
+  contents: {
+    paddingTop: 212,
   },
   panelInfo: {
     marginTop: 20,
@@ -129,11 +138,67 @@ export class ProfilePage extends React.PureComponent {
     userInfo: {
       profileImageSmallUrl: null,
       userNickName: 'cumacuma!',
-      followerCount: 100,
-      followingCount: 150,
       reviewCount: 50,
     },
+    followerCount: 0,
+    followingCount: 0,
     reviews: [],
+  }
+
+  loadFollowInfo = (userId) => {
+    let requestURL = `${process.env.API_URL}/follow/follower/count/${userId}`;
+    const accessToken = localStorage.getItem('accessToken');
+    const token = `Bearer ${accessToken}`;
+    axios({
+        method: 'GET',
+        url: requestURL,
+        headers: {
+          Accept: 'application/json;charset=UTF-8',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          Authorization: token,
+        },
+      }).then(resp => {
+        if(Boolean(resp.data)) {
+          console.log(']]]-------------load follower/count/-------------[[[');
+          console.log(resp.data);
+          this.setState({'followerCount': resp.data});
+        }
+      }).catch(error => {
+          // status: not found - redirecting
+          if(error.response.data.code === 300104) {
+            console.log("no more data");
+          } else if(error.response.data.code === 500000) {
+            console.log("likelist empty > ERROR");  
+          }
+          console.log(error.response);
+      });
+
+    requestURL = `${process.env.API_URL}/follow/following/count/${userId}`;
+    axios({
+        method: 'GET',
+        url: requestURL,
+        headers: {
+          Accept: 'application/json;charset=UTF-8',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          Authorization: token,
+        },
+      }).then(resp => {
+        if(Boolean(resp.data)) {
+          console.log(']]]-------------load following/count/-------------[[[');
+          console.log(resp.data);
+          this.setState({'followingCount': resp.data});
+        }
+      }).catch(error => {
+          // status: not found - redirecting
+          if(error.response.data.code === 300104) {
+            console.log("no more data");
+          } else if(error.response.data.code === 500000) {
+            console.log("likelist empty > ERROR");  
+          }
+          console.log(error.response);
+      });
   }
 
   loadUserInfo = (userId) => {
@@ -156,6 +221,7 @@ export class ProfilePage extends React.PureComponent {
           this.setState({'userInfo': resp.data});
         }
       }).catch(error => {
+          // status: not found - redirecting
           if(error.response.data.code === 300104) {
             console.log("no more data");
           } else if(error.response.data.code === 500000) {
@@ -166,7 +232,7 @@ export class ProfilePage extends React.PureComponent {
   }
 
   loadReviewData = (userId) => {
-    const requestURL = `${process.env.API_URL}/review/myReviewList`;
+    const requestURL = `${process.env.API_URL}/review/follow/list/${userId}`;
     const accessToken = localStorage.getItem('accessToken');
     const token = `Bearer ${accessToken}`;
     axios({
@@ -224,61 +290,66 @@ export class ProfilePage extends React.PureComponent {
   componentDidMount() {
     const userId = this.props.match.params.userId;
     this.loadUserInfo(userId);
+    this.loadFollowInfo(userId);
     this.loadReviewData(userId);
   }
 
   render() {
     const { classes } = this.props;
     const userId = this.props.match.params.userId;
-    const { userInfo, reviews } = this.state;
-    
+    const { userInfo, reviews, followerCount, followingCount } = this.state;
+
     return (
       <div>
-        <div className={classes.container}>
-          <Header headerTitle={<FormattedMessage {...messages.header} />} />
-        </div>
-        <div className={classes.panel}>
-          <div className={classes.row}>
-            <div className={classes.avatarDiv}>
-              <Avatar
-                alt=""
-                src={
-                  userInfo.profileImageSmallUrl
-                    ? userInfo.profileImageSmallUrl
-                    : avatarDefault
-                }
-                className={classNames(classes.avatar, classes.bigAvatar)}
-              />
-              <span className={classes.levelTagInner}>Lv 1</span>
-            </div>
+        <div className={classes.containerWrapper}>
+          <div className={classes.container}>
+            <Header headerTitle={<FormattedMessage {...messages.header} />} />
           </div>
-          <div className={classes.row}>
-            {userInfo.userNickName}
-          </div>
-          <div className={classNames(classes.row, classes.panelInfo)}>
-            <div className={classes.col}>
-              <div className={classes.row}>{userInfo.followerCount}</div>
-              <div className={classes.row} onClick={this.navigateFollower}>
-                팔로워
+          <div className={classes.panel}>
+            <div className={classes.row}>
+              <div className={classes.avatarDiv}>
+                <Avatar
+                  alt=""
+                  src={
+                    userInfo.profileImageSmallUrl
+                      ? userInfo.profileImageSmallUrl
+                      : avatarDefault
+                  }
+                  className={classNames(classes.avatar, classes.bigAvatar)}
+                />
+                <span className={classes.levelTagInner}>Lv 1</span>
               </div>
             </div>
-            <div className={classes.verticalCol}>
-              <div className={classes.verticalDivider} />
+            <div className={classes.row}>
+              {userInfo.userNickName}
             </div>
-            <div className={classes.col}>
-              <div className={classes.row}>{userInfo.followingCount}</div>
-              <div className={classes.row} onClick={this.navigateFollowing}>
-                팔로잉
+            <div className={classNames(classes.row, classes.panelInfo)}>
+              <div className={classes.col}>
+                <div className={classes.row}>{followerCount}</div>
+                <div className={classes.row} onClick={this.navigateFollower}>
+                  팔로워
+                </div>
+              </div>
+              <div className={classes.verticalCol}>
+                <div className={classes.verticalDivider} />
+              </div>
+              <div className={classes.col}>
+                <div className={classes.row}>{followingCount}</div>
+                <div className={classes.row} onClick={this.navigateFollowing}>
+                  팔로잉
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div className={classes.topLine}>
-          <span className={classes.reviewCount}>
-            리뷰 {userInfo.reviewCount} 개
-          </span>
+        <div className={classes.contents}>
+          <div className={classes.topLine}>
+            <span className={classes.reviewCount}>
+              리뷰 {userInfo.reviewCount} 개
+            </span>
+          </div>
+          {this.renderReviewdRow(reviews)}
         </div>
-        {this.renderReviewdRow(reviews)}
       </div>
     );
   }

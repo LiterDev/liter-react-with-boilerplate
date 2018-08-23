@@ -304,6 +304,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
       if (accessToken) {
         const requestURL = `${process.env.API_URL}/share`;
         const token = `Bearer ${accessToken}`;
+        console(`token:::${token}`);
         axios({
           method: 'POST',
           url: requestURL,

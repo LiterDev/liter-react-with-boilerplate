@@ -8,6 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
+import axios from 'axios';
 /* material-ui core */
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -108,6 +109,30 @@ const styles = theme => ({
     letterSpacing: 'normal',
     color: '#1591ff',
   },
+  followButton: {
+    fontFamily: 'AppleSDGothicNeo',
+    fontSize: 12,
+    fontWeight: 300,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: '1.25',
+    letterSpacing: 'normal',
+    color: '#1591ff',
+    paddingTop: 0,
+    minHeight: 10,
+  },
+  unFollowButton: {
+    fontFamily: 'AppleSDGothicNeo',
+    fontSize: 12,
+    fontWeight: 300,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: '1.25',
+    letterSpacing: 'normal',
+    color: '#111111',
+    paddingTop: 0,
+    minHeight: 10,
+  },
   contents: {
     lineHeight: '1.5em',
     height: '3em',
@@ -144,6 +169,7 @@ const styles = theme => ({
   },
   numCaption: {
     // paddingTop: 3,
+    // position: 'absolute',
     fontFamily: 'SFProDisplay',
     fontSize: 11,
     fontWeight: 500,
@@ -151,6 +177,7 @@ const styles = theme => ({
     fontStretch: 'normal',
     letterSpacing: 'normal',
     color: 'rgb(21, 145, 255)',
+    // right: 0,
     bottom: 12,
   },
   activeStatusLast: {
@@ -167,13 +194,73 @@ const styles = theme => ({
     display: 'flex',
     flexDrection: 'column',
     justifyContent: 'center',
+    color: 'rgb(21, 145, 255)',
   },
 });
 
 /* eslint-disable react/prefer-stateless-function */
 class ReviewLikeItem extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      followYn: this.props.review.followYn,
+    };
+    this.handleFollow = this.handleFollow.bind(this);
+  }
+  handleFollow = userId => {
+    console.log(userId);
+    console.log(this.state.followYn);
+    let requestURL = `${process.env.API_URL}/follow`;
+    const accessToken = localStorage.getItem('accessToken');
+    const token = `Bearer ${accessToken}`;
+    if (accessToken) {
+      let method = 'POST';
+      let data = { followId: userId };
+      if (this.state.followYn > 0) {
+        method = 'DELETE';
+        data = {};
+        requestURL = `${process.env.API_URL}/follow/${userId}`;
+      }
+
+      axios({
+        method,
+        url: requestURL,
+        headers: {
+          Accept: 'application/json;charset=UTF-8',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          Authorization: token,
+        },
+        data,
+      })
+        .then(resp => {
+          if (Boolean(resp.data)) {
+            // console.log(resp.data);
+
+            if (method === 'DELETE') {
+              this.setState({ followYn: 0 });
+              this.props.handleFollowState(userId, 0);
+            } else {
+              this.setState({ followYn: 1 });
+              this.props.handleFollowState(userId, 1);
+            }
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  };
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.review.followYn !== prevState.followYn) {
+      return { followYn: nextProps.review.followYn };
+    }
+    return null;
+  }
   render() {
     const { classes, review } = this.props;
+    // console.log(review);
     return (
       <div className={classes.cardWarp}>
         <Card className={classes.card}>
@@ -201,13 +288,23 @@ class ReviewLikeItem extends React.PureComponent {
                 <div className={classes.timeAt}>
                   <TimeAt date={review.updateAt} />
                 </div>
-                <div className={classes.follow}>팔로우</div>
+                <div className={classes.follow}>
+                  <Button
+                    type="button"
+                    onClick={() => this.handleFollow(review.userId)}
+                    className={
+                      this.state.followYn > 0
+                        ? classes.followButton
+                        : classes.unFollowButton
+                    }
+                  >
+                    팔로우
+                  </Button>
+                </div>
               </div>
               <div>
                 <Typography variant="headline" className={classes.contents}>
-                  Live From SpaceLive From SpaceLive From SpaceLive From
-                  SpaceLive From SpaceLive From SpaceLive From SpaceLive From
-                  SpaceLive From SpaceLive From Space
+                  {review.content}
                 </Typography>
               </div>
 
@@ -237,7 +334,7 @@ class ReviewLikeItem extends React.PureComponent {
                   </Button>
                 </div>
                 <div className={classes.activeStatusLast}>
-                  <div>11.20 LCB</div>
+                  <div>{review.rewardLitercube} LCB</div>
                 </div>
               </div>
             </CardContent>
@@ -250,6 +347,7 @@ class ReviewLikeItem extends React.PureComponent {
 
 ReviewLikeItem.propTypes = {
   review: PropTypes.object.isRequired,
+  handleFollowState: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(ReviewLikeItem);

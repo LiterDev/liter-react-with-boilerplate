@@ -112,8 +112,8 @@ export class ReviewsMyLike extends React.PureComponent {
         })
           .then(resp => {
             if (Boolean(resp.data)) {
-              console.log(resp.data);
-              console.log(resp.data.pageable.totalCnt);
+              // console.log(resp.data);
+              // console.log(resp.data.pageable.totalCnt);
               this.setState({
                 curPage: pageIndex,
                 reviewlist: resp.data.content,
@@ -137,10 +137,46 @@ export class ReviewsMyLike extends React.PureComponent {
   componentWillMount() {
     this.loadReviewList(1);
   }
+  handleFollowState = (userId, state) => {
+    console.log(`handleFollowState -----[ ${userId} ],  [ ${state} ]`);
+    // console.log(this.state.reviewlist);
+    if (this.state.reviewlist) {
+      const reviewsCopy = [...this.state.reviewlist];
+      for (let i = 0; i < reviewsCopy.length; i += 1) {
+        // console.log(reviewsCopy[i].followYn);
+        // console.log(reviewsCopy[i].userId);
+        if (
+          userId === reviewsCopy[i].userId &&
+          state !== reviewsCopy[i].followYn
+        ) {
+          // console.log(reviewsCopy[i].followYn);
+          reviewsCopy[i].followYn = state;
+        }
+      }
+      // console.log(reviewsCopy);
+      this.setState({
+        reviewlist: reviewsCopy,
+      });
+    }
+  };
   render() {
     const { classes, handleClose } = this.props;
     const { totalReward, reviewlist } = this.state;
-    console.log(reviewlist);
+    // console.log(reviewlist);
+    let list;
+    if (reviewlist) {
+      list = reviewlist.map(item => {
+        // console.log(item);
+        return (
+          <ReviewLikeItem
+            key={item.id}
+            review={item}
+            handleFollowState={this.handleFollowState}
+          />
+        );
+      });
+    }
+    // console.log(list);
     return (
       <div>
         <AppBar className={classes.appBar}>
@@ -170,10 +206,15 @@ export class ReviewsMyLike extends React.PureComponent {
           >
             좋아요를 한 리뷰 {totalReward}개
           </Typography>
-          {reviewlist &&
+          {/* {reviewlist &&
             reviewlist.map((item, index) => (
-              <ReviewLikeItem key={index} review={item} />
-            ))}
+              <ReviewLikeItem
+                key={item.id}
+                review={item}
+                handleFollowState={this.handleFollowState}
+              />
+            ))} */}
+          {list}
         </div>
       </div>
     );

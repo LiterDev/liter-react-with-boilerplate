@@ -413,9 +413,9 @@ class ReviewCardBottomBarView extends React.PureComponent {
     this.setState({
       openSuccesPop: false,
     });
-
-    // this.props.history.push('/mypage');
+  // this.props.history.push('/mypage');
   };
+
   handleLoginClose = () => {
     this.setState({
       openLoginPop: false,

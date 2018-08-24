@@ -166,6 +166,7 @@ class ReviewCard extends React.PureComponent {
     this.props.handleVoting(reviewId);
   };
 
+
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };

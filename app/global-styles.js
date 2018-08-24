@@ -25,6 +25,10 @@ injectGlobal`
     min-width: 100%;
   }
 
+  #overlay {
+    -webkit-overflow-scrolling: touch;
+  }
+
   p,
   label {
     font-family: Georgia, Times, 'Times New Roman', serif;

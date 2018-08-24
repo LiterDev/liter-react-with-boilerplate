@@ -138,7 +138,7 @@ export class ReviewsMyLike extends React.PureComponent {
     this.loadReviewList(1);
   }
   handleFollowState = (userId, state) => {
-    console.log(`handleFollowState -----[ ${userId} ],  [ ${state} ]`);
+    // console.log(`handleFollowState -----[ ${userId} ],  [ ${state} ]`);
     // console.log(this.state.reviewlist);
     if (this.state.reviewlist) {
       const reviewsCopy = [...this.state.reviewlist];
@@ -159,6 +159,26 @@ export class ReviewsMyLike extends React.PureComponent {
       });
     }
   };
+
+  handleLikeState = reviewId => {
+    console.log(`handleFollowState -----[ ${reviewId} ]`);
+    // console.log(this.state.reviewlist);
+    if (this.state.reviewlist) {
+      let findRemoveIndex = 0;
+      for (let i = 0; i < this.state.reviewlist.length; i += 1) {
+        if (reviewId === this.state.reviewlist[i].id) {
+          findRemoveIndex = i;
+        }
+      }
+      const reviewsCopy = [...this.state.reviewlist];
+      if (findRemoveIndex > 0) {
+        reviewsCopy.splice(findRemoveIndex, 1);
+      }
+      this.setState({
+        reviewlist: reviewsCopy,
+      });
+    }
+  };
   render() {
     const { classes, handleClose } = this.props;
     const { totalReward, reviewlist } = this.state;
@@ -172,6 +192,7 @@ export class ReviewsMyLike extends React.PureComponent {
             key={item.id}
             review={item}
             handleFollowState={this.handleFollowState}
+            handleLikeState={this.handleLikeState}
           />
         );
       });

@@ -42,7 +42,7 @@ const styles = theme => ({
   details: {
     display: 'flex',
     flexDirection: 'column',
-    // width: '100%',
+    width: '80%',
   },
   content: {
     flex: '1 0 auto',
@@ -54,6 +54,7 @@ const styles = theme => ({
   controls: {
     position: 'relative',
     height: 36,
+    // width: '100%',
     // display: 'flex',
     // alignItems: 'center',
     // paddingLeft: theme.spacing.unit,
@@ -119,6 +120,7 @@ const styles = theme => ({
     letterSpacing: 'normal',
     color: '#1591ff',
     paddingTop: 0,
+    paddingRight: 0,
     minHeight: 10,
   },
   unFollowButton: {
@@ -145,7 +147,9 @@ const styles = theme => ({
     letterSpacing: 'normal',
     color: 'rgb(17, 17, 17)',
     marginTop: 8,
-    maxWidth: 235,
+    // width: '70%',
+    // maxWidth: 235,
+    // minWidth: 200,
   },
   icons: {
     width: 16,
@@ -182,6 +186,8 @@ const styles = theme => ({
   },
   activeStatusLast: {
     position: 'absolute',
+    display: 'block',
+    textAlign: 'right',
     fontFamily: 'SFProDisplay',
     fontSize: 11,
     fontWeight: 600,
@@ -191,10 +197,14 @@ const styles = theme => ({
     lineHeight: '1em',
     right: 0,
     bottom: 12,
-    display: 'flex',
-    flexDrection: 'column',
-    justifyContent: 'center',
+    // display: 'flex',
+    // flexDrection: 'column',
+    // justifyContent: 'center',
     color: 'rgb(21, 145, 255)',
+  },
+  followButtonText: {
+    textAlign: 'right',
+    display: 'block',
   },
 });
 
@@ -206,10 +216,42 @@ class ReviewLikeItem extends React.PureComponent {
       followYn: this.props.review.followYn,
     };
     this.handleFollow = this.handleFollow.bind(this);
+    this.handleVoting = this.handleVoting.bind(this);
   }
+  handleVoting = reviewId => {
+    console.log(reviewId);
+    const requestURL = `${process.env.API_URL}/engagement`;
+    const accessToken = localStorage.getItem('accessToken');
+    const token = `Bearer ${accessToken}`;
+    if (accessToken) {
+      axios({
+        method: 'POST',
+        url: requestURL,
+        headers: {
+          Accept: 'application/json;charset=UTF-8',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          Authorization: token,
+        },
+        data: {
+          reviewId,
+        },
+      })
+        .then(resp => {
+          console.log(resp);
+          // if (Boolean(resp.data)) {
+          this.props.handleLikeState(reviewId);
+          // }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  };
+
   handleFollow = userId => {
-    console.log(userId);
-    console.log(this.state.followYn);
+    // console.log(userId);
+    // console.log(this.state.followYn);
     let requestURL = `${process.env.API_URL}/follow`;
     const accessToken = localStorage.getItem('accessToken');
     const token = `Bearer ${accessToken}`;
@@ -297,6 +339,9 @@ class ReviewLikeItem extends React.PureComponent {
                         ? classes.followButton
                         : classes.unFollowButton
                     }
+                    classes={{
+                      label: classes.followButtonText,
+                    }}
                   >
                     팔로우
                   </Button>
@@ -313,7 +358,7 @@ class ReviewLikeItem extends React.PureComponent {
                   <Button
                     color="inherit"
                     onClick={() => {
-                      // this.handleVoting(this.props.review.id);
+                      this.handleVoting(review.id);
                     }}
                     aria-label="service"
                     className={classes.votingIcon}
@@ -348,6 +393,7 @@ class ReviewLikeItem extends React.PureComponent {
 ReviewLikeItem.propTypes = {
   review: PropTypes.object.isRequired,
   handleFollowState: PropTypes.func.isRequired,
+  handleLikeState: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(ReviewLikeItem);

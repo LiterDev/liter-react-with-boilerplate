@@ -459,7 +459,11 @@ class AppDrawer extends React.PureComponent {
           <ListItem className={classes.itemLeaf}>
             <Button className={classes.btnCaption}>나의 보상</Button>
             <div className={classes.literCube}>
-              <span>{localStorage.getItem('literCube')}</span>
+              <span>
+                {Boolean(localStorage.getItem('literCube')) && localStorage.getItem('literCube') !== 'null'
+                  ? localStorage.getItem('literCube')
+                  : '0'}
+              </span>
               <span className={classes.literCubeLcb}>LCB</span>
             </div>
             <div style={{ clear: 'both' }} />

@@ -226,7 +226,7 @@ function Transition(props) {
 }
 
 /* eslint-disable react/prefer-stateless-function */
-class ReviewCardBottomBarView extends React.PureComponent {
+class ReviewCardBottomBarView extends React.Component {
   state = {
     voting: false,
     reviewing: false,
@@ -260,6 +260,16 @@ class ReviewCardBottomBarView extends React.PureComponent {
 
     if (this.props.review.likeYn) this.state.curLiked = true;
     else this.state.curLiked = false;
+  }
+
+  shouldComponentUpdate(nextProps, nextState){
+    if(nextProps.review.likeCount !== this.props.review.likeCount) {
+      console.log(nextProps.review);
+      console.log(this.props.review);
+      return nextProps.review.likeCount !== this.props.review.likeCount;
+    } else {
+      return true;
+    }
   }
 
   loadTotalReward = reviewId => {
@@ -327,8 +337,8 @@ class ReviewCardBottomBarView extends React.PureComponent {
     // console.log(this.props.likeYn);
 
     if (this.props.likeYn > 0) {
-      // this.props.onViewVote(reviewId);
-      this.sendVoting(reviewId);
+      this.props.onViewVote(reviewId);
+      // this.sendVoting(reviewId);
     } else {
       const accessToken = localStorage.getItem('accessToken');
 
@@ -350,8 +360,8 @@ class ReviewCardBottomBarView extends React.PureComponent {
               openSuccesPop: true,
             });
           } else {
-            // this.props.onViewVote(reviewId);
-            this.sendVoting(reviewId);
+            this.props.onViewVote(reviewId);
+            // this.sendVoting(reviewId);
           }
         });
       } else {
@@ -470,8 +480,8 @@ class ReviewCardBottomBarView extends React.PureComponent {
       literCubeState,
     } = this.state;
 
-    // const curVote = likeYn ? votingIcons.sel : votingIcons.non;
-    const curVote = this.state.curLiked ? votingIcons.sel : votingIcons.non;
+    const curVote = likeYn ? votingIcons.sel : votingIcons.non;
+    // const curVote = this.state.curLiked ? votingIcons.sel : votingIcons.non;
     const curReviewing = campaign ? reviewingIcons.sel : reviewingIcons.non;
     const curShare = shareIcons.non;
     const shareLocation = window.location.hostname.concat(
@@ -540,8 +550,8 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 <span
                   className={classNames(classes.numCaption, curVote.styleClass)}
                 >
-                  {/* {review.likeCount ? review.likeCount : 0} */}
-                  {this.state.curLikeCount ? this.state.curLikeCount : 0}
+                  {review.likeCount ? review.likeCount : 0}
+                  {/* {this.state.curLikeCount ? this.state.curLikeCount : 0} */}
                 </span>
               </Button>
             </div>
@@ -716,7 +726,7 @@ class ReviewCardBottomBarView extends React.PureComponent {
                 className={classNames(classes.numCaption, curVote.styleClass)}
               >
                 {review.likeCount ? review.likeCount : 0}
-                {this.state.curLikeCount ? this.state.curLikeCount : 0}
+                {/* {this.state.curLikeCount ? this.state.curLikeCount : 0} */}
               </span>
             </Button>
           </div>

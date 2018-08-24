@@ -29,6 +29,21 @@ export const initialState = fromJS({
   categorys: false,
 });
 
+function clone(obj) {
+  if (obj === null || typeof(obj) !== 'object')
+  return obj;
+
+  var copy = obj.constructor();
+
+  for (var attr in obj) {
+    if (obj.hasOwnProperty(attr)) {
+      copy[attr] = clone(obj[attr]);
+    }
+  }
+  return copy;
+}
+
+
 function reviewsReducer(state = initialState, action) {
   // console.log(`reaview action === [ ${action.type} ]`);
   // console.log(action.data);
@@ -63,9 +78,11 @@ function reviewsReducer(state = initialState, action) {
     case VOTE_ACTION:
       return state;
     case VOTE_SUCCESS:
-        let oriReviews = state.get('reviews');
-        oriReviews.filter(item => item.id === action.data.id).map(tt => {
-          tt.likeCount = action.data.likeCount;
+        let oriReviews = clone(state.get('reviews'));
+        oriReviews.map((item,idx,oriReviews) => {
+          if(item.id === action.data.id) {
+            oriReviews[idx] = action.data;
+          }
         });
       return state
         .set('reviews', oriReviews);

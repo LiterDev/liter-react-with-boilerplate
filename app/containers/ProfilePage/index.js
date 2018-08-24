@@ -137,7 +137,7 @@ export class ProfilePage extends React.PureComponent {
   state = {
     userInfo: {
       profileImageSmallUrl: null,
-      userNickName: 'cumacuma!',
+      userNickName: '',
       reviewCount: 50,
     },
     followerCount: 0,
@@ -149,15 +149,19 @@ export class ProfilePage extends React.PureComponent {
     let requestURL = `${process.env.API_URL}/follow/follower/count/${userId}`;
     const accessToken = localStorage.getItem('accessToken');
     const token = `Bearer ${accessToken}`;
+
+    let headerObj = {
+      'Accept': 'application/json;charset=UTF-8',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': '*',
+    }
+    if(accessToken)
+      headerObj.Authorization = token;
+
     axios({
         method: 'GET',
         url: requestURL,
-        headers: {
-          Accept: 'application/json;charset=UTF-8',
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Access-Control-Allow-Origin': '*',
-          Authorization: token,
-        },
+        headers: headerObj,
       }).then(resp => {
         if(Boolean(resp.data)) {
           console.log(']]]-------------load follower/count/-------------[[[');
@@ -178,12 +182,7 @@ export class ProfilePage extends React.PureComponent {
     axios({
         method: 'GET',
         url: requestURL,
-        headers: {
-          Accept: 'application/json;charset=UTF-8',
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Access-Control-Allow-Origin': '*',
-          Authorization: token,
-        },
+        headers: headerObj,
       }).then(resp => {
         if(Boolean(resp.data)) {
           console.log(']]]-------------load following/count/-------------[[[');
@@ -205,15 +204,19 @@ export class ProfilePage extends React.PureComponent {
     const requestURL = `${process.env.API_URL}/user/detail/${userId}`;
     const accessToken = localStorage.getItem('accessToken');
     const token = `Bearer ${accessToken}`;
+
+    let headerObj = {
+      'Accept': 'application/json;charset=UTF-8',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': '*',
+    }
+    if(accessToken)
+      headerObj.Authorization = token;
+
     axios({
         method: 'GET',
         url: requestURL,
-        headers: {
-          Accept: 'application/json;charset=UTF-8',
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Access-Control-Allow-Origin': '*',
-          Authorization: token,
-        },
+        headers: headerObj,
       }).then(resp => {
         if(Boolean(resp.data)) {
           console.log(']]]-------------load UserInfo-------------[[[');
@@ -235,15 +238,19 @@ export class ProfilePage extends React.PureComponent {
     const requestURL = `${process.env.API_URL}/review/follow/list/${userId}`;
     const accessToken = localStorage.getItem('accessToken');
     const token = `Bearer ${accessToken}`;
+
+    let headerObj = {
+      'Accept': 'application/json;charset=UTF-8',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': '*',
+    }
+    if(accessToken)
+      headerObj.Authorization = token;
+
     axios({
         method: 'GET',
         url: requestURL,
-        headers: {
-          Accept: 'application/json;charset=UTF-8',
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Access-Control-Allow-Origin': '*',
-          Authorization: token,
-        },
+        headers: headerObj,
       }).then(resp => {
         if(Boolean(resp.data)) {
           console.log(']]]-------------load TestData-------------[[[');
@@ -290,8 +297,8 @@ export class ProfilePage extends React.PureComponent {
   componentDidMount() {
     const userId = this.props.match.params.userId;
     this.loadUserInfo(userId);
-    this.loadFollowInfo(userId);
-    this.loadReviewData(userId);
+    // this.loadFollowInfo(userId);
+    // this.loadReviewData(userId);
   }
 
   render() {

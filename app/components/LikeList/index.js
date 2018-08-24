@@ -33,6 +33,8 @@ import avatarDefault from '../../images/ic-avatar.png';
 /* ref */
 import messages from './messages';
 
+import * as bsLock from 'utils/bodyScrollLock';
+
 import axios from 'axios';
 
 const styles = {
@@ -46,12 +48,10 @@ const styles = {
     top: '50%',
   },
   appBar: {
+    position: 'sticky',
     borderTopLeftRadius: '18px',
     borderTopRightRadius: '18px',
-    position: 'relative',
     top: 0,
-    // borderRadius: 18,
-    // backgroundColor: '#ffffff',
     boxShadow: '0 0.5px 0 0 rgba(0, 0, 0, 0.2)',
     height: '47.8px',
   },
@@ -111,6 +111,8 @@ function Transition(props) {
 
 /* eslint-disable react/prefer-stateless-function */
 class LikeList extends React.PureComponent {
+  targetElem = null;
+
   constructor(props) {
     super(props);
   }
@@ -126,7 +128,15 @@ class LikeList extends React.PureComponent {
     totalVoter: 0,
   };
 
-  handleClickOpen = () => {
+  componentDidMount() {
+    this.targetElem = document.querySelector('#app');
+  }
+
+  componentWillUnmount() {
+    bsLock.clearAllBodyScrollLocks();
+  }
+
+  handleClickOpen = (e) => {
     // console.log(this.state.reviewId);
     console.log(this.props.reviewId);
     this.loadLikeList(this.props.reviewId);
@@ -134,10 +144,12 @@ class LikeList extends React.PureComponent {
     // this.loadLikeList(this.state.reviewId);
     // this.loadTotalReward(this.state.reviewId);
     this.setState({ open: true });
+    bsLock.disableBodyScroll(this.targetElement);
   };
 
   handleClose = (e) => {
     this.setState({ open: false });
+    bsLock.enableBodyScroll(this.targetElement);
   };
 
   handleScroll = (e) => {
@@ -281,7 +293,7 @@ class LikeList extends React.PureComponent {
           className={classes.dialogBox}
           classes={{
             root: classes.root,
-            // paper: classes.root,
+            paper: classes.root,
           }}
         >
           <AppBar className={classes.appBar} position="fixed">

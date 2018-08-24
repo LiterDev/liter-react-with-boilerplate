@@ -93,6 +93,14 @@ export class Reviews extends React.Component {
     });
   }
   
+  shouldComponentUpdate(nextProps, nextState){
+    if(nextProps === this.props) {
+      return true;
+    } else {
+      return nextProps.reviews !== this.props.reviews;
+    }
+  }
+
   loadValue = value => {
     // console.log(value);
     this.setState({

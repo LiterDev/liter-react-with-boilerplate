@@ -40,7 +40,6 @@ const styles = theme => ({
     },
   },
   buttonText: {
-    width: '34px',
     height: '16px',
     fontFamily: 'AppleSDGothicNeo',
     fontSize: '13px',
@@ -64,7 +63,6 @@ const styles = theme => ({
     },
   },
   unButtonText: {
-    width: '34px',
     height: '16px',
     fontFamily: 'AppleSDGothicNeo',
     fontSize: '13px',

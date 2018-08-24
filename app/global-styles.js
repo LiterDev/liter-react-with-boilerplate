@@ -8,6 +8,7 @@ injectGlobal`
     width: 100%;
     margin: 0;
     background-color: #ffffff;
+    -webkit-overflow-scrolling: touch;
   }
 
   body {    

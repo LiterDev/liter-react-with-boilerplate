@@ -4,7 +4,7 @@
  *
  */
 
-/* react ref*/
+/* react ref */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -259,8 +259,10 @@ class ReviewCardBottomBarView extends React.Component {
     this.state.curLikeCount = this.props.review.likeCount;
     this.state.literCubeState = this.props.review.rewardLitercube;
 
-    if (this.props.review.likeYn) this.state.curLiked = true;
-    else this.state.curLiked = false;
+    if(this.props.review.likeYn)
+      this.state.curLiked = true;
+    else
+      this.state.curLiked = false;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -294,18 +296,16 @@ class ReviewCardBottomBarView extends React.Component {
         'Access-Control-Allow-Origin': '*',
         Authorization: token,
       },
-    })
-      .then(resp => {
-        if (Boolean(resp.data)) {
-          console.log(']]]-------------load TotalReward-------------[[[');
-          console.log(resp.data);
-          this.setState({ literCubeState: resp.data.reward });
-        }
-      })
-      .catch(error => {
+    }).then(resp => {
+      if(Boolean(resp.data)) {
+        console.log(']]]-------------load TotalReward-------------[[[');
+        console.log(resp.data);
+        this.setState({'literCubeState': resp.data.reward});
+      }
+    }).catch(error => {
         console.log(error);
-      });
-  };
+    });
+  }
 
   sendVoting = reviewId => {
     const accessToken = localStorage.getItem('accessToken');
@@ -326,17 +326,17 @@ class ReviewCardBottomBarView extends React.Component {
     }).then(resp => {
       // console.log(resp);
       let tmp = this.state.curLikeCount;
-      if (this.state.curLiked) {
-        this.setState({ curLiked: false });
+      if(this.state.curLiked) {
+        this.setState({'curLiked': false});
         tmp = tmp - 1;
       } else {
-        this.setState({ curLiked: true });
+        this.setState({'curLiked': true});
         tmp = tmp + 1;
       }
-      this.setState({ curLikeCount: tmp });
+      this.setState({'curLikeCount': tmp});
       this.loadTotalReward(reviewId);
     });
-  };
+  }
 
   handleVoting = reviewId => {
     // console.log(this.state.curLiked);
@@ -439,9 +439,9 @@ class ReviewCardBottomBarView extends React.Component {
     this.setState({
       openSuccesPop: false,
     });
-  // this.props.history.push('/mypage');
-  };
 
+    // this.props.history.push('/mypage');
+  };
   handleLoginClose = () => {
     this.setState({
       openLoginPop: false,
@@ -474,27 +474,14 @@ class ReviewCardBottomBarView extends React.Component {
       });
     }
   }
+
   static contextTypes = {
     router: PropTypes.object,
   };
   render() {
     const { classes } = this.props;
-    const {
-      onViewVote,
-      campaign,
-      viewType,
-      likeYn,
-      review,
-      reviewId,
-    } = this.props;
-    const {
-      voting,
-      reviewing,
-      sharing,
-      viewClass,
-      shareCount,
-      literCubeState,
-    } = this.state;
+    const { onViewVote, campaign, viewType, likeYn, review, reviewId } = this.props;
+    const { voting, reviewing, sharing, viewClass, shareCount, literCubeState } = this.state;
 
     const curVote = likeYn ? votingIcons.sel : votingIcons.non;
     // const curVote = this.state.curLiked ? votingIcons.sel : votingIcons.non;
@@ -586,12 +573,7 @@ class ReviewCardBottomBarView extends React.Component {
                   alt="comment"
                   className={classes.icons}
                 />
-                <span
-                  className={classNames(
-                    classes.numCaption,
-                    curReviewing.styleClass,
-                  )}
-                >
+                <span className={classNames(classes.numCaption, curReviewing.styleClass)}>
                   {review.replyCount ? review.replyCount : 0}
                 </span>
               </Button>
@@ -764,6 +746,7 @@ class ReviewCardBottomBarView extends React.Component {
               >
                 {/* <FormattedMessage {...messages.votingActive} /> */}
                 {review.replyCount ? review.replyCount : 0}
+
               </span>
             </Button>
           </div>

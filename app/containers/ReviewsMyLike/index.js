@@ -112,8 +112,8 @@ export class ReviewsMyLike extends React.PureComponent {
         })
           .then(resp => {
             if (Boolean(resp.data)) {
-              console.log(resp.data);
-              console.log(resp.data.pageable.totalCnt);
+              // console.log(resp.data);
+              // console.log(resp.data.pageable.totalCnt);
               this.setState({
                 curPage: pageIndex,
                 reviewlist: resp.data.content,
@@ -124,12 +124,12 @@ export class ReviewsMyLike extends React.PureComponent {
           })
           .catch(error => {
             if (error.response.data.code === 300104) {
-              console.log('no more data');
+              // console.log('no more data');
               this.setState({ loadEnd: true });
             } else if (error.response.data.code === 500000) {
-              console.log('likelist empty > ERROR');
+              // console.log('likelist empty > ERROR');
             }
-            console.log(error.response);
+            // console.log(error.response);
           });
       }
     }
@@ -137,10 +137,72 @@ export class ReviewsMyLike extends React.PureComponent {
   componentWillMount() {
     this.loadReviewList(1);
   }
+  handleFollowState = (userId, state) => {
+    // console.log(`handleFollowState -----[ ${userId} ],  [ ${state} ]`);
+    // console.log(this.state.reviewlist);
+    if (this.state.reviewlist) {
+      const reviewsCopy = [...this.state.reviewlist];
+      for (let i = 0; i < reviewsCopy.length; i += 1) {
+        // console.log(reviewsCopy[i].followYn);
+        // console.log(reviewsCopy[i].userId);
+        if (
+          userId === reviewsCopy[i].userId &&
+          state !== reviewsCopy[i].followYn
+        ) {
+          // console.log(reviewsCopy[i].followYn);
+          reviewsCopy[i].followYn = state;
+        }
+      }
+      // console.log(reviewsCopy);
+      this.setState({
+        reviewlist: reviewsCopy,
+      });
+    }
+  };
+
+  handleLikeState = reviewId => {
+    // console.log(`handleFollowState -----[ ${reviewId} ]`);
+    // console.log(this.state.reviewlist);
+    if (this.state.reviewlist) {
+      let findRemoveIndex = -1;
+      for (let i = 0; i < this.state.reviewlist.length; i += 1) {
+        // console.log(this.state.reviewlist[i]);
+        if (reviewId === this.state.reviewlist[i].id) {
+          // console.log(this.state.reviewlist[i].id);
+          // console.log(i);
+          findRemoveIndex = i;
+          break;
+        }
+      }
+      const reviewsCopy = [...this.state.reviewlist];
+      if (findRemoveIndex > -1) {
+        reviewsCopy.splice(findRemoveIndex, 1);
+      }
+      // console.log(findRemoveIndex);
+      this.setState({
+        reviewlist: reviewsCopy,
+      });
+    }
+  };
   render() {
     const { classes, handleClose } = this.props;
     const { totalReward, reviewlist } = this.state;
-    console.log(reviewlist);
+    // console.log(reviewlist);
+    let list;
+    if (reviewlist) {
+      list = reviewlist.map(item => {
+        // console.log(item);
+        return (
+          <ReviewLikeItem
+            key={item.id}
+            review={item}
+            handleFollowState={this.handleFollowState}
+            handleLikeState={this.handleLikeState}
+          />
+        );
+      });
+    }
+    // console.log(list);
     return (
       <div>
         <AppBar className={classes.appBar}>
@@ -170,10 +232,15 @@ export class ReviewsMyLike extends React.PureComponent {
           >
             좋아요를 한 리뷰 {totalReward}개
           </Typography>
-          {reviewlist &&
+          {/* {reviewlist &&
             reviewlist.map((item, index) => (
-              <ReviewLikeItem key={index} review={item} />
-            ))}
+              <ReviewLikeItem
+                key={item.id}
+                review={item}
+                handleFollowState={this.handleFollowState}
+              />
+            ))} */}
+          {list}
         </div>
       </div>
     );

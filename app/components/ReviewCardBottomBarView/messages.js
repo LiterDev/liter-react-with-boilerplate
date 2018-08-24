@@ -35,4 +35,12 @@ export default defineMessages({
     id: 'app.components.ReviewCardBottomBarView.sharing',
     defaultMessage: '공유하기',
   },
+  needEmailAuth: {
+    id: 'app.components.ReviewCardBottomBarView.needEmailAuth',
+    defaultMessage: '이메일 인증이 필요한 서비스 입니다.',
+  },
+  needLogin: {
+    id: 'app.components.ReviewCardBottomBarView.needLogin',
+    defaultMessage: '로그인이 필요한 서비스 입니다.',
+  },
 });

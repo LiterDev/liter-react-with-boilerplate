@@ -589,7 +589,6 @@ class ReviewDetailCard extends React.PureComponent {
           likeYn={review.likeYn}
           onViewVote={this.props.handleVoting}
           review={review}
-          reviewId={review.id}
           viewType="fixed"
           history={history}
         />

@@ -33,23 +33,26 @@ import messages from './messages';
 
 const styles = theme => ({
   card: {
-    display: 'flex',
+    // display: 'block',
     paddingTop: 14,
     paddingBottom: 14,
     height: 118,
     width: '100%',
   },
   details: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '80%',
+    // display: 'block',
+    // flexDirection: 'column',
+    position: 'relative',
+    width: '100%',
   },
   content: {
-    flex: '1 0 auto',
+    // flex: '1 0 auto',
   },
   cover: {
     width: 90,
     height: 90,
+    float: 'left',
+    position: 'relative',
   },
   controls: {
     position: 'relative',
@@ -68,9 +71,11 @@ const styles = theme => ({
     borderBottom: 'solid 1px rgb(238, 238, 238)',
   },
   cardContentRoot: {
+    position: 'relative',
     paddingTop: 0,
     paddingBottom: 0,
     paddingRight: 0,
+    paddingLeft: 102,
   },
   userNickName: {
     height: 15,
@@ -100,7 +105,7 @@ const styles = theme => ({
   },
   follow: {
     position: 'absolute',
-    right: 20,
+    right: 0,
     fontFamily: 'AppleSDGothicNeo',
     fontSize: 12,
     fontWeight: 300,
@@ -133,6 +138,7 @@ const styles = theme => ({
     letterSpacing: 'normal',
     color: '#111111',
     paddingTop: 0,
+    paddingRight: 0,
     minHeight: 10,
   },
   contents: {
@@ -238,13 +244,18 @@ class ReviewLikeItem extends React.PureComponent {
         },
       })
         .then(resp => {
-          console.log(resp);
+          // console.log(resp);
           // if (Boolean(resp.data)) {
           this.props.handleLikeState(reviewId);
           // }
         })
         .catch(error => {
-          console.log(error);
+          // console.log(error);
+          // console.log(error.response);
+          // console.log(error.response.data.code);
+          if (Boolean(error.response.data.code)) {
+
+          }
         });
     }
   };

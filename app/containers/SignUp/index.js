@@ -186,7 +186,7 @@ export class SignUp extends React.PureComponent {
       usernameError: false,
       passwordError: false,
       passwordRepeatError: false,
-      openAgreePop: true,
+      openAgreePop: false,
       openSuccesPop: false,
       error: false,
       formData: [],

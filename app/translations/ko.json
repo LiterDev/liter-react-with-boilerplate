@@ -57,6 +57,7 @@
     "회원님의 활동에 따른 보상을 회원님의 지갑으로 지급해 드리고 있습니다. \n보상을 받으려면 이메일 인증을 통해 지갑을 생성해야 합니다.",
 
   "app.containers.Reviews.header": "리뷰",
+
   "app.containers.ReviewForm.header": "리뷰작성",
 
   "app.containers.SignIn.bodytext": "경험을 나누고 보상을 받으세요",
@@ -89,9 +90,17 @@
   "app.components.ReviewCard.followText": "팔로우",
   "app.components.ReviewCard.rewardActive": "진행중",
   "app.components.ReviewCard.sharing": "공유하기",
+
   "app.components.ReviewHeader.helpEmailAddress": "help@literproject.com",
+
   "app.components.ReviewCardBottomBarView.rewardActive": "진행중",
+  "app.components.ReviewCardBottomBarView.needEmailAuth":
+    "이메일 인증이 필요한 서비스 입니다.",
+  "app.components.ReviewCardBottomBarView.needLogin":
+    "로그인이 필요한 서비스 입니다.",
 
   "app.components.popups.AlertDialog.ok": "확인",
-  "app.components.popups.AgreePop.agreeTitle": "약관 동의"
+  "app.components.popups.AgreePop.agreeTitle": "약관 동의",
+
+  "": ""
 }

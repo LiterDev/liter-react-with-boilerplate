@@ -57,12 +57,14 @@ class FollowAjxButton extends React.PureComponent {
     this.state = {
       followStatus: false,
       followId: null,
+      myFollowYn: 0,
     }
 
     this.requestAjx = this.requestAjx.bind(this);
     this.handleSetFollow = this.handleSetFollow.bind(this);
     this.handleSetUnFollow = this.handleSetUnFollow.bind(this);
 
+    this.state.myFollowYn = props.followYn;
   }
 
   componentDidMount() {
@@ -81,6 +83,8 @@ class FollowAjxButton extends React.PureComponent {
     // this.request(requestURL, data, options);
   }
 
+
+
   requestAjx = (method, sendType, requestURL, data, options) => {
     const self = this;
     axios({
@@ -91,13 +95,14 @@ class FollowAjxButton extends React.PureComponent {
     })
     .then(function (response) {
       if(method == 'setFollow') {
-        console.log(self);
         self.setState({
-          'followStatus': 1
+          'followStatus': 1,
+          'myFollowYn': 1,
         });
       } else if(method == 'setUnFollow') {
         self.setState({
-          'followStatus': false
+          'followStatus': false,
+          'myFollowYn': false,
         });
       }
       return response;
@@ -141,17 +146,23 @@ class FollowAjxButton extends React.PureComponent {
     this.requestAjx('setUnFollow', 'DELETE', requestURL, data, options);
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      ...this.state,
+      myFollowYn: nextProps.followYn,
+    });
+  }
+
   render() {
     const { classes } = this.props;
     const { followEmail, followId, followYn } = this.props;
-    const { followStatus } = this.state;
-
+    const { followStatus, myFollowYn } = this.state;
     
     const userEmail = localStorage.getItem('username');
     const bSignIn = (userEmail)?true:false;
 
     if(!followStatus) {
-      if(followYn > 0) {
+      if(myFollowYn > 0) {
         return (
           <div className={classes.followBox}>
             <Typography className={classes.unButtonText} onClick={() => { this.handleSetUnFollow(followId) }} >

@@ -238,6 +238,7 @@ class ReviewCardBottomBarView extends React.Component {
     curLiked: false,
     curLikeCount: 0,
     literCubeState: 0,
+    loading: false,
   };
   constructor(props) {
     super(props);
@@ -262,10 +263,17 @@ class ReviewCardBottomBarView extends React.Component {
     else this.state.curLiked = false;
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      ...this.state,
+      literCubeState: nextProps.review.rewardLitercube,
+    });
+  }
+
   shouldComponentUpdate(nextProps, nextState){
     if(nextProps.review.likeCount !== this.props.review.likeCount) {
-      console.log(nextProps.review);
-      console.log(this.props.review);
+      console.log(nextState);
+      nextState.loading = false;
       return nextProps.review.likeCount !== this.props.review.likeCount;
     } else {
       return true;
@@ -335,39 +343,47 @@ class ReviewCardBottomBarView extends React.Component {
     // console.log('handleVoting in detail');
     // console.log(`this.props.likeYn =====[ ${this.props.likeYn}]`);
     // console.log(this.props.likeYn);
+    const self = this;
 
-    if (this.props.likeYn > 0) {
-      this.props.onViewVote(reviewId);
-      // this.sendVoting(reviewId);
-    } else {
-      const accessToken = localStorage.getItem('accessToken');
-
-      if (accessToken) {
-        const requestURL = `${process.env.API_URL}/user/authInfo`;
-        const token = `Bearer ${accessToken}`;
-        axios({
-          method: 'GET',
-          url: requestURL,
-          headers: {
-            Accept: 'application/json;charset=UTF-8',
-            'Content-Type': 'application/json;charset=UTF-8',
-            'Access-Control-Allow-Origin': '*',
-            Authorization: token,
-          },
-        }).then(resp => {
-          if (!resp.data.hasWallet) {
-            this.setState({
-              openSuccesPop: true,
-            });
-          } else {
-            this.props.onViewVote(reviewId);
-            // this.sendVoting(reviewId);
-          }
-        });
+    if(this.state.loading == false) {
+      self.setState({'loading': true});
+      if (this.props.likeYn > 0) {
+        this.props.onViewVote(reviewId);
+        // this.sendVoting(reviewId);
       } else {
-        this.setState({
-          openLoginPop: true,
-        });
+        const accessToken = localStorage.getItem('accessToken');
+
+        if (accessToken) {
+          const requestURL = `${process.env.API_URL}/user/authInfo`;
+          const token = `Bearer ${accessToken}`;
+          axios({
+            method: 'GET',
+            url: requestURL,
+            headers: {
+              Accept: 'application/json;charset=UTF-8',
+              'Content-Type': 'application/json;charset=UTF-8',
+              'Access-Control-Allow-Origin': '*',
+              Authorization: token,
+            },
+          }).then(resp => {
+            if (!resp.data.hasWallet) {
+              this.setState({
+                openSuccesPop: true,
+              });
+            } else {
+              this.props.onViewVote(reviewId);
+              // this.sendVoting(reviewId);
+            }
+          }).catch(error => {
+            console.log(error);
+            self.setState({'loading': false});
+          });
+        } else {
+          self.setState({'loading': false});
+          this.setState({
+            openLoginPop: true,
+          });          
+        }
       }
     }
   };
@@ -489,15 +505,14 @@ class ReviewCardBottomBarView extends React.Component {
     );
 
     // console.log(`router ::: ${this.context.router}`);
-
     // const curVote = votingIcons.sel;
     // const curVote = votingIcons.non;
     // const curShare = shareIcons.non;
     // const curReviewing = reviewingIcons.non;
     // const curReviewing = reviewingIcons.sel;
-
     // current status for campaign
     // console.log(shareLocation);
+
     let currentStatus = null;
     switch (review.reviewTimeLimit) {
       case 'UNLIMIT':
@@ -551,7 +566,6 @@ class ReviewCardBottomBarView extends React.Component {
                   className={classNames(classes.numCaption, curVote.styleClass)}
                 >
                   {review.likeCount ? review.likeCount : 0}
-                  {/* {this.state.curLikeCount ? this.state.curLikeCount : 0} */}
                 </span>
               </Button>
             </div>
@@ -726,7 +740,6 @@ class ReviewCardBottomBarView extends React.Component {
                 className={classNames(classes.numCaption, curVote.styleClass)}
               >
                 {review.likeCount ? review.likeCount : 0}
-                {/* {this.state.curLikeCount ? this.state.curLikeCount : 0} */}
               </span>
             </Button>
           </div>
@@ -860,26 +873,11 @@ class ReviewCardBottomBarView extends React.Component {
   }
 }
 
-// const mapStateToProps = createStructuredSelector({
-//   reviewcardbottombar: makeSelectReviewCardBottomBar(),
-// });
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     handleVote: () => {
-//       dispatch(voteAction());
-//     },
-//   };
-// };
-
 ReviewCardBottomBarView.propTypes = {
   onClick: PropTypes.func,
-  // router: React.PropTypes.func.isRequired,
 };
 
 const withConnect = connect();
-// mapStateToProps,
-// mapDispatchToProps,
 
 export default compose(
   withConnect,

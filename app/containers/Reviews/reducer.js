@@ -43,7 +43,6 @@ function clone(obj) {
   return copy;
 }
 
-
 function reviewsReducer(state = initialState, action) {
   // console.log(`reaview action === [ ${action.type} ]`);
   // console.log(action.data);
@@ -78,6 +77,7 @@ function reviewsReducer(state = initialState, action) {
     case VOTE_ACTION:
       return state;
     case VOTE_SUCCESS:
+        // let oriReviews = state.get('reviews');
         let oriReviews = clone(state.get('reviews'));
         oriReviews.map((item,idx,oriReviews) => {
           if(item.id === action.data.id) {

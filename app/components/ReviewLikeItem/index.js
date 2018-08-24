@@ -313,7 +313,7 @@ class ReviewLikeItem extends React.PureComponent {
   }
   render() {
     const { classes, review } = this.props;
-    // console.log(review);
+    console.log(review);
     return (
       <div className={classes.cardWarp}>
         <Card className={classes.card}>
@@ -385,7 +385,7 @@ class ReviewLikeItem extends React.PureComponent {
                     />
                     <span className={classNames(classes.numCaption)}>
                       {/* {review.likeCount ? review.likeCount : 0} */}
-                      {review.curLikeCount ? review.curLikeCount : 0}
+                      {review.likeCount ? review.likeCount : 0}
                     </span>
                   </Button>
                 </div>

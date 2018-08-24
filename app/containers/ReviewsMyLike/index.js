@@ -124,12 +124,12 @@ export class ReviewsMyLike extends React.PureComponent {
           })
           .catch(error => {
             if (error.response.data.code === 300104) {
-              console.log('no more data');
+              // console.log('no more data');
               this.setState({ loadEnd: true });
             } else if (error.response.data.code === 500000) {
-              console.log('likelist empty > ERROR');
+              // console.log('likelist empty > ERROR');
             }
-            console.log(error.response);
+            // console.log(error.response);
           });
       }
     }

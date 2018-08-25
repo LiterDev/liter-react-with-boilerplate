@@ -84,11 +84,14 @@ export class ReviewsMyLike extends React.PureComponent {
     super(props);
     this.state = {
       totalReward: 0,
-      reviewlist: false,
+      reviewlist: [],
       loading: false,
       curPage: 1,
       loadEnd: false,
     };
+    // this.handleOnScroll = this.handleOnScroll.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
+    this.loadReviewList = this.loadReviewList.bind(this);
   }
 
   loadReviewList = pageIndex => {
@@ -116,20 +119,19 @@ export class ReviewsMyLike extends React.PureComponent {
               // console.log(resp.data.pageable.totalCnt);
               this.setState({
                 curPage: pageIndex,
-                reviewlist: resp.data.content,
+                reviewlist: this.state.reviewlist.concat(resp.data.content),
                 loading: false,
                 totalReward: resp.data.pageable.totalCnt,
               });
             }
           })
           .catch(error => {
+            console.log(error);
             if (error.response.data.code === 300104) {
-              // console.log('no more data');
               this.setState({ loadEnd: true });
             } else if (error.response.data.code === 500000) {
               // console.log('likelist empty > ERROR');
             }
-            // console.log(error.response);
           });
       }
     }
@@ -184,6 +186,25 @@ export class ReviewsMyLike extends React.PureComponent {
       });
     }
   };
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll, true);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll, true);
+  }
+
+  handleScroll(event) {
+    // console.log('the scroll things', event);
+    const bottom =
+      event.target.scrollHeight - event.target.scrollTop ===
+      event.target.clientHeight;
+    if (bottom) {
+      // console.log('the scroll things', event);
+      this.loadReviewList(this.state.curPage + 1);
+    }
+  }
   render() {
     const { classes, handleClose } = this.props;
     const { totalReward, reviewlist } = this.state;
@@ -204,7 +225,7 @@ export class ReviewsMyLike extends React.PureComponent {
     }
     // console.log(list);
     return (
-      <div>
+      <div onScroll={this.handleScroll}>
         <AppBar className={classes.appBar}>
           <Toolbar className={classes.toolbar}>
             <Typography

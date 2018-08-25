@@ -254,7 +254,6 @@ class ReviewLikeItem extends React.PureComponent {
           // console.log(error.response);
           // console.log(error.response.data.code);
           if (Boolean(error.response.data.code)) {
-
           }
         });
     }
@@ -311,9 +310,10 @@ class ReviewLikeItem extends React.PureComponent {
     }
     return null;
   }
+
   render() {
     const { classes, review } = this.props;
-    console.log(review);
+    // console.log(review);
     return (
       <div className={classes.cardWarp}>
         <Card className={classes.card}>

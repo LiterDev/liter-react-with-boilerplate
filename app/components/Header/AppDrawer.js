@@ -460,7 +460,8 @@ class AppDrawer extends React.PureComponent {
             <Button className={classes.btnCaption}>나의 보상</Button>
             <div className={classes.literCube}>
               <span>
-                {Boolean(localStorage.getItem('literCube')) && localStorage.getItem('literCube') !== 'null'
+                {Boolean(localStorage.getItem('literCube')) &&
+                localStorage.getItem('literCube') !== 'null'
                   ? localStorage.getItem('literCube')
                   : '0'}
               </span>
@@ -548,7 +549,7 @@ class AppDrawer extends React.PureComponent {
           open={this.state.reviewListOpen}
           onClose={this.handleClose}
           TransitionComponent={Transition}
-          scroll={'paper'}
+          scroll="paper"
         >
           <ReviewsMyLike handleClose={this.handleClose} />
         </Dialog>

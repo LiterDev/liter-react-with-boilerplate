@@ -72,15 +72,15 @@ export class EmailValid extends React.PureComponent {
     const { complete } = this.state;
     // console.log(this.props.location);
     // console.log(this.props.location.search);
-    console.log(this.props.location.search.substring(7));
+    // console.log(this.props.location.search.substring(7));
     // const validString = this.props.match.params.validString;
     // this.validEmail(validString);
 
-    console.log(validSuccess);
-    console.log(validError);
+    // console.log(validSuccess);
+    // console.log(validError);
     if (complete) {
       const pathLink = '/';
-      console.log('reDirectHome');
+      // console.log('reDirectHome');
       return (
         <Redirect
           to={{

@@ -23,7 +23,7 @@ import {
 import makeSelectReviews from './selectors';
 
 export function* getReviews(data) {
-  console.log(`saga getReviews === [ ${data.cateValue} ]`);
+  // console.log(`saga getReviews === [ ${data.cateValue} ]`);
   const requestURL = `${
     process.env.API_URL
   }/review/latestList?page=1&categoryId=${data.cateValue}`;

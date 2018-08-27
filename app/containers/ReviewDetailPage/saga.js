@@ -14,7 +14,7 @@ import { LOAD_ACTION, FOLLOW_ACTION, VOTE_ACTION } from './constants';
 
 export function* getReview(data) {
   // const reviewId = yield select(makeSelectReviewId());
-  console.log(`getReview.data =====[ ${data.reviewId}]`);
+  // console.log(`getReview.data =====[ ${data.reviewId}]`);
   const reviewId = data.reviewId;
   const requestURL = `${process.env.API_URL}/review/detail/${reviewId}`;
   const requestSurveyURL = `${process.env.API_URL}/review/survey/${reviewId}`;

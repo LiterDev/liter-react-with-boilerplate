@@ -27,11 +27,11 @@ import makeSelectReviewDetailResolver from './selectors';
 /* eslint-disable react/prefer-stateless-function */
 export class ReviewDetailResolver extends React.PureComponent {
   render() {
-    console.log(']----------- PMPM S--------[');
-    console.log(this.props.match);
+    // console.log(']----------- PMPM S--------[');
+    // console.log(this.props.match);
     const reviewId = this.props.match.params.reviewId;
-    console.log(reviewId);
-    console.log(']----------- PMPM E--------[');
+    // console.log(reviewId);
+    // console.log(']----------- PMPM E--------[');
     // this.props.history.push('/follow');
     return (
       <div>

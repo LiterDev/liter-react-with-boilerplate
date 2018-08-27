@@ -86,11 +86,18 @@ const styles = theme => ({
     // width: '100%',
   },
   text: {
+    fontWeight: 'normal',
     marginTop: 8,
-    color: 'gray',
-    fontWight: 'bold',
-    fontSize: 13,
-    fontStyle: 'oblique',
+    fontSize: 12,
+    fontFamily: 'Apple SD Gothic Neo',
+    color: 'rgb(153, 153, 153)',
+  },
+  selText: {
+    fontWeight: 'normal',
+    marginTop: 8,
+    fontSize: 12,
+    fontFamily: 'Apple SD Gothic Neo',
+    color: 'rgb(17, 17, 17)',
   },
   selAvatar: {
     border: 'solid 2px rgb(55, 161, 255)',
@@ -217,7 +224,13 @@ class ReviewTopTag extends React.PureComponent {
                 />
               )}
               <b>
-                <p className={classes.text}>#최신</p>
+                <p
+                  className={
+                    this.state.selValue === -9 ? classes.selText : classes.text
+                  }
+                >
+                  #최신
+                </p>
               </b>
             </div>
             {/* <div className={classes.avawrap}>
@@ -254,7 +267,15 @@ class ReviewTopTag extends React.PureComponent {
                   />
                   <b>
                     {' '}
-                    <p className={classes.text}>#{cateName[item.categoryId]}</p>
+                    <p
+                      className={
+                        this.state.selValue === item.categoryId
+                          ? classes.selText
+                          : classes.text
+                      }
+                    >
+                      #{cateName[item.categoryId]}
+                    </p>
                   </b>
                 </div>
               ))}

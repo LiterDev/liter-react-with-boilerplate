@@ -217,7 +217,7 @@ class CommentsDrawer extends React.PureComponent {
             disableBackdropTransition={!iOS}
             variant="temporary"
             open={open}
-            onOpen={this.handleOnOpen()}
+            // onOpen={this.handleOnOpen()}
             // onClose={onClose}
             // ModalProps={{
             //   keepMounted: true,

@@ -316,11 +316,6 @@ class ReviewLikeItem extends React.PureComponent {
     }
   };
 
-  navigateDetailPage = () => {
-    console.log("navigateDetailPagenavigateDetailPagenavigateDetailPage");
-    this.props.history.push(`/review/${this.props.review.id}`);
-  }
-
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.review.followYn !== prevState.followYn) {
       return { followYn: nextProps.review.followYn };
@@ -347,7 +342,6 @@ class ReviewLikeItem extends React.PureComponent {
               image={review.mediaCollection[0].fullPathMedium}
               // image="https://s3-ap-northeast-1.amazonaws.com/liter-review/resized/m/DlS7RBN9UlrvdF38sMtO.jpg"
               title="Live from space album cover"
-              onClick={this.navigateDetailPage}
             />
             </StyledLink>
           <div className={classes.details}>

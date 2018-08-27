@@ -14,10 +14,11 @@ import {
   SET_UNFOLLOW,
 } from './constants';
 
-export function loadList(followType) {
+export function loadList(followType, userId) {
   return {
     type: LOAD_LIST,
     followType,
+    userId,
   };
 }
 

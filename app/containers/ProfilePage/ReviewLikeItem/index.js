@@ -24,6 +24,8 @@ import Button from '@material-ui/core/Button';
 import LikeIcon from 'images/ic-feed-like.png';
 import LikeSelIcon from 'images/ic-feed-like-sel.png';
 
+import StyledLink from '../StyledLink';
+
 /* containers */
 /* components */
 /* image */
@@ -53,6 +55,7 @@ const styles = theme => ({
     height: 90,
     float: 'left',
     position: 'relative',
+    zIndex: 111,
   },
   controls: {
     position: 'relative',
@@ -79,7 +82,7 @@ const styles = theme => ({
   },
   userNickName: {
     height: 15,
-    fontFamily: 'Apple SD Gothic Neo',
+    fontFamily: 'AppleSDGothicNeo',
     fontSize: 12,
     fontWeight: 500,
     fontstyle: 'normal',
@@ -90,7 +93,7 @@ const styles = theme => ({
   },
   timeAt: {
     marginLeft: 10,
-    fontFamily: 'Apple SD Gothic Neo',
+    fontFamily: 'AppleSDGothicNeo',
     fontSize: 12,
     fontWeight: 300,
     fontStyle: 'normal',
@@ -106,7 +109,7 @@ const styles = theme => ({
   follow: {
     position: 'absolute',
     right: 0,
-    fontFamily: 'Apple SD Gothic Neo',
+    fontFamily: 'AppleSDGothicNeo',
     fontSize: 12,
     fontWeight: 300,
     fontStyle: 'normal',
@@ -116,7 +119,7 @@ const styles = theme => ({
     color: '#1591ff',
   },
   followButton: {
-    fontFamily: 'Apple SD Gothic Neo',
+    fontFamily: 'AppleSDGothicNeo',
     fontSize: 12,
     fontWeight: 300,
     fontStyle: 'normal',
@@ -129,7 +132,7 @@ const styles = theme => ({
     minHeight: 10,
   },
   unFollowButton: {
-    fontFamily: 'Apple SD Gothic Neo',
+    fontFamily: 'AppleSDGothicNeo',
     fontSize: 12,
     fontWeight: 300,
     fontStyle: 'normal',
@@ -145,7 +148,7 @@ const styles = theme => ({
     lineHeight: '1.5em',
     height: '3em',
     overflow: 'hidden',
-    fontFamily: 'Apple SD Gothic Neo',
+    fontFamily: 'AppleSDGothicNeo',
     fontSize: 14,
     fontWeight: 500,
     fontStyle: 'normal',
@@ -185,10 +188,12 @@ const styles = theme => ({
     fontWeight: 500,
     fontStyle: 'normal',
     fontStretch: 'normal',
-    letterSpacing: 'normal',
-    color: 'rgb(21, 145, 255)',
+    letterSpacing: 'normal',    
     // right: 0,
     bottom: 12,
+  },
+  numCaptionSel: {
+    color: 'rgb(21, 145, 255)',
   },
   activeStatusLast: {
     position: 'absolute',
@@ -225,11 +230,12 @@ class ReviewLikeItem extends React.PureComponent {
     this.handleFollow = this.handleFollow.bind(this);
     this.handleVoting = this.handleVoting.bind(this);
   }
+
   handleVoting = reviewId => {
-    console.log(reviewId);
     const self = this;
     if(this.state.loading === false) {
       self.setState({'loading': true});
+
       const requestURL = `${process.env.API_URL}/engagement`;
       const accessToken = localStorage.getItem('accessToken');
       const token = `Bearer ${accessToken}`;
@@ -248,7 +254,6 @@ class ReviewLikeItem extends React.PureComponent {
           },
         })
           .then(resp => {
-            // console.log(resp);
             // if (Boolean(resp.data)) {
             this.props.handleLikeState(reviewId);
             self.setState({'loading': false});
@@ -262,8 +267,8 @@ class ReviewLikeItem extends React.PureComponent {
             }
             self.setState({'loading': false});
           });
-        }
-    }
+      }
+    }    
   };
 
   handleFollow = userId => {
@@ -311,6 +316,11 @@ class ReviewLikeItem extends React.PureComponent {
     }
   };
 
+  navigateDetailPage = () => {
+    console.log("navigateDetailPagenavigateDetailPagenavigateDetailPage");
+    this.props.history.push(`/review/${this.props.review.id}`);
+  }
+
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.review.followYn !== prevState.followYn) {
       return { followYn: nextProps.review.followYn };
@@ -320,16 +330,26 @@ class ReviewLikeItem extends React.PureComponent {
 
   render() {
     const { classes, review } = this.props;
-    // console.log(review);
+
+    let curLikeIcon = LikeIcon;
+    let numCapColor = "";
+    if(Boolean(review.likeYn) && review.likeYn > 0) {
+      curLikeIcon = LikeSelIcon;
+      numCapColor = classes.numCaptionSel;
+    }
+    
     return (
       <div className={classes.cardWarp}>
         <Card className={classes.card}>
-          <CardMedia
-            className={classes.cover}
-            image={review.mediaCollection[0].fullPathMedium}
-            // image="https://s3-ap-northeast-1.amazonaws.com/liter-review/resized/m/DlS7RBN9UlrvdF38sMtO.jpg"
-            title="Live from space album cover"
-          />
+            <StyledLink to={`/review/${this.props.review.id}`}>
+            <CardMedia
+              className={classes.cover}
+              image={review.mediaCollection[0].fullPathMedium}
+              // image="https://s3-ap-northeast-1.amazonaws.com/liter-review/resized/m/DlS7RBN9UlrvdF38sMtO.jpg"
+              title="Live from space album cover"
+              onClick={this.navigateDetailPage}
+            />
+            </StyledLink>
           <div className={classes.details}>
             <CardContent
               className={classes.content}
@@ -349,7 +369,7 @@ class ReviewLikeItem extends React.PureComponent {
                   <TimeAt date={review.updateAt} />
                 </div>
                 <div className={classes.follow}>
-                  <Button
+                  {/* <Button
                     type="button"
                     onClick={() => this.handleFollow(review.userId)}
                     className={
@@ -362,12 +382,14 @@ class ReviewLikeItem extends React.PureComponent {
                     }}
                   >
                     팔로우
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
               <div>
                 <Typography variant="headline" className={classes.contents}>
-                  {review.content}
+                  <StyledLink to={`/review/${this.props.review.id}`}>
+                    {review.title}
+                  </StyledLink>
                 </Typography>
               </div>
 
@@ -386,12 +408,11 @@ class ReviewLikeItem extends React.PureComponent {
                   >
                     {/* <img src={LikeIcon} alt="like" className={classes.icons} /> */}
                     <img
-                      src={LikeSelIcon}
+                      src={curLikeIcon}
                       alt="like"
                       className={classes.icons}
                     />
-                    <span className={classNames(classes.numCaption)}>
-                      {/* {review.likeCount ? review.likeCount : 0} */}
+                    <span className={classNames(classes.numCaption, numCapColor)}>
                       {review.likeCount ? review.likeCount : 0}
                     </span>
                   </Button>

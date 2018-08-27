@@ -39,7 +39,7 @@ export class FollowingActionPage extends React.PureComponent {
           <meta name="description" content="Description of FollowActionPage" />
         </Helmet>
         {/* <ActionListContainer followType={followType} userid={userId} /> */}
-        <ActionListContainer fType='following' userid={userId} />
+        <ActionListContainer fType='following' userId={userId} />
       </div>
     );
   }

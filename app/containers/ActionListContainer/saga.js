@@ -9,14 +9,15 @@ export function* getContents(data) {
   // Select username from store
   // const followType = yield select(makeSelectPageType());
   const followType = data.followType;
+  const userId = data.userId;
 
   const accessToken = localStorage.getItem('accessToken');
   const token = `Bearer ${accessToken}`;
 
-  // const requestFollowURL = `${process.env.API_URL}/follow/follower/${userid}`;
-  // const requestFollowingURL = `${process.env.API_URL}/follow/following/${userid}`;
-  const requestFollowURL = `${process.env.API_URL}/follow/follower`;
-  const requestFollowingURL = `${process.env.API_URL}/follow/following`;
+  const requestFollowURL = `${process.env.API_URL}/follow/follower/${userId}`;
+  const requestFollowingURL = `${process.env.API_URL}/follow/following/${userId}`;
+  // const requestFollowURL = `${process.env.API_URL}/follow/follower`;
+  // const requestFollowingURL = `${process.env.API_URL}/follow/following`;
 
   const requestURL =
     followType == 'follow' ? requestFollowURL : requestFollowingURL;

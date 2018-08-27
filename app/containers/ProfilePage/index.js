@@ -16,7 +16,11 @@ import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import StyledLink from './StyledLink';
 import Header from 'components/Header';
+
+// import ReviewLikeItem from 'components/ReviewLikeItem';
+import ReviewLikeItem from './ReviewLikeItem';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -26,7 +30,6 @@ import saga from './saga';
 import messages from './messages';
 import avatarDefault from 'images/ic-avatar.png';
 
-import ReviewContainer from './ReviewContainer';
 import axios from 'axios';
 
 const styles = {
@@ -61,6 +64,7 @@ const styles = {
   },
   avatar: {
     margin: 10,
+    border: 'solid 2px rgb(55, 161, 255)',
   },
   bigAvatar: {
     width: 60,
@@ -130,6 +134,10 @@ const styles = {
     letterSpacing: 'normal',
     color: '#292d39',
   },
+  contentList: {
+    paddingLeft: 17,
+    paddingRight: 17,
+  },
 };
 
 /* eslint-disable react/prefer-stateless-function */
@@ -138,8 +146,10 @@ export class ProfilePage extends React.PureComponent {
     userInfo: {
       profileImageSmallUrl: null,
       userNickName: '',
-      reviewCount: 50,
+      reviewCount: 0,
     },
+    curPage: 1,
+    totalReviewCount: 0,
     followerCount: 0,
     followingCount: 0,
     reviews: [],
@@ -225,7 +235,10 @@ export class ProfilePage extends React.PureComponent {
         }
       }).catch(error => {
           // status: not found - redirecting
-          if(error.response.data.code === 300104) {
+          if(error.response.status == 404) {
+            console.log("Not Found");
+          }
+          else if(error.response.data.code === 300104) {
             console.log("no more data");
           } else if(error.response.data.code === 500000) {
             console.log("likelist empty > ERROR");  
@@ -234,8 +247,8 @@ export class ProfilePage extends React.PureComponent {
       });
   }
 
-  loadReviewData = (userId) => {
-    const requestURL = `${process.env.API_URL}/review/follow/list/${userId}`;
+  loadReviewData = (userId, pageIndex) => {
+    const requestURL = `${process.env.API_URL}/review/follow/list/${userId}?page=${pageIndex}`;
     const accessToken = localStorage.getItem('accessToken');
     const token = `Bearer ${accessToken}`;
 
@@ -254,7 +267,13 @@ export class ProfilePage extends React.PureComponent {
       }).then(resp => {
         if(Boolean(resp.data)) {
           console.log(']]]-------------load TestData-------------[[[');
-          this.setState({reviews: resp.data.content});
+          console.log(resp.data);
+          this.setState({
+                curPage: pageIndex,
+                reviews: this.state.reviews.concat(resp.data.content),
+                totalReviewCount: resp.data.pageable.totalCnt,
+                loading: false,
+              });
         }
       }).catch(error => {
           if(error.response.data.code === 300104) {
@@ -266,21 +285,18 @@ export class ProfilePage extends React.PureComponent {
       });
   }
 
-  navigateFollower = () => {
-    console.log("navigateFollower");
-  }
-
-  navigateFollowing = () => {
-    console.log("navigateFollowing");
-  }
-
   renderReviewdRow(data) {
     const { classes } = this.props;
 
     if (data !== false && data.length > 0) {
       const reviewArray = Object.values(data);
-      return reviewArray.map((row, idx) => (
-        <ReviewContainer review={row} data={row} key={idx} />
+      return reviewArray.map((item, idx) => (
+          <ReviewLikeItem 
+            key={`other-review${idx}`}
+            review={item}
+            handleFollowState={this.handleFollowState}
+            handleLikeState={this.handleLikeState}
+          />
       ));
     }
     return (
@@ -294,17 +310,94 @@ export class ProfilePage extends React.PureComponent {
     );
   }
 
+  handleFollowState = () => {
+
+  }
+
+  handleLikeState = (reviewId) => {
+
+    const requestURL = `${process.env.API_URL}/review/detail/${reviewId}`;
+    const accessToken = localStorage.getItem('accessToken');
+    const token = `Bearer ${accessToken}`;
+
+    let headerObj = {
+      'Accept': 'application/json;charset=UTF-8',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': '*',
+    }
+    if(accessToken)
+      headerObj.Authorization = token;
+
+    if (accessToken) {
+      axios({
+        method: 'GET',
+        url: requestURL,
+        headers: headerObj,
+        data: {
+          reviewId,
+        },
+      })
+        .then(resp => {
+          console.log(resp);
+          if (this.state.reviews) {
+            let findRemoveIndex = -1;
+            for (let i = 0; i < this.state.reviews.length; i += 1) {
+              // console.log(this.state.reviewlist[i]);
+              if (reviewId === this.state.reviews[i].id) {
+                // console.log(this.state.reviewlist[i].id);
+                // console.log(i);
+                findRemoveIndex = i;
+                break;
+              }
+            }
+            const reviewsCopy = [...this.state.reviews];
+            if (findRemoveIndex > -1) {
+              //reviewsCopy.splice(findRemoveIndex, 1);
+              reviewsCopy[findRemoveIndex] = resp.data;
+            }
+            // console.log(findRemoveIndex);
+            this.setState({
+              reviews: reviewsCopy,
+            });
+          }
+        })
+        .catch(error => {
+          // console.log(error);
+          // console.log(error.response);
+          // console.log(error.response.data.code);
+          if (Boolean(error.response.data.code)) {
+          }
+        });
+    }
+   
+  }
+
   componentDidMount() {
     const userId = this.props.match.params.userId;
+    const curPage = this.state.curPage;
     this.loadUserInfo(userId);
-    // this.loadFollowInfo(userId);
-    // this.loadReviewData(userId);
+    this.loadFollowInfo(userId);
+    this.loadReviewData(userId, curPage);
+    
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll = (event) => {
+    // console.log(event);    
+    // const bottom = event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight;
+    // if(bottom) {
+    //   this.loadReviewData(userId, this.state.curPage + 1);
+    // }
   }
 
   render() {
     const { classes } = this.props;
     const userId = this.props.match.params.userId;
-    const { userInfo, reviews, followerCount, followingCount } = this.state;
+    const { userInfo, reviews, followerCount, followingCount, totalReviewCount } = this.state;
 
     return (
       <div>
@@ -332,19 +425,23 @@ export class ProfilePage extends React.PureComponent {
             </div>
             <div className={classNames(classes.row, classes.panelInfo)}>
               <div className={classes.col}>
-                <div className={classes.row}>{followerCount}</div>
-                <div className={classes.row} onClick={this.navigateFollower}>
-                  팔로워
-                </div>
+                <StyledLink to={`/follow/${userId}`}>
+                  <div className={classes.row}>{followerCount}</div>
+                  <div className={classes.row}>
+                    팔로워
+                  </div>
+                </StyledLink>
               </div>
               <div className={classes.verticalCol}>
                 <div className={classes.verticalDivider} />
               </div>
               <div className={classes.col}>
-                <div className={classes.row}>{followingCount}</div>
-                <div className={classes.row} onClick={this.navigateFollowing}>
-                  팔로잉
-                </div>
+                <StyledLink to={`/following/${userId}`}>
+                  <div className={classes.row}>{followingCount}</div>
+                  <div className={classes.row}>
+                    팔로잉
+                  </div>
+                </StyledLink>
               </div>
             </div>
           </div>
@@ -352,10 +449,12 @@ export class ProfilePage extends React.PureComponent {
         <div className={classes.contents}>
           <div className={classes.topLine}>
             <span className={classes.reviewCount}>
-              리뷰 {userInfo.reviewCount} 개
+              리뷰 {totalReviewCount} 개
             </span>
           </div>
-          {this.renderReviewdRow(reviews)}
+          <div className={classes.contentList}>
+            {this.renderReviewdRow(reviews)}
+          </div>
         </div>
       </div>
     );

@@ -44,6 +44,7 @@ import reducer from './reducer';
 import saga from './saga';
 import Tmessages from './messages';
 import avatarDefault from '../../images/ic-avatar.png';
+import StyledLink from './StyledLink';
 
 const styles = theme => ({
   root: {
@@ -130,12 +131,11 @@ export class ActionListContainer extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    console.log(props);
-    this.onFollowCtrlClick = this.onFollowCtrlClick.bind(this);
+    this.onFollowCtrlClick = this.onFollowCtrlClick.bind(this);    
   }
 
   componentDidMount() {
-    this.props.onLoadList(this.props.fType);
+    this.props.onLoadList(this.props.fType, this.props.userId);
   }
 
   onFollowCtrlClick = followId => {
@@ -173,17 +173,21 @@ export class ActionListContainer extends React.PureComponent {
         >
           <ListItemIcon>
             <div className={classes.row}>
-              <Avatar
-                alt={item.userNickName}
-                src={(item.profileImageSmallUrl) ? item.profileImageSmallUrl: avatarDefault }
-                className={classes.avatar}
-              />
+              <StyledLink to={`/profile/${item.id}`}>
+                <Avatar
+                  alt={item.userNickName}
+                  src={(item.profileImageSmallUrl) ? item.profileImageSmallUrl: avatarDefault }
+                  className={classes.avatar}
+                />
+              </StyledLink>
             </div>
           </ListItemIcon>
           <div className={classes.listItem}>
             <ListItemText>
               <Typography variant="body1" className={classes.nameFont}>
-                {item.userNickName}
+                <StyledLink to={`/profile/${item.id}`}>
+                  {item.userNickName}
+                </StyledLink>
               </Typography>
               <Typography variant="caption">
                 <FormattedMessage {...messages.reviewCaption} />{' '}
@@ -259,8 +263,8 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    onLoadList: (followType) => {
-      dispatch(loadList(followType));
+    onLoadList: (followType, userId) => {
+      dispatch(loadList(followType, userId));
     },
     onSetFollow: followid => {
       dispatch(setFollow(followid));

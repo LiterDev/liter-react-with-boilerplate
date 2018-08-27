@@ -40,6 +40,7 @@ import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
 import avatarDefault from '../../images/ic-avatar.png';
+import StyledLink from './StyledLink';
 
 const styles = theme => ({
   root: {
@@ -315,7 +316,7 @@ class ReviewDetailCard extends React.PureComponent {
   render() {
     const { classes, reviews, surveys, history } = this.props;
     const review = reviews;
-    // console.log(reviews);
+    console.log(reviews);
     // console.log(surveys);
     // console.log(window.location.href);
 
@@ -329,17 +330,21 @@ class ReviewDetailCard extends React.PureComponent {
 
     const elAvatar =
       avatarImageUrl != null ? (
-        <Avatar
-          aria-label="Recipe"
-          className={classes.avatar}
-          src={avatarImageUrl}
-        />
+        <StyledLink to={`/profile/${review.user.id}`}>
+          <Avatar
+            aria-label="Recipe"
+            className={classes.avatar}
+            src={avatarImageUrl}
+          />
+        </StyledLink>
       ) : (
-        <img
-          aria-label="Recipe"
-          className={classes.avatar}
-          src={avatarDefault}
-        />
+        <StyledLink to={`/profile/${review.user.id}`}>
+          <img
+            aria-label="Recipe"
+            className={classes.avatar}
+            src={avatarDefault}
+          />
+        </StyledLink>
       );
 
     // const formatContent = review.content.split('\n').map( line => {
@@ -457,7 +462,11 @@ class ReviewDetailCard extends React.PureComponent {
                 followId={review.user.id}
               />
             }
-            title={review.user.userNickName}
+            title={(
+                <StyledLink to={`/profile/${review.user.id}`}>
+                  {review.user.userNickName}
+                </StyledLink>
+              )}
             subheader={<TimeAt date={review.updateAt} />}
           />
           <CardContent>

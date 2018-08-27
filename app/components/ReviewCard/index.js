@@ -209,19 +209,21 @@ class ReviewCard extends React.PureComponent {
 
     const elAvatar =
       avatarImageUrl != null ? (
-        <Avatar
-          aria-label="Recipe"
-          className={classes.avatar}
-          src={avatarImageUrl}
-          // onClick={this.moveProfilePage}
-        />
+        <StyledLink to={`/profile/${this.props.review.user.id}`}>
+          <Avatar
+            aria-label="Recipe"
+            className={classes.avatar}
+            src={avatarImageUrl}
+          />
+        </StyledLink>
       ) : (
-        <img
-          aria-label="Recipe"
-          className={classes.avatar}
-          src={avatarDefault}
-          // onClick={this.moveProfilePage}
-        />
+        <StyledLink to={`/profile/${this.props.review.user.id}`}>
+          <img
+            aria-label="Recipe"
+            className={classes.avatar}
+            src={avatarDefault}
+          />
+        </StyledLink>
       );
 
     return (
@@ -244,7 +246,11 @@ class ReviewCard extends React.PureComponent {
                   followId={review.user.id}
                 />
               }
-              title={review.user.userNickName}
+              title={(
+                <StyledLink to={`/profile/${this.props.review.user.id}`}>
+                  {review.user.userNickName}
+                </StyledLink>
+              )}
               // subheader={timeDiff}
               subheader={<TimeAt date={review.updateAt} />}
             />

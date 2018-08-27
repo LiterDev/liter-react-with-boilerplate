@@ -21,8 +21,19 @@ import SkipNextIcon from '@material-ui/icons/SkipNext';
 import TimeAt from 'components/TimeAt';
 import Button from '@material-ui/core/Button';
 /* material-ui icon */
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Divider from '@material-ui/core/Divider';
+import CloseIcon from '@material-ui/icons/Close';
+
 import LikeIcon from 'images/ic-feed-like.png';
 import LikeSelIcon from 'images/ic-feed-like-sel.png';
+
+import LoginAlertDialog from 'components/LoginAlertDialog';
 
 import StyledLink from '../StyledLink';
 
@@ -217,6 +228,40 @@ const styles = theme => ({
     textAlign: 'right',
     display: 'block',
   },
+  popFooter: {
+    textAlign: 'center',
+  },
+  popWrap: {
+    // width: 295,
+    marginRight: 0,
+    marginLeft: 0,
+  },
+  popRoot: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    // borderTop: '1px',
+    // marginRight: 0,
+    // marginLeft: 0,
+  },
+  popPaper: {
+    width: 295,
+    textAlign: 'center',
+    // marginRight: 0,
+    // marginLeft: 0,
+  },
+  button: {
+    // margin: 'auto',
+    // display: 'block',
+  },
+  closeBtn: {
+    color: '#000000',
+    position: 'absolute',
+    right: 5,
+    top: 5,
+  },
+  dialogContent: {
+    paddingTop: '20px',
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -226,6 +271,7 @@ class ReviewLikeItem extends React.PureComponent {
     this.state = {
       followYn: this.props.review.followYn,
       loading: false,
+      loginPop: false,
     };
     this.handleFollow = this.handleFollow.bind(this);
     this.handleVoting = this.handleVoting.bind(this);
@@ -267,9 +313,28 @@ class ReviewLikeItem extends React.PureComponent {
             }
             self.setState({'loading': false});
           });
+      } else {
+        // login 페이지로 이동
+        console.log("로그인필요");
+        self.setState({'loading': false});
+        self.setState({'loginPop': true});
       }
     }    
   };
+
+  handleLoginClose = () => {
+    this.setState({'loginPop': false});
+  }
+
+  handleSignInMove = () => {
+    this.setState({
+      loginPop: false,
+    });
+
+    // this.props.history.push('/signin');
+    this.context.router.history.push(`/signin`);
+    
+  }
 
   handleFollow = userId => {
     // console.log(userId);
@@ -323,8 +388,13 @@ class ReviewLikeItem extends React.PureComponent {
     return null;
   }
 
+  static contextTypes = {
+    router: PropTypes.object,
+  };
+
   render() {
     const { classes, review } = this.props;
+    const { loginPop } = this.state;
 
     let curLikeIcon = LikeIcon;
     let numCapColor = "";
@@ -332,9 +402,54 @@ class ReviewLikeItem extends React.PureComponent {
       curLikeIcon = LikeSelIcon;
       numCapColor = classes.numCaptionSel;
     }
-    
+
     return (
       <div className={classes.cardWarp}>
+
+        <Dialog
+          open={this.state.loginPop}
+          onClose={this.handleLoginClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          className={classes.popWrap}
+          fullWidth="true"
+          // maxWidth="false"
+          classes={{
+            root: classes.popRoot,
+            paper: classes.popPaper,
+          }}
+        >
+          <IconButton
+            color="inherit"
+            onClick={this.handleLoginClose}
+            aria-label="Close"
+            className={classes.closeBtn}
+          >
+            <CloseIcon />
+          </IconButton>
+          <DialogTitle id="alert-dialog-title">
+            {/* {"Use Google's location service?"} */}
+          </DialogTitle>
+
+          <DialogContent className={classes.dialogContent}>
+            <DialogContentText id="alert-dialog-description">
+              로그인이 필요한 서비스 입니다.
+            </DialogContentText>
+          </DialogContent>
+          <Divider />
+          <DialogActions
+            // className={classes.popFooter}
+            classes={{
+              root: classes.popRoot,
+              // paper: classes.popFooter,
+            }}
+          >
+            <Button onClick={this.handleSignInMove} color="secondary">
+              로그인페이지 이동
+            </Button>
+          </DialogActions>
+        </Dialog>
+
         <Card className={classes.card}>
             <StyledLink to={`/review/${this.props.review.id}`}>
             <CardMedia
@@ -417,7 +532,7 @@ class ReviewLikeItem extends React.PureComponent {
               </div>
             </CardContent>
           </div>
-        </Card>
+        </Card>        
       </div>
     );
   }

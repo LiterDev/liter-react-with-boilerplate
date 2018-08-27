@@ -11,4 +11,8 @@ export default defineMessages({
     id: 'app.components.ReviewLikeItem.header',
     defaultMessage: 'This is the ReviewLikeItem component !',
   },
+  needLogin: {
+    id: 'app.components.ReviewLikeItem.needLogin',
+    defaultMessage: '로그인이 필요한 서비스입니다.',
+  },
 });

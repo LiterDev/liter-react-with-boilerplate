@@ -19,6 +19,7 @@ import Typography from '@material-ui/core/Typography';
 import StyledLink from './StyledLink';
 import Header from 'components/Header';
 
+import LoginAlertDialog from 'components/LoginAlertDialog';
 // import ReviewLikeItem from 'components/ReviewLikeItem';
 import ReviewLikeItem from './ReviewLikeItem';
 
@@ -153,6 +154,8 @@ export class ProfilePage extends React.PureComponent {
     followerCount: 0,
     followingCount: 0,
     reviews: [],
+
+    loginPop: false,
   }
 
   loadFollowInfo = (userId) => {
@@ -400,7 +403,7 @@ export class ProfilePage extends React.PureComponent {
     const { userInfo, reviews, followerCount, followingCount, totalReviewCount } = this.state;
 
     return (
-      <div>
+      <div>        
         <div className={classes.containerWrapper}>
           <div className={classes.container}>
             <Header headerTitle={<FormattedMessage {...messages.header} />} />

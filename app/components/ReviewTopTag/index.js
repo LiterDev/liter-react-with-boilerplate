@@ -87,12 +87,13 @@ const styles = theme => ({
   },
   text: {
     marginTop: 8,
-    color : "gray",
-   fontWight: "bold",
-   fontSize:13,
-   fontStyle: "oblique",
-
-    
+    color: 'gray',
+    fontWight: 'bold',
+    fontSize: 13,
+    fontStyle: 'oblique',
+  },
+  selAvatar: {
+    border: 'solid 2px rgb(55, 161, 255)',
   },
   // display: block;
   // border: solid 1px rgba(0,0,0,.05);
@@ -145,12 +146,18 @@ class ReviewTopTag extends React.PureComponent {
   constructor(props) {
     super(props);
 
+    this.state = {
+      selValue: -9,
+    };
     this.handleTag = this.handleTag.bind(this);
   }
 
   handleTag = value => {
     // console.log(value);
     this.props.loadValue(value);
+    this.setState({
+      selValue: value,
+    });
   };
   render() {
     const { classes, categorys, reviewFirst } = this.props;
@@ -187,7 +194,12 @@ class ReviewTopTag extends React.PureComponent {
                         ? reviewFirst.mediaCollection[0].fullPath
                         : reviewFirst.mediaCollection[0].fullPathSmall
                   }
-                  className={classNames(classes.avatar, classes.bigAvatar)}
+                  className={classNames(
+                    classes.bigAvatar,
+                    this.state.selValue === -9
+                      ? classes.selAvatar
+                      : classes.avatar,
+                  )}
                   onClick={() => this.handleTag(-9)}
                 />
               ) : (
@@ -195,11 +207,18 @@ class ReviewTopTag extends React.PureComponent {
                   alt="Adelle Charles"
                   src={Cola}
                   // src={reviewFirst.mediaCollection[0]}
-                  className={classNames(classes.avatar, classes.bigAvatar)}
+                  className={classNames(
+                    classes.bigAvatar,
+                    this.state.selValue === -9
+                      ? classes.selAvatar
+                      : classes.avatar,
+                  )}
                   onClick={() => this.handleTag(-9)}
                 />
               )}
-              <b><p className={classes.text}>#최신</p></b>
+              <b>
+                <p className={classes.text}>#최신</p>
+              </b>
             </div>
             {/* <div className={classes.avawrap}>
               <Avatar
@@ -225,10 +244,18 @@ class ReviewTopTag extends React.PureComponent {
                           ? item.fullPath
                           : item.fullPathSmall
                     }
-                    className={classNames(classes.avatar, classes.bigAvatar)}
+                    className={classNames(
+                      classes.bigAvatar,
+                      this.state.selValue === item.categoryId
+                        ? classes.selAvatar
+                        : classes.avatar,
+                    )}
                     onClick={() => this.handleTag(item.categoryId)}
                   />
-                 <b> <p className={classes.text}>#{cateName[item.categoryId]}</p></b>
+                  <b>
+                    {' '}
+                    <p className={classes.text}>#{cateName[item.categoryId]}</p>
+                  </b>
                 </div>
               ))}
 

@@ -319,8 +319,8 @@ class ReviewLikeItem extends React.PureComponent {
         <Card className={classes.card}>
           <CardMedia
             className={classes.cover}
-            // image={review.mediaCollection[0].fullPathMedium}
-            image="https://s3-ap-northeast-1.amazonaws.com/liter-review/resized/m/DlS7RBN9UlrvdF38sMtO.jpg"
+            image={review.mediaCollection[0].fullPathMedium}
+            // image="https://s3-ap-northeast-1.amazonaws.com/liter-review/resized/m/DlS7RBN9UlrvdF38sMtO.jpg"
             title="Live from space album cover"
           />
           <div className={classes.details}>

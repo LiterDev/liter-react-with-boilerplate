@@ -259,10 +259,8 @@ class ReviewCardBottomBarView extends React.Component {
     this.state.curLikeCount = this.props.review.likeCount;
     this.state.literCubeState = this.props.review.rewardLitercube;
 
-    if(this.props.review.likeYn)
-      this.state.curLiked = true;
-    else
-      this.state.curLiked = false;
+    if (this.props.review.likeYn) this.state.curLiked = true;
+    else this.state.curLiked = false;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -272,8 +270,8 @@ class ReviewCardBottomBarView extends React.Component {
     });
   }
 
-  shouldComponentUpdate(nextProps, nextState){
-    if(nextProps.review.likeCount !== this.props.review.likeCount) {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.review.likeCount !== this.props.review.likeCount) {
       console.log(nextState);
       nextState.loading = false;
       return nextProps.review.likeCount !== this.props.review.likeCount;
@@ -296,16 +294,18 @@ class ReviewCardBottomBarView extends React.Component {
         'Access-Control-Allow-Origin': '*',
         Authorization: token,
       },
-    }).then(resp => {
-      if(Boolean(resp.data)) {
-        console.log(']]]-------------load TotalReward-------------[[[');
-        console.log(resp.data);
-        this.setState({'literCubeState': resp.data.reward});
-      }
-    }).catch(error => {
+    })
+      .then(resp => {
+        if (Boolean(resp.data)) {
+          console.log(']]]-------------load TotalReward-------------[[[');
+          console.log(resp.data);
+          this.setState({ literCubeState: resp.data.reward });
+        }
+      })
+      .catch(error => {
         console.log(error);
-    });
-  }
+      });
+  };
 
   sendVoting = reviewId => {
     const accessToken = localStorage.getItem('accessToken');
@@ -326,17 +326,17 @@ class ReviewCardBottomBarView extends React.Component {
     }).then(resp => {
       // console.log(resp);
       let tmp = this.state.curLikeCount;
-      if(this.state.curLiked) {
-        this.setState({'curLiked': false});
+      if (this.state.curLiked) {
+        this.setState({ curLiked: false });
         tmp = tmp - 1;
       } else {
-        this.setState({'curLiked': true});
+        this.setState({ curLiked: true });
         tmp = tmp + 1;
       }
-      this.setState({'curLikeCount': tmp});
+      this.setState({ curLikeCount: tmp });
       this.loadTotalReward(reviewId);
     });
-  }
+  };
 
   handleVoting = reviewId => {
     // console.log(this.state.curLiked);
@@ -345,8 +345,8 @@ class ReviewCardBottomBarView extends React.Component {
     // console.log(this.props.likeYn);
     const self = this;
 
-    if(this.state.loading == false) {
-      self.setState({'loading': true});
+    if (this.state.loading == false) {
+      self.setState({ loading: true });
       if (this.props.likeYn > 0) {
         this.props.onViewVote(reviewId);
         // this.sendVoting(reviewId);
@@ -365,31 +365,33 @@ class ReviewCardBottomBarView extends React.Component {
               'Access-Control-Allow-Origin': '*',
               Authorization: token,
             },
-          }).then(resp => {
-            if (!resp.data.hasWallet) {
-              this.setState({
-                openSuccesPop: true,
-              });
-            } else {
-              this.props.onViewVote(reviewId);
-              // this.sendVoting(reviewId);
-            }
-          }).catch(error => {
-            console.log(error);
-            self.setState({'loading': false});
-          });
+          })
+            .then(resp => {
+              if (!resp.data.hasWallet) {
+                this.setState({
+                  openSuccesPop: true,
+                });
+              } else {
+                this.props.onViewVote(reviewId);
+                // this.sendVoting(reviewId);
+              }
+            })
+            .catch(error => {
+              console.log(error);
+              self.setState({ loading: false });
+            });
         } else {
-          self.setState({'loading': false});
+          self.setState({ loading: false });
           this.setState({
             openLoginPop: true,
-          });          
+          });
         }
       }
     }
   };
 
   handleResponse = res => {
-    console.log(res);
+    // console.log(res);
 
     if (res.error_code) {
       console.log(`facebook share error:::${res.error_code}`);
@@ -418,7 +420,7 @@ class ReviewCardBottomBarView extends React.Component {
           reviewId: this.props.review.id,
         }),
       }).then(resp => {
-        console.log(resp);
+        // console.log(resp);
         if (resp) {
           this.setState({
             shareCount: resp.data,
@@ -429,10 +431,10 @@ class ReviewCardBottomBarView extends React.Component {
   };
   handleReady = req => {
     // console.log(this.props.review.id);
-    console.log(req);
+    // console.log(req);
   };
   handleError = res => {
-    console.log(`handleError:::${res}`);
+    // console.log(`handleError:::${res}`);
   };
 
   handleClose = () => {
@@ -480,17 +482,31 @@ class ReviewCardBottomBarView extends React.Component {
   };
   render() {
     const { classes } = this.props;
-    const { onViewVote, campaign, viewType, likeYn, review, reviewId } = this.props;
-    const { voting, reviewing, sharing, viewClass, shareCount, literCubeState } = this.state;
+    const {
+      onViewVote,
+      campaign,
+      viewType,
+      likeYn,
+      review,
+      reviewId,
+    } = this.props;
+    const {
+      voting,
+      reviewing,
+      sharing,
+      viewClass,
+      shareCount,
+      literCubeState,
+    } = this.state;
 
     const curVote = likeYn ? votingIcons.sel : votingIcons.non;
     // const curVote = this.state.curLiked ? votingIcons.sel : votingIcons.non;
     const curReviewing = campaign ? reviewingIcons.sel : reviewingIcons.non;
     const curShare = shareIcons.non;
     const shareLocation = window.location.hostname.concat(
-      `/review/${reviewId}`,
+      `/review/${review.id}`,
     );
-
+    // console.log(review.id);
     // console.log(`router ::: ${this.context.router}`);
     // const curVote = votingIcons.sel;
     // const curVote = votingIcons.non;
@@ -573,7 +589,12 @@ class ReviewCardBottomBarView extends React.Component {
                   alt="comment"
                   className={classes.icons}
                 />
-                <span className={classNames(classes.numCaption, curReviewing.styleClass)}>
+                <span
+                  className={classNames(
+                    classes.numCaption,
+                    curReviewing.styleClass,
+                  )}
+                >
                   {review.replyCount ? review.replyCount : 0}
                 </span>
               </Button>
@@ -746,7 +767,6 @@ class ReviewCardBottomBarView extends React.Component {
               >
                 {/* <FormattedMessage {...messages.votingActive} /> */}
                 {review.replyCount ? review.replyCount : 0}
-
               </span>
             </Button>
           </div>

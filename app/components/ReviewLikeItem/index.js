@@ -361,7 +361,7 @@ class ReviewLikeItem extends React.PureComponent {
                       label: classes.followButtonText,
                     }}
                   >
-                    팔로우
+                    {this.state.followYn > 0 ? '팔로잉' : '팔로우'}
                   </Button>
                 </div>
               </div>

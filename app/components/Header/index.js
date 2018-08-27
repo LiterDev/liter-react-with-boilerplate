@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import SearchIcon from '@material-ui/icons/Search';
+import classNames from 'classnames';
 // import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
@@ -151,6 +152,9 @@ const styles = theme => ({
     // marginLeft: 'auto',
     // marginRight: 'auto',
   },
+  appBarTrans: {
+    backgroundColor: 'rgb(251, 251, 251)',
+  },
 });
 
 function HomeIcon(props) {
@@ -199,7 +203,15 @@ class Header extends React.PureComponent {
 
     return (
       <div>
-        <AppBar position="fixed" className={classes.top_box}>
+        <AppBar
+          position="fixed"
+          className={classNames(
+            classes.top_box,
+            this.props.transparency === true
+              ? classes.appBarTrans
+              : classes.appBar,
+          )}
+        >
           <Toolbar className={classes.toolbar}>
             {/* <IconButton
               className={classes.ic_round_home}
@@ -274,6 +286,7 @@ Header.propTypes = {
   classes: PropTypes.object.isRequired,
   headerTitle: PropTypes.any.isRequired,
   searchBar: PropTypes.any,
+  transparency: PropTypes.any,
 };
 
 // export default Header;

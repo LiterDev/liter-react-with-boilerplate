@@ -367,7 +367,10 @@ export class MyPage extends React.PureComponent {
           callbackFunc={this.props.selectUserData}
         />
         <div className={classes.container}>
-          <Header headerTitle={<FormattedMessage {...messages.header} />} />
+          <Header
+            // headerTitle={<FormattedMessage {...messages.header} />}
+            transparency={true}
+          />
         </div>
         <div className={classes.panel}>
           <div className={classes.row}>

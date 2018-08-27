@@ -240,7 +240,7 @@ const styles = theme => ({
   },
   snackBarTitle: {
     paddingRight: '10px',
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: '16px',
     fontWeight: '500',
     fontStyle: 'normal',
@@ -250,7 +250,7 @@ const styles = theme => ({
     color: '#ff5e4d',
   },
   snackBarCaption: {
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: '16px',
     fontWeight: '500',
     fontStyle: 'normal',

@@ -22,7 +22,7 @@ const styles = theme => ({
   buttonText: {
     width: '34px',
     height: '16px',
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: '12px',
     fontWeight: '600',
     fontStyle: 'normal',
@@ -35,7 +35,7 @@ const styles = theme => ({
   unButtonText: {
     width: '34px',
     height: '16px',
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: '12px',
     fontWeight: '600',
     fontStyle: 'normal',

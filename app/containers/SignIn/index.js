@@ -111,7 +111,7 @@ const styles = theme => ({
     marginTop: 22,
     // width: 255,
     height: 19,
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: 16,
     fontWeight: 300,
     fontStyle: 'normal',

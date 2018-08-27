@@ -51,7 +51,7 @@ const styles = theme => ({
     color: '#292d39',
   },
   slideHeaderFont: {
-    fonFamily: 'AppleSDGothicNeo',
+    fonFamily: 'Apple SD Gothic Neo',
     fontWeight: '500',
   }
 })

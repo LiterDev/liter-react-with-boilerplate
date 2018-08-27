@@ -91,7 +91,7 @@ const styles = theme => ({
     textDecoration: 'none',
   },
   btnCaption: {
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: '18px',
     fontWeight: 'normal',
     fontStyle: 'normal',
@@ -101,7 +101,7 @@ const styles = theme => ({
     color: '#111111',
   },
   btnLogOutCaption: {
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: '18px',
     fontWeight: 'normal',
     fontStyle: 'normal',
@@ -111,7 +111,7 @@ const styles = theme => ({
     color: '#7c7c7c',
   },
   btnLogInCaption: {
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: '18px',
     fontWeight: '500',
     fontStyle: 'normal',
@@ -192,7 +192,7 @@ const styles = theme => ({
     color: '#7d9ab4',
   },
   userContent: {
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: '15px',
     fontWeight: '500',
     fontStyle: 'normal',
@@ -214,7 +214,7 @@ const styles = theme => ({
   userContentNum: {
     paddingLeft: '6px',
     paddingRight: '6px',
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: '15px',
     fontWeight: '600',
     fontStyle: 'normal',

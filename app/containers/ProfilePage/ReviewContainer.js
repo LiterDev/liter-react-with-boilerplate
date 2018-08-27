@@ -100,13 +100,13 @@ const styles = {
     color: '#7c7c7c',
   },
   update: {
-    // fontFamily: 'AppleSDGothicNeo',
+    // fontFamily: 'Apple SD Gothic Neo',
     // fontWeight: '300',
     color: '#aaaaaa',
   },
   follow: {
     marginLeft: 'auto',
-    // fontFamily: 'AppleSDGothicNeo',
+    // fontFamily: 'Apple SD Gothic Neo',
     color: '#6d9fcc',
   },
   title: {

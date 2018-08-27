@@ -241,4 +241,5 @@ injectGlobal`
     width: 50%;
   }
 }
+
 `;

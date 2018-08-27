@@ -58,7 +58,7 @@ const styles = {
   flex: {
     flex: 1,
     paddingLeft: 20,
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: 13,
     fontWeight: 'normal',
     fontStyle: 'normal',

@@ -49,7 +49,7 @@ const styles = {
   },
   componentHeader:{
     border: '1px solid white',
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: '18px',
     fontWeight: 600,
     fontStyle: 'normal',
@@ -62,7 +62,7 @@ const styles = {
   },
   componentMiddle:{
       border: '1px solid white',
-      fontFamily: 'AppleSDGothicNeo',
+      fontFamily: 'Apple SD Gothic Neo',
       fontSize: '14px',
       fontWeight: 'normal',
       fontStyle: 'normal',
@@ -83,7 +83,7 @@ const styles = {
   },
   componentCaption: {
       border: '1px solid white',
-      fontFamily: 'AppleSDGothicNeo',
+      fontFamily: 'Apple SD Gothic Neo',
       fontSize: 13,
       fontWeight: 'normal',
       fontStyle: 'normal',

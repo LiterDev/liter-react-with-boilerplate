@@ -86,7 +86,7 @@ const styles = theme => ({
     },
   },
   reviewTitle: {
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: '18px',
     fontWeight: '500',
     fontStyle: 'normal',

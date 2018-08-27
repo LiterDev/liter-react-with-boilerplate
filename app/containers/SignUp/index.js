@@ -64,7 +64,7 @@ const styles = theme => ({
   textForm: {
     // width: 315,
     // height: 60,
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: 13,
     fontWeight: 300,
     fontStyle: 'normal',
@@ -139,7 +139,7 @@ const styles = theme => ({
     // display: 'block',
   },
   passText: {
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: 12,
     fontWeight: 300,
     fontStyle: 'normal',

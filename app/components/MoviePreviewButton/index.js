@@ -88,7 +88,7 @@ const styles = theme => ({
     right: '12px',
     width: '100%',
     height: 18,
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: 16,
     fontWeight: 'normal',
     fontStyle: 'normal',

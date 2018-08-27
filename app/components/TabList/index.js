@@ -131,7 +131,7 @@ const styles = theme => ({
   },
   newRewardSnackBarCaption: {
     opacity: '0.51',
-    fonFamily: 'AppleSDGothicNeo',
+    fonFamily: 'Apple SD Gothic Neo',
     fontSize: '12px',
     fontWeight: 'normal',
     fontStyle: 'normal',
@@ -156,7 +156,7 @@ const styles = theme => ({
     height: '32px',
     border: 'solid 1px #1591ff',
     margin: '29px 8px 29px 8px',
-    fonFamily: 'AppleSDGothicNeo',
+    fonFamily: 'Apple SD Gothic Neo',
     fontSize: '14px',
     fontWeight: 'bold',
     fontStyle: 'normal',

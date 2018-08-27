@@ -32,7 +32,7 @@ const styles = theme => ({
     width: 103,
     height: 20,
     font: {
-      family: 'AppleSDGothicNeo',
+      family: 'Apple SD Gothic Neo',
       size: 17,
       weight: 600,
       style: 'normal',

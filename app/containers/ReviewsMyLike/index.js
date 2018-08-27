@@ -50,7 +50,7 @@ const styles = theme => ({
   title: {
     position: 'relative',
     width: '100%',
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: 16,
     fontWeight: 600,
     fontStyle: 'normal',
@@ -63,7 +63,7 @@ const styles = theme => ({
   },
   titleSub: {
     height: 16,
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: 13,
     fontWeight: 'normal',
     fontStyle: 'normal',

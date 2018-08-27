@@ -82,7 +82,7 @@ const styles = {
   },
   flex: {
     with: '100%',
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: 16,
     fontWeight: 'normal',
     fontStyle: 'normal',

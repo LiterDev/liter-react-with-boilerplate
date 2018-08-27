@@ -92,7 +92,7 @@ const styles = theme => ({
     boxShadow: `0 -1px 7px 0 rgba(0, 0, 0, 0.1)`,
   },
   reviewTitle: {
-    fonFamily: 'AppleSDGothicNeo',
+    fonFamily: 'Apple SD Gothic Neo',
     fontSize: '22px',
     fontWeight: '600',
     fontStyle: 'normal',
@@ -102,7 +102,7 @@ const styles = theme => ({
     color: '#111111',
   },
   reviewContent: {
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: '16px',
     fontWeight: '400',
     fontStyle: 'normal',
@@ -201,7 +201,7 @@ const styles = theme => ({
     width: '100%',
     margin: '0 0px 10px 0px',
     // float: 'left',
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: '14px',
     fontWeight: 'bold',
     fontStyle: 'normal',
@@ -228,7 +228,7 @@ const styles = theme => ({
   paperItem: {
     width: '57px',
     float: 'left',
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: '14px',
     fontWeight: 'normal',
     fontStyle: 'normal',
@@ -239,7 +239,7 @@ const styles = theme => ({
     display: 'block',
   },
   paperDetail: {
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: '14px',
     fontWeight: 'normal',
     fontStyle: 'normal',
@@ -263,7 +263,7 @@ const styles = theme => ({
     float: 'left',
   },
   scoreText: {
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: '12px',
     fontWeight: 'normal',
     fontStyle: 'normal',
@@ -289,7 +289,7 @@ const styles = theme => ({
     textAlign: 'center',
   },
   newFont: {
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: '14px',
     fontWeight: '400',
     fontStyle: 'normal',

@@ -79,7 +79,7 @@ const styles = theme => ({
   },
   userNickName: {
     height: 15,
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: 12,
     fontWeight: 500,
     fontstyle: 'normal',
@@ -90,7 +90,7 @@ const styles = theme => ({
   },
   timeAt: {
     marginLeft: 10,
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: 12,
     fontWeight: 300,
     fontStyle: 'normal',
@@ -106,7 +106,7 @@ const styles = theme => ({
   follow: {
     position: 'absolute',
     right: 0,
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: 12,
     fontWeight: 300,
     fontStyle: 'normal',
@@ -116,7 +116,7 @@ const styles = theme => ({
     color: '#1591ff',
   },
   followButton: {
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: 12,
     fontWeight: 300,
     fontStyle: 'normal',
@@ -129,7 +129,7 @@ const styles = theme => ({
     minHeight: 10,
   },
   unFollowButton: {
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: 12,
     fontWeight: 300,
     fontStyle: 'normal',
@@ -145,7 +145,7 @@ const styles = theme => ({
     lineHeight: '1.5em',
     height: '3em',
     overflow: 'hidden',
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: 14,
     fontWeight: 500,
     fontStyle: 'normal',

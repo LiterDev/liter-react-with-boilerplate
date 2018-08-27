@@ -90,7 +90,7 @@ const styles = theme => ({
     position: 'absolute',
     // left: '33px',
     right: '12px',
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: 16,
     fontWeight: 'normal',
     fontStyle: 'normal',

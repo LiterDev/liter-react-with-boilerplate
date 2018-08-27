@@ -39,7 +39,7 @@ const styles = theme => ({
   },
   litertext: {
     paddingTop: 22,
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: 20,
     fontWeight: 600,
     fontStyle: 'normal',
@@ -57,7 +57,7 @@ const styles = theme => ({
   bodytext: {
     marginTop: 22,
     // width: 255,
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: 15,
     fontWeight: 300,
     fontStyle: 'normal',

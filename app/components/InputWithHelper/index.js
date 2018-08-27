@@ -54,7 +54,7 @@ const styles = theme => ({
   inputWrapWarn: {
     position: 'absolute',
     height: 12,
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: 12,
     fontWeight: 'normal',
     fontStyle: 'normal',

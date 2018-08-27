@@ -81,7 +81,7 @@ const styles = theme => ({
     paddingLeft: 12,
     textAlign: 'center',
     color: 'rgb(17, 17, 17)',
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: 11,
     // width: '100%',
   },

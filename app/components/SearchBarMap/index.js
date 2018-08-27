@@ -166,8 +166,16 @@ class SearchBarMap extends React.PureComponent {
     this.setState({ errorMessage: status }, () => {
       clearSuggestions();
     });
+    if (status === 'ZERO_RESULTS') {
+      console.log('ZERO_RESULTS = ', status); // eslint-disable-line no-console
+      this.handleSelect(this.state.address);
+    }
   };
 
+  handlePaste = e => {
+    console.log('Error from Google Maps paste', e);
+    // 서울특별시 강남구 봉은사로 610 수도빌딩
+  };
   render() {
     const { classes } = this.props;
     // const {
@@ -185,6 +193,7 @@ class SearchBarMap extends React.PureComponent {
           value={this.state.address}
           onChange={this.handleChange}
           onSelect={this.handleSelect}
+          onError={this.handleError}
         >
           {({
             getInputProps,

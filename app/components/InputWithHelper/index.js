@@ -101,7 +101,7 @@ class InputWithHelper extends React.PureComponent {
 
   handleFocus = () => {
     // console.log(this.props.onFocusClear);
-    console.log(this.states.inputState);
+    // console.log(this.states.inputState);
     if (this.props.onFocusClear) {
       this.setState({
         value: '',

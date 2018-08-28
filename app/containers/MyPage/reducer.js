@@ -88,16 +88,27 @@ function myPageReducer(state = initialState, action) {
     case constants.LOAD_USER_DATA:
       return state;
     case constants.LOAD_USER_SUCCESS:
-      return state.set('userData', action.data);
+      return state.set('userData', fromJS(action.data));
     case constants.LOAD_USER_ERROR:
       // console.log(action.data);
       return state;
     case constants.CHANGE_NICK_NAME_ACTION:
       return state;
     case constants.CHANGE_NICK_NAME_SUCCESS:
-      // console.log(action.data);
-      localStorage.setItem('userNickName', action.data.userNickName);
-      return state.set('userData', action.data);
+      console.log('#####');
+      console.log(action.data.userNickName);
+      // localStorage.setItem('userNickName', action.data.userNickName);
+      // return state.setIn(['userData', 'userNickName'], 'test');
+      console.log(state);
+      return state.setIn(
+        ['userData', 'userNickName'],
+        action.data.userNickName,
+      );
+    // return state.setIn(
+    //   ['userData', 'userNickName'],
+    //   action.data.userNickName,
+    // );
+    // return state;
     case constants.CHANGE_NICK_NAME_FAILURE:
       // console.log(action.data);
       return state;

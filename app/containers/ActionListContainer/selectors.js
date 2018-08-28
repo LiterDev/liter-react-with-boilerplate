@@ -10,7 +10,8 @@ const makeSelectList = () =>
 
 const makeSelectListContents = () =>
   createSelector(actionListDomain, contentState =>
-    contentState.getIn(['list', 'contents']),
+    // contentState.getIn(['list', 'contents']),
+    contentState.get('contents'),
   );
 
 export {

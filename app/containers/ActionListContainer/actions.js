@@ -54,10 +54,11 @@ export function setUnFollow(followid, followType, userId) {
   };
 }
 
-export function setFollowedSuccess(data) {
+export function setFollowedSuccess(data, fType) {
   return {
     type: SET_FOLLOWED_SUCCESS,
     data,
+    fType,
   };
 }
 

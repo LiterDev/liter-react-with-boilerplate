@@ -98,7 +98,14 @@ export class FollowCtrl extends React.PureComponent {
 
   render() {
     const { classes } = this.props;
-    const { followId, followType, followYn } = this.props;
+    const { followId, followType, followYn, followEmail } = this.props;
+
+    const userEmail = localStorage.getItem('username');
+    const bSignIn = userEmail ? true : false;
+
+    if (bSignIn && userEmail == followEmail) {
+      return <div/>;
+    }
 
     if(followYn) {
       return (
@@ -108,11 +115,11 @@ export class FollowCtrl extends React.PureComponent {
             onClick={this.handleSetUnFollow}
           >
             <Typography className={classes.unButtonText}>
-              <FormattedMessage {...messages.buttonTitle} />
+              <FormattedMessage {...messages.ubButtonTitle} />
             </Typography>
           </Button>
         </div>
-      );  
+      );
     }
     return (
       <div>

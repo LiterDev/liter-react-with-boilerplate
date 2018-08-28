@@ -15,4 +15,8 @@ export default defineMessages({
     id: 'app.containers.FollowCtrl.buttonTitle',
     defaultMessage: '팔로우',
   },
+  ubButtonTitle: {
+    id: 'app.containers.FollowCtrl.ubButtonTitle',
+    defaultMessage: '팔로잉',
+  },
 });

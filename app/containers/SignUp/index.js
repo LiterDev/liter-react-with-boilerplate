@@ -3,44 +3,47 @@
  * SignUp
  *
  */
-/* react ref*/
+
 import React from 'react';
+// import Input from '@material-ui/core/Input';
+// import Button from '@material-ui/core/Button';
+import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+// import { Helmet } from 'react-helmet';
+import { FormattedMessage } from 'react-intl';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { createStructuredSelector } from 'reselect';
-import { Link } from 'react-router-dom';
-// import { Helmet } from 'react-helmet';
-/* material-ui core */
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Header from 'components/Header';
+// import SignInput from 'components/SignInput';
+import BlueButton from 'components/BlueButton';
+import InputWithHelper from 'components/InputWithHelper';
+import AgreePop from 'components/popups/AgreePop';
+
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
-import { withStyles } from '@material-ui/core/styles';
-/* material-ui icon */
-/* containers */
+
+// import Button from '@material-ui/core/Button';
+// import BottomNavigation from '@material-ui/core/BottomNavigation';
+
+// import Typography from '@material-ui/core/Typography';
 import { makeSelectLoading } from 'containers/App/selectors';
-/* components */
-import AgreePop from 'components/popups/AgreePop';
-import BlueButton from 'components/BlueButton';
-import { ErrorMessages, ErrorCodes } from 'components/ErrorMessages';
-import Header from 'components/Header';
-import InputWithHelper from 'components/InputWithHelper';
-// import SignInput from 'components/SignInput';
-/* image */
-/* ref */
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import { makeSelectSignUpRes, makeSelectSignUpError } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { signupAction } from './actions';
-import { makeSelectSignUpRes, makeSelectSignUpError } from './selectors';
+
+import messages from './messages';
 // import Form from './Form';
+
+import { signupAction } from './actions';
 
 const styles = theme => ({
   container: {
@@ -54,7 +57,7 @@ const styles = theme => ({
     // flexWrap: 'wrap',
   },
   signupForm: {
-    paddingTop: '10%',
+    paddingTop: 66,
     marginBottom: 2,
   },
   passwordForm: {
@@ -64,7 +67,7 @@ const styles = theme => ({
   textForm: {
     // width: 315,
     // height: 60,
-    fontFamily: 'Apple SD Gothic Neo',
+    fontFamily: 'AppleSDGothicNeo',
     fontSize: 13,
     fontWeight: 300,
     fontStyle: 'normal',
@@ -76,7 +79,7 @@ const styles = theme => ({
     marginTop: 20,
   },
   buttonForm: {
-    marginTop: '1%',
+    marginTop: 58,
   },
   button: {
     // margin: theme.spacing.unit,
@@ -139,7 +142,7 @@ const styles = theme => ({
     // display: 'block',
   },
   passText: {
-    fontFamily: 'Apple SD Gothic Neo',
+    fontFamily: 'AppleSDGothicNeo',
     fontSize: 12,
     fontWeight: 300,
     fontStyle: 'normal',
@@ -151,6 +154,7 @@ const styles = theme => ({
     textAlign: 'left',
   },
 });
+
 // function Transition(props) {
 //   return <Slide direction="left" {...props} />;
 // }
@@ -193,7 +197,7 @@ export class SignUp extends React.PureComponent {
     };
     this.onSubmitFormInit = this.onSubmitFormInit.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    // this.validationResult = this.validationResult.bind(this);
+    this.validationResult = this.validationResult.bind(this);
   }
 
   handleClose = () => {
@@ -215,35 +219,13 @@ export class SignUp extends React.PureComponent {
     });
     this.props.signupForm(this.state.formData);
   };
-  handleOnChange = e => {
-    if (e.target.name === 'email') {
-      this.setState({
-        emailError: false,
-      });
-    }
-    if (e.target.name === 'username') {
-      this.setState({
-        usernameError: false,
-      });
-    }
-    if (e.target.name === 'password') {
-      this.setState({
-        passwordError: false,
-      });
-    }
-    if (e.target.name === 'passwordRepeat') {
-      this.setState({
-        passwordRepeatError: false,
-      });
-    }
-    console.log(e.target.name);
-  };
+
   onSubmitFormInit(event) {
     event.preventDefault();
     // if (!this.state.complete) {
     //   return false;
     // }
-    // console.log(event);
+    console.log(event);
     // console.log(event.target.email.value);
     const email = event.target.email.value;
     const username = event.target.username.value;
@@ -251,82 +233,70 @@ export class SignUp extends React.PureComponent {
     const passwordRepeat = event.target.passwordRepeat.value;
     const errors = [];
     if (!email) {
-      errors.push(ErrorCodes.EMAIL_EMPTY);
-      this.setState({
-        emailError: ErrorCodes.EMAIL_EMPTY,
-      });
+      errors.push(500108);
     } else {
       this.setState({
         emailError: false,
       });
     }
     if (!validateEmail(email)) {
-      errors.push(ErrorCodes.EMAIL_VALID);
-      this.setState({
-        emailError: ErrorCodes.EMAIL_VALID,
-      });
+      errors.push(500110);
     } else {
       this.setState({
         emailError: false,
       });
     }
     if (!username) {
-      errors.push(ErrorCodes.USER_NAME_EMPTY);
-      this.setState({
-        usernameError: ErrorCodes.USER_NAME_EMPTY,
-      });
+      errors.push(500106);
     } else {
       this.setState({
         usernameError: false,
       });
     }
     if (!password) {
-      errors.push(ErrorCodes.PASSWORD_EMPTY);
-      this.setState({
-        passwordError: ErrorCodes.PASSWORD_EMPTY,
-      });
-    } else {
-      this.setState({
-        passwordError: false,
-      });
-    }
-    if (!validatePassword(password)) {
-      errors.push(ErrorCodes.PASSWORD_VALID);
-      this.setState({
-        passwordError: ErrorCodes.PASSWORD_VALID,
-      });
+      errors.push(500100);
     } else {
       this.setState({
         passwordError: false,
       });
     }
     if (!passwordRepeat) {
-      errors.push(ErrorCodes.PASSWORD_REPEAT_EMPTY);
-      this.setState({
-        passwordRepeatError: ErrorCodes.PASSWORD_REPEAT_EMPTY,
-      });
-    } else if (password !== passwordRepeat) {
-      errors.push(ErrorCodes.PASSWORD_NOT_EQUAL);
-      this.setState({
-        passwordRepeatError: ErrorCodes.PASSWORD_NOT_EQUAL,
-      });
+      errors.push(500103);
     } else {
       this.setState({
         passwordRepeatError: false,
       });
     }
+
+    if (!validatePassword(password)) {
+      errors.push(500102);
+    } else {
+      this.setState({
+        passwordError: false,
+      });
+    }
+
+    if (password !== passwordRepeat) {
+      errors.push(500105);
+    } else {
+      this.setState({
+        passwordRepeatError: false,
+      });
+    }
+
     if (errors.length > 0) {
-      // for (let i = 0; i < errors.length; i += 1) {
-      //   this.validationResult(errors[i]);
-      // }
+      for (let i = 0; i < errors.length; i += 1) {
+        this.validationResult(errors[i]);
+      }
       return false;
     }
 
+    this.state.formData = new FormData(event.target);
     if (!this.state.agreeComplete) {
       this.setState({
         openAgreePop: true,
       });
-      this.state.formData = new FormData(event.target);
+
       return false;
     }
 
@@ -340,126 +310,90 @@ export class SignUp extends React.PureComponent {
     return false;
   }
 
-  validationMessage(errorCode) {
-    if (!errorCode) {
-      console.log(errorCode);
-      return '';
+  validationResult(errorCode) {
+    console.log(errorCode);
+    // USER_PASSWORD_IS_NOT_ALLOWED(500100, "Password is not valid"),
+    // USER_PASSWORD_IS_EMPTY(500101, "Password is empty"),
+    // USER_PASSWORD_PATTERN_IS_NOT_ALLOWED(500102, "Password pattern is not allowed."),
+    // USER_PASSWORD_REPEAT_IS_EMPTY(500103, "Password is not valid"),
+    // USER_PASSWORD_REPEAT_PATTERN_IS_NOT_ALLOWED(500104, "PasswordRepeat pattern is not allowed."),
+    // USER_PASSWORD_IS_NOT_EQUALS(500105, "Password is not equals."),
+    // USER_NAME_IS_EMPTY(500106, "Username is empty"),
+    // USER_NAME_IS_ALREADY_EXISTS(500107, "Username is already exists"),
+    // USER_EMAIL_IS_EMPTY(500108, "Email is empty"),
+    // USER_EMAIL_IS_ALREADY_EXISTS(500109, "Email is already exists"),
+    if (errorCode === 500108) {
+      this.setState({
+        emailError: <FormattedMessage {...messages.emailEmpty} />,
+      });
     }
-    // console.log(ErrorCodes.messages[errorCode].code);
-    return (
-      <FormattedMessage {...messages[ErrorCodes.messages[errorCode].code]} />
-    );
-  }
+    if (errorCode === 500109) {
+      this.setState({
+        emailError: <FormattedMessage {...messages.emailExists} />,
+      });
+    }
 
-  // validationResult(errorCode) {
-  //   console.log(errorCode);
-  //   // falls through
-  //   switch (errorCode) {
-  //     case ErrorCodes.EMAIL_EMPTY:
-  //       console.log('ErrorCodes.EMAIL_EMPTY');
-  //       this.setState({
-  //         emailError: (
-  //           <FormattedMessage
-  //             {...messages[ErrorCodes.messages[ErrorCodes.EMAIL_EMPTY].code]}
-  //           />
-  //         ),
-  //       });
-  //       break;
-  //     case ErrorCodes.EMAIL_VALID:
-  //       console.log('ErrorCodes.EMAIL_VALID');
-  //       this.setState({
-  //         emailError: (
-  //           <FormattedMessage
-  //             {...messages[ErrorCodes.messages[ErrorCodes.EMAIL_EMPTY].code]}
-  //           />
-  //         ),
-  //       });
-  //       break;
-  //     case ErrorCodes.EMAIL_EXISTS:
-  //       console.log('ErrorCodes.EMAIL_EXISTS');
-  //       this.setState({
-  //         emailError: (
-  //           <FormattedMessage
-  //             {...messages[ErrorCodes.messages[ErrorCodes.EMAIL_EMPTY].code]}
-  //           />
-  //         ),
-  //       });
-  //       break;
-  //     case ErrorCodes.USER_NAME_EMPTY:
-  //       console.log('ErrorCodes.USER_NAME_EMPTY');
-  //       this.setState({
-  //         emailError: (
-  //           <FormattedMessage
-  //             {...messages[ErrorCodes.messages[ErrorCodes.EMAIL_EMPTY].code]}
-  //           />
-  //         ),
-  //       });
-  //       break;
-  //     case ErrorCodes.PASSWORD_EMPTY:
-  //       console.log('ErrorCodes.PASSWORD_EMPTY');
-  //       this.setState({
-  //         emailError: (
-  //           <FormattedMessage
-  //             {...messages[ErrorCodes.messages[ErrorCodes.EMAIL_EMPTY].code]}
-  //           />
-  //         ),
-  //       });
-  //       break;
-  //     case ErrorCodes.PASSWORD_VALID:
-  //       console.log('ErrorCodes.PASSWORD_VALID');
-  //       this.setState({
-  //         emailError: (
-  //           <FormattedMessage
-  //             {...messages[ErrorCodes.messages[ErrorCodes.EMAIL_EMPTY].code]}
-  //           />
-  //         ),
-  //       });
-  //       break;
-  //     // case 500102:
-  //     //   this.setState({
-  //     //     passwordError: (
-  //     //       <FormattedMessage {...messages.passwordPatternValid} />
-  //     //     ),
-  //     //   });
-  //     //   break;
-  //     // case 500103:
-  //     // falls through
-  //     case ErrorCodes.PASSWORD_REPEAT_EMPTY:
-  //       this.setState({
-  //         emailError: (
-  //           <FormattedMessage
-  //             {...messages[ErrorCodes.messages[ErrorCodes.EMAIL_EMPTY].code]}
-  //           />
-  //         ),
-  //       });
-  //       break;
-  //     case ErrorCodes.PASSWORD_NOT_EQUAL:
-  //       this.setState({
-  //         passwordRepeatError: (
-  //           <FormattedMessage {...messages.passwordNotEqual} />
-  //         ),
-  //       });
-  //       break;
-  //     // case 500113:
-  //     //   this.setState({
-  //     //     usernameError: <FormattedMessage {...messages.nicknameExists} />,
-  //     //   });
-  //     //   break;
-  //     default:
-  //   }
-  // }
+    if (errorCode === 500106) {
+      this.setState({
+        usernameError: <FormattedMessage {...messages.usernameEmpty} />,
+      });
+    }
+    if (errorCode === 500110) {
+      this.setState({
+        emailError: <FormattedMessage {...messages.usernameEmpty} />,
+      });
+    }
+
+    if (errorCode === 500100) {
+      this.setState({
+        passwordError: <FormattedMessage {...messages.passwordValid} />,
+      });
+    }
+
+    if (errorCode === 500101) {
+      this.setState({
+        passwordError: <FormattedMessage {...messages.passwordEmpty} />,
+      });
+    }
+    if (errorCode === 500102) {
+      this.setState({
+        passwordError: <FormattedMessage {...messages.passwordPatternValid} />,
+      });
+    }
+    if (errorCode === 500103 || errorCode === 500104) {
+      this.setState({
+        passwordRepeatError: <FormattedMessage {...messages.passwordRepeat} />,
+      });
+    }
+    if (errorCode === 500105) {
+      this.setState({
+        passwordError: <FormattedMessage {...messages.passwordNotEqual} />,
+      });
+      this.setState({
+        passwordRepeatError: (
+          <FormattedMessage {...messages.passwordNotEqual} />
+        ),
+      });
+    }
+
+    if (errorCode === 500113) {
+      this.setState({
+        usernameError: <FormattedMessage {...messages.nicknameExists} />,
+      });
+    }
+  }
 
   componentWillReceiveProps(nextProps) {
     // this.props 는 아직 바뀌지 않은 상태
     // console.log(nextProps);
     // console.log(nextProps.error);
     // console.log(this.props.error);
-    // if (nextProps.error !== this.props.error) {
-    // console.log('validationResultvalidationResult');
-    // if (nextProps.error.response) {
-    //   this.validationResult(nextProps.error.response.data.code);
-    // }
-    // }
+    if (nextProps.error !== this.props.error) {
+      // console.log('validationResultvalidationResult');
+      if (nextProps.error.response) {
+        this.validationResult(nextProps.error.response.data.code);
+      }
+    }
   }
 
   render() {
@@ -495,15 +429,13 @@ export class SignUp extends React.PureComponent {
 
               <InputWithHelper
                 placeholder={<FormattedMessage {...messages.email} />}
-                error={this.validationMessage(this.state.emailError)}
-                onChange={this.handleOnChange}
+                error={this.state.emailError}
                 type="text"
                 inputName="email"
               />
               <InputWithHelper
                 placeholder={<FormattedMessage {...messages.username} />}
-                error={this.validationMessage(this.state.usernameError)}
-                onChange={this.handleOnChange}
+                error={this.state.usernameError}
                 type="text"
                 inputName="username"
               />
@@ -515,14 +447,12 @@ export class SignUp extends React.PureComponent {
               <InputWithHelper
                 placeholder={<FormattedMessage {...messages.password} />}
                 type="password"
-                error={this.validationMessage(this.state.passwordError)}
-                onChange={this.handleOnChange}
+                error={this.state.passwordError}
                 inputName="password"
               />
               <InputWithHelper
                 placeholder={<FormattedMessage {...messages.passwordRepeat} />}
-                error={this.validationMessage(this.state.passwordRepeatError)}
-                onChange={this.handleOnChange}
+                error={this.state.passwordRepeatError}
                 type="password"
                 inputName="passwordRepeat"
               />

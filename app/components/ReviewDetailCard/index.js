@@ -395,55 +395,55 @@ class ReviewDetailCard extends React.PureComponent {
     svAs = asCount != 0 ? svAs / asCount : 0;
 
     let storeInfo = null;
-    switch(review.store) {
+    switch (review.store) {
       case 'ONLINE':
         storeInfo = (
-        <div>
-         <div className={classes.paperSheet}>
-            <span className={classes.paperItem}>상품명</span>
-            <span className={classes.paperDetail}>
-              {review.productName}
-            </span>
+          <div>
+            <div className={classes.paperSheet}>
+              <span className={classes.paperItem}>상품명</span>
+              <span className={classes.paperDetail}>{review.productName}</span>
+            </div>
+            <div
+              className={classNames(classes.paperSheet, classes.paperWordWrap)}
+            >
+              <span className={classes.paperItem}>구매처</span>
+              <span className={classes.paperDetail}>{review.buyLink}</span>
+            </div>
           </div>
-          <div className={classNames(classes.paperSheet, classes.paperWordWrap )}>
-            <span className={classes.paperItem}>구매처</span>
-            <span className={classes.paperDetail}>{review.buyLink}</span>
-          </div>
-        </div>
         );
-      break;
+        break;
       case 'OFFLINE':
         storeInfo = (
-        <div>
-          <div className={classes.paperSheet}>
-            <span className={classes.paperItem}>장소</span>
-            <span className={classes.paperDetail}>
-              {review.productName}
-            </span>
+          <div>
+            <div className={classes.paperSheet}>
+              <span className={classes.paperItem}>장소</span>
+              <span className={classes.paperDetail}>{review.productName}</span>
+            </div>
+            <div
+              className={classNames(classes.paperSheet, classes.paperWordWrap)}
+            >
+              <span className={classes.paperItem}>주소</span>
+              <span className={classes.paperDetail}>{review.storeAddress}</span>
+            </div>
           </div>
-          <div className={classNames(classes.paperSheet, classes.paperWordWrap )}>
-            <span className={classes.paperItem}>주소</span>
-            <span className={classes.paperDetail}>{review.storeAddress}</span>
-          </div>
-        </div>
         );
-      break;
+        break;
       case 'ETC':
         storeInfo = (
-        <div>
-          <div className={classes.paperSheet}>
-            <span className={classes.paperItem}>상품이름</span>
-            <span className={classes.paperDetail}>
-              {review.productName}
-            </span>
+          <div>
+            <div className={classes.paperSheet}>
+              <span className={classes.paperItem}>상품이름</span>
+              <span className={classes.paperDetail}>{review.productName}</span>
+            </div>
+            <div
+              className={classNames(classes.paperSheet, classes.paperWordWrap)}
+            >
+              <span className={classes.paperItem}>구매정보</span>
+              <span className={classes.paperDetail}>{review.buyLink}</span>
+            </div>
           </div>
-          <div className={classNames(classes.paperSheet, classes.paperWordWrap )}>
-            <span className={classes.paperItem}>구매정보</span>
-            <span className={classes.paperDetail}>{review.buyLink}</span>
-          </div>
-        </div>
         );
-      break;
+        break;
     }
 
     // console.log(review.store);
@@ -462,11 +462,11 @@ class ReviewDetailCard extends React.PureComponent {
                 followId={review.user.id}
               />
             }
-            title={(
-                <StyledLink to={`/profile/${review.user.id}`}>
-                  {review.user.userNickName}
-                </StyledLink>
-              )}
+            title={
+              <StyledLink to={`/profile/${review.user.id}`}>
+                {review.user.userNickName}
+              </StyledLink>
+            }
             subheader={<TimeAt date={review.updateAt} />}
           />
           <CardContent>
@@ -492,7 +492,11 @@ class ReviewDetailCard extends React.PureComponent {
                 <div className={classes.mapWrap}>
                   <div className={classes.paperSheetHead}>
                     <SmsIcon className={classes.paperIcons} />
-                    <span>재방문할래요!</span>
+                    {review.recommend === 'YES' ? (
+                      <span>재방문할래요!</span>
+                    ) : (
+                      <span>재방문안할래요!</span>
+                    )}
                   </div>
                   <div className={classes.googleMap}>
                     <Map
@@ -520,11 +524,15 @@ class ReviewDetailCard extends React.PureComponent {
               ) : (
                 <div className={classes.paperSheetHead}>
                   <SmsIcon className={classes.paperIcons} />
-                  <span>재구매할래요!</span>
+                  {review.recommend === 'YES' ? (
+                    <span>재구매할래요!</span>
+                  ) : (
+                    <span>재구매안할래요!</span>
+                  )}
                 </div>
               )}
 
-              { storeInfo }
+              {storeInfo}
               {/* <div className={classes.paperSheet}>
                 <span className={classes.paperItem}>제품</span>
                 <span className={classes.paperDetail}>
@@ -536,7 +544,6 @@ class ReviewDetailCard extends React.PureComponent {
                 <span className={classes.paperItem}>구매처</span>
                 <span className={classes.paperDetail}>{review.buyLink}</span>
               </div> */}
-
 
               <div className={classes.paperSheet}>
                 <span className={classes.paperItem}>총평가</span>

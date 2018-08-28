@@ -590,9 +590,22 @@ class ReviewWrite extends React.PureComponent {
           return false;
         }
         console.log(data.get('storeLat'));
-        if (!Boolean(data.get('storeLat')) || !Boolean(data.get('storeLng'))) {
+
+        if (!Boolean(data.get('storeAddress'))) {
           this.setState({
             validationContent: '방문한 곳의 주소를 입력해주세요',
+          });
+          this.handleAlertOpen();
+          return false;
+        }
+        if (
+          !Boolean(data.get('storeLat')) ||
+          !Boolean(data.get('storeLng')) ||
+          data.get('storeLat') === 'false' ||
+          data.get('storeLng') === 'false'
+        ) {
+          this.setState({
+            validationContent: '방문한 곳의 주소를 지도에서 확인해주세요',
           });
           this.handleAlertOpen();
           return false;

@@ -21,6 +21,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 // import DialogContentText from '@material-ui/core/DialogContentText';
 import Typography from '@material-ui/core/Typography';
 /* material-icon */
@@ -78,16 +79,29 @@ const styles = {
     fontSize: '12px',
     color: '#999999',
   },
+  agreeBtn: {
+    paddingLeft: 0,
+  },
 };
 
 /* eslint-disable react/prefer-stateless-function */
 class AgreePop extends React.Component {
-  state = {
-    serviceOpen: false,
-    serviceAgree: false,
-    privacyOpen: false,
-    privacyAgree: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      serviceOpen: false,
+      serviceAgree: false,
+      privacyOpen: false,
+      privacyAgree: false,
+    };
+    this.toggloeServiceAgree = this.toggloeServiceAgree.bind(this);
+  }
+  // state = {
+  //   serviceOpen: false,
+  //   serviceAgree: false,
+  //   privacyOpen: false,
+  //   privacyAgree: false,
+  // };
 
   handleClose = () => {
     this.setState({
@@ -110,14 +124,14 @@ class AgreePop extends React.Component {
   };
 
   handleDetail = type => {
-    console.log(`handleDetail===${type}`);
+    // console.log(`handleDetail===${type}`);
     if (type === 'SERVICE') {
-      console.log('SERVICE');
+      // console.log('SERVICE');
       this.setState({
         serviceOpen: true,
       });
     } else if (type === 'PRIVACY') {
-      console.log('PRIVACY');
+      // console.log('PRIVACY');
       this.setState({
         privacyOpen: true,
       });
@@ -151,6 +165,16 @@ class AgreePop extends React.Component {
     return true;
   };
 
+  toggloeServiceAgree = () => {
+    this.setState({
+      serviceAgree: !this.state.serviceAgree,
+    });
+  };
+  toggloePrivacyAgree = () => {
+    this.setState({
+      privacyAgree: !this.state.privacyAgree,
+    });
+  };
   render() {
     const { classes, open } = this.props;
     const { serviceOpen, privacyOpen, serviceAgree, privacyAgree } = this.state;
@@ -184,10 +208,18 @@ class AgreePop extends React.Component {
                 }
               >
                 <div>
-                  <span>
-                    {serviceAgree ? <CheckCircle /> : <CheckCircleOutline />}
-                  </span>
-                  <span className={classes.subTitle}>서비스 이용약관 동의</span>
+                  <Button
+                    className={classes.agreeBtn}
+                    onClick={this.toggloeServiceAgree}
+                    color="secondary"
+                  >
+                    <span>
+                      {serviceAgree ? <CheckCircle /> : <CheckCircleOutline />}
+                    </span>
+                    <span className={classes.subTitle}>
+                      서비스 이용약관 동의
+                    </span>
+                  </Button>
                 </div>
                 <div>
                   <span className={classes.moreSub}>
@@ -219,12 +251,18 @@ class AgreePop extends React.Component {
                     : classes.disagreeSubTitle
                 }
               >
-                <span>
-                  {privacyAgree ? <CheckCircle /> : <CheckCircleOutline />}
-                </span>
-                <span className={classes.subTitle}>
-                  개인정보 수집 및 이용 동의
-                </span>
+                <Button
+                  className={classes.agreeBtn}
+                  onClick={this.toggloePrivacyAgree}
+                  color="secondary"
+                >
+                  <span>
+                    {privacyAgree ? <CheckCircle /> : <CheckCircleOutline />}
+                  </span>
+                  <span className={classes.subTitle}>
+                    개인정보 수집 및 이용 동의
+                  </span>
+                </Button>
                 <span className={classes.moreSub}>
                   <IconButton
                     color="inherit"

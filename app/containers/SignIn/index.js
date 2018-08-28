@@ -450,7 +450,10 @@ export class SignIn extends React.PureComponent {
       localStorage.setItem('username', signinSuccess.username);
       // this.props.loadUserData(signinSuccess.username);
       this.props.signinEnd();
-      this.props.loginSuccessHandler();
+      if (this.props.loginSuccessHandler) {
+        this.props.loginSuccessHandler();
+      }
+
       // const pathLink = '/';
       // console.log(this.props.location);
       // console.log(this.props.location.state);

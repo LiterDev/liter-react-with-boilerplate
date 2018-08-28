@@ -6,11 +6,22 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 // import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import Dialog from '@material-ui/core/Dialog';
+import Slide from '@material-ui/core/Slide';
 // import MenuIcon from '@material-ui/icons/Menu';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SvgIcon from '@material-ui/core/SvgIcon';
+import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import classNames from 'classnames';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Divider from '@material-ui/core/Divider';
+import CloseIcon from '@material-ui/icons/Close';
+
+import SignIn from 'containers/SignIn/Loadable';
 // import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
@@ -155,6 +166,40 @@ const styles = theme => ({
   appBarTrans: {
     backgroundColor: 'rgb(251, 251, 251)',
   },
+  popFooter: {
+    textAlign: 'center',
+  },
+  popWrap: {
+    // width: 295,
+    marginRight: 0,
+    marginLeft: 0,
+  },
+  popRoot: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    // borderTop: '1px',
+    // marginRight: 0,
+    // marginLeft: 0,
+  },
+  popPaper: {
+    width: 295,
+    textAlign: 'center',
+    // marginRight: 0,
+    // marginLeft: 0,
+  },
+  button: {
+    // margin: 'auto',
+    // display: 'block',
+  },
+  closeBtn: {
+    color: '#000000',
+    position: 'absolute',
+    right: 5,
+    top: 5,
+  },
+  dialogContent: {
+    paddingTop: '20px',
+  },
 });
 
 function HomeIcon(props) {
@@ -164,10 +209,39 @@ function HomeIcon(props) {
     </SvgIcon>
   );
 }
+
+function Transition(props) {
+  return <Slide direction="right" {...props} />;
+}
+
 /* eslint-disable react/prefer-stateless-function */
 class Header extends React.PureComponent {
-  state = {
-    mobileOpen: false,
+  constructor(props) {
+    super(props);
+    this.state = {
+      mobileOpen: false,
+      loginPopOpen: false,
+      loginConfirmPopOpen: false,
+    };
+
+    this.handleClose = this.handleClose.bind(this);
+    this.loginConfirmPopClose = this.loginConfirmPopClose.bind(this);
+    this.handleSignInMove = this.handleSignInMove.bind(this);
+  }
+  handleSignInMove = () => {
+    this.props.loginConfirmPopClose();
+    this.setState({
+      loginConfirmPopOpen: false,
+      loginPopOpen: true,
+    });
+  };
+  loginConfirmPopClose = () => {
+    // console.log(`close`);
+    this.setState({ loginConfirmPopOpen: false });
+    this.props.loginConfirmPopClose();
+  };
+  handleClose = () => {
+    this.setState({ loginPopOpen: false });
   };
 
   handleDrawerOpen = () => {
@@ -197,6 +271,16 @@ class Header extends React.PureComponent {
     localStorage.removeItem('username');
     this.props.history.push('/');
   };
+  static getDerivedStateFromProps(nextProps, prevState) {
+    // console.log(nextProps.loginConfirmPopOpen);
+    if (Boolean(nextProps.loginConfirmPopOpen)) {
+      if (nextProps.loginConfirmPopOpen !== prevState.loginConfirmPopOpen) {
+        return { loginConfirmPopOpen: nextProps.loginConfirmPopOpen };
+      }
+    }
+
+    return null;
+  }
   render() {
     const { classes, headerTitle, searchBar } = this.props;
     // console.log(searchBar);
@@ -277,6 +361,58 @@ class Header extends React.PureComponent {
             <FormattedMessage {...messages.features} />
           </HeaderLink>
         </NavBar> */}
+        <Dialog
+          fullScreen
+          open={this.state.loginPopOpen}
+          onClose={this.handleClose}
+          TransitionComponent={Transition}
+          scroll="paper"
+        >
+          <SignIn handleClose={this.handleClose} loginPop={true} />
+        </Dialog>
+        <Dialog
+          open={this.state.loginConfirmPopOpen}
+          onClose={this.loginConfirmPopClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          className={classes.popWrap}
+          fullWidth="true"
+          // maxWidth="false"
+          classes={{
+            root: classes.popRoot,
+            paper: classes.popPaper,
+          }}
+        >
+          <IconButton
+            color="inherit"
+            onClick={this.loginConfirmPopClose}
+            aria-label="Close"
+            className={classes.closeBtn}
+          >
+            <CloseIcon />
+          </IconButton>
+          <DialogTitle id="alert-dialog-title">
+            {/* {"Use Google's location service?"} */}
+          </DialogTitle>
+
+          <DialogContent className={classes.dialogContent}>
+            <DialogContentText id="alert-dialog-description">
+              로그인이 필요한 서비스 입니다.
+            </DialogContentText>
+          </DialogContent>
+          <Divider />
+          <DialogActions
+            // className={classes.popFooter}
+            classes={{
+              root: classes.popRoot,
+              // paper: classes.popFooter,
+            }}
+          >
+            <Button onClick={this.handleSignInMove} color="secondary">
+              로그인페이지 이동
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }
@@ -287,6 +423,8 @@ Header.propTypes = {
   headerTitle: PropTypes.any.isRequired,
   searchBar: PropTypes.any,
   transparency: PropTypes.any,
+  loginConfirmPopOpen: PropTypes.any,
+  loginConfirmPopClose: PropTypes.func,
 };
 
 // export default Header;

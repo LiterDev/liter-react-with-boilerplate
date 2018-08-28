@@ -60,11 +60,29 @@ export class Reviews extends React.Component {
     super(props);
     this.state = {
       cateValue: -9,
+      loginConfirmPopOpen: false,
     };
 
     this.handleVoting = this.handleVoting.bind(this);
+    this.loginConfirmPopClose = this.loginConfirmPopClose.bind(this);
+    this.goWrite = this.goWrite.bind(this);
   }
-
+  goWrite = () => {
+    const accessToken = localStorage.getItem('accessToken');
+    const hasWallet = localStorage.getItem('hasWallet');
+    // console.log(hasWallet);
+    if (accessToken && hasWallet === 'true') {
+      this.context.router.history.push(`/review/write`);
+    } else {
+      this.setState({ loginConfirmPopOpen: true });
+    }
+  };
+  loginConfirmPopClose = () => {
+    this.setState({ loginConfirmPopOpen: false });
+  };
+  static contextTypes = {
+    router: PropTypes.object,
+  };
   componentDidMount() {
     const {
       loadReviewList,
@@ -74,7 +92,7 @@ export class Reviews extends React.Component {
       loadCategoryList,
       reviews,
     } = this.props;
-    
+
     loadReviewList(this.state.cateValue);
     loadCategoryList();
 
@@ -92,9 +110,9 @@ export class Reviews extends React.Component {
       }
     });
   }
-  
-  shouldComponentUpdate(nextProps, nextState){
-    if(nextProps === this.props) {
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps === this.props) {
       return true;
     } else {
       return nextProps.reviews !== this.props.reviews;
@@ -123,6 +141,8 @@ export class Reviews extends React.Component {
         <Header
           headerTitle={<FormattedMessage {...messages.header} />}
           searchBar="true"
+          loginConfirmPopOpen={this.state.loginConfirmPopOpen}
+          loginConfirmPopClose={this.loginConfirmPopClose}
         />
 
         <ReviewTopTag
@@ -131,9 +151,9 @@ export class Reviews extends React.Component {
           reviewFirst={reviews.reviews[0]}
         />
         <div className={classes.reviewList}>
-          <ReviewList reviews={reviews} handleVoting={this.handleVoting}/>
+          <ReviewList reviews={reviews} handleVoting={this.handleVoting} />
         </div>
-        <Link
+        {/* <Link
           to="/review/write"
           // onClick={onClose}
           role="button"
@@ -142,7 +162,16 @@ export class Reviews extends React.Component {
           <Button variant="fab" className={classes.floatBtn} color="secondary">
             <AddIcon />
           </Button>
-        </Link>
+        </Link> */}
+
+        <Button
+          variant="fab"
+          className={classes.floatBtn}
+          color="secondary"
+          onClick={this.goWrite}
+        >
+          <AddIcon />
+        </Button>
       </div>
     );
   }

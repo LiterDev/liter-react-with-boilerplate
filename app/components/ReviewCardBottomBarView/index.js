@@ -25,6 +25,7 @@ import Divider from '@material-ui/core/Divider';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
+import Slide from '@material-ui/core/Slide';
 
 /* material-ui icon */
 import CloseIcon from '@material-ui/icons/Close';
@@ -34,8 +35,9 @@ import LikeList from 'components/LikeList';
 /* containers */
 import { voteAction } from 'containers/ReviewCardBottomBar/actions';
 import makeSelectReviewCardBottomBar from 'containers/ReviewCardBottomBar/selectors';
-/* components */
 
+/* components */
+import ReplyList from 'containers/ReplyList/Loadable';
 import axios from 'axios';
 
 import VoteNonIcon from 'images/ic-voting-non.png';
@@ -225,6 +227,10 @@ function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
+function TransitionReply(props) {
+  return <Slide direction="left" {...props} />;
+}
+
 /* eslint-disable react/prefer-stateless-function */
 class ReviewCardBottomBarView extends React.Component {
   state = {
@@ -239,6 +245,7 @@ class ReviewCardBottomBarView extends React.Component {
     curLikeCount: 0,
     literCubeState: 0,
     loading: false,
+    replyPopOpen: false,
   };
   constructor(props) {
     super(props);
@@ -251,6 +258,8 @@ class ReviewCardBottomBarView extends React.Component {
     this.handleVoting = this.handleVoting.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleMove = this.handleMove.bind(this);
+    this.handleCloseReply = this.handleCloseReply.bind(this);
+    this.handleReplyPop = this.handleReplyPop.bind(this);
 
     this.state.viewClass = props.viewType
       ? this.props.classes.rootFix
@@ -477,9 +486,18 @@ class ReviewCardBottomBarView extends React.Component {
     }
   }
 
+  handleCloseReply = () => {
+    console.log('close reply');
+    this.setState({ replyPopOpen: false });
+  };
+  handleReplyPop = () => {
+    console.log(`open reply`);
+    this.setState({ replyPopOpen: true });
+  };
   static contextTypes = {
     router: PropTypes.object,
   };
+
   render() {
     const { classes } = this.props;
     const {
@@ -575,9 +593,7 @@ class ReviewCardBottomBarView extends React.Component {
             <div className={classes.activeStatus}>
               <Button
                 color="inherit"
-                // onClick={() => {
-                //   this.handleVoting(this.props.reviewId);
-                // }}
+                onClick={this.handleReplyPop}
                 aria-label="service"
                 className={classes.votingIcon}
                 classes={{
@@ -718,6 +734,18 @@ class ReviewCardBottomBarView extends React.Component {
               </Button>
             </DialogActions>
           </Dialog>
+          {/* <Dialog
+            fullScreen
+            open={this.state.replyPopOpen}
+            onClose={this.handleCloseReply}
+            TransitionComponent={TransitionReply}
+            scroll="paper"
+          >
+            <ReplyList
+              handleClose={this.handleCloseReply}
+              reviewId={this.props.reviewId}
+            />
+          </Dialog> */}
         </div>
       );
     }
@@ -749,9 +777,7 @@ class ReviewCardBottomBarView extends React.Component {
           <div className={classes.activeStatus}>
             <Button
               color="inherit"
-              // onClick={() => {
-              //   this.handleVoting(this.props.reviewId);
-              // }}
+              onClick={this.handleReplyPop}
               aria-label="comment"
               className={classes.votingIcon}
               classes={{
@@ -871,6 +897,18 @@ class ReviewCardBottomBarView extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
+        {/* <Dialog
+          fullScreen
+          open={this.state.replyPopOpen}
+          onClose={this.handleCloseReply}
+          TransitionComponent={TransitionReply}
+          scroll="paper"
+        >
+          <ReplyList
+            handleClose={this.handleCloseReply}
+            reviewId={this.props.reviewId}
+          />
+        </Dialog> */}
       </div>
     );
   }

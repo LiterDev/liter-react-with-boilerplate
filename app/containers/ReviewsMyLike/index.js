@@ -89,7 +89,6 @@ export class ReviewsMyLike extends React.PureComponent {
       curPage: 1,
       loadEnd: false,
     };
-    // this.handleOnScroll = this.handleOnScroll.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
     this.loadReviewList = this.loadReviewList.bind(this);
   }

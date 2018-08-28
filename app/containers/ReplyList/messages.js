@@ -8,7 +8,7 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
   header: {
-    id: 'app.components.ReplyList.header',
-    defaultMessage: 'This is the ReplyList component !',
+    id: 'app.containers.ReplyList.header',
+    defaultMessage: 'This is ReplyList container !',
   },
 });

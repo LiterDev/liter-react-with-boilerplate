@@ -358,8 +358,8 @@ class ReviewLikeItem extends React.PureComponent {
                     onClick={() => this.handleFollow(review.userId)}
                     className={
                       this.state.followYn > 0
-                        ? classes.followButton
-                        : classes.unFollowButton
+                        ? classes.unFollowButton
+                        : classes.followButton
                     }
                     classes={{
                       label: classes.followButtonText,

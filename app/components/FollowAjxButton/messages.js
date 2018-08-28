@@ -13,10 +13,10 @@ export default defineMessages({
   },
   buttonTitle: {
     id: 'app.components.FollowAjxButton.buttonTitle',
-    defaultMessage: '팔로잉',
+    defaultMessage: '팔로우',
   },
   unButtonTitle: {
     id: 'app.components.FollowAjxButton.unButtonTitle',
-    defaultMessage: '팔로우',
+    defaultMessage: '팔로잉',
   },
 });

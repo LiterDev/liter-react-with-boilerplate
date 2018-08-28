@@ -84,8 +84,8 @@
   "app.containers.SignUp.passwordNotEqual": "비밀번호와 불일치",
   "app.containers.SignUp.nicknameExists": "사용중인 닉네임 입니다.",
 
-  "app.components.FollowAjxButton.unButtonTitle": "팔로우",
-  "app.components.FollowAjxButton.buttonTitle": "팔로잉",
+  "app.components.FollowAjxButton.unButtonTitle": "팔로잉",
+  "app.components.FollowAjxButton.buttonTitle": "팔로우",
 
   "app.components.ReviewCard.followText": "팔로우",
   "app.components.ReviewCard.rewardActive": "진행중",

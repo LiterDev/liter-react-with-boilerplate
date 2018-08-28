@@ -125,13 +125,14 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 export class ActionListContainer extends React.PureComponent {
-  state = {
-    followFlag: null,
-  }
-
   constructor(props) {
     super(props);
-    this.onFollowCtrlClick = this.onFollowCtrlClick.bind(this);    
+    this.state = {
+      followFlag: null,
+      followContents: false,
+    }
+    this.onFollowCtrlClick = this.onFollowCtrlClick.bind(this);
+    this.state.followContents = this.props.contents;
   }
 
   componentDidMount() {
@@ -150,21 +151,27 @@ export class ActionListContainer extends React.PureComponent {
     this.props.onSetUnFollow(followId, this.props.fType, this.props.userId);
   };
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      ...this.state,
+      followContents: nextProps.contents,
+    });
+  }
+
   render() {
-    const { classes } = this.props;
-    const { followType, contents } = this.props;
-    const { fType } = this.props;
+    const { classes, followType, fType } = this.props;
+    const { followContents } = this.state;
 
     const messages = Tmessages[(fType == 'follow')? 0 : 1];
 
     let content = null;
-    const followArray = contents.content != null ? contents.content : [];
+    const followArray = followContents != false ? followContents.content : [];
 
-    console.log("this.props.contents-----------------------");
+    console.log("this.props.followArray-----------------------");
     console.log(followArray);
 
     if (followArray.length > 0) {
-      const filledArray = this.props.contents.content;
+      const filledArray = followContents.content;
       content = filledArray.map((item, idx) => (
         <ListItem
           key={`item-${item.id}`}
@@ -198,10 +205,11 @@ export class ActionListContainer extends React.PureComponent {
           </div>
           <div>
             <FollowCtrl 
+              followEmail={item.username}
               followId={item.id} 
               onUnFollow={this.onUnFollowCtrlClick} 
               onFollow={this.onFollowCtrlClick} 
-              followYn={(item.followStatus == 'UNFOLLOW')? 0: 1} 
+              followYn={(item.followStatus === 'UNFOLLOW')? 0: 1} 
             />
           </div>
         </ListItem>

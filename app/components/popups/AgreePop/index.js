@@ -32,6 +32,8 @@ import CloseIcon from '@material-ui/icons/Close';
 /* components */
 import BlueButton from 'components/BlueButton';
 /* image */
+import OkCheckSelIcon from 'images/ic-okcheck-sel.png';
+import OkCheckNonIcon from 'images/ic-okcheck-non.png';
 /* ref */
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -42,6 +44,17 @@ const styles = {
   dialogTitle: {
     marginTop: '30px',
     textAlign: 'center',
+  },
+  titleFont: {
+    fontSize: '22px',
+    fontWeight: '600px',
+    color: '#333333',
+  },
+  dialogContent: {
+    marginTop: '20px',
+  },
+  dialogContentBottom: {
+    marginTop: '50px',
   },
   closeBtn: {
     color: '#000000',
@@ -58,20 +71,23 @@ const styles = {
   },
   card: {
     marginTop: '10px',
-    border: '1px solid #aaaaaa',
+    // border: '1px solid #aaaaaa',
   },
   subTitle: {
     paddingLeft: '10px',
   },
   agreeSubTitle: {
     color: '#1591ff',
+    fontWeight: 'bold',
   },
   disagreeSubTitle: {
     color: '#000000',
+    fontWeight: 'bold',
   },
   moreSub: {
     position: 'absolute',
     right: '40px',
+    lineHeight: '0',
   },
   moreBtn: {
     height: '10px',
@@ -196,9 +212,11 @@ class AgreePop extends React.Component {
             <CloseIcon />
           </IconButton>
           <DialogTitle className={classes.dialogTitle} id="alert-dialog-title">
-            {<FormattedMessage {...messages.agreeTitle} />}
+            <Typography className={classes.titleFont}>
+              {<FormattedMessage {...messages.agreeTitle} />}
+            </Typography>
           </DialogTitle>
-          <DialogContent>
+          <DialogContent className={classes.dialogContent}>
             <Card className={classes.card}>
               <CardContent
                 className={
@@ -208,18 +226,13 @@ class AgreePop extends React.Component {
                 }
               >
                 <div>
-                  <Button
-                    className={classes.agreeBtn}
-                    onClick={this.toggloeServiceAgree}
-                    color="secondary"
-                  >
-                    <span>
-                      {serviceAgree ? <CheckCircle /> : <CheckCircleOutline />}
-                    </span>
-                    <span className={classes.subTitle}>
-                      서비스 이용약관 동의
-                    </span>
-                  </Button>
+                  <span>
+                    <img
+                      src={serviceAgree ? OkCheckSelIcon : OkCheckNonIcon}
+                      alt="service agree"
+                    />
+                  </span>
+                  <span className={classes.subTitle}>서비스 이용약관 동의</span>
                 </div>
                 <div>
                   <span className={classes.moreSub}>
@@ -243,6 +256,7 @@ class AgreePop extends React.Component {
                 </Typography>
               </CardContent>
             </Card>
+            <Divider />
             <Card className={classes.card}>
               <CardContent
                 className={
@@ -251,30 +265,31 @@ class AgreePop extends React.Component {
                     : classes.disagreeSubTitle
                 }
               >
-                <Button
-                  className={classes.agreeBtn}
-                  onClick={this.toggloePrivacyAgree}
-                  color="secondary"
-                >
+                <div>
                   <span>
-                    {privacyAgree ? <CheckCircle /> : <CheckCircleOutline />}
+                    <img
+                      src={privacyAgree ? OkCheckSelIcon : OkCheckNonIcon}
+                      alt="privacy agree"
+                    />
                   </span>
                   <span className={classes.subTitle}>
                     개인정보 수집 및 이용 동의
                   </span>
-                </Button>
-                <span className={classes.moreSub}>
-                  <IconButton
-                    color="inherit"
-                    onClick={() => {
-                      this.handleDetail('PRIVACY');
-                    }}
-                    aria-label="service"
-                    className={classes.moreBtn}
-                  >
-                    자세히 보기
-                  </IconButton>
-                </span>
+                </div>
+                <div>
+                  <span className={classes.moreSub}>
+                    <IconButton
+                      color="inherit"
+                      onClick={() => {
+                        this.handleDetail('PRIVACY');
+                      }}
+                      aria-label="privacy"
+                      className={classes.moreBtn}
+                    >
+                      자세히 보기
+                    </IconButton>
+                  </span>
+                </div>
               </CardContent>
               <CardContent>
                 <Typography gutterBottom variant="body2">
@@ -283,31 +298,32 @@ class AgreePop extends React.Component {
                 </Typography>
               </CardContent>
             </Card>
+            <Divider />
+            <div className={classes.dialogContentBottom}>
+              <BlueButton
+                btnType="button"
+                // onClickFunc={this.handleopenAgreePop}
+                complete={serviceAgree * privacyAgree ? true : false}
+                btnName="모두 확인 후 동의합니다."
+                onClickFunc={this.handleAgreeCheck}
+                // onClick={this.submitForm}
+              />
+            </div>
           </DialogContent>
           <Divider />
-          <DialogActions className={classes.dialogAction}>
-            {/* <Button onClick={handleClose} color="primary">
+          {/* <DialogActions className={classes.dialogAction}> */}
+          {/* <Button onClick={handleClose} color="primary">
               Disagree
             </Button> */}
-            <BlueButton
-              btnType="button"
-              // onClickFunc={this.handleopenAgreePop}
-              complete={serviceAgree * privacyAgree ? true : false}
-              btnName="모두 확인 후 동의합니다."
-              onClickFunc={this.handleAgreeCheck}
-              // onClick={this.submitForm}
-            />
-            {/* <Button
-              className={classes.okBtn}
-              onClick={this.handleAgreeCheck}
-              color="secondary"
-              disabled={serviceAgree * privacyAgree ? false : true}
-              autoFocus
-            > */}
-            {/* {<FormattedMessage {...messages.ok} />} */}
-            {/* 확인
-            </Button> */}
-          </DialogActions>
+          {/* <BlueButton
+            btnType="button"
+            // onClickFunc={this.handleopenAgreePop}
+            complete={serviceAgree * privacyAgree ? true : false}
+            btnName="모두 확인 후 동의합니다."
+            onClickFunc={this.handleAgreeCheck}
+            // onClick={this.submitForm}
+          /> */}
+          {/* </DialogActions> */}
         </Dialog>
         <Service
           serviceOpen={serviceOpen}

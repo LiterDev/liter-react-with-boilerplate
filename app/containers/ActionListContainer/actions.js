@@ -36,17 +36,21 @@ export function listLoadingError(error) {
   };
 }
 
-export function setFollow(followid) {
+export function setFollow(followid, followType, userId) {
   return {
     type: SET_FOLLOW,
     followid,
+    followType, 
+    userId,
   };
 }
 
-export function setUnFollow(followid) {
+export function setUnFollow(followid, followType, userId) {
   return {
     type: SET_UNFOLLOW,
     followid,
+    followType, 
+    userId,
   };
 }
 

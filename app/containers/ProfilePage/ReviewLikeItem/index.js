@@ -33,6 +33,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import LikeIcon from 'images/ic-feed-like.png';
 import LikeSelIcon from 'images/ic-feed-like-sel.png';
 
+import Media from 'components/Media';
+
 import LoginAlertDialog from 'components/LoginAlertDialog';
 
 import StyledLink from '../StyledLink';
@@ -454,7 +456,13 @@ class ReviewLikeItem extends React.PureComponent {
             <StyledLink to={`/review/${this.props.review.id}`}>
             <CardMedia
               className={classes.cover}
-              image={review.mediaCollection[0].fullPathMedium}
+              image={
+                  `${
+                      review.mediaCollection[0].imageExt === 'gif'
+                        ? review.mediaCollection[0].fullPath
+                        : review.mediaCollection[0].fullPathMedium
+                    }`
+                  }
               // image="https://s3-ap-northeast-1.amazonaws.com/liter-review/resized/m/DlS7RBN9UlrvdF38sMtO.jpg"
               title="Live from space album cover"
             />

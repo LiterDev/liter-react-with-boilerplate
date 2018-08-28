@@ -44,6 +44,8 @@ export function* getContents(data) {
 
 export function* setUnFollowSaga(data) {
   const followId = data.followid;
+  const followType = data.followType;
+  const userId = data.userId;
   const requestURL = `${process.env.API_URL}/follow/${followId}`;
   const accessToken = localStorage.getItem('accessToken');
   const token = `Bearer ${accessToken}`;
@@ -63,7 +65,7 @@ export function* setUnFollowSaga(data) {
     console.log("]]-----------------UN FOLLOW-----------------[[");
     console.log(reqContents);
     // yield put(setFollowedSuccess(reqContents));
-    yield put(loadList());
+    yield put(loadList(followType, userId));
   } catch (err) {
     // yield put(setFollowedError(err));
     // yield put(setFollowedError(err));
@@ -75,6 +77,8 @@ export function* setUnFollowSaga(data) {
 
 export function* setFollowSaga(data) {
   const followId = data.followid;
+  const followType = data.followType;
+  const userId = data.userId;
   const requestURL = `${process.env.API_URL}/follow`;
   const accessToken = localStorage.getItem('accessToken');
   const token = `Bearer ${accessToken}`;
@@ -96,7 +100,7 @@ export function* setFollowSaga(data) {
     console.log("]]----------------- FOLLOW-----------------[[");
     console.log(reqContents);
     // yield put(setFollowedSuccess({reqContents, followId}));
-    yield put(loadList());
+    yield put(loadList(followType, userId));
   } catch (err) {
     // yield put(setFollowedError(err));
     //yield put(loadList());

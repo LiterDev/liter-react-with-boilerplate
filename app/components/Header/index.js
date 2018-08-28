@@ -68,8 +68,7 @@ const styles = theme => ({
     height: theme.spacing.unit * 8,
     // background: {
     //   color: '#ffffff',
-    // },
-    boxShadow: '0 0.5px 0 0 #eeeeee',
+    // },    
     transition: theme.transitions.create('width'),
     '@media print': {
       // position: 'absolute',
@@ -163,8 +162,13 @@ const styles = theme => ({
     // marginLeft: 'auto',
     // marginRight: 'auto',
   },
+  appBar: {
+    backgroundColor: '#ffffff',
+    boxShadow: '0 0.5px 0 0 #eeeeee',
+    // backgroundColor: 'rgba(0, 0, 0, 0.79)',
+  },
   appBarTrans: {
-    backgroundColor: 'rgb(251, 251, 251)',
+    backgroundColor: '#fbfbfb',
   },
   popFooter: {
     textAlign: 'center',

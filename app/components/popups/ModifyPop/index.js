@@ -16,6 +16,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import Input from '@material-ui/core/Input';
 import Replay from '@material-ui/icons/Replay';
@@ -30,6 +31,19 @@ const styles = {
     marginTop: '30px',
     textAlign: 'center',
   },
+  dialogContent: {
+    paddingBottom: '15px',
+  },
+  titleFont: {
+    fontSize: '16px',
+    fontWeight: '600',
+    color: '#111111',
+  },
+  errorFont: {
+    fontSize: '12px',
+    fontWeight: '500',
+    color: '#ff5e4d',
+  },
   closeBtn: {
     color: '#000000',
     position: 'absolute',
@@ -43,8 +57,20 @@ const styles = {
   dialogAction: {
     justifyContent: 'center',
   },
+  inputBox: {
+    marginTop: '10px',
+    width: '100%',
+    border: 'solid 0.5px #999999 !important',
+    borderRadius: '4px',
+  },
+  msgBox: {
+    height: '20px',
+    marginTop: '10px',
+    textAlign: 'center',
+  },
   input: {
     width: '85%',
+    paddingLeft: '20px',
   },
   resetBtn: {
     color: '#8a8a8a',
@@ -58,6 +84,7 @@ class ModifyPop extends React.PureComponent {
     super(props);
     this.state = {
       userNickName: this.props.defaultValue,
+      errorMessage: false,
     };
   }
   handleClose = () => {
@@ -75,8 +102,13 @@ class ModifyPop extends React.PureComponent {
 
   handleSubmit = () => {
     const { submitHandler } = this.props;
-    // console.log(this.state.userNickName);
-    submitHandler(this.state.userNickName);
+    console.log(this.state.userNickName.length);
+    if (this.state.userNickName.length > 0) {
+      this.setState({ errorMessage: false });
+      submitHandler(this.state.userNickName);
+    } else {
+      this.setState({ errorMessage: '사용자이름은 1글자 이상이어야 합니다.' });
+    }
   };
 
   // componentDidMount() {
@@ -87,8 +119,8 @@ class ModifyPop extends React.PureComponent {
   // }
 
   render() {
-    const { classes, open, submitHandler, defaultValue } = this.props;
-    const { userNickName } = this.state;
+    const { classes, open, defaultValue } = this.props;
+    const { userNickName, errorMessage } = this.state;
 
     return (
       <div>
@@ -107,23 +139,33 @@ class ModifyPop extends React.PureComponent {
             <CloseIcon />
           </IconButton>
           <DialogTitle className={classes.dialogTitle} id="alert-dialog-title">
-            사용자 이름 변경
+            <Typography className={classes.titleFont}>
+              사용자 이름 변경
+            </Typography>
           </DialogTitle>
-          <DialogContent>
+          <DialogContent className={classes.dialogContent}>
             <DialogContentText id="alert-dialog-description">
-              변경할 사용자 이름을 입력하세요.
+              {/* 변경할 사용자 이름을 입력하세요. */}
             </DialogContentText>
-            <Input
-              defaultValue={defaultValue}
-              value={userNickName}
-              onChange={e => this.setState({ userNickName: e.target.value })}
-              className={classes.input}
-              inputProps={{
-                'aria-label': 'Description',
-                maxLength: 15,
-              }}
-            />
-            <Replay className={classes.resetBtn} onClick={this.handelReset} />
+            <div className={classes.inputBox}>
+              <Input
+                defaultValue={defaultValue}
+                value={userNickName}
+                className={classes.input}
+                onChange={e => this.setState({ userNickName: e.target.value })}
+                inputProps={{
+                  'aria-label': 'Description',
+                  maxLength: 15,
+                }}
+                disableUnderline
+              />
+              <Replay className={classes.resetBtn} onClick={this.handelReset} />
+            </div>
+            <div className={classes.msgBox}>
+              <Typography className={classes.errorFont}>
+                {errorMessage && errorMessage}
+              </Typography>
+            </div>
           </DialogContent>
           <Divider />
           <DialogActions className={classes.dialogAction}>

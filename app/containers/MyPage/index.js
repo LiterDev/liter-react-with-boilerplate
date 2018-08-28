@@ -258,7 +258,7 @@ export class MyPage extends React.PureComponent {
   };
 
   handleNickChange = userNickName => {
-    const { changeUserNick, selectUserData } = this.props;
+    const { changeUserNick } = this.props;
     changeUserNick(userNickName);
     this.setState({
       nickChangePop: false,

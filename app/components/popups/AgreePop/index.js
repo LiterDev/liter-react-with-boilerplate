@@ -47,7 +47,7 @@ const styles = {
   },
   titleFont: {
     fontSize: '22px',
-    fontWeight: '600px',
+    fontWeight: '600',
     color: '#333333',
   },
   dialogContent: {
@@ -75,6 +75,8 @@ const styles = {
   },
   subTitle: {
     paddingLeft: '10px',
+    fontSize: '14px',
+    fontWeight: 'bold',
   },
   agreeSubTitle: {
     color: '#1591ff',
@@ -84,19 +86,33 @@ const styles = {
     color: '#000000',
     fontWeight: 'bold',
   },
+  moreTitleBtn: {
+    width: '100%',
+    justifyContent: 'left',
+    fontSize: '11px',
+  },
   moreSub: {
     position: 'absolute',
-    right: '40px',
+    right: '0px',
     lineHeight: '0',
+    color: '#aaaaaa',
+    fontSize: '12px',
   },
   moreBtn: {
     height: '10px',
     width: '60px',
-    fontSize: '12px',
+
     color: '#999999',
   },
   agreeBtn: {
     paddingLeft: 0,
+  },
+  checkIconBox: {
+    height: '20px',
+  },
+  contentText: {
+    color: '#333333',
+    fontSize: '14px',
   },
 };
 
@@ -197,7 +213,8 @@ class AgreePop extends React.Component {
     return (
       <div>
         <Dialog
-          open={open}
+          open={true}
+          // open={open}
           fullScreen
           onClose={this.handleClose}
           aria-labelledby="alert-dialog-title"
@@ -226,31 +243,30 @@ class AgreePop extends React.Component {
                 }
               >
                 <div>
-                  <span>
-                    <img
-                      src={serviceAgree ? OkCheckSelIcon : OkCheckNonIcon}
-                      alt="service agree"
-                    />
-                  </span>
-                  <span className={classes.subTitle}>서비스 이용약관 동의</span>
-                </div>
-                <div>
-                  <span className={classes.moreSub}>
-                    <IconButton
-                      color="inherit"
-                      onClick={() => {
-                        this.handleDetail('SERVICE');
-                      }}
-                      aria-label="service"
-                      className={classes.moreBtn}
-                    >
-                      자세히 보기
-                    </IconButton>
-                  </span>
+                  <IconButton
+                    color="inherit"
+                    onClick={() => {
+                      this.handleDetail('SERVICE');
+                    }}
+                    aria-label="service"
+                    className={classes.moreTitleBtn}
+                    disableRipple
+                  >
+                    <span className={classes.checkIconBox}>
+                      <img
+                        src={serviceAgree ? OkCheckSelIcon : OkCheckNonIcon}
+                        alt="service agree"
+                      />
+                    </span>
+                    <span className={classes.subTitle}>
+                      서비스 이용약관 동의
+                    </span>
+                    <span className={classes.moreSub}>자세히 보기</span>
+                  </IconButton>
                 </div>
               </CardContent>
               <CardContent>
-                <Typography gutterBottom variant="body2">
+                <Typography className={classes.contentText}>
                   서비스 이용에 관련된 회사와 회원의 권리, 의무 등을 규정하고
                   있습니다.
                 </Typography>
@@ -266,35 +282,32 @@ class AgreePop extends React.Component {
                 }
               >
                 <div>
-                  <span>
-                    <img
-                      src={privacyAgree ? OkCheckSelIcon : OkCheckNonIcon}
-                      alt="privacy agree"
-                    />
-                  </span>
-                  <span className={classes.subTitle}>
-                    개인정보 수집 및 이용 동의
-                  </span>
-                </div>
-                <div>
-                  <span className={classes.moreSub}>
-                    <IconButton
-                      color="inherit"
-                      onClick={() => {
-                        this.handleDetail('PRIVACY');
-                      }}
-                      aria-label="privacy"
-                      className={classes.moreBtn}
-                    >
-                      자세히 보기
-                    </IconButton>
-                  </span>
+                  <IconButton
+                    color="inherit"
+                    onClick={() => {
+                      this.handleDetail('PRIVACY');
+                    }}
+                    aria-label="privacy"
+                    className={classes.moreTitleBtn}
+                    disableRipple
+                  >
+                    <span className={classes.checkIconBox}>
+                      <img
+                        src={privacyAgree ? OkCheckSelIcon : OkCheckNonIcon}
+                        alt="privacy agree"
+                      />
+                    </span>
+                    <span className={classes.subTitle}>
+                      개인정보 수집 및 이용 동의
+                    </span>
+                    <span className={classes.moreSub}>자세히 보기</span>
+                  </IconButton>
                 </div>
               </CardContent>
               <CardContent>
-                <Typography gutterBottom variant="body2">
-                  서비스 이용에 관련된 회사와 회원의 권리, 의무 등을 규정하고
-                  있습니다.
+                <Typography className={classes.contentText1}>
+                  이메일 계정, SNS연동은 서비스 제공을 위해 필요한 최소한의
+                  개인정보입니다.
                 </Typography>
               </CardContent>
             </Card>

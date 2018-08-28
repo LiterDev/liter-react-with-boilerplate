@@ -406,7 +406,10 @@ export class ProfilePage extends React.PureComponent {
       <div>        
         <div className={classes.containerWrapper}>
           <div className={classes.container}>
-            <Header headerTitle={<FormattedMessage {...messages.header} />} />
+            <Header 
+                transparency={true}
+                headerTitle={<FormattedMessage {...messages.header} />} 
+            />
           </div>
           <div className={classes.panel}>
             <div className={classes.row}>

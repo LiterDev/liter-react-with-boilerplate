@@ -141,13 +141,13 @@ export class ActionListContainer extends React.PureComponent {
   onFollowCtrlClick = followId => {
     console.log("onFollowCtrlClick>>>>>>>>>>>>>>>");
     console.log(followId);
-    this.props.onSetFollow(followId);
+    this.props.onSetFollow(followId, this.props.fType, this.props.userId);
   };
 
   onUnFollowCtrlClick = followId => {
     console.log("onUnFollowCtrlClick>>>>>>>>>>>>>>>");
     console.log(followId);
-    this.props.onSetUnFollow(followId);
+    this.props.onSetUnFollow(followId, this.props.fType, this.props.userId);
   };
 
   render() {
@@ -266,11 +266,11 @@ function mapDispatchToProps(dispatch) {
     onLoadList: (followType, userId) => {
       dispatch(loadList(followType, userId));
     },
-    onSetFollow: followid => {
-      dispatch(setFollow(followid));
+    onSetFollow: (followid, followType, userId) => {
+      dispatch(setFollow(followid, followType, userId));
     },
-    onSetUnFollow: followid => {
-      dispatch(setUnFollow(followid));
+    onSetUnFollow: (followid, followType, userId) => {
+      dispatch(setUnFollow(followid, followType, userId));
     },
   };
 }

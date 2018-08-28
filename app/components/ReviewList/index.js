@@ -23,11 +23,25 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 class ReviewList extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      reviewlist: [],
+    };
+  }
   handleFollow = followId => {
     // console.log('handleFollow clicked--------');
     // console.log(followId);
   };
-
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log(nextProps.reviews);
+    if (nextProps.reviews !== prevState.reviewlist && Boolean(nextProps.reviews)) {
+      return {
+        reviewlist: prevState.reviewlist.concat(nextProps.reviews.reviews),
+      };
+    }
+    return null;
+  }
   render() {
     const { reviews } = this.props;
     // const revies = [1, 2, 3, 4, 5, 6, 7, 8];

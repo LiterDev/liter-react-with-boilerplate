@@ -450,6 +450,7 @@ export class SignIn extends React.PureComponent {
       localStorage.setItem('username', signinSuccess.username);
       // this.props.loadUserData(signinSuccess.username);
       this.props.signinEnd();
+      this.props.loginSuccessHandler();
       // const pathLink = '/';
       // console.log(this.props.location);
       // console.log(this.props.location.state);
@@ -679,6 +680,7 @@ SignIn.propTypes = {
   signinForm: PropTypes.func.isRequired,
   loginPop: PropTypes.any,
   handleClose: PropTypes.func,
+  loginSuccessHandler: PropTypes.func,
   // signinFacebookAction: PropTypes.func.isRequired,
   // signinSuccess: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   signinError: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),

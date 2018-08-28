@@ -22,6 +22,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Header from 'components/Header';
 import ReviewList from 'components/ReviewList';
 import ReviewTopTag from 'components/ReviewTopTag';
+import { Refresh } from 'containers/App';
 /* image */
 /* ref */
 import jQuery from 'jquery';
@@ -61,12 +62,17 @@ export class Reviews extends React.Component {
     this.state = {
       cateValue: -9,
       loginConfirmPopOpen: false,
+      loginYn: false,
+      reviewlist: [],
     };
 
     this.handleVoting = this.handleVoting.bind(this);
     this.loginConfirmPopClose = this.loginConfirmPopClose.bind(this);
     this.goWrite = this.goWrite.bind(this);
   }
+  static contextTypes = {
+    router: PropTypes.object,
+  };
   goWrite = () => {
     const accessToken = localStorage.getItem('accessToken');
     const hasWallet = localStorage.getItem('hasWallet');
@@ -79,6 +85,19 @@ export class Reviews extends React.Component {
   };
   loginConfirmPopClose = () => {
     this.setState({ loginConfirmPopOpen: false });
+  };
+  loginSuccessHandler = () => {
+    const pathname = this.context.router.route.location.pathname;
+    // console.log(this.context.router.route.location.pathname);
+    // console.log(pathname);
+    // this.context.router.history.push(pathname);
+    this.context.router.history.push(`/review/write`);
+
+    // this.props.dispatch(push('/'));
+    // this.props.dispatch(push(location));
+    // console.log('111111');
+    // this.setState({ loginYn: true });
+    // return <Refresh />;
   };
   static contextTypes = {
     router: PropTypes.object,
@@ -131,11 +150,19 @@ export class Reviews extends React.Component {
   handleVoting = reviewId => {
     this.props.doVoting(reviewId);
   };
-
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   console.log(nextProps.reviews);
+  //   if (nextProps.reviews !== prevState.reviewlist) {
+  //     return { reviewlist: prevState.reviewlist.concat(nextProps.reviews) };
+  //   }
+  //   return null;
+  // }
   render() {
     // const { classes } = this.props;
     const { reviews, classes } = this.props;
-
+    // console.log(this.state.reviewlist);
+    // console.log(reviews);
+    console.log(this.state.loginYn);
     return (
       <div className={classes.root}>
         <Header
@@ -143,6 +170,7 @@ export class Reviews extends React.Component {
           searchBar="true"
           loginConfirmPopOpen={this.state.loginConfirmPopOpen}
           loginConfirmPopClose={this.loginConfirmPopClose}
+          loginSuccessHandler={this.loginSuccessHandler}
         />
 
         <ReviewTopTag
@@ -151,7 +179,12 @@ export class Reviews extends React.Component {
           reviewFirst={reviews.reviews[0]}
         />
         <div className={classes.reviewList}>
-          <ReviewList reviews={reviews} handleVoting={this.handleVoting} />
+          {/* <ReviewList reviews={reviews} handleVoting={this.handleVoting} /> */}
+          {this.state.loginYn === 'true' ? (
+            <ReviewList reviews={reviews} handleVoting={this.handleVoting} />
+          ) : (
+            <ReviewList reviews={reviews} handleVoting={this.handleVoting} />
+          )}
         </div>
         {/* <Link
           to="/review/write"

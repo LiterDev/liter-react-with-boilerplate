@@ -169,6 +169,18 @@ const PrivateRoute = ({ component: Component, authenticated, ...rest }) => (
   />
 );
 
+const Refresh = ({ path = '/' }) => (
+  <Route
+    path={path}
+    component={({ history, location, match }) => {
+      history.replace({
+        ...location,
+        pathname: location.pathname.substring(match.path.length),
+      });
+      return null;
+    }}
+  />
+);
 // const PrivateWalletRoute = ({
 //   component: Component,
 //   authenticated,

@@ -68,7 +68,7 @@ const styles = theme => ({
     height: theme.spacing.unit * 8,
     // background: {
     //   color: '#ffffff',
-    // },    
+    // },
     transition: theme.transitions.create('width'),
     '@media print': {
       // position: 'absolute',
@@ -273,7 +273,12 @@ class Header extends React.PureComponent {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('username');
-    this.props.history.push('/');
+    // this.props.history.push('/');
+    // this.context.router.history.push(`/`);
+    window.location.href = '/';
+  };
+  static contextTypes = {
+    router: PropTypes.object,
   };
   static getDerivedStateFromProps(nextProps, prevState) {
     // console.log(nextProps.loginConfirmPopOpen);
@@ -286,7 +291,7 @@ class Header extends React.PureComponent {
     return null;
   }
   render() {
-    const { classes, headerTitle, searchBar } = this.props;
+    const { classes, headerTitle, searchBar, loginSuccessHandler } = this.props;
     // console.log(searchBar);
 
     return (
@@ -372,7 +377,11 @@ class Header extends React.PureComponent {
           TransitionComponent={Transition}
           scroll="paper"
         >
-          <SignIn handleClose={this.handleClose} loginPop={true} />
+          <SignIn
+            handleClose={this.handleClose}
+            loginPop={true}
+            loginSuccessHandler={loginSuccessHandler}
+          />
         </Dialog>
         <Dialog
           open={this.state.loginConfirmPopOpen}
@@ -429,6 +438,7 @@ Header.propTypes = {
   transparency: PropTypes.any,
   loginConfirmPopOpen: PropTypes.any,
   loginConfirmPopClose: PropTypes.func,
+  loginSuccessHandler: PropTypes.func,
 };
 
 // export default Header;

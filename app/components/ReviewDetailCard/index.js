@@ -493,9 +493,9 @@ class ReviewDetailCard extends React.PureComponent {
                   <div className={classes.paperSheetHead}>
                     <SmsIcon className={classes.paperIcons} />
                     {review.recommend === 'YES' ? (
-                      <span>재방문할래요!</span>
+                      <span>재방문 할래요!</span>
                     ) : (
-                      <span>재방문안할래요!</span>
+                      <span>재방문 안할래요!</span>
                     )}
                   </div>
                   <div className={classes.googleMap}>
@@ -525,9 +525,9 @@ class ReviewDetailCard extends React.PureComponent {
                 <div className={classes.paperSheetHead}>
                   <SmsIcon className={classes.paperIcons} />
                   {review.recommend === 'YES' ? (
-                    <span>재구매할래요!</span>
+                    <span>재구매 할래요!</span>
                   ) : (
-                    <span>재구매안할래요!</span>
+                    <span>재구매 안할래요!</span>
                   )}
                 </div>
               )}

@@ -226,10 +226,10 @@ class ReviewLikeItem extends React.PureComponent {
     this.handleVoting = this.handleVoting.bind(this);
   }
   handleVoting = reviewId => {
-    console.log(reviewId);
+    // console.log(reviewId);
     const self = this;
-    if(this.state.loading === false) {
-      self.setState({'loading': true});
+    if (this.state.loading === false) {
+      self.setState({ loading: true });
       const requestURL = `${process.env.API_URL}/engagement`;
       const accessToken = localStorage.getItem('accessToken');
       const token = `Bearer ${accessToken}`;
@@ -251,7 +251,7 @@ class ReviewLikeItem extends React.PureComponent {
             // console.log(resp);
             // if (Boolean(resp.data)) {
             this.props.handleLikeState(reviewId);
-            self.setState({'loading': false});
+            self.setState({ loading: false });
             // }
           })
           .catch(error => {
@@ -260,9 +260,9 @@ class ReviewLikeItem extends React.PureComponent {
             // console.log(error.response.data.code);
             if (Boolean(error.response.data.code)) {
             }
-            self.setState({'loading': false});
+            self.setState({ loading: false });
           });
-        }
+      }
     }
   };
 
@@ -326,13 +326,11 @@ class ReviewLikeItem extends React.PureComponent {
         <Card className={classes.card}>
           <CardMedia
             className={classes.cover}
-            image={
-                  `${
-                      review.mediaCollection[0].imageExt === 'gif'
-                        ? review.mediaCollection[0].fullPath
-                        : review.mediaCollection[0].fullPathMedium
-                    }`
-                  }
+            image={`${
+              review.mediaCollection[0].imageExt === 'gif'
+                ? review.mediaCollection[0].fullPath
+                : review.mediaCollection[0].fullPathMedium
+            }`}
             // image="https://s3-ap-northeast-1.amazonaws.com/liter-review/resized/m/DlS7RBN9UlrvdF38sMtO.jpg"
             title="Live from space album cover"
           />

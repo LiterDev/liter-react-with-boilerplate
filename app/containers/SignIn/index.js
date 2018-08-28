@@ -244,7 +244,7 @@ export class SignIn extends React.PureComponent {
     this.handleClose = this.handleClose.bind(this);
   }
   handleClose = () => {
-    console.log('handel Close');
+    // console.log('handel Close');
     this.setState({
       openSuccesPop: false,
     });
@@ -253,6 +253,11 @@ export class SignIn extends React.PureComponent {
     //   pathLink = this.props.location.state.from.pathname;
     // }
     const location = this.props.location;
+    if (this.props.loginPop) {
+      this.props.handleClose();
+      return false;
+    }
+
     if (location.state && location.state.from.pathname) {
       this.props.history.push(location.state.from.pathname);
     } else {
@@ -415,10 +420,10 @@ export class SignIn extends React.PureComponent {
   };
 
   resetInputState = () => {
-    console.log(`handle props signError :: ${this.props.signinError}`);
-    console.log(`handle onFocus :: ${this.props.signinError !== false}`);
+    // console.log(`handle props signError :: ${this.props.signinError}`);
+    // console.log(`handle onFocus :: ${this.props.signinError !== false}`);
     if (this.props.signinError !== false) {
-      console.log('clear');
+      // console.log('clear');
       return true;
     }
     return false;
@@ -445,6 +450,10 @@ export class SignIn extends React.PureComponent {
       localStorage.setItem('username', signinSuccess.username);
       // this.props.loadUserData(signinSuccess.username);
       this.props.signinEnd();
+      if (this.props.loginSuccessHandler) {
+        this.props.loginSuccessHandler();
+      }
+
       // const pathLink = '/';
       // console.log(this.props.location);
       // console.log(this.props.location.state);
@@ -477,7 +486,9 @@ export class SignIn extends React.PureComponent {
               aria-label="Close"
               className={classes.close}
               onClick={() => {
-                this.props.history.goBack();
+                this.props.loginPop === true
+                  ? this.props.handleClose()
+                  : this.props.history.goBack();
               }}
             >
               <CloseIcon />
@@ -670,6 +681,9 @@ export class SignIn extends React.PureComponent {
 SignIn.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   signinForm: PropTypes.func.isRequired,
+  loginPop: PropTypes.any,
+  handleClose: PropTypes.func,
+  loginSuccessHandler: PropTypes.func,
   // signinFacebookAction: PropTypes.func.isRequired,
   // signinSuccess: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   signinError: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),

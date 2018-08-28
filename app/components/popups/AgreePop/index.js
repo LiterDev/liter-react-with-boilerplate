@@ -213,8 +213,7 @@ class AgreePop extends React.Component {
     return (
       <div>
         <Dialog
-          open={true}
-          // open={open}
+          open={open}
           fullScreen
           onClose={this.handleClose}
           aria-labelledby="alert-dialog-title"

@@ -88,8 +88,6 @@ class FollowAjxButton extends React.Component {
 
   requestAjx = (method, sendType, requestURL, data, options) => {
 
-    this.props.dispatch(updateFollow(19));
-
     const self = this;
     axios({
       method: sendType,
@@ -108,7 +106,7 @@ class FollowAjxButton extends React.Component {
             followStatus: false,
             myFollowYn: false,
           });
-        }
+        }        
         return response;
       })
       .catch(function(error) {
@@ -132,6 +130,7 @@ class FollowAjxButton extends React.Component {
       followId: followId,
     });
     this.requestAjx('setFollow', 'POST', requestURL, data, options);
+    this.props.dispatch(updateFollow(followId));
   }
 
   handleSetUnFollow(follodId) {
@@ -147,6 +146,7 @@ class FollowAjxButton extends React.Component {
     };
     const data = {};
     this.requestAjx('setUnFollow', 'DELETE', requestURL, data, options);
+    this.props.dispatch(updateFollow(follodId));
   }
 
   componentWillReceiveProps(nextProps) {

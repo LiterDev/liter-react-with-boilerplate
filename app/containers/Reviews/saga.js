@@ -116,8 +116,8 @@ export function* getReviewMore(data) {
 }
 
 export function* sagaVote(data) {
-  console.log(']]]]] saga [[[[[[----------do Vote');
-  console.log(data);
+  // console.log(']]]]] saga [[[[[[----------do Vote');
+  // console.log(data);
   const reviewId = data.reviewId;
 
   const requestURL = `${process.env.API_URL}/engagement`;
@@ -137,8 +137,8 @@ export function* sagaVote(data) {
       }),
     };
     const reqContents = yield call(request, requestURL, options);
-    console.log('Vote Success <<<<<<<<<<<<<<<<<<<<');
-    console.log(reqContents);
+    // console.log('Vote Success <<<<<<<<<<<<<<<<<<<<');
+    // console.log(reqContents);
 
     ////////////////////////////////////////////////////////////////////////
     const requestURL2 = `${process.env.API_URL}/review/detail/${reviewId}`;
@@ -187,8 +187,8 @@ export function* getCategorys() {
 }
 
 export function* updateReview(data) {
-  console.log(']]]]] saga [[[[[[----------update Review');
-  console.log(data);
+  // console.log(']]]]] saga [[[[[[----------update Review');
+  // console.log(data);
   const reviewId = data.reviewId;
 
   const accessToken = localStorage.getItem('accessToken');
@@ -206,7 +206,7 @@ export function* updateReview(data) {
 
   try {
     const ur = yield call(request, requestURL, options);
-    console.log(ur);
+    // console.log(ur);
     yield put(updatedReview(ur));
   } catch (err) {
     console.log(err);
@@ -219,11 +219,11 @@ export function* updateFollow(data) {
 
   yield all(reviews.map(item => {
     if(item.user.id === data.followId) {
-      console.log(item.id);
+      // console.log(item.id);
        return call(updateReview, { reviewId: item.id });
     }
   }));
-  console.log(pageList.reviews);
+  // console.log(pageList.reviews);
 }
 
 // Individual exports for testing

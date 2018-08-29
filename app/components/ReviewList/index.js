@@ -34,7 +34,7 @@ class ReviewList extends React.PureComponent {
     // console.log(followId);
   };
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log(nextProps.reviews);
+    // console.log(nextProps.reviews);
     if (nextProps.reviews !== prevState.reviewlist && Boolean(nextProps.reviews)) {
       return {
         reviewlist: prevState.reviewlist.concat(nextProps.reviews.reviews),

@@ -62,8 +62,8 @@ export function* setUnFollowSaga(data) {
   try {
     // Call our request helper (see 'utils/request')
     const reqContents = yield call(request, requestURL, options);
-    console.log("]]-----------------UN FOLLOW-----------------[[");
-    console.log(reqContents);
+    // console.log("]]-----------------UN FOLLOW-----------------[[");
+    // console.log(reqContents);
     
     yield put(setFollowedSuccess(followId, 'UNFOLLOW'));
     // yield put(loadList(followType, userId));
@@ -99,8 +99,8 @@ export function* setFollowSaga(data) {
   try {
     // Call our request helper (see 'utils/request')
     const reqContents = yield call(request, requestURL, options);
-    console.log("]]----------------- FOLLOW-----------------[[");
-    console.log(reqContents);
+    // console.log("]]----------------- FOLLOW-----------------[[");
+    // console.log(reqContents);
     
     yield put(setFollowedSuccess(followId, 'FOLLOW'));
     // yield put(setFollowedSuccess({reqContents, followId}));

@@ -50,12 +50,12 @@ function RewardContainer(props) {
   const { classes } = props;
   const { reward, key } = props;
 
-  console.log("]-------- Reward list sub Container::reward data list -------[");
-  console.log(reward);
+  // console.log("]-------- Reward list sub Container::reward data list -------[");
+  // console.log(reward);
 
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
   const rewardDate = new Date(reward.createdAt).toLocaleDateString('ko-KR', options);
-  console.log(rewardDate);
+  // console.log(rewardDate);
 
   return (
     <Fragment>

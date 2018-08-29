@@ -140,14 +140,14 @@ export class ActionListContainer extends React.PureComponent {
   }
 
   onFollowCtrlClick = followId => {
-    console.log("onFollowCtrlClick>>>>>>>>>>>>>>>");
-    console.log(followId);
+    // console.log("onFollowCtrlClick>>>>>>>>>>>>>>>");
+    // console.log(followId);
     this.props.onSetFollow(followId, this.props.fType, this.props.userId);
   };
 
   onUnFollowCtrlClick = followId => {
-    console.log("onUnFollowCtrlClick>>>>>>>>>>>>>>>");
-    console.log(followId);
+    // console.log("onUnFollowCtrlClick>>>>>>>>>>>>>>>");
+    // console.log(followId);
     this.props.onSetUnFollow(followId, this.props.fType, this.props.userId);
   };
 
@@ -167,8 +167,8 @@ export class ActionListContainer extends React.PureComponent {
     let content = null;
     const followArray = followContents != false ? followContents.content : [];
 
-    console.log("this.props.followArray-----------------------");
-    console.log(followArray);
+    // console.log("this.props.followArray-----------------------");
+    // console.log(followArray);
 
     if (followArray.length > 0) {
       const filledArray = followContents.content;

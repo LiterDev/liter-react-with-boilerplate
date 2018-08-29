@@ -116,7 +116,7 @@ class FollowAjxButton extends React.Component {
   };
 
   handleSetFollow(followId) {
-    console.log('Set');
+    // console.log('Set');
     const requestURL = `${process.env.API_URL}/follow`;
     const accessToken = localStorage.getItem('accessToken');
     const token = `Bearer ${accessToken}`;
@@ -134,7 +134,7 @@ class FollowAjxButton extends React.Component {
   }
 
   handleSetUnFollow(follodId) {
-    console.log('UnSet');
+    // console.log('UnSet');
     const requestURL = `${process.env.API_URL}/follow/${follodId}`;
     const accessToken = localStorage.getItem('accessToken');
     const token = `Bearer ${accessToken}`;

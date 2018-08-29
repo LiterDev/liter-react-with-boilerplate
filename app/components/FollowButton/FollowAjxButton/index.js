@@ -91,7 +91,7 @@ class FollowAjxButton extends React.PureComponent {
     })
     .then( (response) => { 
       if(method == 'setFollow') {
-        console.log(self);
+        // console.log(self);
         self.setState({
           'followStatus': 1
         });
@@ -110,7 +110,7 @@ class FollowAjxButton extends React.PureComponent {
   }
 
   handleSetFollow(followId) {
-    console.log("Set");
+    // console.log("Set");
     const requestURL = `${process.env.API_URL}/follow`;
     const accessToken = localStorage.getItem('accessToken');
     const token = `Bearer ${accessToken}`;
@@ -127,7 +127,7 @@ class FollowAjxButton extends React.PureComponent {
   }
 
   handleSetUnFollow(follodId) {
-    console.log("UnSet");
+    // console.log("UnSet");
     const requestURL = `${process.env.API_URL}/follow/${follodId}`;
     const accessToken = localStorage.getItem('accessToken');
     const token = `Bearer ${accessToken}`;

@@ -31,8 +31,8 @@ class SurveyItemTotal extends React.PureComponent {
       totalRatingArry,
     } = this.props;
     // console.log(totalCount);
-    console.log("]-----****---totalRatingArr--------[");
-    console.log(totalRatingArry);
+    // console.log("]-----****---totalRatingArr--------[");
+    // console.log(totalRatingArry);
     let ratePoint = 0;
     if (totalCount > 0) {
       // console.log(totalRatingArry.length);

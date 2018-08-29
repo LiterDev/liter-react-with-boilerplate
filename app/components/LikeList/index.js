@@ -138,7 +138,7 @@ class LikeList extends React.PureComponent {
 
   handleClickOpen = (e) => {
     // console.log(this.state.reviewId);
-    console.log(this.props.reviewId);
+    // console.log(this.props.reviewId);
     this.loadLikeList(this.props.reviewId);
     this.loadTotalReward(this.props.reviewId);
     // this.loadLikeList(this.state.reviewId);
@@ -180,8 +180,8 @@ class LikeList extends React.PureComponent {
         headers: headerObj,
       }).then(resp => {
         if(Boolean(resp.data)) {
-          console.log(']]]-------------load TotalReward-------------[[[');
-          console.log(resp.data);
+          // console.log(']]]-------------load TotalReward-------------[[[');
+          // console.log(resp.data);
           this.setState({'totalReward': resp.data.reward});
           this.setState({'totalVoter': resp.data.totalCcount});
           this.setState({'loading': false});
@@ -213,10 +213,10 @@ class LikeList extends React.PureComponent {
         headers: headerObj,
       }).then(resp => {
         if(Boolean(resp.data)) {
-          console.log(']]]-------------loaded likelist-------------[[[');
+          // console.log(']]]-------------loaded likelist-------------[[[');
           this.setState({'curPage': 1});
           this.setState({'likelist': resp.data});
-          console.log(resp.data);
+          // console.log(resp.data);
           this.setState({'loading': false});
         }
       }).catch(error => {
@@ -252,9 +252,9 @@ class LikeList extends React.PureComponent {
         url: requestURL,
         headers: headerObj,
       }).then(resp => {
-        console.log(resp);
+        // console.log(resp);
         if(Boolean(resp.data)) {
-          console.log(']]]-------------loaded loadLikeMore-------------[[[');
+          // console.log(']]]-------------loaded loadLikeMore-------------[[[');
           this.setState({'curPage': nextPage});
           const addData = this.state.likelist.concat(resp.data);
           this.setState({'likelist': addData});

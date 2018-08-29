@@ -79,8 +79,8 @@ export function* sagaFollow(data) {
   try {
     // Call our request helper (see 'utils/request')
     const reqContents = yield call(request, requestURL, options);
-    console.log('Follow Success <<<<<<<<<<<<<<<<<<<<');
-    console.log(reqContents);
+    // console.log('Follow Success <<<<<<<<<<<<<<<<<<<<');
+    // console.log(reqContents);
     // yield put(setFollowedSuccess(reqContents));
   } catch (err) {
     console.log('Follow Failure <<<<<<<<<<<<<<<<<<<<');
@@ -90,8 +90,8 @@ export function* sagaFollow(data) {
 }
 
 export function* sagaVote(data) {
-  console.log(']]]]] saga [[[[[[----------do Vote');
-  console.log(data);
+  // console.log(']]]]] saga [[[[[[----------do Vote');
+  // console.log(data);
   const reviewId = data.reviewId;
 
   const requestURL = `${process.env.API_URL}/engagement`;
@@ -111,8 +111,8 @@ export function* sagaVote(data) {
       }),
     };
     const reqContents = yield call(request, requestURL, options);
-    console.log('Vote Success <<<<<<<<<<<<<<<<<<<<');
-    console.log(reqContents);
+    // console.log('Vote Success <<<<<<<<<<<<<<<<<<<<');
+    // console.log(reqContents);
 
     ////////////////////////////////////////////////////////////////////////
     const requestURL2 = `${process.env.API_URL}/review/detail/${reviewId}`;

@@ -12,7 +12,8 @@ import { DEFAULT_ACTION,
         FOLLOW_ACTION,
         VOTE_ACTION,
         VOTE_SUCCESS,
-        VOTE_ERROR
+        VOTE_ERROR,
+        RESET_ACTION,
 } from './constants';
 
 export function defaultAction() {
@@ -75,4 +76,10 @@ export function voteError(error) {
     type: VOTE_ERROR,
     error
   };
+}
+
+export function resetAction() {
+  return {
+    type: RESET_ACTION,
+  }
 }

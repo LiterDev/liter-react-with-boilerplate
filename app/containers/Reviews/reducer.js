@@ -17,6 +17,9 @@ import {
   VOTE_ACTION,
   VOTE_SUCCESS,
   VOTE_ERROR,
+  UPDATE_REVIEW,
+  UPDATED_REVIEW,
+  UPDATE_FOLLOW,
 } from './constants';
 
 export const initialState = fromJS({
@@ -86,8 +89,22 @@ function reviewsReducer(state = initialState, action) {
         });
       return state
         .set('reviews', oriReviews);
+    case UPDATE_REVIEW:
+      return state;
+    case UPDATED_REVIEW:
+        // let oriReviews = state.get('reviews');
+        let updateReviews = clone(state.get('reviews'));
+        updateReviews.map((item,idx,updateReviews) => {
+          if(item.id === action.data.id) {
+            updateReviews[idx] = action.data;
+          }
+        });
+      return state
+        .set('reviews', updateReviews);
     case VOTE_ERROR:
       return state.set('error', action.error);
+    case UPDATE_FOLLOW:
+      return state;
     default:
       return state;
   }

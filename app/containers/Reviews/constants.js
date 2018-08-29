@@ -17,3 +17,9 @@ export const LOAD_CATEGORY_SUCCESS = 'app/Reviews/LOAD_CATEGORY_SUCCESS';
 export const VOTE_ACTION = 'app/Reviews/VOTE_ACTION';
 export const VOTE_SUCCESS = 'app/Reviews/VOTE_SUCCESS';
 export const VOTE_ERROR = 'app/Reviews/VOTE_ERROR';
+
+export const UPDATE_REVIEW = 'app/Reviews/UPDATE_REVIEW';
+export const UPDATED_REVIEW = 'app/Reviews/UPDATED_REVIEW';
+
+export const UPDATE_FOLLOW = 'app/Reviews/UPDATE_FOLLOW';
+

@@ -177,7 +177,7 @@ class ReviewCard extends React.PureComponent {
     const { classes } = this.props;
     const { idx, review, viewType } = this.props;
     const { handleVoting } = this.props;
-
+console.log(review);
     const mediaCollection = review ? review.mediaCollection : false;
     const mediaItem = mediaCollection ? mediaCollection[0] : false;
     // let mainImageUrl = mediaCollection.length > 0 ? '/' + mediaCollection[0].path + '/' + mediaCollection[0].uuid + mediaCollection[0].name : '';

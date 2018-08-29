@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { all, call, put, fork, select, takeLatest, takeEvery } from 'redux-saga/effects';
 import request from 'utils/request';
 
 import { 
@@ -12,12 +12,15 @@ import {
   LOAD_REVIEW_MORE,
   LOAD_CATEGORY,
   VOTE_ACTION,
+  UPDATE_REVIEW,
+  UPDATE_FOLLOW,
 } from './constants';
 
 import {
   loadListMoreSuccess,
   loadListMoreError,
   categoryLoaded,
+  updatedReview,
 } from './actions';
 
 import makeSelectReviews from './selectors';
@@ -182,6 +185,47 @@ export function* getCategorys() {
     yield put(reviewListLoadingError(err));
   }
 }
+
+export function* updateReview(data) {
+  console.log(']]]]] saga [[[[[[----------update Review');
+  console.log(data);
+  const reviewId = data.reviewId;
+
+  const accessToken = localStorage.getItem('accessToken');
+  const token = `Bearer ${accessToken}`;
+  const requestURL = `${process.env.API_URL}/review/detail/${reviewId}`;
+  const options = {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json;charset=UTF-8',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': '*',
+      Authorization: token,
+    },
+  };
+
+  try {
+    const ur = yield call(request, requestURL, options);
+    console.log(ur);
+    yield put(updatedReview(ur));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* updateFollow(data) {
+  const pageList = yield select(makeSelectReviews());
+  const reviews = pageList.reviews;
+
+  yield all(reviews.map(item => {
+    if(item.user.id === data.followId) {
+      console.log(item.id);
+       return call(updateReview, { reviewId: item.id });
+    }
+  }));
+  console.log(pageList.reviews);
+}
+
 // Individual exports for testing
 export default function* defaultSaga() {
   // See example in containers/HomePage/saga.js
@@ -190,4 +234,6 @@ export default function* defaultSaga() {
   yield takeLatest(LOAD_REVIEW_MORE, getReviewMore);
   yield takeLatest(LOAD_CATEGORY, getCategorys);
   yield takeLatest(VOTE_ACTION, sagaVote);
+  yield takeLatest(UPDATE_FOLLOW, updateFollow);
+  yield takeEvery(UPDATE_REVIEW, updateReview);
 }

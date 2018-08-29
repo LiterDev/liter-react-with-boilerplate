@@ -4,8 +4,10 @@
  *
  */
 
-import React from 'react';
+import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 // import styled from 'styled-components';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -14,6 +16,8 @@ import messages from './messages';
 import { FormattedMessage } from 'react-intl';
 
 import axios from 'axios';
+
+import { updateFollow } from 'containers/Reviews/actions';
 
 const styles = theme => ({
   followBox: {
@@ -49,7 +53,7 @@ const styles = theme => ({
 });
 
 /* eslint-disable react/prefer-stateless-function */
-class FollowAjxButton extends React.PureComponent {
+class FollowAjxButton extends React.Component {
   constructor(props) {
     super(props);
 
@@ -83,6 +87,9 @@ class FollowAjxButton extends React.PureComponent {
   }
 
   requestAjx = (method, sendType, requestURL, data, options) => {
+
+    this.props.dispatch(updateFollow(19));
+
     const self = this;
     axios({
       method: sendType,
@@ -219,6 +226,20 @@ class FollowAjxButton extends React.PureComponent {
   }
 }
 
-FollowAjxButton.propTypes = {};
+FollowAjxButton.propTypes = {
+};
 
-export default withStyles(styles)(FollowAjxButton);
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  };
+}
+
+const withConnect = connect(
+  mapDispatchToProps,
+);
+
+export default compose(
+  withConnect,
+  withStyles(styles),
+)(FollowAjxButton);

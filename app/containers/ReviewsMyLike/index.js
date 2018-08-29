@@ -32,6 +32,8 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 
+import { updateReview } from 'containers/Reviews/actions';
+
 const styles = theme => ({
   root: {
     top: theme.spacing.unit * 0,
@@ -152,6 +154,7 @@ export class ReviewsMyLike extends React.PureComponent {
         ) {
           // console.log(reviewsCopy[i].followYn);
           reviewsCopy[i].followYn = state;
+          this.props.dispatch(updateReview(reviewsCopy[i].id));
         }
       }
       // console.log(reviewsCopy);
@@ -164,6 +167,9 @@ export class ReviewsMyLike extends React.PureComponent {
   handleLikeState = reviewId => {
     // console.log(`handleFollowState -----[ ${reviewId} ]`);
     // console.log(this.state.reviewlist);
+
+    this.props.dispatch(updateReview(reviewId));
+
     if (this.state.reviewlist) {
       let findRemoveIndex = -1;
       for (let i = 0; i < this.state.reviewlist.length; i += 1) {

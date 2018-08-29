@@ -7,7 +7,9 @@
 import React from 'react';
 
 import Moment from 'react-moment';
-import moment from 'moment/min/moment-with-locales';
+import momentLocales from 'moment/min/moment-with-locales';
+// import moment from 'moment';
+// import 'moment-timezone';
 
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
@@ -16,7 +18,7 @@ import moment from 'moment/min/moment-with-locales';
 // import messages from './messages';
 
 // Sets the moment instance to use.
-Moment.globalMoment = moment;
+Moment.globalMoment = momentLocales;
 
 // Set the locale for every react-moment instance to French.
 Moment.globalLocale = 'ko';
@@ -25,15 +27,23 @@ Moment.globalLocale = 'ko';
 // Moment.globalFormat = 'D MMM YYYY';
 
 // Set the timezone for every instance.
-// Moment.globalTimezone = 'America/Los_Angeles';
+// Moment.globalTimezone = 'Etc/UCT';
 
 // Use a <span> tag for every react-moment instance.
 // Moment.globalElement = 'span';
 
+// moment.tz.setDefault('Etc/UTC');
+
 /* eslint-disable react/prefer-stateless-function */
 class TimeAt extends React.PureComponent {
   render() {
-    return <Moment date={this.props.date} fromNow />;
+    const tmp = new Date();
+    return (
+      <Moment
+        from={tmp.getTime()}
+        date={this.props.date + tmp.getTimezoneOffset() * 1000}
+      />
+    );
   }
 }
 

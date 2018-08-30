@@ -17,7 +17,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import StyledLink from './StyledLink';
-import Header from 'components/Header';
+import ProfileHeader from 'components/ProfileHeader';
 
 import LoginAlertDialog from 'components/LoginAlertDialog';
 // import ReviewLikeItem from 'components/ReviewLikeItem';
@@ -406,7 +406,7 @@ export class ProfilePage extends React.PureComponent {
       <div>        
         <div className={classes.containerWrapper}>
           <div className={classes.container}>
-            <Header 
+            <ProfileHeader 
                 transparency={true}
                 headerTitle={<FormattedMessage {...messages.header} />} 
             />

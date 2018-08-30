@@ -83,7 +83,7 @@ const styles = {
   totalLiterCube: {
     paddingRight: 30,
     float: 'right',
-    fontFamily: 'SFProDisplay',
+    fontFamily: 'SF Pro Display',
     fontSize: 15,
     fontWeight: 600,
     fontStyle: 'normal',
@@ -93,7 +93,7 @@ const styles = {
   },
   totalLiterCubeNon: {
     paddingRight: 30,
-    paddingTop: 10,
+    marginTop: 2,
     float: 'right',
     fontFamily: 'SFProDisplay',
     fontSize: 15,
@@ -102,6 +102,12 @@ const styles = {
     fontStretch: 'normal',
     letterSpacing: 'normal',
     color: '#1591ff',
+  },
+  buttonRoot: {
+    margin: 'auto',
+    paddingTop: '12px',
+    lineHeight: 0,
+    minHeight: 28,
   }
 };
 
@@ -115,6 +121,8 @@ class LikeList extends React.PureComponent {
 
   constructor(props) {
     super(props);
+
+    this.handleParentClick = this.handleParentClick.bind(this);
   }
 
   state = {
@@ -128,8 +136,13 @@ class LikeList extends React.PureComponent {
     totalVoter: 0,
   };
 
+  handleParentClick = (e) => {
+    this.handleClickOpen(e);
+  }
+
   componentDidMount() {
     this.targetElem = document.querySelector('#app');
+    this.props.showLikeList(this.handleParentClick);
   }
 
   componentWillUnmount() {
@@ -279,7 +292,12 @@ class LikeList extends React.PureComponent {
     return (
       <div onScroll={this.handleScroll}>
         {(rewardLitercube && rewardLitercube > 0)?(
-          <Button className={classes.totalLiterCube} onClick={this.handleClickOpen}>{rewardLitercube} LCB</Button>
+          <Button 
+            ref={(ref) => this.likebutton = ref} 
+            classes={{root: classes.buttonRoot}} 
+            className={classes.totalLiterCube} 
+            onClick={this.handleClickOpen}
+          >{rewardLitercube} LCB</Button>
         ):(
           <span className={classes.totalLiterCubeNon} >{rewardLitercube} LCB</span>
         )}

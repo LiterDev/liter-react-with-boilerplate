@@ -196,7 +196,7 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit * 2,
     boxShadow: `0 2px 4px 0 rgba(0, 0, 0, 0.15)`,
     border: 'solid 0.5px rgba(0, 0, 0, 0.05)',
-    marginBottom: '20px',
+    marginBottom: '40px',
   },
   paperSheetHead: {
     width: '100%',
@@ -316,7 +316,7 @@ class ReviewDetailCard extends React.PureComponent {
   render() {
     const { classes, reviews, surveys, history } = this.props;
     const review = reviews;
-    console.log(reviews);
+    // console.log(reviews);
     // console.log(surveys);
     // console.log(window.location.href);
 

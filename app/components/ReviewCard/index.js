@@ -93,7 +93,26 @@ const styles = theme => ({
     fontStretch: 'normal',
     lineHeight: '1.44',
     letterSpacing: 'normal',
+    color: '#111111',
+    paddingBottom: '8px',
+  },
+  reviewSummary: {
+    fontFamily: 'Apple SD Gothic Neo',
+    fontSize: '16px',
+    fontWeight: '300',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: '1.6',
+    letterSpacing: 'normal',
     color: '#333333',
+    height: '48px',
+    wordWrap: 'break-word',
+    whiteSpace: 'normal',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    '-webkit-line-clamp': 3,
+    '-webkit-box-orient': 'vertical'
+
   },
   divider: {
     margin: 'auto',
@@ -154,8 +173,14 @@ const styles = theme => ({
   },
   followButton: {
     display: 'block',
-    border: '1px solid red',
   },
+  cardContent: {
+    paddingTop: '35px',
+  },
+  contentWrapper: {
+    height: '110px',
+    overflow: 'hidden',
+  }
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -267,22 +292,25 @@ class ReviewCard extends React.PureComponent {
             image={mainImageUrl}
             title={review.username}
           /> */}
+          <Divider className={classes.divider} light />
+
           <ReviewCardBottomBarView
             likeYn={review.likeYn}
             onViewVote={this.handleVoting}
             review={review}
           />
-          <Divider className={classes.divider} light />
-          <CardContent>
+          <CardContent className={classes.cardContent}>
+            <div className={classes.contentWrapper}>
             <StyledLink to={`/review/${review.id}`}>
               <Typography className={classes.reviewTitle} component="p">
                 {review.title}
               </Typography>
+              <Typography className={classes.reviewSummary} component="p">
+                {review.content}
+              </Typography>
             </StyledLink>
-          </CardContent>
-          <div>
-            <Divider className={classes.divider} light />
-          </div>
+            </div>
+          </CardContent>          
         </Card>
       </div>
     );

@@ -113,6 +113,8 @@ const styles = theme => ({
     margintop: 12,
   },
   container: {
+    paddingTop: 130,
+    // position: 'absolute',
     paddingLeft: 2,
     paddingRight: 17,
   },

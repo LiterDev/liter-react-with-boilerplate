@@ -19,6 +19,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import classNames from 'classnames';
+import { updateReview } from 'containers/Reviews/actions';
 
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
@@ -57,6 +58,7 @@ const styles = theme => ({
     position: 'sticky',
     textAlign: 'center',
     top: 0,
+    marginBottom: 20,
   },
   toolbar: {
     textAlign: 'center',
@@ -112,13 +114,15 @@ const styles = theme => ({
     // text-align: center;
   },
   footerContainer: {
+    position: 'relative',
     display: 'table-cell',
     verticalAlign: 'middle',
+    // height: 60,
   },
   inputWrap: {
     position: 'relative',
     float: 'left',
-    width: '60%',
+    width: '80%',
     textAlign: 'center',
     display: 'table-cell',
     verticalAlign: 'middle',
@@ -127,7 +131,8 @@ const styles = theme => ({
   },
   inputLabel: {
     backgroundColor: 'rgb(250, 250, 250)',
-    border: 'solid 1px rgb(238, 238, 238)',
+    // border: 'solid 1px rgb(238, 238, 238)',
+    border: 'solid 0.5px rgb(21, 145, 255)',
     borderRadius: 19,
     height: 36,
   },
@@ -179,6 +184,25 @@ const styles = theme => ({
     paddingLeft: 5,
     paddingRight: 5,
   },
+  actionRereply: {
+    textAlign: 'right',
+    paddingBottom: 10,
+    position: 'relative',
+  },
+  actionTextBlue: {
+    color: 'rgb(21, 145, 255)',
+  },
+  actionTextRed: {
+    color: 'rgb(255, 94, 77)',
+  },
+  actionTextTop: {
+    // paddingLeft: 10,
+    paddingRight: 5,
+  },
+  actionTextBlueTop: {
+    paddingLeft: 5,
+    // paddingRight: 10,
+  },
 });
 
 const avatarImg = Boolean(
@@ -213,10 +237,12 @@ export class ReplyList extends React.PureComponent {
       loadEnd: false,
       parentId: 0,
       replyValue: '',
+      showActionBar: false,
     };
     this.handleScroll = this.handleScroll.bind(this);
     this.loadReplyList = this.loadReplyList.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll, true);
@@ -292,6 +318,14 @@ export class ReplyList extends React.PureComponent {
     // console.log(event.target.value);
     this.setState({
       replyValue: event.target.value,
+      showActionBar: true,
+    });
+  };
+  handleCancel = event => {
+    // console.log(event.target.value);
+    this.setState({
+      replyValue: '',
+      showActionBar: false,
     });
   };
 
@@ -336,8 +370,10 @@ export class ReplyList extends React.PureComponent {
                 replylist: [],
                 loading: false,
                 replyValue: '',
+                showActionBar: false,
               });
               this.loadReplyList(1, 0);
+              this.props.dispatch(updateReview(this.props.reviewId));
             }
           }
         })
@@ -354,7 +390,7 @@ export class ReplyList extends React.PureComponent {
 
   render() {
     const { classes, handleClose, reviewId } = this.props;
-    const { totalReply, replylist } = this.state;
+    const { totalReply, replylist, showActionBar } = this.state;
     // const hasVScroll = hasVerticalScroll(document.querySelector('paper'));
 
     // if (hasVScroll) {
@@ -398,6 +434,56 @@ export class ReplyList extends React.PureComponent {
               댓글 {this.state.totalReply}개
             </Typography>
           </Toolbar>
+          <div className={classes.footerContainer}>
+            <div className={classes.avatarWrap}>
+              <Avatar
+                alt=""
+                src={avatarImg}
+                className={classNames(classes.avatar, classes.bigAvatar)}
+              />
+            </div>
+            <div className={classes.inputWrap}>
+              <div className={classes.inputLabel}>
+                <input
+                  type="text"
+                  placeholder="댓글 추가..."
+                  className={classes.input}
+                  maxLength="100"
+                  onKeyPress={this.handleSubmit}
+                  value={this.state.replyValue}
+                  onChange={this.handleChange}
+                />
+              </div>
+            </div>
+            {showActionBar && (
+              <div
+                className={classNames(
+                  // classes.action,
+                  classes.actionRereply,
+                )}
+              >
+                <Button
+                  onClick={this.handleCancel}
+                  className={classNames(
+                    classes.actionText,
+                    classes.actionTextTop,
+                  )}
+                >
+                  취소
+                </Button>
+                <Button
+                  onClick={this.handleSend}
+                  className={classNames(
+                    classes.actionText,
+                    classes.actionTextBlue,
+                    classes.actionTextBlueTop,
+                  )}
+                >
+                  완료
+                </Button>
+              </div>
+            )}
+          </div>
         </AppBar>
         <div className={classes.container}>
           {replylist &&
@@ -409,7 +495,7 @@ export class ReplyList extends React.PureComponent {
               />
             ))}
         </div>
-        <div className={classes.footer}>
+        {/* <div className={classes.footer}>
           <div className={classes.footerContainer}>
             <div className={classes.avatarWrap}>
               <Avatar
@@ -431,18 +517,9 @@ export class ReplyList extends React.PureComponent {
                 />
               </div>
             </div>
-            <div className={classes.submitBtnWrap}>
-              <Button
-                variant="contained"
-                color="secondary"
-                className={classes.submitBtn}
-                onClick={this.handleSend}
-              >
-                완료
-              </Button>
-            </div>
+            
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }

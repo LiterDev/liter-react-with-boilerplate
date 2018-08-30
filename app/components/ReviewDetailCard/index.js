@@ -316,7 +316,7 @@ class ReviewDetailCard extends React.PureComponent {
   render() {
     const { classes, reviews, surveys, history } = this.props;
     const review = reviews;
-    console.log(reviews);
+    // console.log(reviews);
     // console.log(surveys);
     // console.log(window.location.href);
 

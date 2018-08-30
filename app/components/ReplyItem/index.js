@@ -13,7 +13,16 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
 /* material-ui icon */
+import CloseIcon from '@material-ui/icons/Close';
+
 /* containers */
 /* components */
 import TimeAt from 'components/TimeAt';
@@ -23,6 +32,7 @@ import ReReplyItem from 'components/ReReplyItem';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import avatarDefault from '../../images/ic-avatar.png';
+import avatarDelete from '../../images/ic-profile-x@3x.png';
 
 const styles = theme => ({
   // root: {
@@ -92,6 +102,17 @@ const styles = theme => ({
     paddingTop: 5,
     // height: '100%',
     minHeight: 70,
+  },
+  avatarWrapDelete: {
+    position: 'relative',
+    float: 'left',
+    width: '20%',
+    textAlign: 'center',
+    display: 'table-cell',
+    verticalAlign: 'middle',
+    paddingTop: 5,
+    // height: '100%',
+    minHeight: 50,
   },
   avatar: {
     // margin: 10,
@@ -183,7 +204,7 @@ const styles = theme => ({
   inputWrap: {
     position: 'relative',
     float: 'left',
-    width: '65%',
+    width: '80%',
     textAlign: 'center',
     display: 'table-cell',
     verticalAlign: 'middle',
@@ -251,6 +272,64 @@ const styles = theme => ({
     width: 40,
     height: 36,
   },
+  actionBottom: {
+    paddingLeft: 70,
+  },
+  actionRereply: {
+    textAlign: 'right',
+    paddingBottom: 10,
+    position: 'relative',
+  },
+  actionTextBlue: {
+    color: 'rgb(21, 145, 255)',
+  },
+  actionTextRed: {
+    color: 'rgb(255, 94, 77)',
+  },
+
+  popFooter: {
+    textAlign: 'center',
+  },
+  popWrap: {
+    // width: 295,
+    marginRight: 0,
+    marginLeft: 0,
+  },
+  popRoot: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    // borderTop: '1px',
+    // marginRight: 0,
+    // marginLeft: 0,
+  },
+  popPaper: {
+    width: 295,
+    textAlign: 'center',
+    // marginRight: 0,
+    // marginLeft: 0,
+  },
+  button: {
+    // margin: 'auto',
+    // display: 'block',
+  },
+  closeBtn: {
+    color: '#000000',
+    position: 'absolute',
+    right: 5,
+    top: 5,
+  },
+  dialogContent: {
+    paddingTop: '20px',
+  },
+  cancelBtn: {
+    marginRight: 30,
+  },
+  confirmBtn: {
+    marginLeft: 30,
+  },
+  contentDelete: {
+    paddingTop: 10,
+  },
 });
 
 const avatarImgWriter = Boolean(
@@ -273,12 +352,23 @@ class ReplyItem extends React.PureComponent {
       depCount: this.props.reply.depCount,
       showReReply: false,
       totalReply: this.props.reply.depCount,
+      openDeletePop: false,
+      deleteYn: this.props.reply.active < 1 ? false : true,
+      editMode: false,
+      replyValue: this.props.reply.content,
+      originReplyContent: this.props.reply.content,
     };
     this.handleRReply = this.handleRReply.bind(this);
     this.loadReReplyListClear = this.loadReReplyListClear.bind(this);
+    this.handleDeleteClose = this.handleDeleteClose.bind(this);
+    this.handleDeleteAction = this.handleDeleteAction.bind(this);
+    this.handleEditMode = this.handleEditMode.bind(this);
+    this.handleEditModeCancel = this.handleEditModeCancel.bind(this);
+    this.handleSendEdit = this.handleSendEdit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
   handleRReply = () => {
-    console.log(this.props.reply.id);
+    // console.log(this.props.reply.id);
     this.setState({
       rereplyinputShow: !this.state.rereplyinputShow,
     });
@@ -292,6 +382,18 @@ class ReplyItem extends React.PureComponent {
     // console.log(event.target.value);
     this.setState({
       rereplyValue: event.target.value,
+    });
+  };
+
+  handleChangeEdit = event => {
+    // console.log(event.target.value);
+    // const self = this;
+    if (event.target.value.length > 1000) {
+      return false;
+    }
+    // console.log(event.target.value);
+    this.setState({
+      replyValue: event.target.value,
     });
   };
   loadReReplyListClear = () => {
@@ -424,50 +526,280 @@ class ReplyItem extends React.PureComponent {
           }
           this.setState({ loading: false });
         });
+    } else {
+      alert('로그인이 필요한 서비스 입니다.');
     }
   };
 
+  handleDelete = () => {
+    this.setState({ openDeletePop: true });
+  };
+  handleDeleteClose = () => {
+    this.setState({ openDeletePop: false });
+  };
+  handleDeleteAction = () => {
+    console.log(this.props.reply.id);
+    this.setState({ openDeletePop: false });
+    const requestURL = `${process.env.API_URL}/reply/${this.props.reply.id}`;
+    const accessToken = localStorage.getItem('accessToken');
+    const token = `Bearer ${accessToken}`;
+    if (accessToken) {
+      axios({
+        method: 'DELETE',
+        url: requestURL,
+        headers: {
+          Accept: 'application/json;charset=UTF-8',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          Authorization: token,
+        },
+      })
+        .then(resp => {
+          // console.log(resp);
+          if (Boolean(resp.status)) {
+            // console.log(resp.data);
+            this.setState({
+              // curPage: pageIndex,
+              loading: false,
+              deleteYn: true,
+              // totalReply: resp.data.pageable.totalCnt,
+            });
+
+            // this.props.handleLikeState(reviewId);
+            this.setState({ loading: false });
+          }
+        })
+        .catch(error => {
+          // console.log(error);
+          if (Boolean(error.response.data.code)) {
+          }
+          this.setState({ loading: false });
+        });
+    } else {
+      alert('로그인이 필요한 서비스 입니다.');
+    }
+  };
+  handleEditMode = () => {
+    this.setState({ editMode: true });
+  };
+  handleEditModeCancel = () => {
+    this.setState({
+      editMode: false,
+      replyValue: this.state.originReplyContent,
+    });
+  };
+
+  handleSendEdit = () => {
+    const sendValue = this.state.replyValue;
+    // console.log(sendValue);
+    const requestURL = `${process.env.API_URL}/reply/${this.props.reply.id}`;
+    const accessToken = localStorage.getItem('accessToken');
+    const token = `Bearer ${accessToken}`;
+    if (accessToken) {
+      axios({
+        method: 'PUT',
+        url: requestURL,
+        headers: {
+          Accept: 'application/json;charset=UTF-8',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          Authorization: token,
+        },
+        data: {
+          reviewId: this.props.reply.reviewId,
+          parentId: this.props.reply.id,
+          content: sendValue,
+        },
+      })
+        .then(resp => {
+          // console.log(resp);
+          if (Boolean(resp.data)) {
+            // console.log(resp.data);
+            this.setState({
+              // curPage: pageIndex,
+              loading: false,
+              replyValue: resp.data.content,
+              originReplyContent: resp.data.content,
+              editMode: false,
+            });
+          }
+        })
+        .catch(error => {
+          // console.log(error);
+          if (Boolean(error.response.data.code)) {
+          }
+          this.setState({ loading: false });
+        });
+    } else {
+      alert('로그인이 필요한 서비스 입니다.');
+    }
+  };
+  handleDeleteRereply = replyId => {
+    // console.log(replyId);
+    const cloneList = [...this.state.rereplyList];
+    let findRemoveIndex = -1;
+    for (let i = 0; i < cloneList.length; i += 1) {
+      if (replyId === cloneList[i].id) {
+        findRemoveIndex = i;
+      }
+    }
+    if (findRemoveIndex > 0) {
+      cloneList.splice(findRemoveIndex, 1);
+    }
+    this.setState({
+      // depCount: this.state.depCount - 1,
+      rereplyList: cloneList,
+      loading: false,
+    });
+  };
   render() {
     const { classes, reply } = this.props;
-    const { rereplyinputShow, rereplyList, depCount, showReReply } = this.state;
+    const {
+      rereplyinputShow,
+      rereplyList,
+      depCount,
+      showReReply,
+      deleteYn,
+      editMode,
+      replyValue,
+      originReplyContent,
+    } = this.state;
     // console.log(reply);
+    // console.log(localStorage.getItem('userId'));
+    // {reply.user.id === localStorage.getItem('userId')
     // console.log(reply.depCount);
-    const avatarImg = Boolean(reply.user.profileImageUrl)
-      ? reply.user.profileImageUrl
-      : avatarDefault;
+    let avatarImg = avatarDelete;
+    // console.log(reply);
+    // console.log(reply.active);
+    // console.log(deleteYn);
+    if (deleteYn == false) {
+      avatarImg = Boolean(reply.user.profileImageUrl)
+        ? reply.user.profileImageUrl
+        : avatarDefault;
+    }
+    // if (deleteYn === true){
 
     return (
       <div>
         <div className={classes.root}>
           <div className={classes.rootContainer}>
-            <div className={classes.avatarWrap}>
+            <div
+              className={
+                deleteYn == false
+                  ? classes.avatarWrap
+                  : classes.avatarWrapDelete
+              }
+            >
               <Avatar
                 alt=""
                 src={avatarImg}
                 className={classNames(classes.avatar, classes.bigAvatar)}
               />
             </div>
-            {/* <div className={classes.inputWrap}>
-              <div className={classes.inputLabel}>
-                <input
-                  type="text"
-                  placeholder="메시지 추가..."
-                  className={classes.input}
-                  maxLength="100"
-                  onKeyPress={this.handleSubmit}
-                  value={reply.content}
-                />
-              </div>
-             
-            </div> */}
+
             <div className={classes.replyWrap}>
-              <div className={classes.usernickname}>
-                {reply.user.userNickName}{' '}
-                <span className={classes.timeAt}>
-                  <TimeAt date={reply.updateAt} />
-                </span>
-              </div>
-              <div className={classes.content}>{reply.content}</div>
+              {deleteYn == false ? (
+                <div>
+                  <div className={classes.usernickname}>
+                    {reply.user.userNickName}{' '}
+                    <span className={classes.timeAt}>
+                      <TimeAt date={reply.updateAt} />
+                    </span>
+                  </div>
+                  {editMode == true ? (
+                    <div className={classes.content}>
+                      <div
+                        className={classes.inputWrap}
+                        style={{ width: '100%', zIndex: 10 }}
+                      >
+                        <div className={classes.inputLabel}>
+                          <input
+                            type="text"
+                            // placeholder="메시지 추가..."
+                            className={classes.input}
+                            maxLength="100"
+                            // onKeyPress={this.handleEdit}
+                            value={replyValue}
+                            onChange={this.handleChangeEdit}
+                          />
+                        </div>
+                      </div>
+                      <div
+                        className={classNames(
+                          // classes.action,
+                          classes.actionRereply,
+                        )}
+                      >
+                        <Button
+                          onClick={this.handleEditModeCancel}
+                          className={classes.actionText}
+                        >
+                          취소
+                        </Button>
+                        <Button
+                          onClick={this.handleSendEdit}
+                          className={classNames(
+                            classes.actionText,
+                            classes.actionTextBlue,
+                          )}
+                        >
+                          완료
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className={classes.content}>{originReplyContent}</div>
+                  )}
+
+                  <div className={classes.action}>
+                    {showReReply === false ? (
+                      <Button
+                        onClick={this.handleRReply}
+                        className={classes.actionText}
+                      >
+                        댓글
+                      </Button>
+                    ) : (
+                      ''
+                    )}
+                    {reply.userId == localStorage.getItem('userId') ? (
+                      <Button
+                        onClick={this.handleEditMode}
+                        className={classes.actionText}
+                      >
+                        수정
+                      </Button>
+                    ) : (
+                      ''
+                    )}
+                    {reply.userId == localStorage.getItem('userId') ? (
+                      <Button
+                        onClick={this.handleDelete}
+                        className={classNames(
+                          classes.actionText,
+                          classes.actionTextRed,
+                        )}
+                      >
+                        삭제
+                      </Button>
+                    ) : (
+                      ''
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div
+                    className={classNames(
+                      classes.content,
+                      classes.contentDelete,
+                    )}
+                  >
+                    삭제된 댓글입니다.
+                  </div>
+                </div>
+              )}
+
               {showReReply === true ? (
                 <div className={classes.action}>
                   <Button
@@ -485,17 +817,24 @@ class ReplyItem extends React.PureComponent {
                   <ReReplyItem
                     key={item.id}
                     reply={item}
+                    handleDeleteRereply={this.handleDeleteRereply}
                     // handleFollowState={this.handleFollowState}
                   />
                 ))}
-              <div className={classes.action}>
-                <Button
-                  onClick={this.handleRReply}
-                  className={classes.actionText}
+              {showReReply === true ? (
+                <div
+                  className={classNames(classes.action, classes.actionBottom)}
                 >
-                  댓글
-                </Button>
-              </div>
+                  <Button
+                    onClick={this.handleRReply}
+                    className={classes.actionText}
+                  >
+                    댓글
+                  </Button>
+                </div>
+              ) : (
+                ''
+              )}
               {depCount > 0 ? (
                 <div className={classes.action}>
                   <Button
@@ -511,32 +850,33 @@ class ReplyItem extends React.PureComponent {
             </div>
 
             {rereplyinputShow && (
-              <div className={classes.footer}>
-                <div className={classes.footerContainer}>
-                  <div className={classes.avatarReplyWrap}>
-                    <Avatar
-                      alt=""
-                      src={avatarImgWriter}
-                      className={classNames(
-                        classes.avatar,
-                        classes.bigReplyAvatar,
-                      )}
-                    />
-                  </div>
-                  <div className={classes.inputWrap}>
-                    <div className={classes.inputLabel}>
-                      <input
-                        type="text"
-                        placeholder="메시지 추가..."
-                        className={classes.input}
-                        maxLength="100"
-                        onKeyPress={this.handleSubmit}
-                        value={this.state.rereplyValue}
-                        onChange={this.handleChange}
+              <div>
+                <div className={classes.footer}>
+                  <div className={classes.footerContainer}>
+                    <div className={classes.avatarReplyWrap}>
+                      <Avatar
+                        alt=""
+                        src={avatarImgWriter}
+                        className={classNames(
+                          classes.avatar,
+                          classes.bigReplyAvatar,
+                        )}
                       />
                     </div>
-                  </div>
-                  {/* <div className={classes.submitBtnWrap}>
+                    <div className={classes.inputWrap}>
+                      <div className={classes.inputLabel}>
+                        <input
+                          type="text"
+                          placeholder="메시지 추가..."
+                          className={classes.input}
+                          maxLength="100"
+                          onKeyPress={this.handleSubmit}
+                          value={this.state.rereplyValue}
+                          onChange={this.handleChange}
+                        />
+                      </div>
+                    </div>
+                    {/* <div className={classes.submitBtnWrap}>
                     <Button
                       variant="contained"
                       color="secondary"
@@ -546,11 +886,82 @@ class ReplyItem extends React.PureComponent {
                       <Icon>edit_icon</Icon>
                     </Button>
                   </div> */}
+                  </div>
+                </div>
+                <div
+                  className={classNames(classes.action, classes.actionRereply)}
+                >
+                  <Button
+                    onClick={this.handleRReply}
+                    className={classes.actionText}
+                  >
+                    취소
+                  </Button>
+                  <Button
+                    onClick={this.handleSend}
+                    className={classNames(
+                      classes.actionText,
+                      classes.actionTextBlue,
+                    )}
+                  >
+                    완료
+                  </Button>
                 </div>
               </div>
             )}
           </div>
         </div>
+        <Dialog
+          open={this.state.openDeletePop}
+          onClose={this.handleDeleteClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          className={classes.popWrap}
+          fullWidth="true"
+          // maxWidth="false"
+          classes={{
+            root: classes.popRoot,
+            paper: classes.popPaper,
+          }}
+        >
+          {/* <IconButton
+            color="inherit"
+            onClick={this.handleLoginClose}
+            aria-label="Close"
+            className={classes.closeBtn}
+          >
+            <CloseIcon />
+          </IconButton> */}
+
+          <DialogContent className={classes.dialogContent}>
+            <DialogContentText id="alert-dialog-description">
+              댓글을 삭제하시겠습니까?
+            </DialogContentText>
+          </DialogContent>
+          <Divider />
+          <DialogActions
+            // className={classes.popFooter}
+            classes={{
+              root: classes.popRoot,
+              // paper: classes.popFooter,
+            }}
+          >
+            <Button
+              onClick={this.handleDeleteClose}
+              color="secondary"
+              className={classes.cancelBtn}
+            >
+              취소
+            </Button>
+            <Button
+              onClick={this.handleDeleteAction}
+              color="secondary"
+              className={classes.confirmBtn}
+            >
+              확인
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }

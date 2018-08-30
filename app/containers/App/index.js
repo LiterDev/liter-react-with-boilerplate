@@ -91,10 +91,11 @@ function App(props) {
         Authorization: token,
       },
     }).then(resp => {
-      // console.log(resp.data);
+      console.log(resp.data);
       // localStorage.setItem('accessToken', resp.data.accessToken);
       // localStorage.setItem('refreshToken', resp.data.refreshToken);
       localStorage.setItem('username', resp.data.username);
+      localStorage.setItem('userId', resp.data.id);
       localStorage.setItem('userNickName', resp.data.userNickName);
       localStorage.setItem(
         'profileImageSmallUrl',

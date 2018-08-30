@@ -7,10 +7,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 /* material-ui core */
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import classNames from 'classnames';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Divider from '@material-ui/core/Divider';
 /* material-ui icon */
 /* containers */
 /* components */
@@ -63,7 +70,7 @@ const styles = theme => ({
     paddingRight: 17,
   },
   root: {
-    marginTop: 18, 
+    marginTop: 18,
     position: 'relative',
     // left: 0,
     // bottom: 0,
@@ -78,6 +85,7 @@ const styles = theme => ({
   rootContainer: {
     display: 'table-cell',
     verticalAlign: 'middle',
+    zIndex: 12,
   },
 
   avatarWrap: {
@@ -89,7 +97,6 @@ const styles = theme => ({
     verticalAlign: 'middle',
     paddingTop: 0,
     marginRight: 18,
-    
   },
   avatar: {
     // margin: 10,
@@ -210,16 +217,219 @@ const styles = theme => ({
     width: 30,
     height: 30,
   },
+
+  actionText: {
+    fontFamily: 'Apple SD Gothic Neo',
+    fontSize: 13,
+    fontWeight: 500,
+    opacity: '0.6',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    textAlign: 'left',
+    color: 'rgb(17, 17, 17)',
+    paddingLeft: 0,
+    minWidth: 0,
+    height: 16,
+  },
+  actionBottom: {
+    paddingLeft: 70,
+  },
+  actionRereply: {
+    textAlign: 'right',
+    paddingBottom: 10,
+    position: 'relative',
+  },
+  actionTextBlue: {
+    color: 'rgb(21, 145, 255)',
+  },
+  actionTextRed: {
+    color: 'rgb(255, 94, 77)',
+  },
+  actionRereplyWrap: {
+    paddingLeft: 112,
+  },
+  popFooter: {
+    textAlign: 'center',
+  },
+  popWrap: {
+    // width: 295,
+    marginRight: 0,
+    marginLeft: 0,
+  },
+  popRoot: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    // borderTop: '1px',
+    // marginRight: 0,
+    // marginLeft: 0,
+  },
+  popPaper: {
+    width: 295,
+    textAlign: 'center',
+    // marginRight: 0,
+    // marginLeft: 0,
+  },
+  button: {
+    // margin: 'auto',
+    // display: 'block',
+  },
+  closeBtn: {
+    color: '#000000',
+    position: 'absolute',
+    right: 5,
+    top: 5,
+  },
+  dialogContent: {
+    paddingTop: '20px',
+  },
+  cancelBtn: {
+    marginRight: 30,
+  },
+  confirmBtn: {
+    marginLeft: 30,
+  },
+  contentDelete: {
+    paddingTop: 10,
+  },
 });
 /* eslint-disable react/prefer-stateless-function */
 class ReReplyItem extends React.PureComponent {
   constructor(props) {
     super(props);
-  }
 
+    this.state = {
+      loading: false,
+      loadEnd: false,
+      openDeletePop: false,
+      deleteYn: this.props.reply.active < 1 ? false : true,
+      editMode: false,
+      replyValue: this.props.reply.content,
+      originReplyContent: this.props.reply.content,
+    };
+    this.handleEditMode = this.handleEditMode.bind(this);
+    this.handleEditModeCancel = this.handleEditModeCancel.bind(this);
+    this.handleSendEdit = this.handleSendEdit.bind(this);
+    this.handleChangeEdit = this.handleChangeEdit.bind(this);
+  }
+  handleDelete = () => {
+    this.setState({ openDeletePop: true });
+  };
+  handleDeleteClose = () => {
+    this.setState({ openDeletePop: false });
+  };
+  handleDeleteAction = () => {
+    console.log(this.props.reply.id);
+    this.setState({ openDeletePop: false });
+    const requestURL = `${process.env.API_URL}/reply/${this.props.reply.id}`;
+    const accessToken = localStorage.getItem('accessToken');
+    const token = `Bearer ${accessToken}`;
+    if (accessToken) {
+      axios({
+        method: 'DELETE',
+        url: requestURL,
+        headers: {
+          Accept: 'application/json;charset=UTF-8',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          Authorization: token,
+        },
+      })
+        .then(resp => {
+          // console.log(resp);
+          if (Boolean(resp.status)) {
+            // console.log(resp.data);
+            this.setState({
+              // curPage: pageIndex,
+              loading: false,
+              deleteYn: true,
+              // totalReply: resp.data.pageable.totalCnt,
+            });
+            this.setState({ loading: false });
+            this.props.handleDeleteRereply(this.props.reply.id);
+          }
+        })
+        .catch(error => {
+          // console.log(error);
+          if (Boolean(error.response.data.code)) {
+          }
+          this.setState({ loading: false });
+        });
+    } else {
+      alert('로그인이 필요한 서비스 입니다.');
+    }
+  };
+
+  handleChangeEdit = event => {
+    // console.log(event.target.value);
+    // const self = this;
+    if (event.target.value.length > 1000) {
+      return false;
+    }
+    // console.log(event.target.value);
+    this.setState({
+      replyValue: event.target.value,
+    });
+  };
+  handleEditMode = () => {
+    this.setState({ editMode: true });
+  };
+  handleEditModeCancel = () => {
+    this.setState({
+      editMode: false,
+      replyValue: this.state.originReplyContent,
+    });
+  };
+  handleSendEdit = () => {
+    const sendValue = this.state.replyValue;
+    // console.log(sendValue);
+    const requestURL = `${process.env.API_URL}/reply/${this.props.reply.id}`;
+    const accessToken = localStorage.getItem('accessToken');
+    const token = `Bearer ${accessToken}`;
+    if (accessToken) {
+      axios({
+        method: 'PUT',
+        url: requestURL,
+        headers: {
+          Accept: 'application/json;charset=UTF-8',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          Authorization: token,
+        },
+        data: {
+          reviewId: this.props.reply.reviewId,
+          parentId: this.props.reply.id,
+          content: sendValue,
+        },
+      })
+        .then(resp => {
+          // console.log(resp);
+          if (Boolean(resp.data)) {
+            // console.log(resp.data);
+            this.setState({
+              // curPage: pageIndex,
+              loading: false,
+              replyValue: resp.data.content,
+              originReplyContent: resp.data.content,
+              editMode: false,
+            });
+          }
+        })
+        .catch(error => {
+          // console.log(error);
+          if (Boolean(error.response.data.code)) {
+          }
+          this.setState({ loading: false });
+        });
+    } else {
+      alert('로그인이 필요한 서비스 입니다.');
+    }
+  };
   render() {
     const { classes, reply } = this.props;
-    console.log(reply);
+    const { deleteYn, editMode, replyValue, originReplyContent } = this.state;
+    // console.log(reply);
     const avatarImg = Boolean(reply.user.profileImageUrl)
       ? reply.user.profileImageUrl
       : avatarDefault;
@@ -242,23 +452,117 @@ class ReReplyItem extends React.PureComponent {
                   <TimeAt date={reply.updateAt} />
                 </span>
               </div>
-              <div className={classes.content}>{reply.content}</div>
+              {editMode == true ? (
+                <div className={classes.content}>
+                  <div
+                    className={classes.inputWrap}
+                    style={{ width: '100%', zIndex: 10 }}
+                  >
+                    <div className={classes.inputLabel}>
+                      <input
+                        type="text"
+                        // placeholder="메시지 추가..."
+                        className={classes.input}
+                        maxLength="100"
+                        // onKeyPress={this.handleEdit}
+                        value={replyValue}
+                        onChange={this.handleChangeEdit}
+                      />
+                    </div>
+                  </div>
+                  <div
+                    className={classNames(
+                      // classes.action,
+                      classes.actionRereply,
+                    )}
+                  >
+                    <Button
+                      onClick={this.handleEditModeCancel}
+                      className={classes.actionText}
+                    >
+                      취소
+                    </Button>
+                    <Button
+                      onClick={this.handleSendEdit}
+                      className={classNames(
+                        classes.actionText,
+                        classes.actionTextBlue,
+                      )}
+                    >
+                      완료
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <div className={classes.content}>{originReplyContent}</div>
+              )}
             </div>
-            {/* <div className={classes.inputWrap}>
-              <div className={classes.inputLabel}>
-                <input
-                  type="text"
-                  placeholder="메시지 추가..."
-                  className={classes.input}
-                  maxLength="100"
-                  onKeyPress={this.handleSubmit}
-                  value={reply.content}
-                />
-              </div>
-             
-            </div> */}
           </div>
         </div>
+        <div className={classNames(classes.action, classes.actionRereplyWrap)}>
+          {reply.userId == localStorage.getItem('userId') ? (
+            <Button
+              onClick={this.handleEditMode}
+              className={classes.actionText}
+            >
+              수정
+            </Button>
+          ) : (
+            ''
+          )}
+          {reply.userId == localStorage.getItem('userId') ? (
+            <Button
+              onClick={this.handleDelete}
+              className={classNames(classes.actionText, classes.actionTextRed)}
+            >
+              삭제
+            </Button>
+          ) : (
+            ''
+          )}
+        </div>
+        <Dialog
+          open={this.state.openDeletePop}
+          onClose={this.handleDeleteClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          className={classes.popWrap}
+          fullWidth="true"
+          // maxWidth="false"
+          classes={{
+            root: classes.popRoot,
+            paper: classes.popPaper,
+          }}
+        >
+          <DialogContent className={classes.dialogContent}>
+            <DialogContentText id="alert-dialog-description">
+              댓글을 삭제하시겠습니까?
+            </DialogContentText>
+          </DialogContent>
+          <Divider />
+          <DialogActions
+            // className={classes.popFooter}
+            classes={{
+              root: classes.popRoot,
+              // paper: classes.popFooter,
+            }}
+          >
+            <Button
+              onClick={this.handleDeleteClose}
+              color="secondary"
+              className={classes.cancelBtn}
+            >
+              취소
+            </Button>
+            <Button
+              onClick={this.handleDeleteAction}
+              color="secondary"
+              className={classes.confirmBtn}
+            >
+              확인
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }
@@ -266,6 +570,7 @@ class ReReplyItem extends React.PureComponent {
 
 ReReplyItem.propTypes = {
   reply: PropTypes.object.isRequired,
+  handleDeleteRereply: PropTypes.func.isRequired,
 };
 
 // export default ReplyItem;

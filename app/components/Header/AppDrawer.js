@@ -143,7 +143,7 @@ const styles = theme => ({
     textAlign: 'left',
   },
   userNickName: {
-    display: 'inline-block',
+    display: 'block',
     wordWrap: 'normal',
     maxWidth: '150px',
     overflow: 'hidden',
@@ -159,7 +159,9 @@ const styles = theme => ({
     color: '#111111',
     marginTop: 10,
     marginLeft: 14,
+    marginBottom: 5,
     height: 22,
+    paddingLeft: 13,
   },
   userName: {
     display: 'inline-block',
@@ -434,7 +436,7 @@ class AppDrawer extends React.PureComponent {
             role="button"
             className={classes.link}
           > */}
-            <div>
+            <div className={classes.userInfo}>
               <div className={classes.userNickName}>
                 {localStorage.getItem('userNickName')}
               </div>

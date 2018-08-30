@@ -22,6 +22,7 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 /* material-ui icon */
 import CloseIcon from '@material-ui/icons/Close';
+import StyledLink from 'components/ReviewCard/StyledLink';
 
 /* containers */
 /* components */
@@ -700,11 +701,13 @@ class ReplyItem extends React.PureComponent {
                   : classes.avatarWrapDelete
               }
             >
-              <Avatar
-                alt=""
-                src={avatarImg}
-                className={classNames(classes.avatar, classes.bigAvatar)}
-              />
+              <StyledLink to={`/profile/${reply.user.id}`}>
+                <Avatar
+                  alt=""
+                  src={avatarImg}
+                  className={classNames(classes.avatar, classes.bigAvatar)}
+                />
+              </StyledLink>
             </div>
 
             <div className={classes.replyWrap}>

@@ -42,7 +42,7 @@ import avatarDefault from '../../images/ic-avatar.png';
 
 const styles = theme => ({
   root: {
-    top: theme.spacing.unit * 0,
+    // top: theme.spacing.unit * 0,
     // minHeight: '100vh',
     // maxHeight: '100vh',
     // height: '100vh',
@@ -68,8 +68,8 @@ const styles = theme => ({
     position: 'fixed',
     textAlign: 'center',
     top: 0,
-    left: 0,
-    right: 0,
+    // left: 0,
+    // right: 0,
     marginBottom: 20,
     // display: 'table',
     width: '100%',

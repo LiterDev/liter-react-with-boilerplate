@@ -102,6 +102,16 @@ const styles = theme => ({
   selAvatar: {
     border: 'solid 2px rgb(55, 161, 255)',
   },
+  avartarShow: {
+    // display: 'block',
+    opacity: 1,
+    transition: 'opacity 0.2s ease-in'
+  },
+  avartarNone: {
+    display: 'none',
+    opacity: 0,
+    transition: 'opacity 0.2s ease-in',
+  }
   // display: block;
   // border: solid 1px rgba(0,0,0,.05);
   // border-radius: 50%;
@@ -148,13 +158,15 @@ const selCateName = [
   '그외',
 ];
 
+let lastScrollY = 0;
+
 /* eslint-disable react/prefer-stateless-function */
 class ReviewTopTag extends React.PureComponent {
   constructor(props) {
     super(props);
-
     this.state = {
       selValue: -9,
+      direction: 1,
     };
     this.handleTag = this.handleTag.bind(this);
   }
@@ -166,6 +178,32 @@ class ReviewTopTag extends React.PureComponent {
       selValue: value,
     });
   };
+
+  handleScroll = () => {
+
+    const direction = (lastScrollY > window.scrollY) ? 1 : 2;
+    const between = 30;
+    let diff = 0;
+    
+    if(Math.abs(lastScrollY - window.scrollY) > between){
+      lastScrollY = window.scrollY;
+      diff = 1;
+    } else {
+      diff = 0;
+    }   
+
+    if(diff)
+      this.setState({'direction': diff*direction});
+  };
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
   render() {
     const { classes, categorys, reviewFirst } = this.props;
     // console.log(`categorys ====[ ${categorys}]`);
@@ -182,7 +220,8 @@ class ReviewTopTag extends React.PureComponent {
     // if (Boolean(reviewFirst)) {
     //   console.log(reviewFirst.mediaCollection);
     //   console.log(reviewFirst.mediaCollection[0]);
-    // }
+    // }    
+    const directionStyle = (this.state.direction == 1)? classes.avartarShow : classes.avartarNone;
 
     return (
       <div className={classes.root}>
@@ -202,6 +241,7 @@ class ReviewTopTag extends React.PureComponent {
                         : reviewFirst.mediaCollection[0].fullPathSmall
                   }
                   className={classNames(
+                    directionStyle,
                     classes.bigAvatar,
                     this.state.selValue === -9
                       ? classes.selAvatar
@@ -258,6 +298,7 @@ class ReviewTopTag extends React.PureComponent {
                           : item.fullPathSmall
                     }
                     className={classNames(
+                      directionStyle,
                       classes.bigAvatar,
                       this.state.selValue === item.categoryId
                         ? classes.selAvatar

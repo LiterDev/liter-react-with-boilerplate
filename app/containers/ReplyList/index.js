@@ -37,14 +37,26 @@ import makeSelectReplyList from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+import avatarDefault from '../../images/ic-avatar.png';
 
 const styles = theme => ({
   root: {
-    top: theme.spacing.unit * 0,
+    // top: theme.spacing.unit * 0,
+    // minHeight: '100vh',
+    // maxHeight: '100vh',
+    // height: '100vh',
+    overflowY: 'auto',
+    '-webkit-overflow-scrolling': 'touch',
+    // overflow: 'hidden',
+    // transitionProperty: 'height, min-height',
+    // transitionDuration: '.6s',
+    // transitionDelay: '.1s',
+    // transitionTimingFunction: 'ease-in',
   },
   appBar: {
-    position: 'relative',
+    position: 'sticky',
     textAlign: 'center',
+    top: 0,
   },
   toolbar: {
     textAlign: 'center',
@@ -83,17 +95,20 @@ const styles = theme => ({
     margintop: 12,
   },
   container: {
-    paddingLeft: 17,
+    paddingLeft: 2,
     paddingRight: 17,
   },
   footer: {
-    position: 'fixed',
-    left: 0,
+    // position: 'fixed',
+    position: 'sticky',
+    // left: 0,
     bottom: 0,
     width: '100%',
     height: 72,
     display: 'table',
     boxShadow: '0 -0.5px 0 0 rgba(0, 0, 0, 0.1)',
+    zIndex: 10,
+    backgroundColor: '#ffffff',
     // text-align: center;
   },
   footerContainer: {
@@ -103,12 +118,12 @@ const styles = theme => ({
   inputWrap: {
     position: 'relative',
     float: 'left',
-    width: '80%',
+    width: '60%',
     textAlign: 'center',
     display: 'table-cell',
     verticalAlign: 'middle',
     height: 36,
-    paddingRight: 16,
+    paddingRight: 10,
   },
   inputLabel: {
     backgroundColor: 'rgb(250, 250, 250)',
@@ -127,7 +142,7 @@ const styles = theme => ({
   avatar: {
     // margin: 10,
     // border: 'solid 2px rgb(55, 161, 255)',
-    border: 'solid 0.01em rgb(153, 153, 153)',
+    // border: 'solid 0.01em rgb(153, 153, 153)',
   },
   bigAvatar: {
     display: 'block',
@@ -158,8 +173,34 @@ const styles = theme => ({
     height: 40,
     maxLength: 100,
   },
+  submitBtn: {
+    minWidth: 50,
+    float: 'left',
+    paddingLeft: 5,
+    paddingRight: 5,
+  },
 });
 
+const avatarImg = Boolean(
+  localStorage.getItem('profileImageSmallUrl') &&
+    localStorage.getItem('profileImageSmallUrl') != 'null',
+)
+  ? localStorage.getItem('profileImageSmallUrl')
+  : avatarDefault;
+
+const hasVerticalScroll = node => {
+  if (!node) {
+    if (window.innerHeight) {
+      return document.body.offsetHeight > window.innerHeight;
+    }
+    return (
+      document.documentElement.scrollHeight >
+        document.documentElement.offsetHeight ||
+      document.body.scrollHeight > document.body.offsetHeight
+    );
+  }
+  return node.scrollHeight > node.offsetHeight;
+};
 /* eslint-disable react/prefer-stateless-function */
 export class ReplyList extends React.PureComponent {
   constructor(props) {
@@ -170,9 +211,12 @@ export class ReplyList extends React.PureComponent {
       loading: false,
       curPage: 1,
       loadEnd: false,
+      parentId: 0,
+      replyValue: '',
     };
     this.handleScroll = this.handleScroll.bind(this);
     this.loadReplyList = this.loadReplyList.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll, true);
@@ -182,7 +226,7 @@ export class ReplyList extends React.PureComponent {
     window.removeEventListener('scroll', this.handleScroll, true);
   }
   componentWillMount() {
-    this.loadReplyList(1);
+    this.loadReplyList(1, 0);
   }
 
   handleScroll(event) {
@@ -192,98 +236,134 @@ export class ReplyList extends React.PureComponent {
       event.target.clientHeight;
     if (bottom) {
       // console.log('the scroll things', event);
-      this.loadReplyList(this.state.curPage + 1);
+      this.loadReplyList(this.state.curPage + 1, this.state.parentId);
     }
   }
 
-  loadReplyList = pageIndex => {
+  loadReplyList = (pageIndex, parentId) => {
     if (this.state.loadEnd === false && this.state.loading === false) {
       this.setState({ loading: true });
-      const requestURL = `${
-        process.env.API_URL
-      }/review/myLike?page=${pageIndex}`;
+      const requestURL = `${process.env.API_URL}/reply/${
+        this.props.reviewId
+      }/${parentId}?page=${pageIndex}`;
       const accessToken = localStorage.getItem('accessToken');
       const token = `Bearer ${accessToken}`;
-      if (accessToken) {
-        axios({
-          method: 'GET',
-          url: requestURL,
-          headers: {
-            Accept: 'application/json;charset=UTF-8',
-            'Content-Type': 'application/json;charset=UTF-8',
-            'Access-Control-Allow-Origin': '*',
-            Authorization: token,
-          },
+      // if (accessToken) {
+      axios({
+        method: 'GET',
+        url: requestURL,
+        headers: {
+          Accept: 'application/json;charset=UTF-8',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          // Authorization: token,
+        },
+      })
+        .then(resp => {
+          if (Boolean(resp.data)) {
+            // console.log(resp.data);
+            // console.log(resp.data.pageable.totalCnt);
+            this.setState({
+              curPage: pageIndex,
+              replylist: this.state.replylist.concat(resp.data.content),
+              loading: false,
+              totalReply: resp.data.pageable.totalCnt,
+            });
+          }
         })
-          .then(resp => {
-            if (Boolean(resp.data)) {
-              // console.log(resp.data);
-              // console.log(resp.data.pageable.totalCnt);
-              this.setState({
-                curPage: pageIndex,
-                replylist: this.state.replylist.concat(resp.data.content),
-                loading: false,
-                totalReply: resp.data.pageable.totalCnt,
-              });
-            }
-          })
-          .catch(error => {
-            console.log(error);
-            if (error.response.data.code === 300104) {
-              this.setState({ loadEnd: true });
-            } else if (error.response.data.code === 500000) {
-              // console.log('likelist empty > ERROR');
-            }
-          });
-      }
+        .catch(error => {
+          console.log(error);
+          if (error.response.data.code === 300104) {
+            this.setState({ loadEnd: true });
+          } else if (error.response.data.code === 500000) {
+            // console.log('likelist empty > ERROR');
+          }
+        });
     }
+    // }
+  };
+
+  handleChange = event => {
+    // console.log(event.target.value);
+    // const self = this;
+    if (event.target.value.length > 1000) {
+      return false;
+    }
+    // console.log(event.target.value);
+    this.setState({
+      replyValue: event.target.value,
+    });
   };
 
   handleSubmit = event => {
-    // console.log(reviewId);
-    const self = this;
-    if (e.key === 'Enter') {
-      const requestURL = `${process.env.API_URL}/engagement`;
-      const accessToken = localStorage.getItem('accessToken');
-      const token = `Bearer ${accessToken}`;
-      if (accessToken) {
-        axios({
-          method: 'POST',
-          url: requestURL,
-          headers: {
-            Accept: 'application/json;charset=UTF-8',
-            'Content-Type': 'application/json;charset=UTF-8',
-            'Access-Control-Allow-Origin': '*',
-            Authorization: token,
-          },
-          data: {
-            reviewId: this.props.reviewId,
-            parentId: this.props.parentId ? this.props.parentId : 0,
-            content: event.target.value,
-          },
-        })
-          .then(resp => {
-            // console.log(resp);
-            // if (Boolean(resp.data)) {
-            this.props.handleLikeState(reviewId);
-            self.setState({ loading: false });
-            // }
-          })
-          .catch(error => {
-            if (Boolean(error.response.data.code)) {
-            }
-            self.setState({ loading: false });
-          });
+    // console.log(event.target.value);
+    // console.log(event.key);
+    if (event.key === 'Enter') {
+      if (!Boolean(event.target.value)) {
+        return false;
       }
+      this.handleSend();
+    }
+  };
+
+  handleSend = () => {
+    const sendValue = this.state.replyValue;
+    const requestURL = `${process.env.API_URL}/reply`;
+    const accessToken = localStorage.getItem('accessToken');
+    const token = `Bearer ${accessToken}`;
+    if (accessToken) {
+      axios({
+        method: 'POST',
+        url: requestURL,
+        headers: {
+          Accept: 'application/json;charset=UTF-8',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          Authorization: token,
+        },
+        data: {
+          reviewId: this.props.reviewId,
+          parentId: this.state.parentId ? this.state.parentId : 0,
+          content: sendValue,
+        },
+      })
+        .then(resp => {
+          // console.log(this.state.parentId);
+          if (Boolean(resp.data)) {
+            if (this.state.parentId === 0) {
+              // console.log(this.state.parentId);
+              this.setState({
+                replylist: [],
+                loading: false,
+                replyValue: '',
+              });
+              this.loadReplyList(1, 0);
+            }
+          }
+        })
+        .catch(error => {
+          // console.log(error);
+          if (Boolean(error.response.data.code)) {
+          }
+          this.setState({ loading: false });
+        });
+    } else {
+      alert('로그인이 필요한 서비스 입니다.');
     }
   };
 
   render() {
-    const { classes, handleClose } = this.props;
+    const { classes, handleClose, reviewId } = this.props;
     const { totalReply, replylist } = this.state;
+    // const hasVScroll = hasVerticalScroll(document.querySelector('paper'));
+
+    // if (hasVScroll) {
+    //   console.log('HAS SCROLL', hasVScroll);
+    // }
+    // console.log(reviewId);
     return (
-      <div onScroll={this.handleScroll}>
-        <AppBar className={classes.appBar}>
+      <div onScroll={this.handleScroll} className={classes.root}>
+        <AppBar className={classes.appBar} position="sticky">
           <Toolbar className={classes.toolbar}>
             <IconButton
               color="inherit"
@@ -297,11 +377,14 @@ export class ReplyList extends React.PureComponent {
                 height="24"
                 viewBox="0 0 24 24"
               >
-                <g fill="none" fill-rule="evenodd">
+                <g
+                  fill="none"
+                  // fill-rule="evenodd"
+                >
                   <path d="M0 0h24v24H0z" opacity=".87" />
                   <path
                     fill="#000"
-                    fill-rule="nonzero"
+                    // fill-rule="nonzero"
                     d="M15.725 5.274a.93.93 0 0 0-1.318 0l-6.19 6.189c-.29.29-.29.76 0 1.05l6.19 6.19a.93.93 0 0 0 1.318 0 .93.93 0 0 0 0-1.319l-5.392-5.4 5.4-5.4a.928.928 0 0 0-.008-1.31z"
                   />
                 </g>
@@ -317,21 +400,21 @@ export class ReplyList extends React.PureComponent {
           </Toolbar>
         </AppBar>
         <div className={classes.container}>
-          {/* {reviewlist &&
-            reviewlist.map((item, index) => (
-              <ReviewLikeItem
+          {replylist &&
+            replylist.map((item, index) => (
+              <ReplyItem
                 key={item.id}
-                review={item}
-                handleFollowState={this.handleFollowState}
+                reply={item}
+                // handleFollowState={this.handleFollowState}
               />
-            ))} */}
+            ))}
         </div>
         <div className={classes.footer}>
           <div className={classes.footerContainer}>
             <div className={classes.avatarWrap}>
               <Avatar
                 alt=""
-                src="https://www.carusopizza.cz/258-large_default/coca-cola-can-033l.jpg"
+                src={avatarImg}
                 className={classNames(classes.avatar, classes.bigAvatar)}
               />
             </div>
@@ -342,9 +425,21 @@ export class ReplyList extends React.PureComponent {
                   placeholder="메시지 추가..."
                   className={classes.input}
                   maxLength="100"
-                  onKeyPress={this.handleKey}
+                  onKeyPress={this.handleSubmit}
+                  value={this.state.replyValue}
+                  onChange={this.handleChange}
                 />
               </div>
+            </div>
+            <div className={classes.submitBtnWrap}>
+              <Button
+                variant="contained"
+                color="secondary"
+                className={classes.submitBtn}
+                onClick={this.handleSend}
+              >
+                완료
+              </Button>
             </div>
           </div>
         </div>
@@ -356,6 +451,7 @@ export class ReplyList extends React.PureComponent {
 ReplyList.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
+  reviewId: PropTypes.any.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({

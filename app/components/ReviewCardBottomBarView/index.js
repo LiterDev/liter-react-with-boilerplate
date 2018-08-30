@@ -26,10 +26,15 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
+import Tooltip from '@material-ui/core/Tooltip';
+
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 /* material-ui icon */
 import CloseIcon from '@material-ui/icons/Close';
-import Tooltip from '@material-ui/core/Tooltip';
+
 import LikeList from 'components/LikeList';
 
 /* containers */
@@ -59,37 +64,45 @@ const styles = theme => ({
     position: 'fixed',
     bottom: '0',
     width: '100%',
-    height: '52px',
+    height: '90px',
     backgroundColor: '#fcfcfc',
     boxShadow: `0 -1px 7px 0 rgba(0, 0, 0, 0.1)`,
   },
-  rootBottom: {},
+  rootBottom: {
+  },
   rootButton: {
     display: 'inline-flex',
     minWidth: '50px',
     minHeight: '36px',
     alignItems: 'center',
   },
-
   actions: {
-    paddingTop: '8px',
-    // marginLeft: '10px',
     bottom: '0',
     width: '100%',
     display: 'block',
-    height: '52px',
+    height: '46px',
   },
-  activeStatusFirst: {
-    paddingLeft: '2vh',
-    float: 'left',
+  listPadding: {
+    padding: 0,
   },
-  activeStatus: {
-    paddingLeft: '4vh',
-    float: 'left',
+  rowList: {
+    padding: 0,
+    margin: 'auto',
+    paddingBottom: '2px',
+    textAlign: 'center',
   },
-  activeRStatus: {
-    padding: '0 17px 0 16px',
-    float: 'right',
+  cellList: {
+    margin: 'auto',
+    textAlign: 'center',
+  },
+  cellWrapper: {
+    margin: 'auto',
+    minHeight: 36,
+  },
+  divider: {
+    margin: 'auto',
+    textAlign: 'center',
+    width: '90%',
   },
   shareicons: {
     width: '19px',
@@ -102,6 +115,20 @@ const styles = theme => ({
   icons: {
     width: '24px',
     height: '24px',
+  },
+  smallIcons: {
+    width: '16px',
+    height: '16px',
+  },
+  smallFont: {
+    padding: '0 0 0 10px',
+    fontSize: '12px',
+    fontWeight: '500',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    color: '#111111',
   },
   captionNText: {
     padding: '0 0 0 10px',
@@ -199,7 +226,7 @@ const styles = theme => ({
   toolStyle: {
     maxWidth: 351,
     backgroundColor: '#ffffff !important',
-    fontFamily: 'AppleSDGothicNeo',
+    fontFamily: 'Apple SD Gothic Neo',
     fontSize: 11,
     fontWeight: 500,
     fontStyle: 'normal',
@@ -209,6 +236,15 @@ const styles = theme => ({
     color: '#111111 !important',
     boxShadow: '0 1px 7px 0 rgba(0, 0, 0, 0.2)',
   },
+  statusLeft: {
+    margin: 'auto',
+    marginLeft: '20px',
+    textAlign: 'left',
+  },
+  statusRight: {
+    margin: 'auto',
+    textAlign: 'Right',
+  }
 });
 
 const votingIcons = {
@@ -517,8 +553,18 @@ class ReviewCardBottomBarView extends React.Component {
     router: PropTypes.object,
   };
 
+<<<<<<< HEAD
   selfVoting = bOpen => {
     this.setState({ selfVoting: bOpen });
+=======
+  selfVoting = (bOpen) => {
+    if(bOpen) {
+      setTimeout(() => {
+          this.setState({'selfVoting': false});
+      }, 1500);
+    }
+    this.setState({'selfVoting': bOpen});
+>>>>>>> ee9c8d7f6c80789cf3b2213a264e881f90c3c391
   };
 
   render() {
@@ -587,6 +633,7 @@ class ReviewCardBottomBarView extends React.Component {
     // 좋아요 가능
     if (onViewVote !== false) {
       return (
+<<<<<<< HEAD
         <div className={viewClass}>
           <div className={classes.actions}>
             <div className={classes.activeStatusFirst}>
@@ -614,90 +661,134 @@ class ReviewCardBottomBarView extends React.Component {
                       root: classes.rootButton,
                     }}
                   >
+=======
+        <div className={viewClass}>          
+          <List classes={{padding: classes.listPadding}} className={classes.actions}>
+            <ListItem className={classes.rowList}>
+              {/*----------Like Button:START ----------*/}
+              {/* <ListItem className={classes.activeStatusFirst}> */}
+              <ListItemText className={classes.cellList}>
+                {review.user.username === localStorage.getItem('username')? (
+                  <Tooltip 
+                    placement="top"
+                    classes={{popper: classes.popper, tooltip: classes.toolStyle}}
+                    open={this.state.selfVoting} 
+                    onClose={() => this.selfVoting(false)}
+                    title="본인이 작성한 리뷰에는 좋아요를 추가할 수 없습니다." 
+                  >
+                  <Button
+                    // color="inherit"
+                    // onClick={() => {
+                    //   this.handleVoting(this.props.review.id);
+                    // }}
+                    onClick={() => this.selfVoting(true)}
+                    aria-label="service"
+                    className={classes.votingIcon}
+                    classes={{
+                      root: classes.rootButton,
+                    }}
+                  >              
+>>>>>>> ee9c8d7f6c80789cf3b2213a264e881f90c3c391
                     {/* <img src={LikeIcon} alt="like" className={classes.icons} /> */}
                     <img
                       src={curVote.selImg}
                       alt="like"
                       className={classes.icons}
+<<<<<<< HEAD
                     />
                     <span
                       className={classNames(
                         classes.numCaption,
                         curVote.styleClass,
                       )}
+=======
+                    />                
+                    <span
+                      className={classNames(classes.numCaption, curVote.styleClass)}
+>>>>>>> ee9c8d7f6c80789cf3b2213a264e881f90c3c391
                     >
                       {review.likeCount ? review.likeCount : 0}
                     </span>
                   </Button>
+<<<<<<< HEAD
                 </Tooltip>
               ) : (
+=======
+                  </Tooltip>
+                ):(
+                  <Button
+                    // color="inherit"
+                    onClick={() => {
+                      this.handleVoting(this.props.review.id);
+                    }}
+                    aria-label="service"
+                    className={classes.votingIcon}
+                    classes={{
+                      root: classes.rootButton,
+                    }}
+                  >              
+                    {/* <img src={LikeIcon} alt="like" className={classes.icons} /> */}
+                    <img
+                      src={curVote.selImg}
+                      alt="like"
+                      className={classes.icons}
+                    />                
+                    <span
+                      className={classNames(classes.numCaption, curVote.styleClass)}
+                    >
+                      {review.likeCount ? review.likeCount : 0}
+                    </span>
+                  </Button>
+                )}
+              </ListItemText>
+              {/*----------Like Button:END ----------*/}
+              {/*----------Reply Button:START ----------*/}
+              {/* <ListItem className={classes.activeStatus}> */}
+              <ListItemText className={classes.cellList}>
+>>>>>>> ee9c8d7f6c80789cf3b2213a264e881f90c3c391
                 <Button
-                  // color="inherit"
-                  onClick={() => {
-                    this.handleVoting(this.props.review.id);
-                  }}
+                  color="inherit"
+                  onClick={this.handleReplyPop}
                   aria-label="service"
                   className={classes.votingIcon}
                   classes={{
                     root: classes.rootButton,
                   }}
                 >
+<<<<<<< HEAD
                   {/* <img src={LikeIcon} alt="like" className={classes.icons} /> */}
+=======
+>>>>>>> ee9c8d7f6c80789cf3b2213a264e881f90c3c391
                   <img
-                    src={curVote.selImg}
-                    alt="like"
+                    src={CommentIcon}
+                    alt="comment"
                     className={classes.icons}
                   />
                   <span
                     className={classNames(
                       classes.numCaption,
+<<<<<<< HEAD
                       curVote.styleClass,
+=======
+                      curReviewing.styleClass,
+>>>>>>> ee9c8d7f6c80789cf3b2213a264e881f90c3c391
                     )}
                   >
-                    {review.likeCount ? review.likeCount : 0}
+                    {review.replyCount ? review.replyCount : 0}
                   </span>
                 </Button>
-              )}
-            </div>
-            <div className={classes.activeStatus}>
-              <Button
-                color="inherit"
-                onClick={this.handleReplyPop}
-                aria-label="service"
-                className={classes.votingIcon}
-                classes={{
-                  root: classes.rootButton,
-                }}
-              >
-                <img
-                  src={CommentIcon}
-                  alt="comment"
-                  className={classes.icons}
-                />
-                <span
-                  className={classNames(
-                    classes.numCaption,
-                    curReviewing.styleClass,
-                  )}
-                >
-                  {review.replyCount ? review.replyCount : 0}
-                </span>
-              </Button>
-            </div>
-            <div className={classes.activeStatus}>
-              <FacebookProvider
-                appId={process.env.FACEBOOK_APPID}
-                mobileIframe
-                hashtag="#LITER"
-              >
-                <Share
-                  href={shareLocation}
-                  onReady={this.handleReady}
-                  onResponse={this.handleResponse}
-                  onError={this.handleError}
-                  // mobileIframe
+              </ListItemText>
+              {/*----------Reply Button:END ----------*/}
+              {/*----------Share Button:START ----------*/}
+              {/* <ListItem className={classes.activeStatus}> */}
+              <ListItemText className={classes.cellList}>
+                <div className={classes.cellWrapper}>
+                <FacebookProvider
+                  appId={process.env.FACEBOOK_APPID}
+                  mobileIframe
                   hashtag="#LITER"
                 >
+<<<<<<< HEAD
                   {/* <Share href="http://www.facebook.com"> */}
                   <div className={classes.captionWrapper}>
                     <img
@@ -724,6 +815,68 @@ class ReviewCardBottomBarView extends React.Component {
             />
             {/* ]]---------  LikeList Popup :: END  --------[[ */}
           </div>
+=======
+                  <Share
+                    href={shareLocation}
+                    onReady={this.handleReady}
+                    onResponse={this.handleResponse}
+                    onError={this.handleError}
+                    // mobileIframe
+                    hashtag="#LITER"
+                  >
+                    {/* <Share href="http://www.facebook.com"> */}
+                    <div className={classes.captionWrapper}>
+                      <img
+                        src={ShareIcon}
+                        alt="share"
+                        className={classes.icons}
+                      />
+                      <span
+                        className={classNames(
+                          classes.numCaption,
+                          curShare.styleClass,
+                        )}
+                      >
+                        {shareCount}
+                      </span>
+                    </div>
+                  </Share>
+                </FacebookProvider>
+                </div>
+              </ListItemText>
+              {/*----------Share Button:END ----------*/}
+            </ListItem>
+            <Divider className={classes.divider}/>
+
+          <ListItem className={classes.rowList}>
+            <ListItemText className={classNames(classes.cellList, classes.statusLeft)}>
+              <div>
+                <img
+                  src={LikeSelIcon}
+                  alt="like"
+                  className={classes.smallIcons}
+                />
+                {review.likeCount ? (
+                  <span className={classes.smallFont} onClick={() => this.showLikeList()}> 도움이 됐어요 {review.likeCount}명</span>
+                ) : (
+                  <span className={classes.smallFont}> 도움이 됐어요 {0}명</span>
+                )}
+              </div>
+            </ListItemText>
+
+            <ListItemText className={classNames(classes.cellList, classes.statusRight)}>
+              {/* ]]---------  LikeList Popup :: START --------[[ */}
+              <LikeList
+                showLikeList={click => (this.showLikeList = click)}
+                reviewId={this.props.review.id}
+                rewardLitercube={this.state.literCubeState}
+              />
+              {/* ]]---------  LikeList Popup :: END  --------[[ */}
+            </ListItemText>
+          </ListItem>
+          </List>
+
+>>>>>>> ee9c8d7f6c80789cf3b2213a264e881f90c3c391
           <Dialog
             open={this.state.openSuccesPop}
             onClose={this.handleClose}

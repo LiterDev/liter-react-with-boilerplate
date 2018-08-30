@@ -84,6 +84,10 @@
   "app.containers.SignUp.passwordNotEqual": "비밀번호와 불일치",
   "app.containers.SignUp.nicknameExists": "사용중인 닉네임 입니다.",
 
+  "app.components.Timer.hour": "시",
+  "app.components.Timer.minute": "분",
+  "app.components.Timer.seconds": "초",
+
   "app.components.FollowAjxButton.unButtonTitle": "팔로잉",
   "app.components.FollowAjxButton.buttonTitle": "팔로우",
 

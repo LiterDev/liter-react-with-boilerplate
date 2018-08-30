@@ -589,7 +589,7 @@ class ReviewWrite extends React.PureComponent {
           this.handleAlertOpen();
           return false;
         }
-        console.log(data.get('storeLat'));
+        // console.log(data.get('storeLat'));
 
         if (!Boolean(data.get('storeAddress'))) {
           this.setState({

@@ -734,7 +734,7 @@ class ReviewCardBottomBarView extends React.Component {
               </Button>
             </DialogActions>
           </Dialog>
-          {/* <Dialog
+          <Dialog
             fullScreen
             open={this.state.replyPopOpen}
             onClose={this.handleCloseReply}
@@ -743,9 +743,9 @@ class ReviewCardBottomBarView extends React.Component {
           >
             <ReplyList
               handleClose={this.handleCloseReply}
-              reviewId={this.props.reviewId}
+              reviewId={review.id}
             />
-          </Dialog> */}
+          </Dialog>
         </div>
       );
     }
@@ -897,18 +897,15 @@ class ReviewCardBottomBarView extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-        {/* <Dialog
+        <Dialog
           fullScreen
           open={this.state.replyPopOpen}
           onClose={this.handleCloseReply}
           TransitionComponent={TransitionReply}
           scroll="paper"
         >
-          <ReplyList
-            handleClose={this.handleCloseReply}
-            reviewId={this.props.reviewId}
-          />
-        </Dialog> */}
+          <ReplyList handleClose={this.handleCloseReply} reviewId={review.id} />
+        </Dialog>
       </div>
     );
   }

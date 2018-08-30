@@ -42,12 +42,21 @@ import avatarDefault from '../../images/ic-avatar.png';
 
 const styles = theme => ({
   root: {
-    // top: theme.spacing.unit * 0,
+    top: theme.spacing.unit * 0,
     // minHeight: '100vh',
     // maxHeight: '100vh',
     // height: '100vh',
     overflowY: 'auto',
-    '-webkit-overflow-scrolling': 'touch',
+    WebkitOverflowCcrolling: 'touch',
+    // bottom: 0,
+    // left: 0,
+    // overflow: 'auto',
+    // position: 'absolute',
+    // right: 0,
+    // top: 0,
+    // transform: 'translate3d(0,0,0)',
+    // position: 'fixed',
+    // -webkit-overflow-scrolling: auto;
     // overflow: 'hidden',
     // transitionProperty: 'height, min-height',
     // transitionDuration: '.6s',
@@ -55,13 +64,20 @@ const styles = theme => ({
     // transitionTimingFunction: 'ease-in',
   },
   appBar: {
-    position: 'sticky',
+    transform: 'translate3d(0,0,0)',
+    position: 'fixed',
     textAlign: 'center',
     top: 0,
+    left: 0,
+    right: 0,
     marginBottom: 20,
+    // display: 'table',
+    width: '100%',
+    height: 130,
   },
   toolbar: {
     textAlign: 'center',
+    boxShadow: '0 0.5px 0 0 rgba(0, 0, 0, 0.1)',
   },
   close: {
     position: 'absolute',
@@ -108,7 +124,7 @@ const styles = theme => ({
     width: '100%',
     height: 72,
     display: 'table',
-    boxShadow: '0 -0.5px 0 0 rgba(0, 0, 0, 0.1)',
+    // boxShadow: '0 -0.5px 0 0 rgba(0, 0, 0, 0.1)',
     zIndex: 10,
     backgroundColor: '#ffffff',
     // text-align: center;
@@ -117,6 +133,9 @@ const styles = theme => ({
     position: 'relative',
     display: 'table-cell',
     verticalAlign: 'middle',
+    paddingBottom: 15,
+    paddingTop: 15,
+    // boxShadow: '0 0.5px 0 0 rgba(0, 0, 0, 0.1)',
     // height: 60,
   },
   inputWrap: {
@@ -131,10 +150,13 @@ const styles = theme => ({
   },
   inputLabel: {
     backgroundColor: 'rgb(250, 250, 250)',
-    // border: 'solid 1px rgb(238, 238, 238)',
-    border: 'solid 0.5px rgb(21, 145, 255)',
+    border: 'solid 1px rgb(238, 238, 238)',
+    // border: 'solid 0.5px rgb(21, 145, 255)',
     borderRadius: 19,
     height: 36,
+  },
+  inputLabelFocus: {
+    border: 'solid 0.5px rgb(21, 145, 255)',
   },
   avatarWrap: {
     position: 'relative',
@@ -238,6 +260,7 @@ export class ReplyList extends React.PureComponent {
       parentId: 0,
       replyValue: '',
       showActionBar: false,
+      focusYn: false,
     };
     this.handleScroll = this.handleScroll.bind(this);
     this.loadReplyList = this.loadReplyList.bind(this);
@@ -246,10 +269,12 @@ export class ReplyList extends React.PureComponent {
   }
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll, true);
+    window.addEventListener('touchmove', this.handleScroll, false);
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll, true);
+    window.removeEventListener('touchmove', this.handleScroll, false);
   }
   componentWillMount() {
     this.loadReplyList(1, 0);
@@ -387,10 +412,14 @@ export class ReplyList extends React.PureComponent {
       alert('로그인이 필요한 서비스 입니다.');
     }
   };
-
+  handleFocus = e => {
+    this.setState({
+      focusYn: !this.state.focusYn,
+    });
+  };
   render() {
     const { classes, handleClose, reviewId } = this.props;
-    const { totalReply, replylist, showActionBar } = this.state;
+    const { totalReply, replylist, showActionBar, focusYn } = this.state;
     // const hasVScroll = hasVerticalScroll(document.querySelector('paper'));
 
     // if (hasVScroll) {
@@ -399,7 +428,7 @@ export class ReplyList extends React.PureComponent {
     // console.log(reviewId);
     return (
       <div onScroll={this.handleScroll} className={classes.root}>
-        <AppBar className={classes.appBar} position="sticky">
+        <AppBar className={classes.appBar} position="fixed">
           <Toolbar className={classes.toolbar}>
             <IconButton
               color="inherit"
@@ -443,7 +472,12 @@ export class ReplyList extends React.PureComponent {
               />
             </div>
             <div className={classes.inputWrap}>
-              <div className={classes.inputLabel}>
+              <div
+                className={classNames(
+                  classes.inputLabel,
+                  focusYn == true ? classes.inputLabelFocus : '',
+                )}
+              >
                 <input
                   type="text"
                   placeholder="댓글 추가..."
@@ -452,6 +486,8 @@ export class ReplyList extends React.PureComponent {
                   onKeyPress={this.handleSubmit}
                   value={this.state.replyValue}
                   onChange={this.handleChange}
+                  onFocus={this.handleFocus}
+                  onBlur={this.handleFocus}
                 />
               </div>
             </div>

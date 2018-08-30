@@ -108,7 +108,7 @@ const styles = theme => ({
     transition: 'opacity 0.2s ease-in'
   },
   avartarNone: {
-    height: 0,
+    display: 'none',
     opacity: 0,
     transition: 'opacity 0.2s ease-in',
   }

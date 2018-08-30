@@ -15,7 +15,10 @@ import {
   LOAD_CATEGORY_SUCCESS,
   VOTE_ACTION,
   VOTE_SUCCESS,
-  VOTE_ERROR
+  VOTE_ERROR,
+  UPDATE_REVIEW,
+  UPDATED_REVIEW,
+  UPDATE_FOLLOW,
 } from './constants';
 
 export function loadList(cateValue) {
@@ -94,4 +97,25 @@ export function voteError(error) {
     type: VOTE_ERROR,
     error
   };
+}
+
+export function updateReview(reviewId) {
+  return {
+    type: UPDATE_REVIEW,
+    reviewId
+  };
+}
+
+export function updatedReview(data) {
+  return {
+    type: UPDATED_REVIEW,
+    data,
+  };
+}
+
+export function updateFollow(followId) {
+  return {
+    type: UPDATE_FOLLOW,
+    followId,
+  }
 }

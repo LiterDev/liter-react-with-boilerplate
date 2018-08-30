@@ -178,8 +178,8 @@ class TabList extends React.Component {
   componentDidMount = () => {
     this.props.tabListHandler(this.state.value);
        
-    console.log("]----------- myPage::componentDidMount:data ---------[");
-    console.log(this.props.data);
+    // console.log("]----------- myPage::componentDidMount:data ---------[");
+    // console.log(this.props.data);
 
     // if(Boolean(this.props.data.estimated) && this.props.data.estimated > 0) {
     //   this.setState({ estimatedReward: true });
@@ -232,7 +232,7 @@ class TabList extends React.Component {
   }
 
   handleRewardClaim = () => {
-    console.log("]---***--reward claim---****---[");
+    // console.log("]---***--reward claim---****---[");
     this.setState({'newReward': false});
     this.props.handleRewardClaim();
   }
@@ -245,8 +245,8 @@ class TabList extends React.Component {
     const result = [];
     const tabItem = tabs[value];
 
-    console.log("]----------- myPage::renderContainer:data ---------[");
-    console.log(data);
+    // console.log("]----------- myPage::renderContainer:data ---------[");
+    // console.log(data);
 
     if (tabItem.type === 'REVIEW') {
       result.push(

@@ -13,3 +13,4 @@ export const FOLLOW_ACTION = 'app/ReviewDetailPage/FOLLOW_ACTION';
 export const VOTE_ACTION = 'app/ReviewDetailPage/VOTE_ACTION';
 export const VOTE_SUCCESS = 'app/ReviewDetailPage/VOTE_SUCCESS';
 export const VOTE_ERROR = 'app/ReviewDetailPage/VOTE_ERROR';
+export const RESET_ACTION = 'app/ReviewDetailPage/RESET_ACTION';

@@ -162,7 +162,7 @@ export class Reviews extends React.Component {
     const { reviews, classes } = this.props;
     // console.log(this.state.reviewlist);
     // console.log(reviews);
-    console.log(this.state.loginYn);
+    // console.log(this.state.loginYn);
     return (
       <div className={classes.root}>
         <Header

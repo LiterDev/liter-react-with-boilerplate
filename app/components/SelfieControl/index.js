@@ -135,13 +135,13 @@ class SelfieControl extends React.PureComponent {
   
   handleInput = () => {
     this.upload.click();
-    console.log("]] ----- handleInput end ----- [[");
+    // console.log("]] ----- handleInput end ----- [[");
   }
 
   handleAppend(event) {
 
-    console.log("]] ----- event start ----- [[");
-    console.log(event.target.files);
+    // console.log("]] ----- event start ----- [[");
+    // console.log(event.target.files);
 
     if (event.target.files) {
       if (event.target.files.length > 0) {

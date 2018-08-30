@@ -25,7 +25,7 @@ import ReviewDetailCard from 'components/ReviewDetailCard';
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
 import reducer from './reducer';
-import { loadAction, followAction, voteAction } from './actions';
+import { loadAction, followAction, voteAction, resetAction } from './actions';
 import saga from './saga';
 import {
   makeSelectReviews,
@@ -57,6 +57,10 @@ export class ReviewDetailPage extends React.PureComponent {
   componentDidMount() {
     const { loadReview, reviewId } = this.props;
     loadReview(reviewId);
+  }
+
+  componentWillUnmount() {    
+    //this.props.doReset();
   }
 
   handleVoting = reviewId => {
@@ -142,6 +146,9 @@ function mapDispatchToProps(dispatch) {
     doVoting: userId => {
       dispatch(voteAction(userId));
     },
+    doReset: () => {
+      dispatch(resetAction());
+    }
   };
 }
 

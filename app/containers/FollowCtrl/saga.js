@@ -6,11 +6,11 @@ import { makeSelectUserID } from '../ActionListContainer/selectors';
 
 export function* setFollowSagaData(userid) {
   const selectid = yield select(makeSelectUserID());
-  console.log(userid);
+  // console.log(userid);
 
   if (false) {
     if (selectid === userid) {
-      console.log(selectid);
+      // console.log(selectid);
       const requestURL = `${process.env.API_URL}/user/follow`;
       try {
         const options = {

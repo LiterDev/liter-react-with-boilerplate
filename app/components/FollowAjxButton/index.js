@@ -4,8 +4,10 @@
  *
  */
 
-import React from 'react';
+import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 // import styled from 'styled-components';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -14,6 +16,8 @@ import messages from './messages';
 import { FormattedMessage } from 'react-intl';
 
 import axios from 'axios';
+
+import { updateFollow } from 'containers/Reviews/actions';
 
 const styles = theme => ({
   followBox: {
@@ -49,7 +53,7 @@ const styles = theme => ({
 });
 
 /* eslint-disable react/prefer-stateless-function */
-class FollowAjxButton extends React.PureComponent {
+class FollowAjxButton extends React.Component {
   constructor(props) {
     super(props);
 
@@ -83,6 +87,7 @@ class FollowAjxButton extends React.PureComponent {
   }
 
   requestAjx = (method, sendType, requestURL, data, options) => {
+
     const self = this;
     axios({
       method: sendType,
@@ -101,7 +106,7 @@ class FollowAjxButton extends React.PureComponent {
             followStatus: false,
             myFollowYn: false,
           });
-        }
+        }        
         return response;
       })
       .catch(function(error) {
@@ -111,7 +116,7 @@ class FollowAjxButton extends React.PureComponent {
   };
 
   handleSetFollow(followId) {
-    console.log('Set');
+    // console.log('Set');
     const requestURL = `${process.env.API_URL}/follow`;
     const accessToken = localStorage.getItem('accessToken');
     const token = `Bearer ${accessToken}`;
@@ -125,10 +130,11 @@ class FollowAjxButton extends React.PureComponent {
       followId: followId,
     });
     this.requestAjx('setFollow', 'POST', requestURL, data, options);
+    this.props.dispatch(updateFollow(followId));
   }
 
   handleSetUnFollow(follodId) {
-    console.log('UnSet');
+    // console.log('UnSet');
     const requestURL = `${process.env.API_URL}/follow/${follodId}`;
     const accessToken = localStorage.getItem('accessToken');
     const token = `Bearer ${accessToken}`;
@@ -140,6 +146,7 @@ class FollowAjxButton extends React.PureComponent {
     };
     const data = {};
     this.requestAjx('setUnFollow', 'DELETE', requestURL, data, options);
+    this.props.dispatch(updateFollow(follodId));
   }
 
   componentWillReceiveProps(nextProps) {
@@ -219,6 +226,20 @@ class FollowAjxButton extends React.PureComponent {
   }
 }
 
-FollowAjxButton.propTypes = {};
+FollowAjxButton.propTypes = {
+};
 
-export default withStyles(styles)(FollowAjxButton);
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  };
+}
+
+const withConnect = connect(
+  mapDispatchToProps,
+);
+
+export default compose(
+  withConnect,
+  withStyles(styles),
+)(FollowAjxButton);

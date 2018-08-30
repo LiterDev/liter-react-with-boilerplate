@@ -15,6 +15,7 @@ import {
   VOTE_ACTION,
   VOTE_SUCCESS,
   VOTE_ERROR,
+  RESET_ACTION,
 } from './constants';
 
 export const initialState = fromJS({
@@ -26,6 +27,10 @@ export const initialState = fromJS({
 
 function reviewDetailPageReducer(state = initialState, action) {
   switch (action.type) {
+    case RESET_ACTION:
+      return state
+          .set('reviews', false)
+          .set('surveys', false);
     case LOAD_ACTION:
       return state;
     case LOAD_SUCCESS:

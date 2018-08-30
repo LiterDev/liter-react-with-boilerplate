@@ -29,7 +29,7 @@ import Slide from '@material-ui/core/Slide';
 
 /* material-ui icon */
 import CloseIcon from '@material-ui/icons/Close';
-
+import Tooltip from '@material-ui/core/Tooltip';
 import LikeList from 'components/LikeList';
 
 /* containers */
@@ -191,6 +191,23 @@ const styles = theme => ({
   captionWrapper: {
     paddingTop: 6,
   },
+  popper: {
+    zIndex: 0,
+    opacity: 0.9,
+  },
+  toolStyle: {
+    maxWidth: 351,
+    backgroundColor: '#ffffff !important',
+    fontFamily: 'AppleSDGothicNeo',
+    fontSize: 11,
+    fontWeight: 500,
+    fontStyle: 'normal',
+    lineHeight: '1.27',
+    fontStretch: 'normal',
+    letterSpacing: 'normal',
+    color: '#111111 !important',
+    boxShadow: '0 1px 7px 0 rgba(0, 0, 0, 0.2)',
+  },
 });
 
 const votingIcons = {
@@ -246,6 +263,7 @@ class ReviewCardBottomBarView extends React.Component {
     literCubeState: 0,
     loading: false,
     replyPopOpen: false,
+    selfVoting: false,
   };
   constructor(props) {
     super(props);
@@ -498,6 +516,10 @@ class ReviewCardBottomBarView extends React.Component {
     router: PropTypes.object,
   };
 
+  selfVoting = (bOpen) => {
+    this.setState({'selfVoting': bOpen});
+  };
+
   render() {
     const { classes } = this.props;
     const {
@@ -560,35 +582,74 @@ class ReviewCardBottomBarView extends React.Component {
       default:
         break;
     }
+
     // 좋아요 가능
     if (onViewVote !== false) {
       return (
-        <div className={viewClass}>
+        <div className={viewClass}>          
           <div className={classes.actions}>
             <div className={classes.activeStatusFirst}>
-              <Button
-                color="inherit"
-                onClick={() => {
-                  this.handleVoting(this.props.review.id);
-                }}
-                aria-label="service"
-                className={classes.votingIcon}
-                classes={{
-                  root: classes.rootButton,
-                }}
-              >
-                {/* <img src={LikeIcon} alt="like" className={classes.icons} /> */}
-                <img
-                  src={curVote.selImg}
-                  alt="like"
-                  className={classes.icons}
-                />
-                <span
-                  className={classNames(classes.numCaption, curVote.styleClass)}
+              {review.user.username === localStorage.getItem('username')? (
+                <Tooltip 
+                  placement="top"
+                  classes={{popper: classes.popper, tooltip: classes.toolStyle}}
+                  open={this.state.selfVoting} 
+                  onClose={() => this.selfVoting(false)}
+                  title="본인이 작성한 리뷰에는 좋아요를 추가할 수 없습니다." 
+                  actions={(
+                    <Button>누름</Button>
+                  )}
                 >
-                  {review.likeCount ? review.likeCount : 0}
-                </span>
-              </Button>
+                <Button
+                  // color="inherit"
+                  // onClick={() => {
+                  //   this.handleVoting(this.props.review.id);
+                  // }}
+                  onClick={() => this.selfVoting(true)}
+                  aria-label="service"
+                  className={classes.votingIcon}
+                  classes={{
+                    root: classes.rootButton,
+                  }}
+                >              
+                  {/* <img src={LikeIcon} alt="like" className={classes.icons} /> */}
+                  <img
+                    src={curVote.selImg}
+                    alt="like"
+                    className={classes.icons}
+                  />                
+                  <span
+                    className={classNames(classes.numCaption, curVote.styleClass)}
+                  >
+                    {review.likeCount ? review.likeCount : 0}
+                  </span>
+                </Button>
+                </Tooltip>
+              ):(
+                <Button
+                  // color="inherit"
+                  onClick={() => {
+                    this.handleVoting(this.props.review.id);
+                  }}
+                  aria-label="service"
+                  className={classes.votingIcon}
+                  classes={{
+                    root: classes.rootButton,
+                  }}
+                >              
+                  {/* <img src={LikeIcon} alt="like" className={classes.icons} /> */}
+                  <img
+                    src={curVote.selImg}
+                    alt="like"
+                    className={classes.icons}
+                  />                
+                  <span
+                    className={classNames(classes.numCaption, curVote.styleClass)}
+                  >
+                    {review.likeCount ? review.likeCount : 0}
+                  </span>
+                </Button>
+              )}
             </div>
             <div className={classes.activeStatus}>
               <Button
@@ -654,7 +715,7 @@ class ReviewCardBottomBarView extends React.Component {
               rewardLitercube={this.state.literCubeState}
             />
             {/* ]]---------  LikeList Popup :: END  --------[[ */}
-          </div>
+          </div>          
           <Dialog
             open={this.state.openSuccesPop}
             onClose={this.handleClose}

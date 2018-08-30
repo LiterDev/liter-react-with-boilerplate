@@ -67,8 +67,7 @@ const styles = theme => ({
     backgroundColor: '#fcfcfc',
     boxShadow: `0 -1px 7px 0 rgba(0, 0, 0, 0.1)`,
   },
-  rootBottom: {
-  },
+  rootBottom: {},
   rootButton: {
     display: 'inline-flex',
     minWidth: '50px',
@@ -243,7 +242,7 @@ const styles = theme => ({
   statusRight: {
     margin: 'auto',
     textAlign: 'Right',
-  }
+  },
 });
 
 const votingIcons = {
@@ -552,13 +551,13 @@ class ReviewCardBottomBarView extends React.Component {
     router: PropTypes.object,
   };
 
-  selfVoting = (bOpen) => {
-    if(bOpen) {
+  selfVoting = bOpen => {
+    if (bOpen) {
       setTimeout(() => {
-          this.setState({'selfVoting': false});
+        this.setState({ selfVoting: false });
       }, 1500);
     }
-    this.setState({'selfVoting': bOpen});
+    this.setState({ selfVoting: bOpen });
   };
 
   render() {
@@ -627,46 +626,55 @@ class ReviewCardBottomBarView extends React.Component {
     // 좋아요 가능
     if (onViewVote !== false) {
       return (
-        <div className={viewClass}>          
-          <List classes={{padding: classes.listPadding}} className={classes.actions}>
+        <div className={viewClass}>
+          <List
+            classes={{ padding: classes.listPadding }}
+            className={classes.actions}
+          >
             <ListItem className={classes.rowList}>
               {/*----------Like Button:START ----------*/}
               {/* <ListItem className={classes.activeStatusFirst}> */}
               <ListItemText className={classes.cellList}>
-                {review.user.username === localStorage.getItem('username')? (
-                  <Tooltip 
+                {review.user.username === localStorage.getItem('username') ? (
+                  <Tooltip
                     placement="top"
-                    classes={{popper: classes.popper, tooltip: classes.toolStyle}}
-                    open={this.state.selfVoting} 
-                    onClose={() => this.selfVoting(false)}
-                    title="본인이 작성한 리뷰에는 좋아요를 추가할 수 없습니다." 
-                  >
-                  <Button
-                    // color="inherit"
-                    // onClick={() => {
-                    //   this.handleVoting(this.props.review.id);
-                    // }}
-                    onClick={() => this.selfVoting(true)}
-                    aria-label="service"
-                    className={classes.votingIcon}
                     classes={{
-                      root: classes.rootButton,
+                      popper: classes.popper,
+                      tooltip: classes.toolStyle,
                     }}
-                  >              
-                    {/* <img src={LikeIcon} alt="like" className={classes.icons} /> */}
-                    <img
-                      src={curVote.selImg}
-                      alt="like"
-                      className={classes.icons}
-                    />                
-                    <span
-                      className={classNames(classes.numCaption, curVote.styleClass)}
+                    open={this.state.selfVoting}
+                    onClose={() => this.selfVoting(false)}
+                    title="본인이 작성한 리뷰에는 좋아요를 추가할 수 없습니다."
+                  >
+                    <Button
+                      // color="inherit"
+                      // onClick={() => {
+                      //   this.handleVoting(this.props.review.id);
+                      // }}
+                      onClick={() => this.selfVoting(true)}
+                      aria-label="service"
+                      className={classes.votingIcon}
+                      classes={{
+                        root: classes.rootButton,
+                      }}
                     >
-                      {review.likeCount ? review.likeCount : 0}
-                    </span>
-                  </Button>
+                      {/* <img src={LikeIcon} alt="like" className={classes.icons} /> */}
+                      <img
+                        src={curVote.selImg}
+                        alt="like"
+                        className={classes.icons}
+                      />
+                      <span
+                        className={classNames(
+                          classes.numCaption,
+                          curVote.styleClass,
+                        )}
+                      >
+                        {review.likeCount ? review.likeCount : 0}
+                      </span>
+                    </Button>
                   </Tooltip>
-                ):(
+                ) : (
                   <Button
                     // color="inherit"
                     onClick={() => {
@@ -677,15 +685,18 @@ class ReviewCardBottomBarView extends React.Component {
                     classes={{
                       root: classes.rootButton,
                     }}
-                  >              
+                  >
                     {/* <img src={LikeIcon} alt="like" className={classes.icons} /> */}
                     <img
                       src={curVote.selImg}
                       alt="like"
                       className={classes.icons}
-                    />                
+                    />
                     <span
-                      className={classNames(classes.numCaption, curVote.styleClass)}
+                      className={classNames(
+                        classes.numCaption,
+                        curVote.styleClass,
+                      )}
                     >
                       {review.likeCount ? review.likeCount : 0}
                     </span>
@@ -725,69 +736,82 @@ class ReviewCardBottomBarView extends React.Component {
               {/* <ListItem className={classes.activeStatus}> */}
               <ListItemText className={classes.cellList}>
                 <div className={classes.cellWrapper}>
-                <FacebookProvider
-                  appId={process.env.FACEBOOK_APPID}
-                  mobileIframe
-                  hashtag="#LITER"
-                >
-                  <Share
-                    href={shareLocation}
-                    onReady={this.handleReady}
-                    onResponse={this.handleResponse}
-                    onError={this.handleError}
-                    // mobileIframe
+                  <FacebookProvider
+                    appId={process.env.FACEBOOK_APPID}
+                    mobileIframe
                     hashtag="#LITER"
                   >
-                    {/* <Share href="http://www.facebook.com"> */}
-                    <div className={classes.captionWrapper}>
-                      <img
-                        src={ShareIcon}
-                        alt="share"
-                        className={classes.icons}
-                      />
-                      <span
-                        className={classNames(
-                          classes.numCaption,
-                          curShare.styleClass,
-                        )}
-                      >
-                        {shareCount}
-                      </span>
-                    </div>
-                  </Share>
-                </FacebookProvider>
+                    <Share
+                      href={shareLocation}
+                      onReady={this.handleReady}
+                      onResponse={this.handleResponse}
+                      onError={this.handleError}
+                      // mobileIframe
+                      hashtag="#LITER"
+                    >
+                      {/* <Share href="http://www.facebook.com"> */}
+                      <div className={classes.captionWrapper}>
+                        <img
+                          src={ShareIcon}
+                          alt="share"
+                          className={classes.icons}
+                        />
+                        <span
+                          className={classNames(
+                            classes.numCaption,
+                            curShare.styleClass,
+                          )}
+                        >
+                          {shareCount}
+                        </span>
+                      </div>
+                    </Share>
+                  </FacebookProvider>
                 </div>
               </ListItemText>
               {/*----------Share Button:END ----------*/}
             </ListItem>
-            <Divider className={classes.divider}/>
+            <Divider className={classes.divider} />
 
-          <ListItem className={classes.rowList}>
-            <ListItemText className={classNames(classes.cellList, classes.statusLeft)}>
-              <div>
-                <img
-                  src={LikeSelIcon}
-                  alt="like"
-                  className={classes.smallIcons}
+            <ListItem className={classes.rowList}>
+              <ListItemText
+                className={classNames(classes.cellList, classes.statusLeft)}
+              >
+                <div>
+                  <img
+                    src={LikeSelIcon}
+                    alt="like"
+                    className={classes.smallIcons}
+                  />
+                  {review.likeCount ? (
+                    <span
+                      className={classes.smallFont}
+                      onClick={() => this.showLikeList()}
+                    >
+                      {' '}
+                      도움이 됐어요 {review.likeCount}명
+                    </span>
+                  ) : (
+                    <span className={classes.smallFont}>
+                      {' '}
+                      도움이 됐어요 {0}명
+                    </span>
+                  )}
+                </div>
+              </ListItemText>
+
+              <ListItemText
+                className={classNames(classes.cellList, classes.statusRight)}
+              >
+                {/* ]]---------  LikeList Popup :: START --------[[ */}
+                <LikeList
+                  showLikeList={click => (this.showLikeList = click)}
+                  reviewId={this.props.review.id}
+                  rewardLitercube={this.state.literCubeState}
                 />
-                {review.likeCount ? (
-                  <span className={classes.smallFont} onClick={() => this.showLikeList()}> 도움이 됐어요 {review.likeCount}명</span>
-                ) : (
-                  <span className={classes.smallFont}> 도움이 됐어요 {0}명</span>
-                )}
-              </div>
-            </ListItemText>
-
-            <ListItemText className={classNames(classes.cellList, classes.statusRight)}>
-              {/* ]]---------  LikeList Popup :: START --------[[ */}
-              <LikeList
-                showLikeList={click => (this.showLikeList = click)}
-                reviewId={this.props.review.id}
-                rewardLitercube={this.state.literCubeState}
-              />
-              {/* ]]---------  LikeList Popup :: END  --------[[ */}
-            </ListItemText>
-          </ListItem>
+                {/* ]]---------  LikeList Popup :: END  --------[[ */}
+              </ListItemText>
+            </ListItem>
           </List>
 
           <Dialog

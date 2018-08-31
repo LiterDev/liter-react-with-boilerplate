@@ -125,6 +125,7 @@ const styles = theme => ({
     letterSpacing: 'normal',
     color: ' #333333',
     whiteSpace: 'pre-wrap',
+    wordWrap: 'break-word',
   },
   divider: {
     margin: 'auto',

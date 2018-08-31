@@ -431,8 +431,8 @@ class ReReplyItem extends React.PureComponent {
     const { classes, reply } = this.props;
     const { deleteYn, editMode, replyValue, originReplyContent } = this.state;
     // console.log(reply);
-    const avatarImg = Boolean(reply.user.profileImageUrl)
-      ? reply.user.profileImageUrl
+    const avatarImg = Boolean(reply.user.profileImageSmallUrl)
+      ? reply.user.profileImageSmallUrl
       : avatarDefault;
 
     return (

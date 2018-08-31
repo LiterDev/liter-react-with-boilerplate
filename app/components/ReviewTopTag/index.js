@@ -192,7 +192,7 @@ class ReviewTopTag extends React.PureComponent {
     } else {
       diff = 0;
     }   
-    console.log(window.scrollY);
+
     if(diff)
       this.setState({'direction': diff*direction});
   };

@@ -98,9 +98,10 @@ const styles = theme => ({
     minHeight: 36,
   },
   divider: {
-    margin: 'auto',
+    margin: '3px auto 3px auto',
     textAlign: 'center',
     width: '90%',
+    color: '#e3e3e3',
   },
   shareicons: {
     width: '19px',
@@ -812,6 +813,7 @@ class ReviewCardBottomBarView extends React.Component {
                 {/* ]]---------  LikeList Popup :: END  --------[[ */}
               </ListItemText>
             </ListItem>
+            <Divider className={classes.divider} />
           </List>
 
           <Dialog

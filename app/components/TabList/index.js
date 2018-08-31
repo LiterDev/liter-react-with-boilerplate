@@ -116,7 +116,7 @@ const styles = theme => ({
   },
   estimatedSnackbarContent: {
     width: '100%',
-    lineHeight: '53px',    
+    lineHeight: '53px',
     height: '53px',
     color: '#fff',
     textAlign: 'center',
@@ -124,7 +124,7 @@ const styles = theme => ({
   newRewardSnackbarContent: {
     marginTop: '-35px',
     width: '100%',
-    lineHeight: '53px',    
+    lineHeight: '53px',
     height: '53px',
     color: '#fff',
     textAlign: 'center',
@@ -164,7 +164,13 @@ const styles = theme => ({
     lineHeight: '1.14',
     letterSpacing: 'normal',
     color: '#1591ff',
-  }
+  },
+  lcbText: {
+    fontWeight: 500,
+    fontSize: '12px',
+    fontFamily: 'SFProText',
+    marginLeft: 5,
+  },
 });
 
 class TabList extends React.Component {
@@ -177,31 +183,31 @@ class TabList extends React.Component {
 
   componentDidMount = () => {
     this.props.tabListHandler(this.state.value);
-       
+
     // console.log("]----------- myPage::componentDidMount:data ---------[");
     // console.log(this.props.data);
 
     // if(Boolean(this.props.data.estimated) && this.props.data.estimated > 0) {
     //   this.setState({ estimatedReward: true });
     // }
-    
+
     // if(Boolean(this.props.data.acquire) && this.props.data.acquire > 0) {
-    //   this.setState({ newReward: true, bottomHeight: 53 });      
+    //   this.setState({ newReward: true, bottomHeight: 53 });
     // }
   };
 
-  componentWillReceiveProps = (nextProps) => {
-    if(Boolean(nextProps.data.estimated) && nextProps.data.estimated > 0) {
+  componentWillReceiveProps = nextProps => {
+    if (Boolean(nextProps.data.estimated) && nextProps.data.estimated > 0) {
       this.setState({ estimatedReward: true });
     } else {
       this.setState({ estimatedReward: false });
     }
-    if(Boolean(nextProps.data.acquire) && nextProps.data.acquire > 0) {
+    if (Boolean(nextProps.data.acquire) && nextProps.data.acquire > 0) {
       this.setState({ newReward: true, bottomHeight: 53 });
     } else {
       this.setState({ newReward: false, bottomHeight: 0 });
     }
-  }
+  };
 
   handleChange = (event, value) => {
     const { tabListHandler } = this.props;
@@ -220,22 +226,22 @@ class TabList extends React.Component {
     ));
   }
 
-  handleClose = (type) => {
-    switch(type) {
+  handleClose = type => {
+    switch (type) {
       case 'estimated':
-        this.setState({'estimatedReward': false});
-      break;
+        this.setState({ estimatedReward: false });
+        break;
       case 'acquire':
-        this.setState({'newReward': false});
-      break;
+        this.setState({ newReward: false });
+        break;
     }
-  }
+  };
 
   handleRewardClaim = () => {
     // console.log("]---***--reward claim---****---[");
-    this.setState({'newReward': false});
+    this.setState({ newReward: false });
     this.props.handleRewardClaim();
-  }
+  };
 
   renderContainer() {
     const { data, tabs } = this.props;
@@ -271,38 +277,45 @@ class TabList extends React.Component {
           </ListItem>
           <Snackbar
             className={classes.estimatedSnackbar}
-            style={{'bottom': this.state.bottomHeight}}
+            style={{ bottom: this.state.bottomHeight }}
             open={this.state.estimatedReward}
             onClose={() => this.handleClose('estimated')}
-            onClick={() => this.handleClose('estimated')} >
+            onClick={() => this.handleClose('estimated')}
+          >
             <div className={classes.estimatedSnackbarContent}>
               <span className={classes.newRewardSnackBarCaption}>
                 예상 보상 내역 (추후 변동될 수 있습니다.)
               </span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="21" viewBox="0 0 10 21" >
-                <g fill="none" fillRule="evenodd"><path d="M-155-201h375v667h-375z" /><path fill="#fff" fillRule="nonzero" stroke="#fff" strokeWidth=".1"d="M7.886 6.502l.114.1v.972l-.034.072-.142.08A3.67 3.67 0 0 0 4.776 9.37l3.108.048.116.106-.059 1.022-.12.096-3.388-.042c-.018.139-.027.26-.027.376l.001.075v.028c.003.104.003.174-.002.233l3.48.05.115.105-.059 1.023-.12.096-3-.067c.596 1.045 1.747 1.71 3.066 1.757l.113.107-.059 1.022-.117.096c-2.01 0-3.798-1.186-4.44-2.918l-1.272-.048L2 12.428l.059-1.022.125-.096.861.048a4.1 4.1 0 0 1-.018-.383c0-.14.01-.25.037-.341l-.953-.043L2 10.485l.059-1.023.121-.096 1.153.033c.704-1.78 2.504-2.948 4.553-2.897z" /></g>
-              </svg>
-              <span className={classes.newRewardSnackBarCoin}>{data.estimated}</span>
+              <span className={classes.newRewardSnackBarCoin}>
+                {data.estimated}
+                <span className={classes.lcbText}>LCB</span>
+              </span>
             </div>
           </Snackbar>
           <Snackbar
             className={classes.newRewardSnackbar}
             open={this.state.newReward}
             onClose={() => this.handleClose('acquire')}
-            onClick={() => this.handleClose('acquire')} >
+            onClick={() => this.handleClose('acquire')}
+          >
             <div className={classes.newRewardSnackbarContent}>
               <span className={classes.newRewardSnackBarCaption}>
                 지금 받을 수 있는 신규보상
               </span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="21" viewBox="0 0 10 21" >
-                <g fill="none" fillRule="evenodd"><path d="M-155-201h375v667h-375z" /><path fill="#fff" fillRule="nonzero" stroke="#fff" strokeWidth=".1"d="M7.886 6.502l.114.1v.972l-.034.072-.142.08A3.67 3.67 0 0 0 4.776 9.37l3.108.048.116.106-.059 1.022-.12.096-3.388-.042c-.018.139-.027.26-.027.376l.001.075v.028c.003.104.003.174-.002.233l3.48.05.115.105-.059 1.023-.12.096-3-.067c.596 1.045 1.747 1.71 3.066 1.757l.113.107-.059 1.022-.117.096c-2.01 0-3.798-1.186-4.44-2.918l-1.272-.048L2 12.428l.059-1.022.125-.096.861.048a4.1 4.1 0 0 1-.018-.383c0-.14.01-.25.037-.341l-.953-.043L2 10.485l.059-1.023.121-.096 1.153.033c.704-1.78 2.504-2.948 4.553-2.897z" /></g>
-              </svg>
-              <span className={classes.newRewardSnackBarCoin}>{data.acquire}</span>
-              <button className={classes.newRewardSnackBarBtn} onClick={() => this.handleRewardClaim()} >보상받기</button>
+              <span className={classes.newRewardSnackBarCoin}>
+                {data.acquire}
+                <span className={classes.lcbText}>LCB</span>
+              </span>
+              <button
+                className={classes.newRewardSnackBarBtn}
+                onClick={() => this.handleRewardClaim()}
+              >
+                보상받기
+              </button>
             </div>
           </Snackbar>
 
-          { this.renderRewardRow(tabItem.type, data.rewards) }
+          {this.renderRewardRow(tabItem.type, data.rewards)}
         </List>,
       );
     }
@@ -340,7 +353,7 @@ class TabList extends React.Component {
     const { classes } = this.props;
     // console.log('####');
     // console.log(Boolean(data));
-      //console.log(Object.values(data));
+    //console.log(Object.values(data));
     // return <div>11</div>;
 
     if (Boolean(data) !== false && data.length > 0) {
@@ -348,7 +361,7 @@ class TabList extends React.Component {
         <RewardContainer reward={row} key={type.concat(row.id)} />
       ));
     }
-    
+
     return (
       // <div key={type.concat('-empty')}>111</div>
       <Card className={classes.card} key={type.concat(1)}>

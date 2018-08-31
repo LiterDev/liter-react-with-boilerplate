@@ -38,8 +38,8 @@ const styles = theme => ({
 
 function MediaThumbnail(props) {
   const { classes } = props;
-  console.log(`fullPathMedium =====[ ${props.fullPathMedium}]`);
-  console.log(`reviewId =====[ ${props.reviewId}]`);
+  // console.log(`fullPathMedium =====[ ${props.fullPathMedium}]`);
+  // console.log(`reviewId =====[ ${props.reviewId}]`);
   switch (props.mediaType) {
     case 'IMAGE':
       return (

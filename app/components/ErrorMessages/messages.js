@@ -47,4 +47,8 @@ export default defineMessages({
     id: 'app.components.ErrorCodes.nicknameExists',
     defaultMessage: 'User nick name is already exists',
   },
+  unknownError: {
+    id: 'app.components.ErrorCodes.unknownError',
+    defaultMessage: 'Unknown Error',
+  },
 });

@@ -40,20 +40,34 @@ export const ErrorCodes = {
     500109: { code: 'emailExists' },
     500112: { code: 'usernameEmpty' },
     500113: { code: 'nicknameExists' },
+    unknown: { code: 'unknownError' },
   },
   // USER_NAME_EXISTE: 500302,
 };
 if (Object.freeze) Object.freeze(ErrorCodes);
 
 function ErrorMessages(errCode) {
-  // const errCode = props.code;
-  // console.log(`ErrorMessage:: ${errCode}`);
-  // console.log(`ErrorMessage:: ${ErrorCodes.messages[errCode].code}`);
-  // console.log(
-  //   <FormattedMessage {...messages[ErrorCodes.messages[errCode].code]} />,
-  // );
-  // return false;
-  return <FormattedMessage {...messages[ErrorCodes.messages[errCode].code]} />;
+  console.log(`###ErrorMessage:: ${errCode}`);
+  console.log(errCode);
+  const msgArray = Object.keys(ErrorCodes.messages);
+  console.log(Object.keys(ErrorCodes.messages).length);
+  console.log(msgArray);
+  console.log(msgArray.indexOf(errCode));
+  console.log(msgArray.includes(errCode));
+  
+  console.log(msgArray.length);
+  // for(msgArray.)
+  // const keys = Object.keys(ErrorCodes.messages).map(item => Number(item) === errCode);
+  // console.log(keys);
+  // for (const msg of msgArray) {
+  //   console.log(msg);
+  // }
+  if (msgArray.indexOf(String(errCode)) > -1) {
+    return (
+      <FormattedMessage {...messages[ErrorCodes.messages[errCode].code]} />
+    );
+  }
+  return <FormattedMessage {...messages[ErrorCodes.messages.unknown.code]} />;
 }
 
 ErrorMessages.propTypes = {};

@@ -337,9 +337,9 @@ export class MyPage extends React.PureComponent {
     }
     if (nextProps.myPages.error !== this.props.myPages.error) {
       if (nextProps.myPages.error !== false) {
-        console.log(nextProps.myPages.error);
+        // console.log(nextProps.myPages.error);
         const msg = ErrorMessages(nextProps.myPages.error);
-        console.log(msg);
+        // console.log(msg);
         this.setState({ errorMessage: msg });
       } else {
         this.setState({

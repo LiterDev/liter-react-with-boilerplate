@@ -118,6 +118,7 @@
   "app.components.ErrorCodes.emailExists": "사용중인 이메일입니다",
   "app.components.ErrorCodes.usernameEmpty": "사용자명을 입력해주세요",
   "app.components.ErrorCodes.nicknameExists": "사용중인 닉네임 입니다.",
+  "app.components.ErrorCodes.unknownError": "알수 없는 에러입니다.",
 
   "": ""
 }

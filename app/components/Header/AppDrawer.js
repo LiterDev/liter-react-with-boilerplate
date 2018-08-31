@@ -22,6 +22,7 @@ import ReviewsMyLike from 'containers/ReviewsMyLike/Loadable';
 import Dialog from '@material-ui/core/Dialog';
 import ListItemText from '@material-ui/core/ListItemText';
 import Slide from '@material-ui/core/Slide';
+import StyledLink from 'components/ReviewCard/StyledLink';
 
 import avatarDefault from '../../images/ic-avatar.png';
 
@@ -415,19 +416,23 @@ class AppDrawer extends React.PureComponent {
         </div>
         <div className={classes.panel}>
           <div className={classes.row}>
-            <div className={classes.avatarDiv}>
-              <Badge
-                badgeContent={'Lv 1'}
-                color="primary"
-                classes={{ badge: classes.badge }}
-              >
-                <Avatar
-                  alt=""
-                  src={avatarImg}
-                  className={classNames(classes.avatar, classes.bigAvatar)}
-                />
-              </Badge>
-            </div>
+            <StyledLink
+              to={`/profile/${localStorage.getItem('userId')}`}
+            >
+              <div className={classes.avatarDiv}>
+                <Badge
+                  badgeContent={'Lv 1'}
+                  color="primary"
+                  classes={{ badge: classes.badge }}
+                >
+                  <Avatar
+                    alt=""
+                    src={avatarImg}
+                    className={classNames(classes.avatar, classes.bigAvatar)}
+                  />
+                </Badge>
+              </div>
+            </StyledLink>
           </div>
           <div className={classNames(classes.row, classes.rowPaddingName)}>
             {/* <Link

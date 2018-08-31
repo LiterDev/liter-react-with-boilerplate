@@ -22,4 +22,5 @@ export const UPDATE_REVIEW = 'app/Reviews/UPDATE_REVIEW';
 export const UPDATED_REVIEW = 'app/Reviews/UPDATED_REVIEW';
 
 export const UPDATE_FOLLOW = 'app/Reviews/UPDATE_FOLLOW';
+export const LOAD_REVIEW_ACTION_SEARCH = 'app/Reviews/LOAD_REVIEW_ACTION_SEARCH';
 

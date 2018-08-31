@@ -61,14 +61,17 @@ export class Reviews extends React.Component {
     super(props);
     this.state = {
       cateValue: -9,
+      searchValue: '',
       loginConfirmPopOpen: false,
       loginYn: false,
       reviewlist: [],
+      curPage: 1,
     };
 
     this.handleVoting = this.handleVoting.bind(this);
     this.loginConfirmPopClose = this.loginConfirmPopClose.bind(this);
     this.goWrite = this.goWrite.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   }
   static contextTypes = {
     router: PropTypes.object,
@@ -114,20 +117,26 @@ export class Reviews extends React.Component {
 
     loadReviewList(this.state.cateValue);
     loadCategoryList();
+    window.addEventListener('scroll', this.handleScroll, true);
 
-    $(window).scroll(() => {
-      if (
-        $(document).height() - $(window).height() - $(window).scrollTop() <
-        250
-      ) {
-        // console.log(this.props);
-        loadReviewListMore(
-          this.props.reviews.loadMore,
-          this.props.reviews.last,
-          this.state.cateValue,
-        );
-      }
-    });
+    // $(window).scroll(() => {
+    //   if (
+    //     $(document).height() - $(window).height() - $(window).scrollTop() <
+    //     250
+    //   ) {
+    //     // console.log(this.state.cateValue);
+    //     loadReviewListMore(
+    //       this.props.reviews.loadMore,
+    //       this.props.reviews.last,
+    //       this.state.cateValue,
+    //       this.state.searchValue,
+    //     );
+    //   }
+    // });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll, true);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -138,6 +147,32 @@ export class Reviews extends React.Component {
     }
   }
 
+  handleScroll(event) {
+    // console.log('the scroll things', event);
+    const bottom =
+      event.target.scrollingElement.scrollHeight -
+        event.target.scrollingElement.scrollTop ===
+      event.target.scrollingElement.clientHeight;
+
+    // console.log(
+    //   `event.target.scrollHeight -----] ${event.target.scrollHeight} [`,
+    // );
+    // console.log(`event.target.scrollTop -----] ${event.target.scrollTop} [`);
+    // console.log(
+    //   `event.target.clientHeight -----] ${event.target.clientHeight} [`,
+    // );
+    // console.log(bottom);
+    if (bottom) {
+      console.log('the scroll things', event);
+      // this.loadReplyList(this.state.curPage + 1, this.state.parentId);
+      this.props.loadReviewListMore(
+        this.props.reviews.loadMore,
+        this.props.reviews.last,
+        this.state.cateValue,
+        this.state.searchValue,
+      );
+    }
+  }
   loadValue = value => {
     // console.log(value);
     this.setState({
@@ -157,12 +192,26 @@ export class Reviews extends React.Component {
   //   }
   //   return null;
   // }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    // console.log(nextProps.reviews.categoryId);
+    // console.log(prevState.cateValue);
+    if (nextProps.reviews.categoryId !== prevState.cateValue) {
+      return { cateValue: nextProps.reviews.categoryId };
+    }
+    if (nextProps.reviews.searchValue !== prevState.searchValue) {
+      return { searchValue: nextProps.reviews.searchValue };
+    }
+    return null;
+  }
   render() {
     // const { classes } = this.props;
     const { reviews, classes } = this.props;
     // console.log(this.state.reviewlist);
     // console.log(reviews);
-    // console.log(this.state.loginYn);
+    // console.log(this.props);
+
+    // console.log(this.state.cateValue);
     return (
       <div className={classes.root}>
         <Header
@@ -230,9 +279,10 @@ function mapDispatchToProps(dispatch) {
       // console.log(`cateValue ====[ ${cateValue}]`);
       dispatch(loadList(cateValue));
     },
-    loadReviewListMore: (loadMore, last, cateValue) => {
+    loadReviewListMore: (loadMore, last, cateValue, searchValue) => {
+      // console.log(cateValue);
       if (!loadMore && !last) {
-        dispatch(loadListMore(cateValue));
+        dispatch(loadListMore(cateValue, searchValue));
       }
     },
     loadReviewListWithCategory: value => {},

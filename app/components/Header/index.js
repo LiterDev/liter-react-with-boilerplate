@@ -21,7 +21,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
 import CloseIcon from '@material-ui/icons/Close';
-import { loadList } from 'containers/Reviews/actions';
+import { loadListWithSearch } from 'containers/Reviews/actions';
 
 import SignIn from 'containers/SignIn/Loadable';
 // import { Link } from 'react-router-dom';
@@ -314,7 +314,7 @@ class Header extends React.PureComponent {
   };
   handleSend = () => {
     // this.props.dispatch(categoryLoaded(this.state.searchValue));
-    this.props.dispatch(loadList(1));
+    this.props.dispatch(loadListWithSearch(this.state.searchValue));
   };
   render() {
     const { classes, headerTitle, searchBar, loginSuccessHandler } = this.props;

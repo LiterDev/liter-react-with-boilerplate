@@ -352,9 +352,9 @@ const styles = theme => ({
     display: 'block',
     marginBottom: '8px',
   },
-  blank:{
-    height:'60px',
-  }
+  blank: {
+    height: '60px',
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -538,7 +538,7 @@ class ReviewDetailCard extends React.PureComponent {
           </CardContent>
           <CardContent classes={{ root: classes.surveyBox }}>
             <SurveyView surveys={surveys} />
-          </CardContent>  
+          </CardContent>
           <div>
             <Paper className={classes.paperRoot} elevation={1}>
               {reviews.store === 'OFFLINE' ? (
@@ -644,26 +644,27 @@ class ReviewDetailCard extends React.PureComponent {
 
               <div className={classes.paperSheet}>
                 <span className={classes.paperItem}>총평가</span>
-                <span className={classes.paperTotal}>{review.totalScore}
-               
-                <StarRatings
+                <span className={classes.paperTotal}>
+                  {review.totalScore}
+
+                  <StarRatings
                     rating={review.totalScore}
-                      changeRating={false}
-                      numberOfStars={5}
-                      starSpacing="0"
-                      name="rating"
-                      starDimension="23px"
-                      starEmptyColor="rgb(220, 235, 247)"
-                      starRatedColor="rgb(21, 145, 255)"
-                      starHoverColor="rgb(21, 145, 255)"
-                      svgIconPath="M19.77 29.503l6.838 4.288c1.252.786 2.784-.376 2.455-1.845l-1.813-8.063 6.047-5.433c1.104-.99.51-2.87-.94-2.99l-7.957-.7-3.114-7.62a1.626 1.626 0 0 0-3.031 0l-3.114 7.603-7.958.7c-1.45.12-2.043 2-.939 2.99l6.047 5.432-1.813 8.064c-.33 1.469 1.203 2.63 2.455 1.845l6.838-4.271z"
-                    /></span>
-                  <span className = {classes.paperItem}></span>
-                
+                    changeRating={false}
+                    numberOfStars={5}
+                    starSpacing="0"
+                    name="rating"
+                    starDimension="23px"
+                    starEmptyColor="rgb(220, 235, 247)"
+                    starRatedColor="rgb(21, 145, 255)"
+                    starHoverColor="rgb(21, 145, 255)"
+                    svgIconPath="M19.77 29.503l6.838 4.288c1.252.786 2.784-.376 2.455-1.845l-1.813-8.063 6.047-5.433c1.104-.99.51-2.87-.94-2.99l-7.957-.7-3.114-7.62a1.626 1.626 0 0 0-3.031 0l-3.114 7.603-7.958.7c-1.45.12-2.043 2-.939 2.99l6.047 5.432-1.813 8.064c-.33 1.469 1.203 2.63 2.455 1.845l6.838-4.271z"
+                  />
+                </span>
+                <span className={classes.paperItem} />
               </div>
 
-                  <Divider className={classes.fullDivider} light />
-          
+              <Divider className={classes.fullDivider} light />
+
               {/* <div className={classes.scoreBox}>
                 <div className={classes.scoreItem}>
                   <div className={classes.scoreGradeBox}>

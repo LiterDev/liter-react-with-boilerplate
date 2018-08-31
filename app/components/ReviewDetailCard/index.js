@@ -324,6 +324,7 @@ const styles = theme => ({
     width: '22px',
     height: '22px',
     marginRight: '5px',
+    color: '#1591ff',
   },
   recommendOkFont: {
     color: '#1591ff',
@@ -521,7 +522,7 @@ class ReviewDetailCard extends React.PureComponent {
           </CardContent>
           <CardContent classes={{ root: classes.survayBox }}>
             <SurvayView surveys={surveys} />
-          </CardContent>
+          </CardContent>  
           <div>
             <Paper className={classes.paperRoot} elevation={1}>
               {reviews.store === 'OFFLINE' ? (
@@ -629,7 +630,7 @@ class ReviewDetailCard extends React.PureComponent {
                 <span className={classes.paperItem}>총평가</span>
                 <span className={classes.paperDetail}>{review.totalScore}</span>
               </div>
-              <div className={classes.scoreBox}>
+              {/* <div className={classes.scoreBox}>
                 <div className={classes.scoreItem}>
                   <div className={classes.scoreGradeBox}>
                     <GradeIcon className={classes.gradeicons} />
@@ -651,7 +652,7 @@ class ReviewDetailCard extends React.PureComponent {
                   </div>
                   <p className={classes.scoreText}>문의 응대</p>
                 </div>
-              </div>
+              </div> */}
 
               <Divider className={classes.fullDivider} light />
 

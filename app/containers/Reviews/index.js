@@ -163,7 +163,7 @@ export class Reviews extends React.Component {
     // );
     // console.log(bottom);
     if (bottom) {
-      console.log('the scroll things', event);
+      // console.log('the scroll things', event);
       // this.loadReplyList(this.state.curPage + 1, this.state.parentId);
       this.props.loadReviewListMore(
         this.props.reviews.loadMore,
@@ -220,6 +220,7 @@ export class Reviews extends React.Component {
           loginConfirmPopOpen={this.state.loginConfirmPopOpen}
           loginConfirmPopClose={this.loginConfirmPopClose}
           loginSuccessHandler={this.loginSuccessHandler}
+          cateValue={this.state.cateValue}
         />
 
         <ReviewTopTag

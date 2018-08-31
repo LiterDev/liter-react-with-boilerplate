@@ -28,12 +28,15 @@ const styles = theme => ({
     flexWrap: 'wrap',
   },
   chip: {
-    margin: theme.spacing.unit / 2,
+    // margin: theme.spacing.unit / 2,
+    borderRadius: 2,
+    marginRight: 6,
+    opacity: 0.5,
   },
   chipRoot: {
     height: '24px',
     borderRadius: '2px',
-    margin: '0px',
+    // margin: '0px',
   },
   chipLabel: {
     fontSize: '13px',

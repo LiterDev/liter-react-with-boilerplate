@@ -229,6 +229,7 @@ class Header extends React.PureComponent {
       loginPopOpen: false,
       loginConfirmPopOpen: false,
       searchValue: '',
+      cateValue: -9,
     };
 
     this.handleClose = this.handleClose.bind(this);
@@ -287,13 +288,33 @@ class Header extends React.PureComponent {
   };
   static getDerivedStateFromProps(nextProps, prevState) {
     // console.log(nextProps.loginConfirmPopOpen);
+    // console.log(nextProps.cateValue);
     if (Boolean(nextProps.loginConfirmPopOpen)) {
       if (nextProps.loginConfirmPopOpen !== prevState.loginConfirmPopOpen) {
         return { loginConfirmPopOpen: nextProps.loginConfirmPopOpen };
       }
     }
 
+    // console.log(nextProps.cateValue);
+    // console.log(prevState.cateValue);
+    if (nextProps.cateValue !== prevState.cateValue) {
+      return {
+        searchValue: '',
+        cateValue: nextProps.cateValue,
+      };
+    }
+    // if ()
+    // console.log(nextProps.cateValue);
     return null;
+  }
+  componentWillReceiveProps(nextProps) {
+    // console.log(nextProps.cateValue);
+    // console.log(this.state.cateValue);
+    if (nextProps.cateValue !== this.state.cateValue) {
+      this.setState({
+        searchValue: '',
+      });
+    }
   }
   handleChange = event => {
     if (event.target.value.length > 20) {
@@ -353,6 +374,7 @@ class Header extends React.PureComponent {
                     onChange={this.handleChange}
                     onKeyPress={this.handleSearch}
                     maxLength="20"
+                    value={this.state.searchValue}
                   />
                 </div>
               </div>
@@ -469,6 +491,7 @@ Header.propTypes = {
   loginConfirmPopOpen: PropTypes.any,
   loginConfirmPopClose: PropTypes.func,
   loginSuccessHandler: PropTypes.func,
+  cateValue: PropTypes.any,
 };
 
 // export default Header;

@@ -82,7 +82,7 @@ const styles = theme => ({
   },
   cardHeader: {
     title: {
-     backgroundColor: 'black',
+      backgroundColor: 'black',
     },
   },
   reviewTitle: {
@@ -111,8 +111,7 @@ const styles = theme => ({
     textOverflow: 'ellipsis',
     display: '-webkit-box',
     '-webkit-line-clamp': 3,
-    '-webkit-box-orient': 'vertical'
-
+    '-webkit-box-orient': 'vertical',
   },
   divider: {
     margin: 'auto',
@@ -180,17 +179,16 @@ const styles = theme => ({
   contentWrapper: {
     height: '110px',
     overflow: 'hidden',
-  }
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
 class ReviewCard extends React.PureComponent {
   // state = { expanded: false };
 
-  handleVoting = (reviewId) => {
+  handleVoting = reviewId => {
     this.props.handleVoting(reviewId);
   };
-
 
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
@@ -257,7 +255,7 @@ class ReviewCard extends React.PureComponent {
           {viewType ? (
             <CardHeader
               className={classes.cardHeader}
-              avatar={elAvatar}              
+              avatar={elAvatar}
               action={
                 // <FollowButton
                 //   followYn={review.followYn}
@@ -271,11 +269,11 @@ class ReviewCard extends React.PureComponent {
                   followId={review.user.id}
                 />
               }
-              title={(
+              title={
                 <StyledLink to={`/profile/${this.props.review.user.id}`}>
                   {review.user.userNickName}
                 </StyledLink>
-              )}
+              }
               // subheader={timeDiff}
               subheader={<TimeAt date={review.updateAt} />}
             />
@@ -300,16 +298,16 @@ class ReviewCard extends React.PureComponent {
           />
           <CardContent className={classes.cardContent}>
             <div className={classes.contentWrapper}>
-            <StyledLink to={`/review/${review.id}`}>
-              <Typography className={classes.reviewTitle} component="p">
-                {review.title}
-              </Typography>
-              <Typography className={classes.reviewSummary} component="p">
-                {review.content}
-              </Typography>
-            </StyledLink>
+              <StyledLink to={`/review/${review.id}`}>
+                <Typography className={classes.reviewTitle} component="p">
+                  {review.title}
+                </Typography>
+                <Typography className={classes.reviewSummary} component="p">
+                  {review.content}
+                </Typography>
+              </StyledLink>
             </div>
-          </CardContent>          
+          </CardContent>
         </Card>
       </div>
     );

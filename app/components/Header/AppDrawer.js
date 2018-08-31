@@ -416,9 +416,7 @@ class AppDrawer extends React.PureComponent {
         </div>
         <div className={classes.panel}>
           <div className={classes.row}>
-            <StyledLink
-              to={`/profile/${localStorage.getItem('userId')}`}
-            >
+            <StyledLink to={`/mypage`}>
               <div className={classes.avatarDiv}>
                 <Badge
                   badgeContent={'Lv 1'}

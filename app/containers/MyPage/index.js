@@ -27,6 +27,7 @@ import Header from 'components/Header';
 import ModifyPop from 'components/popups/ModifyPop';
 import SelfieControl from 'components/SelfieControl';
 import TabList from 'components/TabList';
+import ErrorMessages from 'components/ErrorMessages';
 /* image */
 import avatarDefault from 'images/ic-avatar.png';
 /* ref */
@@ -145,6 +146,7 @@ export class MyPage extends React.PureComponent {
       emailSuccessPop: false,
       nickChangePop: false,
       totalLiterCube: 0,
+      errorMessage: false,
     };
 
     this.handleCreateWallet = this.handleCreateWallet.bind(this);
@@ -260,9 +262,6 @@ export class MyPage extends React.PureComponent {
   handleNickChange = userNickName => {
     const { changeUserNick } = this.props;
     changeUserNick(userNickName);
-    this.setState({
-      nickChangePop: false,
-    });
   };
 
   openUserNickChange = () => {
@@ -336,6 +335,18 @@ export class MyPage extends React.PureComponent {
         });
       }
     }
+    if (nextProps.myPages.error !== this.props.myPages.error) {
+      if (nextProps.myPages.error !== false) {
+        // console.log(nextProps.myPages.error);
+        const msg = ErrorMessages(nextProps.myPages.error);
+        // console.log(msg);
+        this.setState({ errorMessage: msg });
+      } else {
+        this.setState({
+          nickChangePop: false,
+        });
+      }
+    }
   }
 
   navigateFollower = () => {
@@ -353,10 +364,11 @@ export class MyPage extends React.PureComponent {
 
   render() {
     const { classes, myPages } = this.props;
+    const { errorMessage } = this.state;
 
     // const literCoin =
     //   myPages.userData.literCoin > 0 ? myPages.userData.literCoin : 0;
-    const literCoin = parseFloat(
+    const literCoin = Number(
       Boolean(this.state.totalLiterCube) ? this.state.totalLiterCube : 0,
     ).toFixed(2);
 
@@ -462,6 +474,7 @@ export class MyPage extends React.PureComponent {
           onClose={this.handleClose}
           open={this.state.nickChangePop}
           submitHandler={this.handleNickChange}
+          errorMsg={errorMessage}
         />
       </div>
     );

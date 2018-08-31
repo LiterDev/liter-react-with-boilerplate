@@ -106,5 +106,19 @@
   "app.components.popups.AlertDialog.ok": "확인",
   "app.components.popups.AgreePop.agreeTitle": "약관 동의",
 
+  "app.components.ErrorCodes.passwordValid": "올바른 비밀번호가 아닙니다",
+  "app.components.ErrorCodes.passwordEmpty": "비밀번호를 입력해주세요",
+  "app.components.ErrorCodes.passwordPatternValid": "비밀번호 형식이 틀립니다",
+  "app.components.ErrorCodes.passwordRepeatEmpty":
+    "비밀번호 확인을 입력해주세요",
+  "app.components.ErrorCodes.passwordNotEqual":
+    "비밀번호와 확인이 불일치합니다.",
+  "app.components.ErrorCodes.emailEmpty": "이메일을 입력해주세요",
+  "app.components.ErrorCodes.emailValid": "올바른 이메일 형식이 아닙니다",
+  "app.components.ErrorCodes.emailExists": "사용중인 이메일입니다",
+  "app.components.ErrorCodes.usernameEmpty": "사용자명을 입력해주세요",
+  "app.components.ErrorCodes.nicknameExists": "사용중인 닉네임 입니다.",
+  "app.components.ErrorCodes.unknownError": "알수 없는 에러입니다.",
+
   "": ""
 }

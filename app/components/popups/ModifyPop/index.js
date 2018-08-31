@@ -119,7 +119,7 @@ class ModifyPop extends React.PureComponent {
   // }
 
   render() {
-    const { classes, open, defaultValue } = this.props;
+    const { classes, open, defaultValue, errorMsg } = this.props;
     const { userNickName, errorMessage } = this.state;
 
     return (
@@ -163,7 +163,7 @@ class ModifyPop extends React.PureComponent {
             </div>
             <div className={classes.msgBox}>
               <Typography className={classes.errorFont}>
-                {errorMessage && errorMessage}
+                {errorMsg !== false ? errorMsg : errorMessage && errorMessage}
               </Typography>
             </div>
           </DialogContent>

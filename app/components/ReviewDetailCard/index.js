@@ -36,7 +36,7 @@ import MediaSlider from 'components/MediaSlider';
 import FollowAjxButton from 'components/FollowAjxButton';
 import TimeAt from 'components/TimeAt';
 import TagView from 'components/TagView';
-import SurvayView from 'components/SurvayView';
+import SurveyView from 'components/SurveyView';
 
 /* image */
 import avatarDefault from 'images/ic-avatar.png';
@@ -520,8 +520,8 @@ class ReviewDetailCard extends React.PureComponent {
           <CardContent classes={{ root: classes.tagBox }}>
             <TagView tags={review.tags} />
           </CardContent>
-          <CardContent classes={{ root: classes.survayBox }}>
-            <SurvayView surveys={surveys} />
+          <CardContent classes={{ root: classes.surveyBox }}>
+            <SurveyView surveys={surveys} />
           </CardContent>  
           <div>
             <Paper className={classes.paperRoot} elevation={1}>
@@ -628,6 +628,8 @@ class ReviewDetailCard extends React.PureComponent {
 
               <div className={classes.paperSheet}>
                 <span className={classes.paperItem}>총평가</span>
+                <span className = {classes.paperItem}></span>
+           
                 <span className={classes.paperDetail}>{review.totalScore}</span>
               </div>
               {/* <div className={classes.scoreBox}>

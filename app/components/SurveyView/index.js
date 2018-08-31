@@ -1,6 +1,6 @@
 /**
  *
- * SurvayView
+ * SurveyView
  *
  */
 /* react ref */
@@ -58,7 +58,7 @@ const styles = theme => ({
 });
 
 /* eslint-disable react/prefer-stateless-function */
-class SurvayView extends React.PureComponent {
+class SurveyView extends React.PureComponent {
   render() {
     const { classes, surveys } = this.props;
     let categorySurveyArr = false;
@@ -67,7 +67,7 @@ class SurvayView extends React.PureComponent {
       categorySurveyArr = surveyArr.filter(
         item => item.reviewSurveyType === 'CATEGORY',
       );
-      const storeSurvayArr = surveyArr.filter(
+      const storeSurveyArr = surveyArr.filter(
         item => item.reviewSurveyType === 'STORE',
       );
       return (
@@ -101,7 +101,7 @@ class SurvayView extends React.PureComponent {
             );
           })}
           <Divider className={classes.divider} />
-          {storeSurvayArr.map(survey => {
+          {storeSurveyArr.map(survey => {
             const surveyScore = Number(survey.score).toFixed(1);
             return (
               <div className={classes.line} key={survey.id}>
@@ -139,6 +139,6 @@ class SurvayView extends React.PureComponent {
   }
 }
 
-SurvayView.propTypes = {};
+SurveyView.propTypes = {};
 
-export default withStyles(styles)(SurvayView);
+export default withStyles(styles)(SurveyView);

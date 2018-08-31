@@ -100,18 +100,22 @@ function myPageReducer(state = initialState, action) {
       // localStorage.setItem('userNickName', action.data.userNickName);
       // return state.setIn(['userData', 'userNickName'], 'test');
       console.log(state);
-      return state.setIn(
-        ['userData', 'userNickName'],
-        action.data.userNickName,
-      );
+      return state
+        .set('loading', false)
+        .set('error', false)
+        .setIn(['userData', 'userNickName'], action.data.userNickName);
     // return state.setIn(
     //   ['userData', 'userNickName'],
     //   action.data.userNickName,
     // );
     // return state;
     case constants.CHANGE_NICK_NAME_FAILURE:
-      // console.log(action.data);
-      return state;
+      // console.log(action.error.response.data.code);
+      return state
+        .set('loading', false)
+        .set('error', action.error.response.data.code);
+    // console.log(action.data);
+    // return state;
     default:
       // console.log(action.type);
       return state;

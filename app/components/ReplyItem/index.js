@@ -684,8 +684,8 @@ class ReplyItem extends React.PureComponent {
     // console.log(reply.active);
     // console.log(deleteYn);
     if (deleteYn == false) {
-      avatarImg = Boolean(reply.user.profileImageUrl)
-        ? reply.user.profileImageUrl
+      avatarImg = Boolean(reply.user.profileImageSmallUrl)
+        ? reply.user.profileImageSmallUrl
         : avatarDefault;
     }
     // if (deleteYn === true){

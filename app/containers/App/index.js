@@ -136,7 +136,11 @@ function App(props) {
           // authenticated={this.state.isAuthenticatedWallet}
         />
         <Route path="/review/edit/:reviewId" component={ReviewForm} />
-        <Route path="/review/:reviewId" component={ReviewDetailResolver} />
+        <Route
+          path="/review/:reviewId"
+          component={ReviewDetailResolver}
+          // onUpdate={handleUpdate}
+        />
         <Route path="/following" component={FollowingActionPage} />
         {/* <PrivateRoute exact path="/review/write" component={ReviewForm} /> */}
         {/* <PrivateRoute path="/review/edit/:reviewId" component={ReviewForm} /> */}
@@ -155,6 +159,13 @@ function App(props) {
   );
 }
 
+function handleUpdate() {
+  let { action } = this.state.location;
+
+  if (action === 'PUSH') {
+    window.scrollTo(0, 0);
+  }
+}
 const PrivateRoute = ({ component: Component, authenticated, ...rest }) => (
   <Route
     {...rest}

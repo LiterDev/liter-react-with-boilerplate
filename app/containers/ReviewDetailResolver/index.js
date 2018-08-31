@@ -30,9 +30,14 @@ export class ReviewDetailResolver extends React.PureComponent {
     // console.log(']----------- PMPM S--------[');
     // console.log(this.props.match);
     const reviewId = this.props.match.params.reviewId;
-    // console.log(reviewId);
+    console.log(this.props);
     // console.log(']----------- PMPM E--------[');
     // this.props.history.push('/follow');
+    const { action } = this.props.history;
+
+    if (action === 'PUSH') {
+      window.scrollTo(0, 0);
+    }
     return (
       <div>
         <ReviewDetailPage reviewId={reviewId} history={this.props.history} />

@@ -76,6 +76,11 @@ export class EmailAuthPop extends React.PureComponent {
   handleClose = () => {
     this.props.onClose(false);
   };
+
+  handleReturn = () => {
+    console.log('alarm!!!');
+  };
+
   render() {
     const { classes, open, sendEmail } = this.props;
 
@@ -113,7 +118,12 @@ export class EmailAuthPop extends React.PureComponent {
               <br />
             </DialogContentText>
             {/* */}
-            <Timer limit={'20m'} />
+            <Timer
+              storageItemName="sendEmailSuccessTime"
+              limitSeconds={3 * 2}
+              items={['M', 'S']}
+              limitAlram={this.handleReturn}
+            />
             (인증 남은 시간)
             <br />
             <br />

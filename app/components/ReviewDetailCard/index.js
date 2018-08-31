@@ -5,41 +5,53 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import { compose } from 'redux';
 import classNames from 'classnames';
+
+/* material-ui core */
+
+import Avatar from '@material-ui/core/Avatar';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
+// import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Avatar from '@material-ui/core/Avatar';
+// import CardActions from '@material-ui/core/CardActions';
+
 import Typography from '@material-ui/core/Typography';
-import SmsIcon from '@material-ui/icons/Sms';
-import ShareIcon from '@material-ui/icons/Share';
+// import SmsIcon from '@material-ui/icons/Sms';
+// import ShareIcon from '@material-ui/icons/Share';
 import GradeIcon from '@material-ui/icons/Grade';
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+// import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-import ReviewCardSlider from 'containers/ReviewCardSlider';
+// import ReviewCardSlider from 'containers/ReviewCardSlider';
+
+/* components */
 import MediaSlider from 'components/MediaSlider';
-import FollowButton from 'components/FollowButton';
+// import FollowButton from 'components/FollowButton';
 import FollowAjxButton from 'components/FollowAjxButton';
 import TimeAt from 'components/TimeAt';
+import TagView from 'components/TagView';
+import SurvayView from 'components/SurvayView';
 
-import FacebookProvider, { Share } from 'react-facebook';
+/* image */
+import avatarDefault from 'images/ic-avatar.png';
+import TalkIcon from 'images/icons/ic-talk.png';
+import TalkNoIcon from 'images/icons/ic-talk-x.png';
+
+// import FacebookProvider, { Share } from 'react-facebook';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 
-import ReviewCardBottomBar from 'containers/ReviewCardBottomBar';
+// import ReviewCardBottomBar from 'containers/ReviewCardBottomBar';
 import ReviewCardBottomBarView from 'components/ReviewCardBottomBarView';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
-import avatarDefault from '../../images/ic-avatar.png';
 import StyledLink from './StyledLink';
 
 const styles = theme => ({
@@ -196,20 +208,19 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit * 2,
     boxShadow: `0 2px 4px 0 rgba(0, 0, 0, 0.15)`,
     border: 'solid 0.5px rgba(0, 0, 0, 0.05)',
-    marginBottom: '40px',
+    marginBottom: '20px',
   },
   paperSheetHead: {
     width: '100%',
     margin: '0 0px 10px 0px',
     // float: 'left',
     fontFamily: 'Apple SD Gothic Neo',
-    fontSize: '14px',
+    fontSize: '16px',
     fontWeight: 'bold',
     fontStyle: 'normal',
     fontStretch: 'normal',
-    lineHeight: '30px',
+    lineHeight: '1.13',
     letterSpacing: 'normal',
-    color: '#1591ff',
     position: 'relative',
     // height: 30,
   },
@@ -309,6 +320,24 @@ const styles = theme => ({
   mapWrap: {
     position: 'relative',
   },
+  talk: {
+    width: '22px',
+    height: '22px',
+    marginRight: '5px',
+  },
+  recommendOkFont: {
+    color: '#1591ff',
+  },
+  recommendNotFont: {
+    color: '#60798f',
+  },
+  contentsBox: {
+    paddingBottom: '10px',
+  },
+  tagBox: {
+    paddingTop: '10px',
+    paddingBottom: '20px',
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -322,11 +351,10 @@ class ReviewDetailCard extends React.PureComponent {
 
     // this.props.location.state.from.pathname
     // const avatarImageUrl = review.user.profileImageSmallUrl;
-    const totalNewReview = 1;
+    // const totalNewReview = 1;
     const mediaCollection = review ? review.mediaCollection : false;
     // const mainImageUrl = mediaCollection.length > 0 ? '/' + mediaCollection[0].path + '/' + mediaCollection[0].uuid : '';
     const avatarImageUrl = review.user.profileImageSmallUrl;
-    const timeDiff = '방금전';
 
     const elAvatar =
       avatarImageUrl != null ? (
@@ -340,6 +368,7 @@ class ReviewDetailCard extends React.PureComponent {
       ) : (
         <StyledLink to={`/profile/${review.user.id}`}>
           <img
+            alt="Recipe"
             aria-label="Recipe"
             className={classes.avatar}
             src={avatarDefault}
@@ -386,13 +415,14 @@ class ReviewDetailCard extends React.PureComponent {
             svAs += item.score;
             asCount++;
             break;
+          default:
         }
       });
     }
 
-    svPrd = prdCount != 0 ? svPrd / prdCount : 0;
-    svDrv = drvCount != 0 ? svDrv / drvCount : 0;
-    svAs = asCount != 0 ? svAs / asCount : 0;
+    svPrd = prdCount !== 0 ? svPrd / prdCount : 0;
+    svDrv = drvCount !== 0 ? svDrv / drvCount : 0;
+    svAs = asCount !== 0 ? svAs / asCount : 0;
 
     let storeInfo = null;
     switch (review.store) {
@@ -444,6 +474,7 @@ class ReviewDetailCard extends React.PureComponent {
           </div>
         );
         break;
+      default:
     }
 
     // console.log(review.store);
@@ -480,22 +511,49 @@ class ReviewDetailCard extends React.PureComponent {
 
           <MediaSlider media={mediaCollection} />
 
-          <CardContent>
+          <CardContent classes={{ root: classes.contentsBox }}>
             <Typography className={classes.reviewContent} component="p">
               {review.content}
             </Typography>
           </CardContent>
-
+          <CardContent classes={{ root: classes.tagBox }}>
+            <TagView tags={review.tags} />
+          </CardContent>
+          <CardContent classes={{ root: classes.survayBox }}>
+            <SurvayView surveys={surveys} />
+          </CardContent>
           <div>
             <Paper className={classes.paperRoot} elevation={1}>
               {reviews.store === 'OFFLINE' ? (
                 <div className={classes.mapWrap}>
-                  <div className={classes.paperSheetHead}>
-                    <SmsIcon className={classes.paperIcons} />
+                  <div
+                    className={classNames(
+                      classes.paperSheetHead,
+                      review.recommend === 'YES'
+                        ? classes.recommendOkFont
+                        : classes.recommendNotFont,
+                    )}
+                  >
                     {review.recommend === 'YES' ? (
-                      <span>재방문 할래요!</span>
+                      <span>
+                        <img
+                          aria-label="recommend"
+                          src={TalkIcon}
+                          alt="recommend"
+                          className={classes.talk}
+                        />
+                        재방문 할래요!
+                      </span>
                     ) : (
-                      <span>재방문 안할래요!</span>
+                      <span>
+                        <img
+                          aria-label="recommend"
+                          src={TalkNoIcon}
+                          alt="recommend"
+                          className={classes.talk}
+                        />
+                        재방문 안할래요!
+                      </span>
                     )}
                   </div>
                   <div className={classes.googleMap}>
@@ -522,12 +580,34 @@ class ReviewDetailCard extends React.PureComponent {
                   </div>
                 </div>
               ) : (
-                <div className={classes.paperSheetHead}>
-                  <SmsIcon className={classes.paperIcons} />
+                <div
+                  className={classNames(
+                    classes.paperSheetHead,
+                    review.recommend === 'YES'
+                      ? classes.recommendOkFont
+                      : classes.recommendNotFont,
+                  )}
+                >
                   {review.recommend === 'YES' ? (
-                    <span>재구매 할래요!</span>
+                    <span>
+                      <img
+                        aria-label="recommend"
+                        src={TalkIcon}
+                        alt="recommend"
+                        className={classes.talk}
+                      />
+                      재구매 할래요!
+                    </span>
                   ) : (
-                    <span>재구매 안할래요!</span>
+                    <span>
+                      <img
+                        aria-label="recommend"
+                        src={TalkNoIcon}
+                        alt="recommend"
+                        className={classes.talk}
+                      />
+                      재구매 안할래요!
+                    </span>
                   )}
                 </div>
               )}

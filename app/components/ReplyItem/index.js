@@ -944,7 +944,7 @@ class ReplyItem extends React.PureComponent {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
           className={classes.popWrap}
-          fullWidth="true"
+          fullWidth
           // maxWidth="false"
           classes={{
             root: classes.popRoot,

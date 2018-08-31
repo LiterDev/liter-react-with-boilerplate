@@ -820,7 +820,7 @@ class ReviewCardBottomBarView extends React.Component {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             className={classes.popWrap}
-            fullWidth="true"
+            fullWidth
             // maxWidth="false"
             classes={{
               root: classes.popRoot,
@@ -856,7 +856,7 @@ class ReviewCardBottomBarView extends React.Component {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             className={classes.popWrap}
-            fullWidth="true"
+            fullWidth
             // maxWidth="false"
             classes={{
               root: classes.popRoot,
@@ -1027,7 +1027,7 @@ class ReviewCardBottomBarView extends React.Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
           className={classes.popWrap}
-          fullWidth="true"
+          fullWidth
           // maxWidth="false"
           classes={{
             root: classes.popRoot,

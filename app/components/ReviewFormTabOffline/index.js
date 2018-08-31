@@ -309,7 +309,7 @@ class ReviewFormTabOffline extends React.PureComponent {
         <div className={classes.rowdivSec}>
           <div className={classes.buyWrap}>
             <img src={CheckIcon} alt="check" className={classes.iconWrite} />
-            <span className={classes.cateText}>재구매를 하겠습니까?</span>
+            <span className={classes.cateText}>재방문을 하겠습니까?</span>
           </div>
           <Divider className={classes.divider} />
           <Paper className={classes.tabPaper}>

@@ -19,13 +19,23 @@ import {
   UPDATE_REVIEW,
   UPDATED_REVIEW,
   UPDATE_FOLLOW,
+  LOAD_REVIEW_ACTION_SEARCH,
 } from './constants';
 
-export function loadList(cateValue) {
+export function loadList(cateValue, searchValue) {
   // console.log(`reaview loadList === [ ${cateValue} ]`);
   return {
     type: LOAD_REVIEW_ACTION,
     cateValue,
+    searchValue,
+  };
+}
+
+export function loadListWithSearch(searchValue) {
+  // console.log(`reaview loadList === [ ${cateValue} ]`);
+  return {
+    type: LOAD_REVIEW_ACTION_SEARCH,
+    searchValue,
   };
 }
 
@@ -43,10 +53,12 @@ export function reviewListLoadingError(error) {
   };
 }
 
-export function loadListMore(cateValue) {
+export function loadListMore(cateValue, searchValue) {
+  // console.log(`reaview loadList === [ ${cateValue} ]`);
   return {
     type: LOAD_REVIEW_MORE,
     cateValue,
+    searchValue,
   };
 }
 
@@ -81,28 +93,28 @@ export function categoryLoaded(data) {
 export function voteAction(reviewId) {
   return {
     type: VOTE_ACTION,
-    reviewId
+    reviewId,
   };
 }
 
 export function voteSuccess(data) {
   return {
     type: VOTE_SUCCESS,
-    data
+    data,
   };
 }
 
 export function voteError(error) {
   return {
     type: VOTE_ERROR,
-    error
+    error,
   };
 }
 
 export function updateReview(reviewId) {
   return {
     type: UPDATE_REVIEW,
-    reviewId
+    reviewId,
   };
 }
 
@@ -117,5 +129,5 @@ export function updateFollow(followId) {
   return {
     type: UPDATE_FOLLOW,
     followId,
-  }
+  };
 }

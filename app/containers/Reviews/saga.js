@@ -22,6 +22,7 @@ import {
   VOTE_ACTION,
   UPDATE_REVIEW,
   UPDATE_FOLLOW,
+  LOAD_REVIEW_ACTION_SEARCH,
 } from './constants';
 
 import {
@@ -34,10 +35,22 @@ import {
 import makeSelectReviews from './selectors';
 
 export function* getReviews(data) {
-  console.log(`saga getReviews === [ ${data.cateValue} ]`);
+  console.log(data);
+
+  let cateValue = data.cateValue;
+  console.log(`saga getReviews === [ ${cateValue} ]`);
+  if (!Boolean(cateValue) && cateValue != 0) {
+    const reviews = yield select(makeSelectReviews());
+    cateValue = reviews.categoryId;
+  }
+  console.log(`saga getReviews === [ ${cateValue} ]`);
+  console.log(`saga getReviews === [ ${data.searchValue} ]`);
+
   const requestURL = `${
     process.env.API_URL
-  }/review/latestList?page=1&categoryId=${data.cateValue}`;
+  }/review/latestList?page=1&categoryId=${cateValue}${
+    Boolean(data.searchValue) ? '&searchValue=' + data.searchValue : ''
+  }`;
   const accessToken = localStorage.getItem('accessToken');
   // console.log(`accessToken========[ ${accessToken}]`);
   let token = null;
@@ -76,7 +89,15 @@ export function* getReviews(data) {
 }
 
 export function* getReviewMore(data) {
+  // console.log(data);
+  console.log(`saga getReviewMore === [ ${data.cateValue} ]`);
+  console.log(`saga getReviewMore === [ ${data.searchValue} ]`);
   const reviews = yield select(makeSelectReviews());
+  let cateValue = data.cateValue;
+  // console.log(`saga getReviews === [ ${cateValue} ]`);
+  // if (!Boolean(cateValue) && cateValue != 0) {
+  //   cateValue = reviews.categoryId;
+  // }
   const curPage = reviews.page + 1;
   const requestURL = `${
     process.env.API_URL
@@ -245,5 +266,6 @@ export default function* defaultSaga() {
   yield takeLatest(LOAD_CATEGORY, getCategorys);
   yield takeLatest(VOTE_ACTION, sagaVote);
   yield takeLatest(UPDATE_FOLLOW, updateFollow);
+  yield takeLatest(LOAD_REVIEW_ACTION_SEARCH, getReviews);
   yield takeEvery(UPDATE_REVIEW, updateReview);
 }

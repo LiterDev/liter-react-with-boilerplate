@@ -20,18 +20,19 @@ import {
   UPDATE_REVIEW,
   UPDATED_REVIEW,
   UPDATE_FOLLOW,
+  LOAD_REVIEW_ACTION_SEARCH,
 } from './constants';
 
 export const initialState = fromJS({
   reviews: false,
-  page: 1,
+  // page: 1,
   last: false,
   loading: false,
   error: false,
   loadMore: false,
   categorys: false,
   categoryId: -9,
-  serchVal: '',
+  searchValue: '',
 });
 
 function clone(obj) {
@@ -49,18 +50,30 @@ function clone(obj) {
 
 function reviewsReducer(state = initialState, action) {
   // console.log(`reaview action === [ ${action.type} ]`);
-  console.log(action.data);
+
   switch (action.type) {
     case LOAD_REVIEW_ACTION:
       return state
         .set('loading', true)
-        .set('error', false);
-        // .set('categoryId', action.data.pageable.categoryId);
-    case LOAD_REVIEW_SUCCESS:
-      return state
-        .set('loading', false)
         .set('error', false)
-        .set('reviews', action.data.content);
+        .set('page', 1);
+    case LOAD_REVIEW_ACTION_SEARCH:
+      // console.log(action.data);
+      return state.set('loading', true).set('error', false);
+    // .set('categoryId', action.data.pageable.categoryId);
+    case LOAD_REVIEW_SUCCESS:
+      // console.log(action.data);
+      console.log(action.data.last);
+      return (
+        state
+          .set('loading', false)
+          .set('error', false)
+          .set('reviews', action.data.content)
+          .set('last', action.data.last)
+          // .set('loadMore', false)
+          .set('categoryId', action.data.pageable.categoryId)
+          .set('searchValue', action.data.pageable.searchValue)
+      );
     case LOAD_REVIEW_ERROR:
       return state;
     case LOAD_REVIEW_MORE:
@@ -74,7 +87,9 @@ function reviewsReducer(state = initialState, action) {
         .set('page', curPage)
         .set('loadMore', false)
         .set('reviews', reviews)
-        .set('last', action.data.last);
+        .set('last', action.data.last)
+        .set('categoryId', action.data.pageable.categoryId)
+        .set('searchValue', action.data.pageable.searchValue);
     case LOAD_REVIEW_MORE_ERROR:
       return state.set('loadMore', false).set('error', true);
     case LOAD_CATEGORY:

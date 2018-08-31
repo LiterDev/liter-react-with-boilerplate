@@ -662,7 +662,7 @@ class ReviewDetailCard extends React.PureComponent {
                 
               </div>
 
-
+                  <Divider className={classes.fullDivider} light />
           
               {/* <div className={classes.scoreBox}>
                 <div className={classes.scoreItem}>

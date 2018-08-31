@@ -98,9 +98,10 @@ const styles = theme => ({
     minHeight: 36,
   },
   divider: {
-    margin: 'auto',
+    margin: '3px auto 3px auto',
     textAlign: 'center',
     width: '90%',
+    color: '#e3e3e3',
   },
   shareicons: {
     width: '19px',
@@ -812,6 +813,7 @@ class ReviewCardBottomBarView extends React.Component {
                 {/* ]]---------  LikeList Popup :: END  --------[[ */}
               </ListItemText>
             </ListItem>
+            <Divider className={classes.divider} />
           </List>
 
           <Dialog
@@ -820,7 +822,7 @@ class ReviewCardBottomBarView extends React.Component {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             className={classes.popWrap}
-            fullWidth="true"
+            fullWidth
             // maxWidth="false"
             classes={{
               root: classes.popRoot,
@@ -856,7 +858,7 @@ class ReviewCardBottomBarView extends React.Component {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             className={classes.popWrap}
-            fullWidth="true"
+            fullWidth
             // maxWidth="false"
             classes={{
               root: classes.popRoot,
@@ -1027,7 +1029,7 @@ class ReviewCardBottomBarView extends React.Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
           className={classes.popWrap}
-          fullWidth="true"
+          fullWidth
           // maxWidth="false"
           classes={{
             root: classes.popRoot,

@@ -1,11 +1,19 @@
-import { all, call, put, fork, select, takeLatest, takeEvery } from 'redux-saga/effects';
+import {
+  all,
+  call,
+  put,
+  fork,
+  select,
+  takeLatest,
+  takeEvery,
+} from 'redux-saga/effects';
 import request from 'utils/request';
 
-import { 
-  reviewListLoaded, 
-  reviewListLoadingError, 
+import {
+  reviewListLoaded,
+  reviewListLoadingError,
   voteSuccess,
-  voteError 
+  voteError,
 } from './actions';
 import {
   LOAD_REVIEW_ACTION,
@@ -26,7 +34,7 @@ import {
 import makeSelectReviews from './selectors';
 
 export function* getReviews(data) {
-  // console.log(`saga getReviews === [ ${data.cateValue} ]`);
+  console.log(`saga getReviews === [ ${data.cateValue} ]`);
   const requestURL = `${
     process.env.API_URL
   }/review/latestList?page=1&categoryId=${data.cateValue}`;
@@ -217,12 +225,14 @@ export function* updateFollow(data) {
   const pageList = yield select(makeSelectReviews());
   const reviews = pageList.reviews;
 
-  yield all(reviews.map(item => {
-    if(item.user.id === data.followId) {
-      // console.log(item.id);
-       return call(updateReview, { reviewId: item.id });
-    }
-  }));
+  yield all(
+    reviews.map(item => {
+      if (item.user.id === data.followId) {
+        // console.log(item.id);
+        return call(updateReview, { reviewId: item.id });
+      }
+    }),
+  );
   // console.log(pageList.reviews);
 }
 

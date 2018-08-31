@@ -175,7 +175,7 @@ const styles = theme => ({
     display: 'block',
   },
   cardContent: {
-    paddingTop: '35px',
+    paddingTop: '50px',
   },
   contentWrapper: {
     height: '110px',
@@ -292,7 +292,6 @@ class ReviewCard extends React.PureComponent {
             image={mainImageUrl}
             title={review.username}
           /> */}
-          <Divider className={classes.divider} light />
 
           <ReviewCardBottomBarView
             likeYn={review.likeYn}

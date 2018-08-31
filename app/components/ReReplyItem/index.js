@@ -18,6 +18,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
+import StyledLink from 'components/ReviewCard/StyledLink';
 /* material-ui icon */
 /* containers */
 /* components */
@@ -439,11 +440,13 @@ class ReReplyItem extends React.PureComponent {
         <div className={classes.root}>
           <div className={classes.rootContainer}>
             <div className={classes.avatarWrap}>
-              <Avatar
-                alt=""
-                src={avatarImg}
-                className={classNames(classes.avatar, classes.bigAvatar)}
-              />
+              <StyledLink to={`/profile/${reply.user.id}`}>
+                <Avatar
+                  alt=""
+                  src={avatarImg}
+                  className={classNames(classes.avatar, classes.bigAvatar)}
+                />
+              </StyledLink>
             </div>
             <div className={classes.replyWrap}>
               <div className={classes.usernickname}>
@@ -527,7 +530,7 @@ class ReReplyItem extends React.PureComponent {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
           className={classes.popWrap}
-          fullWidth="true"
+          fullWidth
           // maxWidth="false"
           classes={{
             root: classes.popRoot,

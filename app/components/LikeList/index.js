@@ -24,10 +24,12 @@ import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
+
 /* material-ui icon */
 /* containers */
 /* components */
 import FollowAjxButton from 'components/FollowAjxButton';
+import StyledLink from 'components/ReviewCard/StyledLink';
 /* image */
 import avatarDefault from '../../images/ic-avatar.png';
 /* ref */
@@ -108,7 +110,7 @@ const styles = {
     paddingTop: '12px',
     lineHeight: 0,
     minHeight: 28,
-  }
+  },
 };
 
 function Transition(props) {
@@ -136,9 +138,9 @@ class LikeList extends React.PureComponent {
     totalVoter: 0,
   };
 
-  handleParentClick = (e) => {
+  handleParentClick = e => {
     this.handleClickOpen(e);
-  }
+  };
 
   componentDidMount() {
     this.targetElem = document.querySelector('#app');
@@ -149,7 +151,7 @@ class LikeList extends React.PureComponent {
     bsLock.clearAllBodyScrollLocks();
   }
 
-  handleClickOpen = (e) => {
+  handleClickOpen = e => {
     // console.log(this.state.reviewId);
     // console.log(this.props.reviewId);
     this.loadLikeList(this.props.reviewId);
@@ -160,146 +162,156 @@ class LikeList extends React.PureComponent {
     bsLock.disableBodyScroll(this.targetElement);
   };
 
-  handleClose = (e) => {
+  handleClose = e => {
     this.setState({ open: false });
     bsLock.enableBodyScroll(this.targetElement);
   };
 
-  handleScroll = (e) => {
-    const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+  handleScroll = e => {
+    const bottom =
+      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
     if (bottom) {
       this.loadLikeMore(this.props.reviewId);
     }
   };
 
-  loadTotalReward = (reviewId) => {
-    if(this.state.loading === false) {
-      this.setState({'loading': true});
+  loadTotalReward = reviewId => {
+    if (this.state.loading === false) {
+      this.setState({ loading: true });
       const requestURL = `${process.env.API_URL}/review/reward/${reviewId}`;
       const accessToken = localStorage.getItem('accessToken');
       const token = `Bearer ${accessToken}`;
 
       let headerObj = {
-        'Accept': 'application/json;charset=UTF-8',
+        Accept: 'application/json;charset=UTF-8',
         'Content-Type': 'application/json;charset=UTF-8',
         'Access-Control-Allow-Origin': '*',
-      }
-      if(accessToken)
-        headerObj.Authorization = token;
+      };
+      if (accessToken) headerObj.Authorization = token;
 
       axios({
         method: 'GET',
         url: requestURL,
         headers: headerObj,
-      }).then(resp => {
-        if(Boolean(resp.data)) {
-          // console.log(']]]-------------load TotalReward-------------[[[');
-          // console.log(resp.data);
-          this.setState({'totalReward': resp.data.reward});
-          this.setState({'totalVoter': resp.data.totalCcount});
-          this.setState({'loading': false});
-        }
-      }).catch(error => {
+      })
+        .then(resp => {
+          if (Boolean(resp.data)) {
+            // console.log(']]]-------------load TotalReward-------------[[[');
+            // console.log(resp.data);
+            this.setState({ totalReward: resp.data.reward });
+            this.setState({ totalVoter: resp.data.totalCcount });
+            this.setState({ loading: false });
+          }
+        })
+        .catch(error => {
           console.log(error);
-      });
+        });
     }
-  }
+  };
 
-  loadLikeList = (reviewId) => {
-    if(this.state.loadEnd === false && this.state.loading === false) {
-      this.setState({'loading': true});
+  loadLikeList = reviewId => {
+    if (this.state.loadEnd === false && this.state.loading === false) {
+      this.setState({ loading: true });
       const requestURL = `${process.env.API_URL}/engagement/${reviewId}?page=1`;
       const accessToken = localStorage.getItem('accessToken');
       const token = `Bearer ${accessToken}`;
 
       let headerObj = {
-        'Accept': 'application/json;charset=UTF-8',
+        Accept: 'application/json;charset=UTF-8',
         'Content-Type': 'application/json;charset=UTF-8',
         'Access-Control-Allow-Origin': '*',
-      }
-      if(accessToken)
-        headerObj.Authorization = token;
+      };
+      if (accessToken) headerObj.Authorization = token;
 
       axios({
         method: 'GET',
         url: requestURL,
         headers: headerObj,
-      }).then(resp => {
-        if(Boolean(resp.data)) {
-          // console.log(']]]-------------loaded likelist-------------[[[');
-          this.setState({'curPage': 1});
-          this.setState({'likelist': resp.data});
-          // console.log(resp.data);
-          this.setState({'loading': false});
-        }
-      }).catch(error => {
-          if(error.response.data.code === 300104) {
-            console.log("no more data");
-            this.setState({'loadEnd': true});
-          } else if(error.response.data.code === 500000) {
-            console.log("likelist empty > ERROR");  
+      })
+        .then(resp => {
+          if (Boolean(resp.data)) {
+            // console.log(']]]-------------loaded likelist-------------[[[');
+            this.setState({ curPage: 1 });
+            this.setState({ likelist: resp.data });
+            // console.log(resp.data);
+            this.setState({ loading: false });
+          }
+        })
+        .catch(error => {
+          if (error.response.data.code === 300104) {
+            console.log('no more data');
+            this.setState({ loadEnd: true });
+          } else if (error.response.data.code === 500000) {
+            console.log('likelist empty > ERROR');
           }
           console.log(error.response);
-      });
+        });
     }
-  }
+  };
 
-  loadLikeMore = (reviewId) => {
-    if(this.state.loadEnd === false && this.state.loading === false) {
-      this.setState({'loading': true});
+  loadLikeMore = reviewId => {
+    if (this.state.loadEnd === false && this.state.loading === false) {
+      this.setState({ loading: true });
       const nextPage = this.state.curPage + 1;
-      const requestURL = `${process.env.API_URL}/engagement/${reviewId}?page=${nextPage}`;
+      const requestURL = `${
+        process.env.API_URL
+      }/engagement/${reviewId}?page=${nextPage}`;
       const accessToken = localStorage.getItem('accessToken');
       const token = `Bearer ${accessToken}`;
 
       let headerObj = {
-        'Accept': 'application/json;charset=UTF-8',
+        Accept: 'application/json;charset=UTF-8',
         'Content-Type': 'application/json;charset=UTF-8',
         'Access-Control-Allow-Origin': '*',
-      }
-      if(accessToken)
-        headerObj.Authorization = token;
+      };
+      if (accessToken) headerObj.Authorization = token;
 
       axios({
         method: 'GET',
         url: requestURL,
         headers: headerObj,
-      }).then(resp => {
-        // console.log(resp);
-        if(Boolean(resp.data)) {
-          // console.log(']]]-------------loaded loadLikeMore-------------[[[');
-          this.setState({'curPage': nextPage});
-          const addData = this.state.likelist.concat(resp.data);
-          this.setState({'likelist': addData});
-          this.setState({'loading': false});
-        }
-      }).catch(error => {
-          if(error.response.data.code === 300104) {
-            console.log("no more data");
-            this.setState({'loadEnd': true});
-          } else if(error.response.data.code === 500000) {
-            console.log("likelist empty > ERROR");  
+      })
+        .then(resp => {
+          // console.log(resp);
+          if (Boolean(resp.data)) {
+            // console.log(']]]-------------loaded loadLikeMore-------------[[[');
+            this.setState({ curPage: nextPage });
+            const addData = this.state.likelist.concat(resp.data);
+            this.setState({ likelist: addData });
+            this.setState({ loading: false });
+          }
+        })
+        .catch(error => {
+          if (error.response.data.code === 300104) {
+            console.log('no more data');
+            this.setState({ loadEnd: true });
+          } else if (error.response.data.code === 500000) {
+            console.log('likelist empty > ERROR');
           }
           console.log(error.response);
-      });
+        });
     }
-  }
+  };
 
   render() {
     const { classes, reviewId, rewardLitercube } = this.props;
     const { totalVoter, totalReward, likelist } = this.state;
-    
+
     return (
       <div onScroll={this.handleScroll}>
-        {(rewardLitercube && rewardLitercube > 0)?(
-          <Button 
-            ref={(ref) => this.likebutton = ref} 
-            classes={{root: classes.buttonRoot}} 
-            className={classes.totalLiterCube} 
+        {rewardLitercube && rewardLitercube > 0 ? (
+          <Button
+            ref={ref => (this.likebutton = ref)}
+            classes={{ root: classes.buttonRoot }}
+            className={classes.totalLiterCube}
             onClick={this.handleClickOpen}
-          >{rewardLitercube} LCB</Button>
-        ):(
-          <span className={classes.totalLiterCubeNon} >{rewardLitercube} LCB</span>
+          >
+            {rewardLitercube} LCB
+          </Button>
+        ) : (
+          <span className={classes.totalLiterCubeNon}>
+            {rewardLitercube} LCB
+          </span>
         )}
 
         <Dialog
@@ -316,47 +328,55 @@ class LikeList extends React.PureComponent {
         >
           <AppBar className={classes.appBar} position="fixed">
             <Toolbar>
-              <Typography variant="title" color="inherit" className={classes.flex}>
+              <Typography
+                variant="title"
+                color="inherit"
+                className={classes.flex}
+              >
                 총 {totalVoter} 명
               </Typography>
-              <div className={classes.cubeCaption}>
-                {totalReward} LCB
-              </div>
+              <div className={classes.cubeCaption}>{totalReward} LCB</div>
             </Toolbar>
           </AppBar>
           <List>
-            {likelist && likelist.map((item, idx) => {
-                  const elAvatar =
+            {likelist &&
+              likelist.map((item, idx) => {
+                const elAvatar =
                   item.user.profileImageSmallUrl != null ? (
-                    <Avatar
-                      aria-label="Recipe"
-                      className={classes.avatar}
-                      src={item.user.profileImageSmallUrl}
-                    />
+                    <StyledLink to={`/profile/${item.user.id}`}>
+                      <Avatar
+                        aria-label="Recipe"
+                        className={classes.avatar}
+                        src={item.user.profileImageSmallUrl}
+                      />
+                    </StyledLink>
                   ) : (
-                    <img
-                      aria-label="Recipe"
-                      className={classes.avatar}
-                      src={avatarDefault}
-                    />
+                    <StyledLink to={`/profile/${item.user.id}`}>
+                      <img
+                        aria-label="Recipe"
+                        className={classes.avatar}
+                        src={avatarDefault}
+                        alt=""
+                      />
+                    </StyledLink>
                   );
-              return (
-              <div key={idx}>
-                <CardHeader
-                  className={classes.cardHeader}
-                  avatar={elAvatar}
-                  action={
-                    <FollowAjxButton
-                      followEmail={item.user.username}
-                      followYn={item.followYn}
-                      followId={item.user.id}
+                return (
+                  <div key={idx}>
+                    <CardHeader
+                      className={classes.cardHeader}
+                      avatar={elAvatar}
+                      action={
+                        <FollowAjxButton
+                          followEmail={item.user.username}
+                          followYn={item.followYn}
+                          followId={item.user.id}
+                        />
+                      }
+                      title={item.user.userNickName}
                     />
-                  }
-                  title={item.user.userNickName}
-                />
-              </div>
-            )
-            })}
+                  </div>
+                );
+              })}
           </List>
         </Dialog>
       </div>
@@ -369,4 +389,3 @@ LikeList.propTypes = {
 };
 
 export default withStyles(styles)(LikeList);
-

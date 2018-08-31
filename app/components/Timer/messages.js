@@ -7,8 +7,16 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  header: {
-    id: 'app.components.Timer.header',
-    defaultMessage: 'This is the Timer component !',
+  hour: {
+    id: 'app.components.Timer.hour',
+    defaultMessage: 'hour',
+  },
+  minute: {
+    id: 'app.components.Timer.minute',
+    defaultMessage: 'minute',
+  },
+  seconds: {
+    id: 'app.components.Timer.seconds',
+    defaultMessage: 'seconds',
   },
 });

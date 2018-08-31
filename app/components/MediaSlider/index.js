@@ -61,17 +61,12 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 class MediaSlider extends React.PureComponent {
-  state = {
-    currentSlide: 1,
-    totalSlide: false,
-  };
 
-  componentDidMount() {
-    if (this.props.media !== false) {
-      // this.setState('totoalSlideCount', Object.values(this.props.media).length);
-      const totalSlide = Object.values(this.props.media).length;
-      this.setState({ totalSlide: totalSlide });
-    }
+  constructor(props){
+    super(props);
+    this.state = {
+      currentSlide: 1,
+    };
   }
 
   render() {
@@ -92,6 +87,7 @@ class MediaSlider extends React.PureComponent {
     if (media !== false) {
       mediaArray = Object.values(media);
 
+      
       // console.log(mediaArray);
 
       return (
@@ -120,7 +116,7 @@ class MediaSlider extends React.PureComponent {
           </Slider>
           <div className={classes.slideCaptionBox}>
             <span className={classes.slideCaption}>
-              {this.state.currentSlide} / {this.state.totalSlide}
+              {this.state.currentSlide} / {mediaArray.length}
             </span>
           </div>
         </div>

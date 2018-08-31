@@ -22,6 +22,7 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 /* material-ui icon */
 import CloseIcon from '@material-ui/icons/Close';
+import StyledLink from 'components/ReviewCard/StyledLink';
 
 /* containers */
 /* components */
@@ -217,7 +218,9 @@ const styles = theme => ({
     borderRadius: 19,
     height: 36,
   },
-
+  inputLabelFocus: {
+    border: 'solid 0.5px rgb(21, 145, 255)',
+  },
   avatarReplyWrap: {
     position: 'relative',
     float: 'left',
@@ -357,6 +360,7 @@ class ReplyItem extends React.PureComponent {
       editMode: false,
       replyValue: this.props.reply.content,
       originReplyContent: this.props.reply.content,
+      focusYn: false,
     };
     this.handleRReply = this.handleRReply.bind(this);
     this.loadReReplyListClear = this.loadReReplyListClear.bind(this);
@@ -652,6 +656,12 @@ class ReplyItem extends React.PureComponent {
       loading: false,
     });
   };
+  handleFocus = e => {
+    console.log(`focus`);
+    this.setState({
+      focusYn: !this.state.focusYn,
+    });
+  };
   render() {
     const { classes, reply } = this.props;
     const {
@@ -663,6 +673,7 @@ class ReplyItem extends React.PureComponent {
       editMode,
       replyValue,
       originReplyContent,
+      focusYn,
     } = this.state;
     // console.log(reply);
     // console.log(localStorage.getItem('userId'));
@@ -690,11 +701,13 @@ class ReplyItem extends React.PureComponent {
                   : classes.avatarWrapDelete
               }
             >
-              <Avatar
-                alt=""
-                src={avatarImg}
-                className={classNames(classes.avatar, classes.bigAvatar)}
-              />
+              <StyledLink to={`/profile/${reply.user.id}`}>
+                <Avatar
+                  alt=""
+                  src={avatarImg}
+                  className={classNames(classes.avatar, classes.bigAvatar)}
+                />
+              </StyledLink>
             </div>
 
             <div className={classes.replyWrap}>
@@ -712,7 +725,12 @@ class ReplyItem extends React.PureComponent {
                         className={classes.inputWrap}
                         style={{ width: '100%', zIndex: 10 }}
                       >
-                        <div className={classes.inputLabel}>
+                        <div
+                          className={classNames(
+                            classes.inputLabel,
+                            focusYn == true ? classes.inputLabelFocus : '',
+                          )}
+                        >
                           <input
                             type="text"
                             // placeholder="메시지 추가..."
@@ -721,6 +739,8 @@ class ReplyItem extends React.PureComponent {
                             // onKeyPress={this.handleEdit}
                             value={replyValue}
                             onChange={this.handleChangeEdit}
+                            onFocus={this.handleFocus}
+                            onBlur={this.handleFocus}
                           />
                         </div>
                       </div>
@@ -864,15 +884,22 @@ class ReplyItem extends React.PureComponent {
                       />
                     </div>
                     <div className={classes.inputWrap}>
-                      <div className={classes.inputLabel}>
+                      <div
+                        className={classNames(
+                          classes.inputLabel,
+                          focusYn == true ? classes.inputLabelFocus : '',
+                        )}
+                      >
                         <input
                           type="text"
-                          placeholder="메시지 추가..."
+                          placeholder="답글 추가..."
                           className={classes.input}
                           maxLength="100"
                           onKeyPress={this.handleSubmit}
                           value={this.state.rereplyValue}
                           onChange={this.handleChange}
+                          onFocus={this.handleFocus}
+                          onBlur={this.handleFocus}
                         />
                       </div>
                     </div>
@@ -917,7 +944,7 @@ class ReplyItem extends React.PureComponent {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
           className={classes.popWrap}
-          fullWidth="true"
+          fullWidth
           // maxWidth="false"
           classes={{
             root: classes.popRoot,

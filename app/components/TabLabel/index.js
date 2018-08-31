@@ -25,20 +25,25 @@ const styles = theme => ({
     display: 'table-cel',
     marginTop: 2,
   },
-  icon: {
+  iconBox: {
     float: 'left',
     verticalAlign: 'middle',
     marginRight: 5,
     display: 'table-cel',
     // color: 'rgb(244, 244, 244)',
   },
+  icon: {
+    fontSize: '18px',
+    lineHeight: '26px',
+    height: '26px',
+  },
 });
 function TabLabel(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <span className={classes.icon}>
-        <Icon>check_circle</Icon>
+      <span className={classes.iconBox}>
+        <Icon classes={{ root: classes.icon }}>check_circle</Icon>
       </span>
       <span className={classes.text}>{props.children}</span>
     </div>

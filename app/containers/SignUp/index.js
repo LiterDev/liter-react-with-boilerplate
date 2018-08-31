@@ -81,12 +81,12 @@ const styles = theme => ({
   buttonForm: {
     marginTop: 58,
   },
-  button: {
-    // margin: theme.spacing.unit,
-    backgroundColor: '#b7ddff',
-    width: '100%',
-    height: 44,
-  },
+  // button: {
+  //   // margin: theme.spacing.unit,
+  //   backgroundColor: '#b7ddff',
+  //   width: '100%',
+  //   height: 44,
+  // },
   buttonText: {
     color: '#ffffff',
     fontSize: 15,
@@ -136,10 +136,6 @@ const styles = theme => ({
     textAlign: 'center',
     // marginRight: 0,
     // marginLeft: 0,
-  },
-  button: {
-    // margin: 'auto',
-    // display: 'block',
   },
   passText: {
     fontFamily: 'AppleSDGothicNeo',

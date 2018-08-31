@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -20,6 +21,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
 import CloseIcon from '@material-ui/icons/Close';
+import { loadList } from 'containers/Reviews/actions';
 
 import SignIn from 'containers/SignIn/Loadable';
 // import { Link } from 'react-router-dom';
@@ -226,11 +228,14 @@ class Header extends React.PureComponent {
       mobileOpen: false,
       loginPopOpen: false,
       loginConfirmPopOpen: false,
+      searchValue: '',
     };
 
     this.handleClose = this.handleClose.bind(this);
     this.loginConfirmPopClose = this.loginConfirmPopClose.bind(this);
     this.handleSignInMove = this.handleSignInMove.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
   handleSignInMove = () => {
     this.props.loginConfirmPopClose();
@@ -290,6 +295,27 @@ class Header extends React.PureComponent {
 
     return null;
   }
+  handleChange = event => {
+    if (event.target.value.length > 20) {
+      return false;
+    }
+    // console.log(event.target.value);
+    this.setState({
+      searchValue: event.target.value,
+    });
+  };
+  handleSearch = event => {
+    if (event.key === 'Enter') {
+      if (!Boolean(event.target.value)) {
+        return false;
+      }
+      this.handleSend();
+    }
+  };
+  handleSend = () => {
+    // this.props.dispatch(categoryLoaded(this.state.searchValue));
+    this.props.dispatch(loadList(1));
+  };
   render() {
     const { classes, headerTitle, searchBar, loginSuccessHandler } = this.props;
     // console.log(searchBar);
@@ -324,6 +350,9 @@ class Header extends React.PureComponent {
                     className={classes.input}
                     placeholder="검색"
                     name="searchValue"
+                    onChange={this.handleChange}
+                    onKeyPress={this.handleSearch}
+                    maxLength="20"
                   />
                 </div>
               </div>
@@ -389,7 +418,7 @@ class Header extends React.PureComponent {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
           className={classes.popWrap}
-          fullWidth="true"
+          fullWidth
           // maxWidth="false"
           classes={{
             root: classes.popRoot,
@@ -432,6 +461,7 @@ class Header extends React.PureComponent {
 }
 
 Header.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
   headerTitle: PropTypes.any.isRequired,
   searchBar: PropTypes.any,
@@ -443,7 +473,10 @@ Header.propTypes = {
 
 // export default Header;
 // export default withStyles(styles)(Header);
+
+const withConnect = connect();
 export default compose(
+  withConnect,
   withRouter,
   withStyles(styles),
 )(Header);

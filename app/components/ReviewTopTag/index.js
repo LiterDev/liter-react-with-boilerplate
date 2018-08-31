@@ -183,15 +183,16 @@ class ReviewTopTag extends React.PureComponent {
 
     const direction = (lastScrollY > window.scrollY) ? 1 : 2;
     const between = 30;
+    const minPos = 80;
     let diff = 0;
     
-    if(Math.abs(lastScrollY - window.scrollY) > between){
+    if(Math.abs(lastScrollY - window.scrollY) > between && window.scrollY > minPos){
       lastScrollY = window.scrollY;
       diff = 1;
     } else {
       diff = 0;
     }   
-
+    console.log(window.scrollY);
     if(diff)
       this.setState({'direction': diff*direction});
   };

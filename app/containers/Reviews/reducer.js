@@ -13,7 +13,7 @@ import {
   LOAD_REVIEW_MORE_SUCCESS,
   LOAD_REVIEW_MORE_ERROR,
   LOAD_CATEGORY,
-  LOAD_CATEGORY_SUCCESS,  
+  LOAD_CATEGORY_SUCCESS,
   VOTE_ACTION,
   VOTE_SUCCESS,
   VOTE_ERROR,
@@ -30,11 +30,12 @@ export const initialState = fromJS({
   error: false,
   loadMore: false,
   categorys: false,
+  categoryId: -9,
+  serchVal: '',
 });
 
 function clone(obj) {
-  if (obj === null || typeof(obj) !== 'object')
-  return obj;
+  if (obj === null || typeof obj !== 'object') return obj;
 
   var copy = obj.constructor();
 
@@ -48,10 +49,13 @@ function clone(obj) {
 
 function reviewsReducer(state = initialState, action) {
   // console.log(`reaview action === [ ${action.type} ]`);
-  // console.log(action.data);
+  console.log(action.data);
   switch (action.type) {
     case LOAD_REVIEW_ACTION:
-      return state.set('loading', true).set('error', false);
+      return state
+        .set('loading', true)
+        .set('error', false);
+        // .set('categoryId', action.data.pageable.categoryId);
     case LOAD_REVIEW_SUCCESS:
       return state
         .set('loading', false)
@@ -80,27 +84,25 @@ function reviewsReducer(state = initialState, action) {
     case VOTE_ACTION:
       return state;
     case VOTE_SUCCESS:
-        // let oriReviews = state.get('reviews');
-        let oriReviews = clone(state.get('reviews'));
-        oriReviews.map((item,idx,oriReviews) => {
-          if(item.id === action.data.id) {
-            oriReviews[idx] = action.data;
-          }
-        });
-      return state
-        .set('reviews', oriReviews);
+      // let oriReviews = state.get('reviews');
+      let oriReviews = clone(state.get('reviews'));
+      oriReviews.map((item, idx, oriReviews) => {
+        if (item.id === action.data.id) {
+          oriReviews[idx] = action.data;
+        }
+      });
+      return state.set('reviews', oriReviews);
     case UPDATE_REVIEW:
       return state;
     case UPDATED_REVIEW:
-        // let oriReviews = state.get('reviews');
-        let updateReviews = clone(state.get('reviews'));
-        updateReviews.map((item,idx,updateReviews) => {
-          if(item.id === action.data.id) {
-            updateReviews[idx] = action.data;
-          }
-        });
-      return state
-        .set('reviews', updateReviews);
+      // let oriReviews = state.get('reviews');
+      let updateReviews = clone(state.get('reviews'));
+      updateReviews.map((item, idx, updateReviews) => {
+        if (item.id === action.data.id) {
+          updateReviews[idx] = action.data;
+        }
+      });
+      return state.set('reviews', updateReviews);
     case VOTE_ERROR:
       return state.set('error', action.error);
     case UPDATE_FOLLOW:

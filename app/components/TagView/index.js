@@ -33,7 +33,7 @@ const styles = theme => ({
   chipRoot: {
     height: '24px',
     borderRadius: '2px',
-    margin: '0px',
+    margin: '0px 2px 2px 2px',
   },
   chipLabel: {
     fontSize: '13px',
@@ -69,8 +69,7 @@ class TagView extends React.PureComponent {
   }
 
   render() {
-    const { classes } = this.props;
-    const { tags } = this.props;
+    const { classes, tags } = this.props;
     const tagsArr = tags.split(',');
 
     return (

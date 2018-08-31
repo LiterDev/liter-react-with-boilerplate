@@ -55,6 +55,8 @@ const styles = theme => ({
     marginTop: '10px',
     marginBottom: '10px',
   },
+
+
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -110,7 +112,7 @@ class SurveyView extends React.PureComponent {
                 </span>
                 <span className={classes.ratingBox}>
                   <span className={classes.scoreBox}> {surveyScore}</span>
-                  <span>
+                  <span className={classes.scoreStar}>
                     <StarRatings
                       rating={survey.score}
                       changeRating={false}

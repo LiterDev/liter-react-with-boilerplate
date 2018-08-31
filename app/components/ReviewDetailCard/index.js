@@ -37,6 +37,7 @@ import FollowAjxButton from 'components/FollowAjxButton';
 import TimeAt from 'components/TimeAt';
 import TagView from 'components/TagView';
 import SurveyView from 'components/SurveyView';
+import StarRatings from 'react-star-ratings';
 
 /* image */
 import avatarDefault from 'images/ic-avatar.png';
@@ -208,7 +209,7 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit * 2,
     boxShadow: `0 2px 4px 0 rgba(0, 0, 0, 0.15)`,
     border: 'solid 0.5px rgba(0, 0, 0, 0.05)',
-    marginBottom: '20px',
+    marginBottom: '58px',
   },
   paperSheetHead: {
     width: '100%',
@@ -339,6 +340,21 @@ const styles = theme => ({
     paddingTop: '10px',
     paddingBottom: '20px',
   },
+  paperTotal: {
+    fontFamily: 'Apple SD Gothic Neo',
+    fontSize: '14px',
+    fontWeight: 'normal',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: '1.29',
+    letterSpacing: 1.8,
+    color: '#333333 ',
+    display: 'block',
+    marginBottom: '8px',
+  },
+  blank:{
+    height:'60px',
+  }
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -628,10 +644,26 @@ class ReviewDetailCard extends React.PureComponent {
 
               <div className={classes.paperSheet}>
                 <span className={classes.paperItem}>총평가</span>
-                <span className = {classes.paperItem}></span>
-           
-                <span className={classes.paperDetail}>{review.totalScore}</span>
+                <span className={classes.paperTotal}>{review.totalScore}
+               
+                <StarRatings
+                    rating={review.totalScore}
+                      changeRating={false}
+                      numberOfStars={5}
+                      starSpacing="0"
+                      name="rating"
+                      starDimension="23px"
+                      starEmptyColor="rgb(220, 235, 247)"
+                      starRatedColor="rgb(21, 145, 255)"
+                      starHoverColor="rgb(21, 145, 255)"
+                      svgIconPath="M19.77 29.503l6.838 4.288c1.252.786 2.784-.376 2.455-1.845l-1.813-8.063 6.047-5.433c1.104-.99.51-2.87-.94-2.99l-7.957-.7-3.114-7.62a1.626 1.626 0 0 0-3.031 0l-3.114 7.603-7.958.7c-1.45.12-2.043 2-.939 2.99l6.047 5.432-1.813 8.064c-.33 1.469 1.203 2.63 2.455 1.845l6.838-4.271z"
+                    /></span>
+                  <span className = {classes.paperItem}></span>
+                
               </div>
+
+
+          
               {/* <div className={classes.scoreBox}>
                 <div className={classes.scoreItem}>
                   <div className={classes.scoreGradeBox}>
@@ -656,7 +688,7 @@ class ReviewDetailCard extends React.PureComponent {
                 </div>
               </div> */}
 
-              <Divider className={classes.fullDivider} light />
+              {/* <Divider className={classes.FullDivider} light /> */}
 
               <div className={classes.newReview}>
                 {/* <span className={classes.newFont}>{ totalNewReview }개의 최신리뷰 보기</span>
@@ -684,6 +716,7 @@ class ReviewDetailCard extends React.PureComponent {
               </span>
             </div> */}
         {/* <ReviewCardBottomBar ref={`detailCard${review.id}`} prKey={`detailCard${review.id}`} reviewId={review.id} /> */}
+        <div className={classes.blank} />
         <ReviewCardBottomBarView
           likeYn={review.likeYn}
           onViewVote={this.props.handleVoting}

@@ -31,6 +31,7 @@ const styles = theme => ({
     // margin: theme.spacing.unit / 2,
     borderRadius: 2,
     marginRight: 6,
+    marginBottom: 6,
     opacity: 0.5,
   },
   chipRoot: {

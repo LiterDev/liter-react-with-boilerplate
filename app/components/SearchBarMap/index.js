@@ -224,7 +224,7 @@ class SearchBarMap extends React.PureComponent {
               /> */}
 
               <div className="Demo__autocomplete-container">
-                {loading && <div>Loading...</div>}
+                {/* {loading && <div>Loading...</div>} */}
                 {suggestions.map(suggestion => {
                   const className = suggestion.active
                     ? 'Demo__suggestion-item--active'

@@ -20,6 +20,7 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import TimeAt from 'components/TimeAt';
 import Button from '@material-ui/core/Button';
+import StyledLink from 'components/ReviewCard/StyledLink';
 /* material-ui icon */
 import LikeIcon from 'images/ic-feed-like.png';
 import LikeSelIcon from 'images/ic-feed-like-sel.png';
@@ -53,6 +54,7 @@ const styles = theme => ({
     height: 90,
     float: 'left',
     position: 'relative',
+    zIndex: 10,
   },
   controls: {
     position: 'relative',
@@ -324,16 +326,18 @@ class ReviewLikeItem extends React.PureComponent {
     return (
       <div className={classes.cardWarp}>
         <Card className={classes.card}>
-          <CardMedia
-            className={classes.cover}
-            image={`${
-              review.mediaCollection[0].imageExt === 'gif'
-                ? review.mediaCollection[0].fullPath
-                : review.mediaCollection[0].fullPathMedium
-            }`}
-            // image="https://s3-ap-northeast-1.amazonaws.com/liter-review/resized/m/DlS7RBN9UlrvdF38sMtO.jpg"
-            title="Live from space album cover"
-          />
+          <StyledLink to={`/review/${review.id}`}>
+            <CardMedia
+              className={classes.cover}
+              image={`${
+                review.mediaCollection[0].imageExt === 'gif'
+                  ? review.mediaCollection[0].fullPath
+                  : review.mediaCollection[0].fullPathMedium
+              }`}
+              // image="https://s3-ap-northeast-1.amazonaws.com/liter-review/resized/m/DlS7RBN9UlrvdF38sMtO.jpg"
+              title="Live from space album cover"
+            />
+          </StyledLink>
           <div className={classes.details}>
             <CardContent
               className={classes.content}

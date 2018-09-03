@@ -166,8 +166,10 @@ const styles = theme => ({
   },
   appBar: {
     backgroundColor: '#ffffff',
-    boxShadow: '0 0.5px 0 0 #eeeeee',
+    // boxShadow: '0 0.5px 0 0 #eeeeee',
+    boxShadow: '0 0.5px 0 0 rgba(0, 0, 0, 0.1)',
     // backgroundColor: 'rgba(0, 0, 0, 0.79)',
+    zIndex: 99,
   },
   appBarTrans: {
     backgroundColor: '#fbfbfb',
@@ -205,6 +207,9 @@ const styles = theme => ({
   },
   dialogContent: {
     paddingTop: '20px',
+  },
+  appBoxShadow: {
+    boxShadow: '0 0.5px 0 0 rgba(0, 0, 0, 0.1)',
   },
 });
 
@@ -339,7 +344,7 @@ class Header extends React.PureComponent {
   };
   render() {
     const { classes, headerTitle, searchBar, loginSuccessHandler } = this.props;
-    // console.log(searchBar);
+    console.log(`searchBar -----[ ${searchBar} ]`);
 
     return (
       <div>
@@ -350,6 +355,7 @@ class Header extends React.PureComponent {
             this.props.transparency === true
               ? classes.appBarTrans
               : classes.appBar,
+            searchBar === 'true' ? classes.appBoxShadow : '',
           )}
         >
           <Toolbar className={classes.toolbar}>

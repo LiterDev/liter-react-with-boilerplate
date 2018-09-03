@@ -26,17 +26,20 @@ const styles = theme => ({
   root: {
     // flexGrow: 1,
     position: 'fixed',
-    top: theme.spacing.unit * 8,
+    top: theme.spacing.unit * 9,
     backgroundColor: '#ffffff',
     minHeight: '113',
     width: '100%',
     zIndex: 1100,
+
     // right: theme.spacing.unit * 2,
   },
   row: {
     width: '100%',
     // display: 'flex',
     justifyContent: 'center',
+    marginLeft: 8,
+    paddingTop: 14,
   },
   avatar: {
     // margin: 10,
@@ -78,8 +81,8 @@ const styles = theme => ({
     },
   },
   avawrap: {
-    paddingRight: 12,
-    paddingLeft: 12,
+    paddingRight: 0,
+    paddingLeft: 0,
     textAlign: 'center',
     color: 'rgb(17, 17, 17)',
     fontFamily: 'Apple SD Gothic Neo',
@@ -244,9 +247,10 @@ class ReviewTopTag extends React.PureComponent {
       className: 'center',
       infinite: false,
       // speed: 500,
-      slidesToShow: 4.5,
+      slidesToShow: 4.9,
       slidesToScroll: 1,
       swipeToSlide: true,
+      // centerPadding: '30px',
     };
     // console.log(reviewFirst);
     // if (Boolean(reviewFirst)) {

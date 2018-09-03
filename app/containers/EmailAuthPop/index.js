@@ -27,7 +27,7 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 /* containers */
 /* components */
-import Timer from 'components/Timer';
+import CallbackTimer from 'components/CallbackTimer';
 /* image */
 /* ref */
 // import { FormattedMessage } from 'react-intl';
@@ -65,6 +65,9 @@ const styles = {
 
 /* eslint-disable react/prefer-stateless-function */
 export class EmailAuthPop extends React.PureComponent {
+  constructor(props) {
+    super(props);
+  }
   reSendEmail = () => {
     const { sendEmail } = this.props;
     // this.setState({
@@ -87,6 +90,7 @@ export class EmailAuthPop extends React.PureComponent {
     // const elapsed = Math.round(this.state.elapsed / 100);
     // const second = (elapsed / 10).toFixed(1);
     if (open) sendEmail();
+
     return (
       <div>
         <Dialog fullScreen open={open} onClose={this.handleClose}>
@@ -118,9 +122,9 @@ export class EmailAuthPop extends React.PureComponent {
               <br />
             </DialogContentText>
             {/* */}
-            <Timer
+            <CallbackTimer
               storageItemName="sendEmailSuccessTime"
-              limitSeconds={3 * 2}
+              limitSeconds={ 60 * 60 }
               items={['M', 'S']}
               limitAlram={this.handleReturn}
             />

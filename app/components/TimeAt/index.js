@@ -38,10 +38,12 @@ Moment.globalLocale = 'ko';
 class TimeAt extends React.PureComponent {
   render() {
     const tmp = new Date();
+    const unixTimeStamp = parseInt(this.props.date - (this.props.date % 1000) / 1000);
     return (
       <Moment
         from={tmp.getTime()}
-        date={this.props.date + tmp.getTimezoneOffset() * 1000}
+        // date={this.props.date + tmp.getTimezoneOffset() * 1000}
+        date={unixTimeStamp}
       />
     );
   }

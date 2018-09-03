@@ -105,7 +105,7 @@ class Timer extends React.PureComponent {
     const { limitSeconds, storageItemName, items } = this.props;
     return (
       <div>
-        input limitSeconds ::: {limitSeconds}
+        {/* input limitSeconds ::: {limitSeconds}
         <br />
         <br />
         storage-sucess ::: <br />
@@ -125,7 +125,7 @@ class Timer extends React.PureComponent {
         state - seconds ::: <br />
         <Moment format="YYYY-MM-DD hh:mm:ss" date={seconds} />({seconds})<br />
         <br />
-        diff ::: <br />
+        diff ::: <br /> */}
         <AccessTime />
         {items.indexOf('H') > -1 && this.getLimit('HOUR')}
         {items.indexOf('H') > -1 && <FormattedMessage {...messages.hour} />}

@@ -52,7 +52,7 @@ class TagInput extends React.PureComponent {
   // };
   onChange(e) {
     // console.log('090909');
-    if (this.state.tagList.length > 9) {
+    if (this.state.tagList.length > 29) {
       return false;
     }
     const val = e.target.value;

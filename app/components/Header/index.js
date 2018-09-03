@@ -167,9 +167,9 @@ const styles = theme => ({
   appBar: {
     backgroundColor: '#ffffff',
     // boxShadow: '0 0.5px 0 0 #eeeeee',
-    boxShadow: '0 0.5px 0 0 rgba(0, 0, 0, 0.1)',
+    // boxShadow: '0 0.5px 0 0 rgba(0, 0, 0, 0.1)',
     // backgroundColor: 'rgba(0, 0, 0, 0.79)',
-    zIndex: 102,
+    zIndex: 1100,
   },
   appBarTrans: {
     backgroundColor: '#fbfbfb',
@@ -210,6 +210,7 @@ const styles = theme => ({
   },
   appBoxShadow: {
     boxShadow: '0 0.5px 0 0 rgba(0, 0, 0, 0.1)',
+    WebkitBoxShadow: '0 1px 0 0 rgba(0, 0, 0, 0.1)',
   },
 });
 

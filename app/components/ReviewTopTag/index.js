@@ -26,11 +26,11 @@ const styles = theme => ({
   root: {
     // flexGrow: 1,
     position: 'fixed',
-    top: theme.spacing.unit * 9,
+    top: theme.spacing.unit * 8,
     backgroundColor: '#ffffff',
     minHeight: '113',
     width: '100%',
-    zIndex: 1100,
+    zIndex: 100,
 
     // right: theme.spacing.unit * 2,
   },
@@ -187,7 +187,7 @@ class ReviewTopTag extends React.PureComponent {
   handleScroll = () => {
     const direction = lastScrollY > window.scrollY ? 1 : 2;
     const between = 30;
-    const minPos = 80;
+    const minPos = 72;
     let diff = 0;
 
     if (

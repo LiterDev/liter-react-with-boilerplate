@@ -8,6 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
+import axios from 'axios';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -105,13 +106,13 @@ const styles = theme => ({
   avartarShow: {
     // display: 'block',
     opacity: 1,
-    transition: 'opacity 0.2s ease-in'
+    transition: 'opacity 0.2s ease-in',
   },
   avartarNone: {
     display: 'none',
     opacity: 0,
     transition: 'opacity 0.2s ease-in',
-  }
+  },
   // display: block;
   // border: solid 1px rgba(0,0,0,.05);
   // border-radius: 50%;
@@ -167,6 +168,7 @@ class ReviewTopTag extends React.PureComponent {
     this.state = {
       selValue: -9,
       direction: 1,
+      reviewFirst: false,
     };
     this.handleTag = this.handleTag.bind(this);
   }
@@ -180,33 +182,62 @@ class ReviewTopTag extends React.PureComponent {
   };
 
   handleScroll = () => {
-
-    const direction = (lastScrollY > window.scrollY) ? 1 : 2;
+    const direction = lastScrollY > window.scrollY ? 1 : 2;
     const between = 30;
     const minPos = 80;
     let diff = 0;
-    
-    if(Math.abs(lastScrollY - window.scrollY) > between && window.scrollY > minPos){
+
+    if (
+      Math.abs(lastScrollY - window.scrollY) > between &&
+      window.scrollY > minPos
+    ) {
       lastScrollY = window.scrollY;
       diff = 1;
     } else {
       diff = 0;
-    }   
+    }
 
-    if(diff)
-      this.setState({'direction': diff*direction});
+    if (diff) this.setState({ direction: diff * direction });
   };
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
+    this.getLastReviews();
   }
 
+  getLastReviews = () => {
+    const requestURL = `${process.env.API_URL}/review/findLastReview`;
+    axios({
+      method: 'GET',
+      url: requestURL,
+      headers: {
+        Accept: 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+      },
+    })
+      .then(resp => {
+        // console.log(this.state.parentId);
+        if (Boolean(resp.data)) {
+          console.log(resp.data);
+
+          this.setState({ reviewFirst: resp.data });
+        }
+      })
+      .catch(error => {
+        // console.log(error);
+        if (Boolean(error.response.data.code)) {
+        }
+        this.setState({ loading: false });
+      });
+  };
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
   render() {
-    const { classes, categorys, reviewFirst } = this.props;
+    const { classes, categorys } = this.props;
+    const { reviewFirst } = this.state;
     // console.log(`categorys ====[ ${categorys}]`);
     const settings = {
       dots: false,
@@ -221,8 +252,9 @@ class ReviewTopTag extends React.PureComponent {
     // if (Boolean(reviewFirst)) {
     //   console.log(reviewFirst.mediaCollection);
     //   console.log(reviewFirst.mediaCollection[0]);
-    // }    
-    const directionStyle = (this.state.direction == 1)? classes.avartarShow : classes.avartarNone;
+    // }
+    const directionStyle =
+      this.state.direction == 1 ? classes.avartarShow : classes.avartarNone;
 
     return (
       <div className={classes.root}>

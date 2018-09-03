@@ -351,7 +351,7 @@ class AppDrawer extends React.PureComponent {
               role="button"
               className={classes.link}
             >
-              <Button className={classes.btnLogInCaption}>로그인</Button>
+              <Button className={classes.btnLogInCaption}>로그인 / 회원가입</Button>
             </Link>
           </ListItem>
 

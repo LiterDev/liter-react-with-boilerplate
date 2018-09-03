@@ -9,7 +9,7 @@ export function* sendEmailAuth() {
   const requestURL = `${process.env.API_URL}/user/validemailSend`;
   const accessToken = localStorage.getItem('accessToken');
   // const refreshToken = localStorage.getItem('refreshToken');
-  console.log(accessToken);
+  // console.log(accessToken);
   const token = `Bearer ${accessToken}`;
   try {
     const options = {
@@ -23,7 +23,7 @@ export function* sendEmailAuth() {
 
     // const req = request(request, requestURL, options);
     const res = yield call(request, requestURL, options);
-    console.log(res);
+    // console.log(res);
     yield put(actions.emailAuthSuccess(res));
   } catch (err) {
     // console.log(err);

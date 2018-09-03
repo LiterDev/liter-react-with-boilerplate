@@ -32,8 +32,8 @@ class CallbackTimer extends React.PureComponent {
 
   tick() {
     const self = this;
-    console.log("로컬 정보", localStorage.getItem(this.props.storageItemName));
-    console.log("State 정보", this.state.unixTime);
+    // console.log("로컬 정보", localStorage.getItem(this.props.storageItemName));
+    // console.log("State 정보", this.state.unixTime);
     if(Boolean(localStorage.getItem(this.props.storageItemName))
       && this.state.unixTime != Number(localStorage.getItem(this.props.storageItemName))
       ) {
@@ -43,13 +43,13 @@ class CallbackTimer extends React.PureComponent {
       self.setState({'fromTime': curTimeStamp});
       self.setState({'unixTime': unixTimeStamp});
       self.setState({'toTime': toTimeStamp});      
-      console.log("갱신 ------ ");
+      // console.log("갱신 ------ ");
     } else {
       var dateObj = new Date();
       // var utcEpochSeconds = parseInt((dateObj.getTime() + (dateObj.getTimezoneOffset() * 60000)) / 1000);
       var localTimeDate = parseInt(dateObj.getTime() / 1000);
-      console.log("@@@현재 Loal react 시간", localTimeDate);
-      console.log("@@@서버 마감 시간", this.state.toTime);
+      // console.log("@@@현재 Loal react 시간", localTimeDate);
+      // console.log("@@@서버 마감 시간", this.state.toTime);
       const timeDiff = this.state.toTime - localTimeDate;
       self.setState({'tickTime': timeDiff});
     }
@@ -59,7 +59,7 @@ class CallbackTimer extends React.PureComponent {
 
     // const curTickTime = new Date(this.state.curTickTime);
     const timeDiff = this.state.tickTime;
-    console.log(timeDiff);
+    // console.log(timeDiff);
     if(timeDiff > 0) {
       switch (type) {
         case 'HOUR':

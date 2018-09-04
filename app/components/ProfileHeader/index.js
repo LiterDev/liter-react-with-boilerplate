@@ -26,7 +26,7 @@ import SignIn from 'containers/SignIn/Loadable';
 // import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import AppDrawer from './AppDrawer';
+import AppDrawer from 'components/Header/AppDrawer';
 import MenuIcon from '../../images/ic-round-menu.png';
 import messages from './messages';
 

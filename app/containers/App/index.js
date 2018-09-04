@@ -25,12 +25,14 @@ import SlideTest from 'containers/SlideTest/Loadable';
 import FollowActionPage from 'containers/FollowActionPage/Loadable';
 import FollowingActionPage from 'containers/FollowingActionPage/Loadable';
 import Reviews from 'containers/Reviews/Loadable';
+import UserProfile from 'containers/UserProfile/Loadable';
 // import Auth from 'containers/Auth/Loadable';
 
 // import ReviewDetailPage from 'containers/ReviewDetailPage/Loadable';
 import ReviewDetailResolver from 'containers/ReviewDetailResolver/Loadable';
 import EmailValid from 'containers/EmailValid/Loadable';
 import About from 'components/About/Loadable';
+
 // import ReviewFormEdit from 'containers/ReviewFormEdit/Loadable';
 
 // import Header from 'components/Header';
@@ -150,6 +152,7 @@ function App(props) {
         <PrivateRoute path="/valid" component={EmailValid} />
         <Route path="/about" component={About} />
         <Route path="/profile/:userId" component={ProfilePage} />
+        <PrivateRoute path="/userProfile" component={UserProfile} />
         {/* <ModalRoute path="/hello" component={ReviewsMyLike} /> */}
         <Route path="" component={NotFoundPage} />
       </Switch>

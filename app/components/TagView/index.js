@@ -56,8 +56,17 @@ const colorVariation = [
   'e16769', '7a908c', '563c4d', '507467', 'a08f93', 'c06976', 'a18338', 'b48a87', '3f5886', 'dc7c29'
 ]
 
+const selArry = [];
 /* eslint-disable react/prefer-stateless-function */
 class TagView extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      lastColor: '',
+    };
+
+  }
+
   // renderTag() {
   // const { classes } = this.props;
   // const { tags } = this.props;
@@ -81,9 +90,24 @@ class TagView extends React.PureComponent {
     //     .toString()
     //     .substr(-6),
     // );
-    console.log(Math.floor(Math.random() * 50))
+    // console.log(Math.floor(Math.random() * 50))
+
+    let colorTag = colorVariation[Math.floor(Math.random() * 50)];
+    if (selArry.includes(colorTag)) {
+      colorTag = colorVariation[Math.floor(Math.random() * 50)];
+    }
+    selArry.push(colorTag);
+
+    // console.log(selArry);
+    // if (this.state.lastColor === colorTag) {
+    //   colorTag = colorVariation[Math.floor(Math.random() * 50)];
+    // }
+    // console.log(colorTag);
+    // this.setState({
+    //   lastColor: colorTag,
+    // })
     return '#'.concat(
-      colorVariation[Math.floor(Math.random() * 50)]
+      colorTag
     );
   }
 
@@ -94,7 +118,7 @@ class TagView extends React.PureComponent {
     return (
       <Paper className={classes.root}>
         {tagsArr.map(tag => {
-          const key = this.generateColor();
+          let key = this.generateColor();
           const style = {
             backgroundColor: key,
           };

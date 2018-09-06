@@ -18,6 +18,20 @@ const styles = theme => ({
   root: {
     paddingTop: theme.spacing.unit * 0,
   },
+  scoreBox:{
+    width: '25px',
+    height: '20px',
+    fontFamily: 'SFProDisplay',
+    fontSize: '16px',
+    fontWeight: 500,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    textAlign: 'center',
+    color: '#333333'
+
+  }
 });
            
 
@@ -30,13 +44,14 @@ class SurveyItemTotal extends React.PureComponent {
       starHoverColor,
       totalCount,
       totalRatingArry,
+      classes
     } = this.props;
     //const ratePoint = Number.toFixed(1);
     // console.log(totalCount);
     // console.log("]-----****---totalRatingArr--------[");
     // console.log(totalRatingArry);
-    let ratePoint = 0;
-    let ratePointcaption = 0;
+    let ratePoint = 0.0;
+    let ratePointcaption = 0.0;
     //const ratePoint = Number.toFixed(1);
     if (totalCount > 0) {
       // console.log(totalRatingArry.length);
@@ -66,7 +81,8 @@ class SurveyItemTotal extends React.PureComponent {
           rating={ratePoint}
           // changeRating={this.changeRating}
           numberOfStars={5}
-          starSpacing="0"
+          starSpacing="17"
+          starDimension="40px"
           name="rating"
           starEmptyColor={starEmptyColor}
           starRatedColor={starRatedColor}
@@ -74,9 +90,9 @@ class SurveyItemTotal extends React.PureComponent {
           svgIconPath="M19.77 29.503l6.838 4.288c1.252.786 2.784-.376 2.455-1.845l-1.813-8.063 6.047-5.433c1.104-.99.51-2.87-.94-2.99l-7.957-.7-3.114-7.62a1.626 1.626 0 0 0-3.031 0l-3.114 7.603-7.958.7c-1.45.12-2.043 2-.939 2.99l6.047 5.432-1.813 8.064c-.33 1.469 1.203 2.63 2.455 1.845l6.838-4.271z"
         />
         <input name="totalScore" value={ratePoint} type="hidden" />
-        <span>{ ratePointcaption}</span>
+        <span className={classes.scoreBox}>{ ratePointcaption}</span>
       </div>
-    );
+    ); 
   }
 }
 

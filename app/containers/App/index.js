@@ -68,6 +68,7 @@ const styles = theme => ({
     minHeight: '100vh',
     // display: 'flex',
     width: '100%',
+    backgroundColor: '#f9f9f9',
   },
 });
 

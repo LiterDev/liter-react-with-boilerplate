@@ -89,7 +89,6 @@ const styles = theme => ({
 });
 
 function ImagePreview(props) {
-  
   const { classes } = props;
 
   return (
@@ -118,8 +117,7 @@ function ImagePreview(props) {
               src={RemoveIcon}
               className={classes.ic_close_photo}
               alt="previewImg"
-              onClick={() => this.imageClick().bind(this)}
-
+              // onClick={() => this.imageClick().bind(this)}
             />
           </IconButton>
         </div>
@@ -156,4 +154,3 @@ ImagePreview.propTypes = {
 
 // export default ImagePreview;
 export default withStyles(styles)(ImagePreview);
-

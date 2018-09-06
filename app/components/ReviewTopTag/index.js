@@ -31,6 +31,7 @@ const styles = theme => ({
     minHeight: '113',
     width: '100%',
     zIndex: 100,
+    // height: '100%'
 
     // right: theme.spacing.unit * 2,
   },
@@ -40,6 +41,7 @@ const styles = theme => ({
     justifyContent: 'center',
     marginLeft: 8,
     paddingTop: 14,
+    height: '100%',
   },
   avatar: {
     // margin: 10,

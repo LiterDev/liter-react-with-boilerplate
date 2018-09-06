@@ -50,7 +50,7 @@ const styles = theme => ({
     boxShadow: '1px 6px 4px 0 rgba(0, 0, 0, 0.28)',
   },
   reviewList: {
-    marginTop: theme.spacing.unit * 14,
+    marginTop: theme.spacing.unit * 13.3,
     paddingTop: theme.spacing.unit * 0.1,
     zIndex: 1100,
   },

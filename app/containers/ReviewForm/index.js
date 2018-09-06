@@ -46,10 +46,14 @@ import {
 } from './selectors';
 
 const styles = theme => ({
+  root: {
+    backgroundColor: '#f9f9f9',
+  },
   containerWrap: {
     paddingLeft: 0,
     paddingRight: 0,
   },
+
   container: {
     backgroundColor: '#ffffff',
     margin: '12px 0px 0px',
@@ -126,6 +130,10 @@ const styles = theme => ({
     position: 'absolute',
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2,
+  },
+  writeForm: {
+    marginTop: 12,
+    backgroundColor: '#f9f9f9',
   },
 });
 
@@ -216,7 +224,7 @@ export class ReviewForm extends React.PureComponent {
     // console.log(process.env.API_URL);
     // console.log(process.env.NODE_ENV);
     return (
-      <div>
+      <div className={classes.root}>
         <Header headerTitle={<FormattedMessage {...messages.header} />} />
         {loading ? (
           <div className={classes.dimmed}>
@@ -227,7 +235,7 @@ export class ReviewForm extends React.PureComponent {
         )}
         <ReviewWrite
           onSubmitForm={this.props.onSubmitForm}
-          style={{}}
+          className={classes.writeForm}
           reviews={reviews}
           surveys={surveys}
         />

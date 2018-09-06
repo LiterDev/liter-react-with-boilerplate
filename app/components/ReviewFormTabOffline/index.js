@@ -26,6 +26,7 @@ import Paper from '@material-ui/core/Paper';
 
 import LinkIcon from '../../images/ic-link-on@3x.png';
 import WriteIcon from '../../images/ic-write@3x.png';
+import TagIcon from '../../images/ic-tag@3x.png';
 import StartTitle from '../../images/ic-star@3x.png';
 import CheckIcon from '../../images/ic-repurchase@3x.png';
 import SurveyData from '../../survey.json';
@@ -263,7 +264,7 @@ class ReviewFormTabOffline extends React.PureComponent {
             </Map>
           </div>
         </div>
-        <div className={classes.rowdivSec}>
+        {/* <div className={classes.rowdivSec}>
           <div className={classes.buyWrap}>
             <img src={WriteIcon} alt="write" className={classes.iconWrite} />
             <span className={classes.cateText}>리뷰를 작성하세요.</span>
@@ -279,10 +280,9 @@ class ReviewFormTabOffline extends React.PureComponent {
         </div>
         <div className={classes.rowdivSec}>
           <div className={classes.buyWrap}>
-            <img src={WriteIcon} alt="write" className={classes.iconWrite} />
+            <img src={TagIcon} alt="write" className={classes.iconWrite} />
             <span className={classes.cateText}>태그</span>
           </div>
-          {/* <Divider className={classes.divider} /> */}
           <TagInput />
         </div>
         <div className={classes.rowdivSec}>
@@ -301,10 +301,7 @@ class ReviewFormTabOffline extends React.PureComponent {
               surveyBuyType={SurveyData.surveyBuyType[0]}
             />
           )}
-          {/* <SurveyList
-            surveyCate={SurveyData.surveyCate[this.props.category]}
-            surveyBuyType={SurveyData.surveyBuyType[0]}
-          /> */}
+          
         </div>
         <div className={classes.rowdivSec}>
           <div className={classes.buyWrap}>
@@ -321,14 +318,22 @@ class ReviewFormTabOffline extends React.PureComponent {
               centered
             >
               <Tab
-                label={<TabLabel>예</TabLabel>}
+                label={
+                  <TabLabel selected={this.state.value === 0 ? 1 : 0}>
+                    예
+                  </TabLabel>
+                }
                 classes={{
                   root: classes.tabRoot,
                   labelIcon: classes.tabIcon,
                 }}
               />
               <Tab
-                label={<TabLabel>아니오</TabLabel>}
+                label={
+                  <TabLabel selected={this.state.value === 1 ? 1 : 0}>
+                    아니오
+                  </TabLabel>
+                }
                 classes={{
                   root: classes.tabRoot,
                   labelIcon: classes.tabIcon,
@@ -341,7 +346,7 @@ class ReviewFormTabOffline extends React.PureComponent {
           name="recommend"
           value={this.state.value === 0 ? 'YES' : 'NO'}
           type="hidden"
-        />
+        /> */}
         <input type="hidden" name="store" value="OFFLINE" />
       </div>
     );

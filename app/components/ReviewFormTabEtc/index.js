@@ -23,6 +23,7 @@ import WriteIcon from '../../images/ic-write@3x.png';
 import StartTitle from '../../images/ic-star@3x.png';
 import SurveyData from '../../survey.json';
 import CheckIcon from '../../images/ic-repurchase@3x.png';
+import TagIcon from '../../images/ic-tag@3x.png';
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
 
@@ -162,7 +163,6 @@ class ReviewFormTabEtc extends React.PureComponent {
   handleChange = (event, value) => {
     this.setState({
       value,
-    
     });
   };
   render() {
@@ -218,7 +218,7 @@ class ReviewFormTabEtc extends React.PureComponent {
         </div>
         <div className={classes.rowdivSec}>
           <div className={classes.buyWrap}>
-            <img src={WriteIcon} alt="write" className={classes.iconWrite} />
+            <img src={TagIcon} alt="write" className={classes.iconWrite} />
             <span className={classes.cateText}>태그</span>
           </div>
           {/* <Divider className={classes.divider} /> */}
@@ -251,14 +251,22 @@ class ReviewFormTabEtc extends React.PureComponent {
               centered
             >
               <Tab
-                label={<TabLabel>예</TabLabel>}
+                label={
+                  <TabLabel selected={this.state.value === 0 ? 1 : 0}>
+                    예
+                  </TabLabel>
+                }
                 classes={{
                   root: classes.tabRoot,
                   labelIcon: classes.tabIcon,
                 }}
               />
               <Tab
-                label={<TabLabel>아니오</TabLabel>}
+                label={
+                  <TabLabel selected={this.state.value === 1 ? 1 : 0}>
+                    아니오
+                  </TabLabel>
+                }
                 classes={{
                   root: classes.tabRoot,
                   labelIcon: classes.tabIcon,
@@ -278,9 +286,7 @@ class ReviewFormTabEtc extends React.PureComponent {
   }
 }
 
-ReviewFormTabEtc.propTypes = {
-
-};
+ReviewFormTabEtc.propTypes = {};
 
 // export default ReviewFormTabEtc;
 export default withStyles(styles)(ReviewFormTabEtc);

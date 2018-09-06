@@ -96,7 +96,8 @@ const styles = theme => ({
     lineHeight: 'normal',
     letterSpacing: 'normal',
     textAlign: 'center',
-    color: '#1591ff',
+    // color: '#1591ff',
+    color: '#333333',
   },
 });
 /* eslint-disable react/prefer-stateless-function */
@@ -128,7 +129,7 @@ class MoviePreviewButton extends React.PureComponent {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, movRemainCount } = this.props;
     return (
       <div className={classes.root}>
         <div>
@@ -151,13 +152,48 @@ class MoviePreviewButton extends React.PureComponent {
               <Typography className={classes.buttonText}>
                 동영상 추가
               </Typography>
-              <Icon
+              {/* <Icon
                 className={classes.icon}
                 color="disabled"
                 style={{ fontSize: 16 }}
               >
                 add_circle
-              </Icon>
+              </Icon> */}
+              <div className={classes.icon}>
+                {movRemainCount > 0 ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                  >
+                    <g fill="none" fill-rule="evenodd">
+                      <path d="M0 0h20v20H0z" />
+                      <path
+                        fill="#1591FF"
+                        fill-rule="nonzero"
+                        d="M18.333 3.333H15l1.667 3.334h-2.5L12.5 3.333h-1.667L12.5 6.667H10L8.333 3.333H6.667l1.666 3.334h-2.5L4.167 3.333h-.834c-.916 0-1.658.75-1.658 1.667l-.008 10c0 .917.75 1.667 1.666 1.667h13.334c.916 0 1.666-.75 1.666-1.667V3.333z"
+                      />
+                    </g>
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                  >
+                    <g fill="none" fill-rule="evenodd">
+                      <path d="M0 0h20v20H0z" />
+                      <path
+                        fill="#7C7C7C"
+                        fill-rule="nonzero"
+                        d="M18.333 3.333H15l1.667 3.334h-2.5L12.5 3.333h-1.667L12.5 6.667H10L8.333 3.333H6.667l1.666 3.334h-2.5L4.167 3.333h-.834c-.916 0-1.658.75-1.658 1.667l-.008 10c0 .917.75 1.667 1.666 1.667h13.334c.916 0 1.666-.75 1.666-1.667V3.333z"
+                      />
+                    </g>
+                  </svg>
+                )}
+              </div>
             </Button>
           </label>
         </div>

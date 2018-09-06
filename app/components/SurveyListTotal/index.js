@@ -12,7 +12,7 @@ import SurveyItem from 'components/SurveyItem';
 import SurveyItemTotal from 'components/SurveyItemTotal';
 
 import Divider from '@material-ui/core/Divider';
-
+import SurveyData from '../../survey.json';
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
 
@@ -41,28 +41,17 @@ class SurveyList extends React.PureComponent {
       // totalRating: 0,
       totalRatingArry: [],
       totalCount: 0,
+      surveyCate: [],
+      surveyBuyType: [],
+      category: -1,
+      buyType: -1,
       // this.props.surveyCate.length + this.props.surveyBuyType.length,
     };
     this.totalRate = this.totalRate.bind(this);
   }
-  totalRate = (rating, surveyId) => {
+  totalRate = (rating, surveyId, surveyType) => {
     // console.log(rating);
     // console.log(surveyId);
-    let totalCount = 0;
-    if (Boolean(this.props.surveyCate) && Boolean(this.props.surveyBuyType)) {
-      totalCount =
-        this.props.surveyCate.length + this.props.surveyBuyType.length;
-    } else if (
-      Boolean(this.props.surveyCate) &&
-      !Boolean(this.props.surveyBuyType)
-    ) {
-      totalCount = this.props.surveyCate.length;
-    } else if (
-      !Boolean(this.props.surveyCate) &&
-      Boolean(this.props.surveyBuyType)
-    ) {
-      totalCount = this.props.surveyBuyType.length;
-    }
 
     const totalRatingArryTmp = [...this.state.totalRatingArry];
     // console.log(totalRatingArryTmp.includes(surveyId));
@@ -79,27 +68,109 @@ class SurveyList extends React.PureComponent {
         totalRatingArryTmp.push({
           surveyId,
           rating,
+          surveyType,
         });
       }
     } else {
       totalRatingArryTmp.push({
         surveyId,
         rating,
+        surveyType,
       });
     }
     // console.log(totalRatingArryTmp);
     // console.log(totalCount);
     this.setState({
-      totalCount: totalCount,
+      // totalCount: totalCount,
       totalRatingArry: totalRatingArryTmp,
     });
     // console.log(this.state.totalRatingArry);
   };
 
-  render() {
-    const { classes, surveyCate, surveyBuyType } = this.props;
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log(nextProps.category);
+    console.log(prevState.category);
+    if (nextProps.category !== prevState.category) {
+      if (prevState.totalRatingArry.length > 0) {
+        if (nextProps.category > -1) {
+          const findRemoveId = [];
+          // const totalRatingArry = prevState.totalRatingArry;
+          const totalRatingArryCopy = [...prevState.totalRatingArry];
+          console.log(totalRatingArryCopy);
+          if (totalRatingArryCopy.length > 0) {
+            let i = totalRatingArryCopy.length;
+            while (i--) {
+              if (totalRatingArryCopy[i].surveyType === 'CATEGORY') {
+                //     // findRemoveId.push(i);
+                totalRatingArryCopy.splice(i, 1);
+              }
+            }
+          }
+          return {
+            totalRatingArry: totalRatingArryCopy,
+            category: nextProps.category,
+          };
+        }
+        return {
+          category: nextProps.category,
+        };
+      }
+      return {
+        category: nextProps.category,
+      };
+    }
 
+    if (nextProps.buyType !== prevState.buyType) {
+      if (prevState.totalRatingArry.length > 0) {
+        if (nextProps.buyType > -1) {
+          const totalRatingArryCopy = [...prevState.totalRatingArry];
+          // console.log(totalRatingArryCopy);
+          if (totalRatingArryCopy.length > 0) {
+            let i = totalRatingArryCopy.length;
+            while (i--) {
+              if (totalRatingArryCopy[i].surveyType === 'STORE') {
+                //     // findRemoveId.push(i);
+                totalRatingArryCopy.splice(i, 1);
+              }
+            }
+          }
+          return {
+            totalRatingArry: totalRatingArryCopy,
+            buyType: nextProps.buyType,
+          };
+        }
+        return {
+          buyType: nextProps.buyType,
+        };
+      }
+      return {
+        buyType: nextProps.buyType,
+      };
+    }
+    return null;
+  }
+  componentDidMount = () => {};
+  render() {
+    const { classes, category, buyType } = this.props;
+    let surveyCate = [];
+    if (category > -1) {
+      surveyCate = SurveyData.surveyCate[category];
+    }
+    let surveyBuyType = [];
+    if (buyType > -1) {
+      surveyBuyType = SurveyData.surveyBuyType[buyType];
+    }
+    // console.log(surveyCate);
     // console.log(surveyBuyType);
+    let totalCount = 0;
+    if (Boolean(surveyCate) && Boolean(surveyBuyType)) {
+      totalCount = surveyCate.length + surveyBuyType.length;
+    } else if (Boolean(surveyCate) && !Boolean(surveyBuyType)) {
+      totalCount = surveyCate.length;
+    } else if (!Boolean(surveyCate) && Boolean(surveyBuyType)) {
+      totalCount = surveyBuyType.length;
+    }
+
     return (
       <div className={classes.root}>
         {/* <FormattedMessage {...messages.header} /> */}
@@ -150,7 +221,7 @@ class SurveyList extends React.PureComponent {
               starEmptyColor="rgb(220, 235, 247)"
               starRatedColor="rgb(21, 145, 255)"
               starHoverColor="rgb(21, 145, 255)"
-              totalCount={this.state.totalCount}
+              totalCount={totalCount}
               totalRatingArry={this.state.totalRatingArry}
               // surveyId={0}
             />
@@ -162,8 +233,8 @@ class SurveyList extends React.PureComponent {
 }
 
 SurveyList.propTypes = {
-  surveyCate: PropTypes.array.isRequired,
-  surveyBuyType: PropTypes.array.isRequired,
+  category: PropTypes.any.isRequired,
+  buyType: PropTypes.any.isRequired,
 };
 
 // export default SurveyList;

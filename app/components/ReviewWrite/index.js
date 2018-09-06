@@ -7,6 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
 // import styled from 'styled-components';
 import ImagePreviewButtonWithoutSlider from 'components/ImagePreviewButtonWithoutSlider';
 import MoviePreviewButton from 'components/MoviePreviewButton';
@@ -31,9 +32,13 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
+import PhoneIcon from '@material-ui/icons/Phone';
 
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
+import TagInput from 'components/TagInput';
+import SurveyList from 'components/SurveyList';
+import SurveyListTotal from 'components/SurveyListTotal';
 
 // import Typography from '@material-ui/core/Typography';
 // import PhoneIcon from '@material-ui/icons/Phone';
@@ -43,24 +48,25 @@ import SnackbarContent from '@material-ui/core/SnackbarContent';
 // const emails = ['username@gmail.com', 'user02@gmail.com'];
 
 import BueatySel from '../../images/ic-beauty-14@3x.png';
-
 import LifeSel from '../../images/ic-life-14@3x.png';
-
 import FoodSel from '../../images/ic-food-17@3x.png';
-
 import FashionSel from '../../images/ic-fashion-17@3x.png';
-
 import BabySel from '../../images/ic-baby-17@3x.png';
-
 import hobbySel from '../../images/ic-hobby-17@3x.png';
-
 import RestorantSel from '../../images/ic-restorant-17@3x.png';
-
 import PetSel from '../../images/ic-pet-17@3x.png';
-
 import EtcSel from '../../images/ic-etc-17@3x.png';
+import LinkIcon from '../../images/ic-link-on@3x.png';
+import WriteIcon from '../../images/ic-write@3x.png';
+import TagIcon from '../../images/ic-tag@3x.png';
+import StartTitle from '../../images/ic-star@3x.png';
+import CheckIcon from '../../images/ic-repurchase@3x.png';
+import SurveyData from '../../survey.json';
 
 const styles = theme => ({
+  root: {
+    backgroundColor: '#f9f9f9',
+  },
   rowdiv: {
     width: '100%',
     marginTop: 12,
@@ -70,6 +76,15 @@ const styles = theme => ({
     paddingRight: 16,
     paddingTop: 16,
     paddingBottom: 16,
+  },
+  rowdivForm: {
+    width: '100%',
+    backgroundColor: '#ffffff',
+    paddingBottom: 16,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 20,
+    marginTop: 12,
   },
   rowdivSec: {
     width: '100%',
@@ -176,6 +191,7 @@ const styles = theme => ({
   tabRoot: {
     minHeight: 60,
     fontSize: '1.5rem',
+    color: '#999999',
   },
   tabIcon: {
     flaot: 'left',
@@ -259,6 +275,56 @@ const styles = theme => ({
     textAlign: 'center',
     color: '#574949',
   },
+  activeColor: {},
+  deActiveColor: {
+    color: '#aaaaaa',
+  },
+  // rowdivSec: {
+  //   width: '100%',
+  //   backgroundColor: '#ffffff',
+  //   paddingBottom: 16,
+  //   paddingLeft: 16,
+  //   paddingRight: 16,
+  //   paddingTop: 20,
+  //   marginTop: 12,
+  // },
+  buyWrapForm: {
+    // paddingTop: 16,
+    textAlign: 'left',
+    color: '#333333',
+    fontSize: 16,
+    marginBottom: 19,
+    // display: 'table',
+  },
+  // iconShopping: {
+  //   color: '#7c7c7c',
+  //   lineHeight: 0,
+  //   fontSize: 14,
+  // },
+  iconWrite: {
+    width: 24,
+    height: 24,
+    marginRight: 14,
+  },
+  // cateText: {
+  //   verticalAlign: 'middle',
+  //   fontSize: 17,
+  // },
+  inputReview: {
+    minWidth: '100%',
+    maxWidth: '100%',
+    paddingTop: 20,
+  },
+  tabRootForm: {
+    // minHeight: 60,
+    paddingTop: 10,
+    width: '40%',
+    fontSize: '1.5rem',
+  },
+  tabPaperForm: {
+    heght: 20,
+    marginTop: 10,
+  },
 });
 const cateList = [
   {
@@ -326,60 +392,6 @@ const cateList = [
   },
 ];
 
-function resizeImage(settings) {
-  var file = settings.file;
-  var maxSize = settings.maxSize;
-  var reader = new FileReader();
-  var image = new Image();
-  var canvas = document.createElement('canvas');
-  var dataURItoBlob = function(dataURI) {
-    var bytes =
-      dataURI.split(',')[0].indexOf('base64') >= 0
-        ? atob(dataURI.split(',')[1])
-        : unescape(dataURI.split(',')[1]);
-    var mime = dataURI
-      .split(',')[0]
-      .split(':')[1]
-      .split(';')[0];
-    var max = bytes.length;
-    var ia = new Uint8Array(max);
-    for (var i = 0; i < max; i++) ia[i] = bytes.charCodeAt(i);
-    return new Blob([ia], { type: mime });
-  };
-  function resize() {
-    var width = image.width;
-    var height = image.height;
-    if (width > height) {
-      if (width > maxSize) {
-        height *= maxSize / width;
-        width = maxSize;
-      }
-    } else {
-      if (height > maxSize) {
-        width *= maxSize / height;
-        height = maxSize;
-      }
-    }
-    canvas.width = width;
-    canvas.height = height;
-    canvas.getContext('2d').drawImage(image, 0, 0, width, height);
-    var dataUrl = canvas.toDataURL('image/jpeg');
-    return dataURItoBlob(dataUrl);
-  }
-  return new Promise(function(ok, no) {
-    if (!file.type.match(/image.*/)) {
-      no(new Error('Not an image'));
-      return;
-    }
-    reader.onload = function(readerEvent) {
-      image.onload = function() {
-        return ok(resize());
-      };
-      image.src = readerEvent.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
-}
 /* eslint-disable react/prefer-stateless-function */
 class ReviewWrite extends React.PureComponent {
   constructor(props) {
@@ -388,20 +400,24 @@ class ReviewWrite extends React.PureComponent {
       files: new FormData(),
       // filesArray: [],
       imageCount: 0,
+      imageRemainCount: 0,
+      movRemainCount: 0,
       imageComponent: [],
       open: false,
       selectedValue: false,
-      value: 0,
+      value: -1,
       // storeValue: 'ONLINE',
       complete: false,
 
       //
       validationAlert: false,
       validationContent: false,
+      recommend: false,
     };
     this.handleImageAppend = this.handleImageAppend.bind(this);
     this.handleImageRemove = this.handleImageRemove.bind(this);
     this.onSubmitFormInit = this.onSubmitFormInit.bind(this);
+    this.handleChangeRecommend = this.handleChangeRecommend.bind(this);
   }
 
   handleImageAppend = (fileList, type) => {
@@ -440,9 +456,11 @@ class ReviewWrite extends React.PureComponent {
         file: `${movType}|${movKey}|${fileList}`,
         movieLink: fileList,
       });
-      this.state.imageCount += 1;
+      // this.state.imageCount += 1;
       this.setState({
+        imageCount: (this.state.imageCount += 1),
         imageComponent: this.state.imageComponent.concat(imageComponentTmp),
+        movRemainCount: (this.state.movRemainCount += 1),
       });
     } else {
       if (fileList && type !== 'mov') {
@@ -464,10 +482,12 @@ class ReviewWrite extends React.PureComponent {
               file: fileList[i],
             });
 
-            this.state.imageCount += 1;
+            // this.state.imageCount += 1;
           }
           this.setState({
+            imageCount: (this.state.imageCount += 1),
             imageComponent: this.state.imageComponent.concat(imageComponentTmp),
+            imageRemainCount: (this.state.imageRemainCount += 1),
           });
         }
       }
@@ -480,15 +500,23 @@ class ReviewWrite extends React.PureComponent {
   };
   handleImageRemove = name => {
     const findRemoveIndex = [];
+    let removeImgCount = 0;
+    let removeMovCount = 0;
     if (this.state.imageComponent.length > 0) {
       for (let i = 0; i < this.state.imageComponent.length; i += 1) {
         if (name === this.state.imageComponent[i].name) {
           findRemoveIndex.push(i);
+          if (this.state.imageComponent[i].mediaType === 'mov') {
+            removeMovCount += 1;
+          } else {
+            removeImgCount += 1;
+          }
         }
       }
     }
     const copy = [...this.state.imageComponent];
-    // console.log(copy);
+    // console.log(removeMovCount);
+    // console.log(removeImgCount);
     if (findRemoveIndex.length > 0) {
       for (let i = 0; i < findRemoveIndex.length; i += 1) {
         // this.state.imageComponent.splice(findRemoveIndex[i], 1);
@@ -498,6 +526,17 @@ class ReviewWrite extends React.PureComponent {
     this.setState({
       imageComponent: copy,
     });
+    if (removeImgCount > 0) {
+      this.setState({
+        imageRemainCount: this.state.imageRemainCount - removeImgCount,
+      });
+    }
+    if (removeMovCount > 0) {
+      this.setState({
+        movRemainCount: this.state.movRemainCount - removeMovCount,
+      });
+    }
+
     this.state.files.delete(name);
     // console.log(Array.from(this.state.files.entries()).length);
   };
@@ -637,6 +676,9 @@ class ReviewWrite extends React.PureComponent {
         break;
       default:
         console.log('default');
+        this.setState({ validationContent: '구매형태를 선택해 주세요' });
+        this.handleAlertOpen();
+        return false;
     }
 
     if (data.get('content').trim().length < 50) {
@@ -686,7 +728,7 @@ class ReviewWrite extends React.PureComponent {
     // console.log(tSurveyIdByCate);
     // console.log(this.state.selectedValue);
     for (let i = 0; i < tSurveyIdByCate.length; i += 1) {
-      console.log(data.get(`startRating[${tSurveyIdByCate[i]}].rating`));
+      // console.log(data.get(`startRating[${tSurveyIdByCate[i]}].rating`));
       if (data.get(`startRating[${tSurveyIdByCate[i]}].rating`) < 1) {
         nullCountCate += 1;
         // console.log(data.get(`startRating[${tSurveyIdByCate[i]}].rating`));
@@ -697,7 +739,7 @@ class ReviewWrite extends React.PureComponent {
       }
     }
 
-    console.log(nullCountCate);
+    // console.log(nullCountCate);
     if (nullCountCate > 0) {
       this.setState({
         validationContent: `${valContentCate} 평점을 입력해주세요`,
@@ -729,7 +771,8 @@ class ReviewWrite extends React.PureComponent {
     let nullCount = 0;
     let valContent = null;
     for (let i = 0; i < tSurveyId.length; i += 1) {
-      console.log(data.get(`startRating[${tSurveyId[i]}].rating`));
+      // console.log(data.get(`startRating[${tSurveyId[i]}].rating`));
+      // console.log(data.get(`startRating[${tSurveyId[i]}]`));
       if (data.get(`startRating[${tSurveyId[i]}].rating`) < 1) {
         nullCount += 1;
         // console.log(data.get(`startRating[${tSurveyId[i]}].rating`));
@@ -742,6 +785,24 @@ class ReviewWrite extends React.PureComponent {
 
     if (nullCount > 0) {
       this.setState({ validationContent: `${valContent} 평점을 입력해주세요` });
+      this.handleAlertOpen();
+      return false;
+    }
+
+    if (nullCount > 0) {
+      this.setState({ validationContent: `${valContent} 평점을 입력해주세요` });
+      this.handleAlertOpen();
+      return false;
+    }
+
+    if (!this.state.recommend) {
+      let recommandTitle = '재구매';
+      if (this.state.value === 1) {
+        recommandTitle = '재방문';
+      }
+      this.setState({
+        validationContent: `${recommandTitle} 여부를 선택해 주세요`,
+      });
       this.handleAlertOpen();
       return false;
     }
@@ -790,32 +851,37 @@ class ReviewWrite extends React.PureComponent {
       // storeValue: storeVal,
     });
   };
+
+  handleChangeRecommend = (event, value) => {
+    this.setState({
+      recommend: value,
+    });
+  };
   render() {
     const { classes, reviews, surveys } = this.props;
-    if (reviews) {
-      console.log(reviews);
-      let store = 0;
-      if (reviews.store === 'ONLINE') {
-        store = 0;
-      } else if (reviews.store === 'OFFLINE') {
-        store = 1;
-      } else {
-        store = 2;
-      }
-      const mediaCollection = reviews.mediaCollection;
-      if (mediaCollection) {
-        // if (){
-        // }
-      }
-      this.setState({
-        value: store,
-        selectedValue: reviews.categoryId,
-      });
 
-      // this.handleClose(reviews.)
-    }
+    // if (reviews) {
+    //   // console.log(reviews);
+    //   let store = 0;
+    //   if (reviews.store === 'ONLINE') {
+    //     store = 0;
+    //   } else if (reviews.store === 'OFFLINE') {
+    //     store = 1;
+    //   } else {
+    //     store = 2;
+    //   }
+    //   const mediaCollection = reviews.mediaCollection;
+    //   if (mediaCollection) {
+    //     // if (){
+    //     // }
+    //   }
+    //   this.setState({
+    //     value: store,
+    //     selectedValue: reviews.categoryId,
+    //   });
+    // }
     return (
-      <div>
+      <div className={classes.root}>
         <form onSubmit={this.onSubmitFormInit}>
           <div className={classes.rowdiv}>
             <div>
@@ -855,12 +921,31 @@ class ReviewWrite extends React.PureComponent {
                     // disabled: 'disabled',
                   }}
                 >
-                  <Icon className={classes.icon} color="secondary">
+                  {/* <Icon className={classes.icon} color="secondary">
                     add_circle
-                  </Icon>
+                  </Icon> */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <g fill="none" fill-rule="evenodd">
+                      <circle cx="12" cy="12" r="12" fill="#999" />
+                      <path
+                        fill="#FFF"
+                        d="M16 13h-3v3c0 .55-.45 1-1 1s-1-.45-1-1v-3H8c-.55 0-1-.45-1-1s.45-1 1-1h3V8c0-.55.45-1 1-1s1 .45 1 1v3h3c.55 0 1 .45 1 1s-.45 1-1 1z"
+                      />
+                    </g>
+                  </svg>
                 </IconButton>
 
-                <span className={classes.cateText}>
+                <span
+                  className={classNames(
+                    classes.cateText,
+                    classes.deActiveColor,
+                  )}
+                >
                   카테고리를 선택해주세요.
                 </span>
               </div>
@@ -879,7 +964,9 @@ class ReviewWrite extends React.PureComponent {
                     className={classes.imgAvatar}
                   />
                 </Avatar>
-                <span className={classes.cateText}>
+                <span
+                  className={classNames(classes.cateText, classes.activeColor)}
+                >
                   {cateList[this.state.selectedValue].name}
                 </span>
 
@@ -904,8 +991,12 @@ class ReviewWrite extends React.PureComponent {
             <div className={classes.imageBtn}>
               <ImagePreviewButtonWithoutSlider
                 handleImageAppend={this.handleImageAppend}
+                imageRemainCount={this.state.imageRemainCount}
               />
-              <MoviePreviewButton handleImageAppend={this.handleImageAppend} />
+              <MoviePreviewButton
+                handleImageAppend={this.handleImageAppend}
+                movRemainCount={this.state.movRemainCount}
+              />
             </div>
             {/* <div className={classes.movieBtn}>
               
@@ -945,21 +1036,35 @@ class ReviewWrite extends React.PureComponent {
                   centered
                 >
                   <Tab
-                    label={<TabLabel>인터넷구매</TabLabel>}
+                    label={
+                      <TabLabel selected={this.state.value === 0 ? 1 : 0}>
+                        인터넷구매
+                      </TabLabel>
+                    }
+                    classes={{
+                      root: classes.tabRoot,
+                      labelIcon: classes.tabIcon,
+                    }}
+
+                    // icon={<PhoneIcon />}
+                  />
+                  <Tab
+                    label={
+                      <TabLabel selected={this.state.value === 1 ? 1 : 0}>
+                        매장방문
+                      </TabLabel>
+                    }
                     classes={{
                       root: classes.tabRoot,
                       labelIcon: classes.tabIcon,
                     }}
                   />
                   <Tab
-                    label={<TabLabel>매장방문</TabLabel>}
-                    classes={{
-                      root: classes.tabRoot,
-                      labelIcon: classes.tabIcon,
-                    }}
-                  />
-                  <Tab
-                    label={<TabLabel>기타</TabLabel>}
+                    label={
+                      <TabLabel selected={this.state.value === 2 ? 1 : 0}>
+                        기타
+                      </TabLabel>
+                    }
                     classes={{
                       root: classes.tabRoot,
                       labelIcon: classes.tabIcon,
@@ -998,6 +1103,110 @@ class ReviewWrite extends React.PureComponent {
           >
             작성 완료
           </Button> */}
+          <div className={classes.rowdivForm}>
+            <div className={classes.buyWrapForm}>
+              <img src={WriteIcon} alt="write" className={classes.iconWrite} />
+              <span className={classes.cateText}>리뷰를 작성하세요.</span>
+            </div>
+            <Divider className={classes.divider} />
+            <Input
+              className={classes.inputReview}
+              placeholder="사용 및 이용 후기 또는 도움이 되는 정보를 남겨주세요."
+              disableUnderline
+              multiline
+              name="content"
+            />
+          </div>
+          <div className={classes.rowdivForm}>
+            <div className={classes.buyWrapForm}>
+              <img src={TagIcon} alt="write" className={classes.iconWrite} />
+
+              <span className={classes.cateText}>태그</span>
+            </div>
+            {/* <Divider className={classes.divider} /> */}
+            <TagInput />
+          </div>
+          <div className={classes.rowdivSec}>
+            <div className={classes.buyWrapForm}>
+              <img src={StartTitle} alt="write" className={classes.iconWrite} />
+              <span className={classes.cateText}>별평점</span>
+            </div>
+
+            <SurveyListTotal
+            
+              category={this.state.selectedValue}
+              buyType={this.state.value}
+            />
+            {/* {this.state.selectedValue > -1 ? (
+              <SurveyList
+                surveyCate={SurveyData.surveyCate[this.state.selectedValue]}
+                surveyBuyType={SurveyData.surveyBuyType[this.state.value]}
+                category={this.state.selectedValue}
+                buyType={this.state.value}
+              />
+            ) : (
+              <SurveyList
+                surveyCate={SurveyData.surveyCate[99999]}
+                surveyBuyType={SurveyData.surveyBuyType[this.state.value]}
+                category={this.state.selectedValue}
+                buyType={this.state.value}
+              />
+            )} */}
+            {/* <SurveyList
+            surveyCate={surveyCate}
+            surveyBuyType={surveyBuyType}
+            // categoryId={this.state.categoryId}
+          /> */}
+          </div>
+          <div className={classes.rowdivForm}>
+            <div className={classes.buyWrapForm}>
+              <img src={CheckIcon} alt="check" className={classes.iconWrite} />
+
+              <span className={classes.cateText}>
+                {this.state.value === 1
+                  ? '재방문을 하겠습니까?'
+                  : '재구매를 하겠습니까?'}
+              </span>
+            </div>
+            <Divider className={classes.divider} />
+            <Paper className={classes.tabPaperForm}>
+              <Tabs
+                value={this.state.recommend}
+                onChange={this.handleChangeRecommend}
+                indicatorColor="primary"
+                textColor="secondary"
+                centered
+              >
+                <Tab
+                  label={
+                    <TabLabel selected={this.state.recommend === 0 ? 1 : 0}>
+                      예
+                    </TabLabel>
+                  }
+                  classes={{
+                    root: classes.tabRootForm,
+                    labelIcon: classes.tabIcon,
+                  }}
+                />
+                <Tab
+                  label={
+                    <TabLabel selected={this.state.recommend === 1 ? 1 : 0}>
+                      아니오
+                    </TabLabel>
+                  }
+                  classes={{
+                    root: classes.tabRootForm,
+                    labelIcon: classes.tabIcon,
+                  }}
+                />
+              </Tabs>
+            </Paper>
+          </div>
+          <input
+            name="recommend"
+            value={this.state.recommend === 0 ? 'YES' : 'NO'}
+            type="hidden"
+          />
           <input
             type="hidden"
             name="category"

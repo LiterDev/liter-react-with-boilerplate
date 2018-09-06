@@ -144,23 +144,6 @@
   "surveyBuyType": [
     [
       {
-        "surveyId": 81,
-        "surveyName": "친절한 서비스를 경험하셨나요?",
-        "sortPosition": 0
-      },
-      {
-        "surveyId": 82,
-        "surveyName": "인테리어, 매장 내 부대시설 등 전체적인 환경은 어땠나요?",
-        "sortPosition": 1
-      },
-      {
-        "surveyId": 83,
-        "surveyName": "주차 및 대중교통 이용으로 접근하기 쉬운가요?",
-        "sortPosition": 2
-      }
-    ],
-    [
-      {
         "surveyId": 91,
         "surveyName": "쇼핑몰의 사진, 설명과 제품이 동일한가요?",
         "sortPosition": 0
@@ -174,6 +157,23 @@
         "surveyId": 93,
         "surveyName": "문의 사항에 대해 도움되는 답변으로 신속하게 응답하나요?",
         "sortPosition": 3
+      }
+    ],
+    [
+      {
+        "surveyId": 81,
+        "surveyName": "친절한 서비스를 경험하셨나요?",
+        "sortPosition": 0
+      },
+      {
+        "surveyId": 82,
+        "surveyName": "인테리어, 매장 내 부대시설 등 전체적인 환경은 어땠나요?",
+        "sortPosition": 1
+      },
+      {
+        "surveyId": 83,
+        "surveyName": "주차 및 대중교통 이용으로 접근하기 쉬운가요?",
+        "sortPosition": 2
       }
     ],
     [

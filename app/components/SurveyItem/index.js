@@ -18,6 +18,21 @@ const styles = theme => ({
   root: {
     paddingTop: theme.spacing.unit * 0,
   },
+
+  scoreLetter :{
+    width: '25px;',
+    height: '20px',
+    fontFamily: 'SFProDisplay',
+    fontSize: '16px',
+    fontWeight: 500,
+    fontStyle: 'normal',
+    fontStretch:'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    textAlign: 'center',
+    color: '#333333',
+
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -48,9 +63,11 @@ class SurveyItem extends React.PureComponent {
       surveyName,
       sortPosition,
     } = this.props;
+    const { classes } = this.props;
 
     return (
       <div>
+        
         <StarRatings
           rating={this.state.rating}
           changeRating={this.changeRating}
@@ -62,6 +79,8 @@ class SurveyItem extends React.PureComponent {
           starHoverColor={starHoverColor}
           svgIconPath="M19.77 29.503l6.838 4.288c1.252.786 2.784-.376 2.455-1.845l-1.813-8.063 6.047-5.433c1.104-.99.51-2.87-.94-2.99l-7.957-.7-3.114-7.62a1.626 1.626 0 0 0-3.031 0l-3.114 7.603-7.958.7c-1.45.12-2.043 2-.939 2.99l6.047 5.432-1.813 8.064c-.33 1.469 1.203 2.63 2.455 1.845l6.838-4.271z"
         />
+        <span className={classes.scoreLetter}> {this.state.rating}.0 </span>
+        
         <input
           type="hidden"
           value={`${surveyId}|${surveyType}|${

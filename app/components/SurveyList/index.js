@@ -93,8 +93,8 @@ class SurveyList extends React.PureComponent {
     return (
       <div className={classes.root}>
         {/* <FormattedMessage {...messages.header} /> */}
-        {surveyCate &&
-          surveyCate.map((item, index) => (
+        {surveyCate && surveyCate.map((item, index) => (
+            
             <div key={item.surveyId} className={classes.surveyWrap}>
               <div className={classes.surveyTitle}>{item.surveyName}</div>
               <SurveyItem
@@ -108,10 +108,11 @@ class SurveyList extends React.PureComponent {
                 sortPosition={index}
               />
             </div>
-          ))}
+        ))}
         {surveyBuyType && <Divider className={classes.divider} />}
         {surveyBuyType &&
           surveyBuyType.map((item, index) => (
+     
             <div key={item.surveyId} className={classes.surveyWrap}>
               <div className={classes.surveyTitle}>{item.surveyName}</div>
               <SurveyItem
@@ -122,13 +123,18 @@ class SurveyList extends React.PureComponent {
                 surveyId={item.surveyId}
                 surveyType="STORE"
                 surveyName={item.surveyName}
-                sortPosition={index}
+                sortPosition={index}   
               />
+
             </div>
-          ))}
+            
+        ))}
         <Divider className={classes.divider} />
+        
         <div className={classes.surveyWrap}>
-          <div className={classes.surveyTitle}>총평가</div>
+          <div className={classes.surveyTitle}>총평가 </div>
+         
+       <span> 
           <SurveyItemTotal
             starEmptyColor="rgb(220, 235, 247)"
             starRatedColor="rgb(21, 145, 255)"
@@ -137,6 +143,12 @@ class SurveyList extends React.PureComponent {
             totalRatingArry={this.state.totalRatingArry}
             // surveyId={0}
           />
+       </span> 
+         
+      
+
+         
+         
         </div>
       </div>
     );

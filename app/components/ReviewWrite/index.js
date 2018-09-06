@@ -412,7 +412,7 @@ class ReviewWrite extends React.PureComponent {
       //
       validationAlert: false,
       validationContent: false,
-      recommend: false,
+      recommend: -1,
     };
     this.handleImageAppend = this.handleImageAppend.bind(this);
     this.handleImageRemove = this.handleImageRemove.bind(this);
@@ -795,7 +795,7 @@ class ReviewWrite extends React.PureComponent {
       return false;
     }
 
-    if (!this.state.recommend) {
+    if (this.state.recommend < 0) {
       let recommandTitle = '재구매';
       if (this.state.value === 1) {
         recommandTitle = '재방문';
@@ -1133,7 +1133,6 @@ class ReviewWrite extends React.PureComponent {
             </div>
 
             <SurveyListTotal
-            
               category={this.state.selectedValue}
               buyType={this.state.value}
             />
@@ -1204,7 +1203,13 @@ class ReviewWrite extends React.PureComponent {
           </div>
           <input
             name="recommend"
-            value={this.state.recommend === 0 ? 'YES' : 'NO'}
+            value={
+              this.state.recommend > -1
+                ? this.state.recommend === 0
+                  ? 'YES'
+                  : 'NO'
+                : ''
+            }
             type="hidden"
           />
           <input

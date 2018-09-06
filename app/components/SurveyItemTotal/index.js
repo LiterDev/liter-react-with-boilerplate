@@ -18,6 +18,19 @@ const styles = theme => ({
   root: {
     paddingTop: theme.spacing.unit * 0,
   },
+  scoreBox: {
+    width: '25px',
+    height: '20px',
+    fontFamily: 'SFProDisplay',
+    fontSize: '16px',
+    fontWeight: 500,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    textAlign: 'center',
+    color: '#333333',
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -29,6 +42,7 @@ class SurveyItemTotal extends React.PureComponent {
       starHoverColor,
       totalCount,
       totalRatingArry,
+      classes,
     } = this.props;
     //const ratePoint = Number.toFixed(1);
     // console.log(totalCount);
@@ -67,7 +81,8 @@ class SurveyItemTotal extends React.PureComponent {
           rating={ratePoint}
           // changeRating={this.changeRating}
           numberOfStars={5}
-          starSpacing="0"
+          starSpacing="17"
+          starDimension="40px"
           name="rating"
           starEmptyColor={totalCount > 0 ? starEmptyColor : '#dfdfdf'}
           starRatedColor={starRatedColor}

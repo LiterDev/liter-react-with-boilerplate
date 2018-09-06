@@ -207,10 +207,11 @@ class SurveyList extends React.PureComponent {
               />
             </div>
           ))}
-        <Divider className={classes.divider} />
+
+        {totalCount > 0 ? <Divider className={classes.divider} /> : ''}
 
         <div className={classes.surveyWrap}>
-          {this.state.totalCount > 0 ? (
+          {totalCount > 0 ? (
             <div className={classes.surveyTitle}>총평가 </div>
           ) : (
             ''

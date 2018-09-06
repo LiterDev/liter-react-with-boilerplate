@@ -202,7 +202,7 @@ class ReviewFormTabEtc extends React.PureComponent {
             />
           </div>
         </div>
-        <div className={classes.rowdivSec}>
+        {/* <div className={classes.rowdivSec}>
           <div className={classes.buyWrap}>
             <img src={WriteIcon} alt="write" className={classes.iconWrite} />
             <span className={classes.cateText}>리뷰를 작성하세요.</span>
@@ -221,7 +221,7 @@ class ReviewFormTabEtc extends React.PureComponent {
             <img src={TagIcon} alt="write" className={classes.iconWrite} />
             <span className={classes.cateText}>태그</span>
           </div>
-          {/* <Divider className={classes.divider} /> */}
+          
           <TagInput />
         </div>
         <div className={classes.rowdivSec}>
@@ -279,7 +279,7 @@ class ReviewFormTabEtc extends React.PureComponent {
           name="recommend"
           value={this.state.value === 0 ? 'YES' : 'NO'}
           type="hidden"
-        />
+        /> */}
         <input type="hidden" name="store" value="ETC" />
       </div>
     );

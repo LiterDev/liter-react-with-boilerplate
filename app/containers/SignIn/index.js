@@ -63,7 +63,7 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 0,
     backgroundColor: '#ffffff',
     textAlign: 'center',
-    // height: '100vh',
+    height: '100vh',
     // paddingLeft: 30,
     // paddingRight: 30,
 

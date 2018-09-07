@@ -9,7 +9,7 @@ import Star from '@material-ui/icons/Star';
 import StyledLink from 'components/ReviewCard/StyledLink';
 import MediaThumbnail from 'components/MediaThumbnail';
 import TimeAt from 'components/TimeAt';
-
+import { FormattedMessage, FormattedNumber } from 'react-intl';
 import LiterCubeIcon from '../../images/ic-cube-end-5.png';
 
 const styles = {
@@ -135,6 +135,10 @@ const styles = {
     lineHeight: '1.43',
     color: '#111111',
   },
+  krw: {
+    marginRight: 3,
+    fontSize: 10,
+  },
 };
 
 function ReviewContainer(props) {
@@ -212,9 +216,13 @@ function ReviewContainer(props) {
                 </div>
               ) : (
                 <div>
-                  <img src={LiterCubeIcon} />
+                  {/* <img src={LiterCubeIcon} />
                   <span className={classes.leftPadding6}>
                     {review.rewardLitercube.toFixed(2)}
+                  </span> */}
+                  <span className={classes.leftPadding6}>
+                    <span className={classes.krw}>₩</span>
+                    <FormattedNumber value={review.rewardLitercubeKrw} />
                   </span>
                 </div>
               )}

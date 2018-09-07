@@ -150,9 +150,10 @@ const styles = theme => ({
     lineHeight: 'normal',
     letterSpacing: 'normal',
     color: '#ffffff',
-    position: 'absolute',
-    right: 12,
-    top: 12,
+    // position: 'absolute',
+    // right: 12,
+    // top: 12,
+    marginLeft: 10,
   },
   newRewardSnackBarBtn: {
     borderRadius: '1.6px',

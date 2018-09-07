@@ -169,6 +169,7 @@ const styles = theme => ({
     letterSpacing: 'normal',
     color: 'rgb(17, 17, 17)',
     marginTop: 8,
+    backgroundColor: '#ffffff',
     // width: '70%',
     // maxWidth: 235,
     // minWidth: 200,

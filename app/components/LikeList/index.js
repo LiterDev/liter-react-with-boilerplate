@@ -112,7 +112,7 @@ const styles = {
     minHeight: 28,
   },
   krw: {
-    marginRight: 3,
+    marginRight: 1,
     fontSize: 12,
   },
 };

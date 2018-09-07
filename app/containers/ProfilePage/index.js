@@ -51,6 +51,7 @@ const styles = {
   },
   contents: {
     paddingTop: 212,
+    backgroundColor: '#ffffff',
   },
   panelInfo: {
     marginTop: 20,

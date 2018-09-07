@@ -201,7 +201,7 @@ const styles = theme => ({
     fontWeight: 500,
     fontStyle: 'normal',
     fontStretch: 'normal',
-    letterSpacing: 'normal',    
+    letterSpacing: 'normal',
     // right: 0,
     bottom: 12,
   },
@@ -264,6 +264,10 @@ const styles = theme => ({
   dialogContent: {
     paddingTop: '20px',
   },
+  krw: {
+    marginRight: 1,
+    fontSize: 10,
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -281,8 +285,8 @@ class ReviewLikeItem extends React.PureComponent {
 
   handleVoting = reviewId => {
     const self = this;
-    if(this.state.loading === false) {
-      self.setState({'loading': true});
+    if (this.state.loading === false) {
+      self.setState({ loading: true });
 
       const requestURL = `${process.env.API_URL}/engagement`;
       const accessToken = localStorage.getItem('accessToken');
@@ -304,7 +308,7 @@ class ReviewLikeItem extends React.PureComponent {
           .then(resp => {
             // if (Boolean(resp.data)) {
             this.props.handleLikeState(reviewId);
-            self.setState({'loading': false});
+            self.setState({ loading: false });
             // }
           })
           .catch(error => {
@@ -313,20 +317,20 @@ class ReviewLikeItem extends React.PureComponent {
             // console.log(error.response.data.code);
             if (Boolean(error.response.data.code)) {
             }
-            self.setState({'loading': false});
+            self.setState({ loading: false });
           });
       } else {
         // login 페이지로 이동
-        console.log("로그인필요");
-        self.setState({'loading': false});
-        self.setState({'loginPop': true});
+        console.log('로그인필요');
+        self.setState({ loading: false });
+        self.setState({ loginPop: true });
       }
-    }    
+    }
   };
 
   handleLoginClose = () => {
-    this.setState({'loginPop': false});
-  }
+    this.setState({ loginPop: false });
+  };
 
   handleSignInMove = () => {
     this.setState({
@@ -335,8 +339,7 @@ class ReviewLikeItem extends React.PureComponent {
 
     // this.props.history.push('/signin');
     this.context.router.history.push(`/signin`);
-    
-  }
+  };
 
   handleFollow = userId => {
     // console.log(userId);
@@ -399,15 +402,14 @@ class ReviewLikeItem extends React.PureComponent {
     const { loginPop } = this.state;
 
     let curLikeIcon = LikeIcon;
-    let numCapColor = "";
-    if(Boolean(review.likeYn) && review.likeYn > 0) {
+    let numCapColor = '';
+    if (Boolean(review.likeYn) && review.likeYn > 0) {
       curLikeIcon = LikeSelIcon;
       numCapColor = classes.numCaptionSel;
     }
 
     return (
       <div className={classes.cardWarp}>
-
         <Dialog
           open={this.state.loginPop}
           onClose={this.handleLoginClose}
@@ -453,20 +455,18 @@ class ReviewLikeItem extends React.PureComponent {
         </Dialog>
 
         <Card className={classes.card}>
-            <StyledLink to={`/review/${this.props.review.id}`}>
+          <StyledLink to={`/review/${this.props.review.id}`}>
             <CardMedia
               className={classes.cover}
-              image={
-                  `${
-                      review.mediaCollection[0].imageExt === 'gif'
-                        ? review.mediaCollection[0].fullPath
-                        : review.mediaCollection[0].fullPathMedium
-                    }`
-                  }
+              image={`${
+                review.mediaCollection[0].imageExt === 'gif'
+                  ? review.mediaCollection[0].fullPath
+                  : review.mediaCollection[0].fullPathMedium
+              }`}
               // image="https://s3-ap-northeast-1.amazonaws.com/liter-review/resized/m/DlS7RBN9UlrvdF38sMtO.jpg"
               title="Live from space album cover"
             />
-            </StyledLink>
+          </StyledLink>
           <div className={classes.details}>
             <CardContent
               className={classes.content}
@@ -529,18 +529,23 @@ class ReviewLikeItem extends React.PureComponent {
                       alt="like"
                       className={classes.icons}
                     />
-                    <span className={classNames(classes.numCaption, numCapColor)}>
+                    <span
+                      className={classNames(classes.numCaption, numCapColor)}
+                    >
                       {review.likeCount ? review.likeCount : 0}
                     </span>
                   </Button>
                 </div>
                 <div className={classes.activeStatusLast}>
-                  <div>{review.rewardLitercube} LCB</div>
+                  <div>
+                    <span className={classes.krw}>₩</span>
+                    {review.rewardLitercubeKrw}
+                  </div>
                 </div>
               </div>
             </CardContent>
           </div>
-        </Card>        
+        </Card>
       </div>
     );
   }

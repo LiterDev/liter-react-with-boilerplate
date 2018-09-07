@@ -83,7 +83,7 @@ const styles = {
     color: '#1591ff',
   },
   totalLiterCube: {
-    paddingRight: 30,
+    paddingRight: 0,
     float: 'right',
     fontFamily: 'SF Pro Display',
     fontSize: 15,

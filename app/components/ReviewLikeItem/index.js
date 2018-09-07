@@ -214,6 +214,10 @@ const styles = theme => ({
     textAlign: 'right',
     display: 'block',
   },
+  krw: {
+    marginRight: 1,
+    fontSize: 10,
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -407,7 +411,8 @@ class ReviewLikeItem extends React.PureComponent {
                 <div className={classes.activeStatusLast}>
                   {/* <div>{review.rewardLitercube} LCB</div> */}
                   <div>
-                    ₩ <FormattedNumber value={review.rewardLitercubeKrw} />
+                    <span className={classes.krw}>₩</span>
+                    <FormattedNumber value={review.rewardLitercubeKrw} />
                   </div>
                 </div>
               </div>

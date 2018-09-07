@@ -183,7 +183,7 @@ export class MyPage extends React.PureComponent {
           // console.log(response);
 
           self.setState({
-            totalLiterCube: response.data.totalLiterCube,
+            totalLiterCube: response.data.totalLiterCubeKrw,
           });
         }
       })

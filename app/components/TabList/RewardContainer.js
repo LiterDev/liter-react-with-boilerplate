@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
-
+import { FormattedMessage, FormattedNumber } from 'react-intl';
 import classNames from 'classnames';
 
 const styles = {
@@ -76,12 +76,14 @@ function RewardContainer(props) {
           <div className={classes.dateWidth}>{rewardDate}</div>
         </span>
         <span className={classNames(classes.rewardCol, classes.colDivider)}>
-          {reward.claimLiterCube}
-          <span className={classes.lcbText}>LCB</span>
+          {/* {reward.claimLiterCube}
+          <span className={classes.lcbText}>LCB</span> */}
+          ₩ <FormattedNumber value={reward.claimLiterCubeKrw} />
         </span>
         <span className={classNames(classes.totalCol)}>
-          {reward.totalLiterCube}
-          <span className={classes.lcbText}>LCB</span>
+          {/* {reward.totalLiterCube}
+          <span className={classes.lcbText}>LCB</span> */}
+          ₩ <FormattedNumber value={reward.totalLiterCubeKrw} />
         </span>
       </ListItem>
       <Divider />

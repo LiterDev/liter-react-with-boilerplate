@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedNumber } from 'react-intl';
 /* material-ui core */
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -110,6 +110,10 @@ const styles = {
     paddingTop: '12px',
     lineHeight: 0,
     minHeight: 28,
+  },
+  krw: {
+    marginRight: 5,
+    fontSize: 12,
   },
 };
 
@@ -294,7 +298,12 @@ class LikeList extends React.PureComponent {
   };
 
   render() {
-    const { classes, reviewId, rewardLitercube } = this.props;
+    const {
+      classes,
+      reviewId,
+      rewardLitercube,
+      rewardLitercubeKrw,
+    } = this.props;
     const { totalVoter, totalReward, likelist } = this.state;
 
     return (
@@ -306,11 +315,15 @@ class LikeList extends React.PureComponent {
             className={classes.totalLiterCube}
             onClick={this.handleClickOpen}
           >
-            {rewardLitercube} LCB
+            {/* {rewardLitercube} LCB */}
+            <span className={classes.krw}>₩</span>
+            <FormattedNumber value={rewardLitercube} />
           </Button>
         ) : (
           <span className={classes.totalLiterCubeNon}>
-            {rewardLitercube} LCB
+            {/* {rewardLitercube} LCB */}
+            <span className={classes.krw}>₩</span>
+            <FormattedNumber value={rewardLitercube} />
           </span>
         )}
 

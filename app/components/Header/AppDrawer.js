@@ -23,11 +23,12 @@ import Dialog from '@material-ui/core/Dialog';
 import ListItemText from '@material-ui/core/ListItemText';
 import Slide from '@material-ui/core/Slide';
 import StyledLink from 'components/ReviewCard/StyledLink';
+import { FormattedMessage, FormattedNumber } from 'react-intl';
 
 import avatarDefault from '../../images/ic-avatar.png';
 
 // import HeaderLink from './HeaderLink';
-// import { FormattedMessage } from 'react-intl';
+
 // import messages from './messages';
 
 const styles = theme => ({
@@ -351,7 +352,9 @@ class AppDrawer extends React.PureComponent {
               role="button"
               className={classes.link}
             >
-              <Button className={classes.btnLogInCaption}>로그인 / 회원가입</Button>
+              <Button className={classes.btnLogInCaption}>
+                로그인 / 회원가입
+              </Button>
             </Link>
           </ListItem>
 
@@ -470,13 +473,18 @@ class AppDrawer extends React.PureComponent {
           <ListItem className={classes.itemLeaf}>
             <Button className={classes.btnCaption}>나의 보상</Button>
             <div className={classes.literCube}>
+              <span className={classes.literCubeLcb}>₩ </span>
               <span>
-                {Boolean(localStorage.getItem('literCube')) &&
-                localStorage.getItem('literCube') !== 'null'
-                  ? localStorage.getItem('literCube')
-                  : '0'}
+                <FormattedNumber
+                  value={
+                    Boolean(localStorage.getItem('literCubeKrw')) &&
+                    localStorage.getItem('literCubeKrw') !== 'null'
+                      ? localStorage.getItem('literCubeKrw')
+                      : '0'
+                  }
+                />
               </span>
-              <span className={classes.literCubeLcb}>LCB</span>
+              {/* <span className={classes.literCubeLcb}>LCB</span> */}
             </div>
             <div style={{ clear: 'both' }} />
           </ListItem>

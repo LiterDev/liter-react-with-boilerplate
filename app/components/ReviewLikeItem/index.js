@@ -29,7 +29,7 @@ import LikeSelIcon from 'images/ic-feed-like-sel.png';
 /* components */
 /* image */
 /* ref */
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedNumber } from 'react-intl';
 import messages from './messages';
 
 const styles = theme => ({
@@ -405,7 +405,10 @@ class ReviewLikeItem extends React.PureComponent {
                   </Button>
                 </div>
                 <div className={classes.activeStatusLast}>
-                  <div>{review.rewardLitercube} LCB</div>
+                  {/* <div>{review.rewardLitercube} LCB</div> */}
+                  <div>
+                    ₩ <FormattedNumber value={review.rewardLitercubeKrw} />
+                  </div>
                 </div>
               </div>
             </CardContent>

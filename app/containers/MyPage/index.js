@@ -31,7 +31,7 @@ import ErrorMessages from 'components/ErrorMessages';
 /* image */
 import avatarDefault from 'images/ic-avatar.png';
 /* ref */
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedNumber } from 'react-intl';
 import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
@@ -309,9 +309,9 @@ export class MyPage extends React.PureComponent {
   componentDidMount() {
     this.setState({
       totalLiterCube:
-        Boolean(localStorage.getItem('literCube')) &&
-        localStorage.getItem('literCube') != 'null'
-          ? localStorage.getItem('literCube')
+        Boolean(localStorage.getItem('literCubeKrw')) &&
+        localStorage.getItem('literCubeKrw') != 'null'
+          ? localStorage.getItem('literCubeKrw')
           : 0,
     });
   }
@@ -365,12 +365,16 @@ export class MyPage extends React.PureComponent {
   render() {
     const { classes, myPages } = this.props;
     const { errorMessage } = this.state;
+    const { action } = this.props.history;
 
+    if (action === 'PUSH') {
+      window.scrollTo(0, 0);
+    }
     // const literCoin =
     //   myPages.userData.literCoin > 0 ? myPages.userData.literCoin : 0;
     const literCoin = Number(
       Boolean(this.state.totalLiterCube) ? this.state.totalLiterCube : 0,
-    ).toFixed(2);
+    );
 
     return (
       <div>
@@ -419,8 +423,9 @@ export class MyPage extends React.PureComponent {
           <div className={classes.row}>
             {localStorage.getItem('hasWallet') === 'true' ? (
               <Typography variant="headline" className={classes.userCoin}>
-                {literCoin}
-                <span className={classes.lcbText}>LCB</span>
+                <span className={classes.lcbText}>₩</span>{' '}
+                <FormattedNumber value={literCoin} />
+                {/* <span className={classes.lcbText}>LCB</span> */}
               </Typography>
             ) : (
               <Button

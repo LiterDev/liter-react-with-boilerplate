@@ -202,7 +202,7 @@ class LikeList extends React.PureComponent {
           if (Boolean(resp.data)) {
             // console.log(']]]-------------load TotalReward-------------[[[');
             // console.log(resp.data);
-            this.setState({ totalReward: resp.data.reward });
+            this.setState({ totalReward: resp.data.rewardKrw });
             this.setState({ totalVoter: resp.data.totalCcount });
             this.setState({ loading: false });
           }
@@ -348,7 +348,10 @@ class LikeList extends React.PureComponent {
               >
                 총 {totalVoter} 명
               </Typography>
-              <div className={classes.cubeCaption}>{totalReward} LCB</div>
+              <div className={classes.cubeCaption}>
+                <span className={classes.krw}>₩</span>
+                <FormattedNumber value={totalReward} />
+              </div>
             </Toolbar>
           </AppBar>
           <List>

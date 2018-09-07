@@ -128,7 +128,8 @@ const styles = {
     fontWeight: 800,
     fontSize: '13px',
     fontFamily: 'SFProText',
-    marginLeft: 5,
+    // marginLeft: 5,
+    marginRight: 3,
   },
 };
 
@@ -423,7 +424,7 @@ export class MyPage extends React.PureComponent {
           <div className={classes.row}>
             {localStorage.getItem('hasWallet') === 'true' ? (
               <Typography variant="headline" className={classes.userCoin}>
-                <span className={classes.lcbText}>₩</span>{' '}
+                <span className={classes.lcbText}>₩</span>
                 <FormattedNumber value={literCoin} />
                 {/* <span className={classes.lcbText}>LCB</span> */}
               </Typography>

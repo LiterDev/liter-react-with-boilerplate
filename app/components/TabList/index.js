@@ -296,7 +296,7 @@ class TabList extends React.Component {
               </span>
               <span className={classes.newRewardSnackBarCoin}>
                 <span className={classes.krw}>₩</span>
-                {data.estimated}
+                <FormattedNumber value={data.estimated} />
                 {/* <span className={classes.lcbText}>LCB</span> */}
               </span>
             </div>

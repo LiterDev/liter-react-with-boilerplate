@@ -314,6 +314,7 @@ const styles = theme => ({
     minWidth: '100%',
     maxWidth: '100%',
     paddingTop: 20,
+    fontSize: 14,
   },
   tabRootForm: {
     // minHeight: 60,
@@ -324,6 +325,9 @@ const styles = theme => ({
   tabPaperForm: {
     heght: 20,
     marginTop: 10,
+  },
+  reviewContents: {
+    minHeight: 250,
   },
 });
 const cateList = [
@@ -1103,7 +1107,9 @@ class ReviewWrite extends React.PureComponent {
           >
             작성 완료
           </Button> */}
-          <div className={classes.rowdivForm}>
+          <div
+            className={classNames(classes.rowdivForm, classes.reviewContents)}
+          >
             <div className={classes.buyWrapForm}>
               <img src={WriteIcon} alt="write" className={classes.iconWrite} />
               <span className={classes.cateText}>리뷰를 작성하세요.</span>

@@ -320,7 +320,7 @@ class ReviewCardBottomBarView extends React.Component {
       : this.props.classes.rootBottom;
 
     this.state.curLikeCount = this.props.review.likeCount;
-    this.state.literCubeState = this.props.review.rewardLitercube;
+    this.state.literCubeState = this.props.review.rewardLitercubeKrw;
 
     if (this.props.review.likeYn) this.state.curLiked = true;
     else this.state.curLiked = false;
@@ -329,7 +329,7 @@ class ReviewCardBottomBarView extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       ...this.state,
-      literCubeState: nextProps.review.rewardLitercube,
+      literCubeState: nextProps.review.rewardLitercubeKrw,
     });
   }
 

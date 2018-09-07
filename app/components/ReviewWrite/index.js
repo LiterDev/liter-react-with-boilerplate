@@ -108,15 +108,35 @@ const styles = theme => ({
       color: blue[500],
     },
   },
-  cssFocused: {},
   cssUnderline: {
     '&:after': {
       borderBottomColor: blue[500],
+      bottom: -6,
+      // paddingTop: 10,
     },
+    '&:before': {
+      borderBottomColor: '#e3e3e3',
+      bottom: -6,
+      // paddingTop: 10,
+    },
+  },
+  cssFocused: {
+    // borderBottomColor: blue[500],
+    // '&:not': {
+    //   borderBottomColor: blue[500],
+    //   // paddingTop: 10,
+    // },
+  },
+  cssError: {
+    // '&:before': {
+    //   borderBottomColor: blue[500],
+    //   // paddingTop: 10,
+    // },
   },
   inputTop: {
     width: '100%',
     heght: 26,
+    fontSize: 19,
     // minWidth: '100%',
     // maxWidth: '100%',
   },
@@ -124,7 +144,7 @@ const styles = theme => ({
     width: '100%',
   },
   cateWrap: {
-    paddingTop: 16,
+    paddingTop: 20,
     textAlign: 'left',
     color: '#1591ff',
     fontSize: 16,
@@ -147,7 +167,7 @@ const styles = theme => ({
     backgroundColor: '#ffffff',
   },
   cateText: {
-    fontSize: 18,
+    fontSize: 16,
     height: 20,
     verticalAlign: 'middle',
     // lineHeight: 0,
@@ -328,6 +348,9 @@ const styles = theme => ({
   },
   reviewContents: {
     minHeight: 250,
+  },
+  cateSpanButton: {
+    paddingLeft: 0,
   },
 });
 const cateList = [
@@ -840,7 +863,12 @@ class ReviewWrite extends React.PureComponent {
 
   // 카테고리팝업 핸들러
   handleClose = value => {
-    this.setState({ selectedValue: value, open: false });
+    console.log(value);
+    if (Boolean(value) || value === 0) {
+      this.setState({ selectedValue: value, open: false });
+    } else {
+      this.setState({ open: false });
+    }
   };
 
   handleChange = (event, value) => {
@@ -902,6 +930,8 @@ class ReviewWrite extends React.PureComponent {
                 <Input
                   classes={{
                     underline: classes.cssUnderline,
+                    focused: classes.cssFocused,
+                    error: classes.cssError,
                   }}
                   id="custom-css-input"
                   className={classes.inputTop}
@@ -943,15 +973,19 @@ class ReviewWrite extends React.PureComponent {
                     </g>
                   </svg>
                 </IconButton>
-
-                <span
-                  className={classNames(
-                    classes.cateText,
-                    classes.deActiveColor,
-                  )}
+                <Button
+                  onClick={this.handleClickOpen}
+                  className={classes.cateSpanButton}
                 >
-                  카테고리를 선택해주세요.
-                </span>
+                  <span
+                    className={classNames(
+                      classes.cateText,
+                      classes.deActiveColor,
+                    )}
+                  >
+                    카테고리를 선택해주세요.
+                  </span>
+                </Button>
               </div>
             ) : (
               <div className={classes.cateWrap}>

@@ -50,6 +50,10 @@ const styles = {
     fontFamily: 'SFProText',
     marginLeft: 5,
   },
+  krw: {
+    fontSize: 12,
+    marginRight: 3,
+  },
 };
 function RewardContainer(props) {
   // const { classes, reward } = props;
@@ -78,12 +82,14 @@ function RewardContainer(props) {
         <span className={classNames(classes.rewardCol, classes.colDivider)}>
           {/* {reward.claimLiterCube}
           <span className={classes.lcbText}>LCB</span> */}
-          ₩ <FormattedNumber value={reward.claimLiterCubeKrw} />
+          <span className={classes.krw}>₩</span>
+          <FormattedNumber value={reward.claimLiterCubeKrw} />
         </span>
         <span className={classNames(classes.totalCol)}>
           {/* {reward.totalLiterCube}
           <span className={classes.lcbText}>LCB</span> */}
-          ₩ <FormattedNumber value={reward.totalLiterCubeKrw} />
+          <span className={classes.krw}>₩</span>
+          <FormattedNumber value={reward.totalLiterCubeKrw} />
         </span>
       </ListItem>
       <Divider />

@@ -17,6 +17,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import { FormattedMessage, FormattedNumber } from 'react-intl';
 
 import ReviewContainer from './ReviewContainer';
 import RewardContainer from './RewardContainer';
@@ -149,6 +150,9 @@ const styles = theme => ({
     lineHeight: 'normal',
     letterSpacing: 'normal',
     color: '#ffffff',
+    position: 'absolute',
+    right: 12,
+    top: 12,
   },
   newRewardSnackBarBtn: {
     borderRadius: '1.6px',
@@ -170,6 +174,10 @@ const styles = theme => ({
     fontSize: '12px',
     fontFamily: 'SFProText',
     marginLeft: 5,
+  },
+  krw: {
+    fontSize: 12,
+    marginRight: 3,
   },
 });
 
@@ -287,8 +295,9 @@ class TabList extends React.Component {
                 예상 보상 내역 (추후 변동될 수 있습니다.)
               </span>
               <span className={classes.newRewardSnackBarCoin}>
+                <span className={classes.krw}>₩</span>
                 {data.estimated}
-                <span className={classes.lcbText}>LCB</span>
+                {/* <span className={classes.lcbText}>LCB</span> */}
               </span>
             </div>
           </Snackbar>
@@ -303,8 +312,9 @@ class TabList extends React.Component {
                 지금 받을 수 있는 신규보상
               </span>
               <span className={classes.newRewardSnackBarCoin}>
-                {data.acquire}
-                <span className={classes.lcbText}>LCB</span>
+                <span className={classes.krw}>₩</span>
+                <FormattedNumber value={data.acquire} />
+                {/* <span className={classes.lcbText}>LCB</span> */}
               </span>
               <button
                 className={classes.newRewardSnackBarBtn}

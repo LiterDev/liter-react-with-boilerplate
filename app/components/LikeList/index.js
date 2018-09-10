@@ -152,7 +152,7 @@ class LikeList extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    bsLock.clearAllBodyScrollLocks();
+    // bsLock.clearAllBodyScrollLocks();
   }
 
   handleClickOpen = e => {
@@ -163,20 +163,22 @@ class LikeList extends React.PureComponent {
     // this.loadLikeList(this.state.reviewId);
     // this.loadTotalReward(this.state.reviewId);
     this.setState({ open: true });
-    bsLock.disableBodyScroll(this.targetElement);
+    // bsLock.disableBodyScroll(this.targetElement);
   };
 
   handleClose = e => {
     this.setState({ open: false });
-    bsLock.enableBodyScroll(this.targetElement);
+    // bsLock.enableBodyScroll(this.targetElement);
   };
 
   handleScroll = e => {
+
     const bottom =
       e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
     if (bottom) {
       this.loadLikeMore(this.props.reviewId);
     }
+    
   };
 
   loadTotalReward = reviewId => {

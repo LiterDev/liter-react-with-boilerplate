@@ -117,7 +117,7 @@ export class Reviews extends React.Component {
 
     loadReviewList(this.state.cateValue);
     loadCategoryList();
-    window.addEventListener('scroll', this.handleScroll, true);
+    window.addEventListener('scroll', this.handleScroll, false);
 
     // $(window).scroll(() => {
     //   if (
@@ -136,7 +136,7 @@ export class Reviews extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll, true);
+    window.removeEventListener('scroll', this.handleScroll, false);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -149,28 +149,34 @@ export class Reviews extends React.Component {
 
   handleScroll(event) {
     // console.log('the scroll things', event);
-    const bottom =
-      event.target.scrollingElement.scrollHeight -
-        event.target.scrollingElement.scrollTop ===
-      event.target.scrollingElement.clientHeight;
+    event.preventDefault();
+    event.stopPropagation();
+    
+    // event.nativeEvent.stopImmediatePropagation();
+    if(event.target.scrollingElement) {
+      const bottom =
+        event.target.scrollingElement.scrollHeight -
+          event.target.scrollingElement.scrollTop ===
+        event.target.scrollingElement.clientHeight;
 
-    // console.log(
-    //   `event.target.scrollHeight -----] ${event.target.scrollHeight} [`,
-    // );
-    // console.log(`event.target.scrollTop -----] ${event.target.scrollTop} [`);
-    // console.log(
-    //   `event.target.clientHeight -----] ${event.target.clientHeight} [`,
-    // );
-    // console.log(bottom);
-    if (bottom) {
-      // console.log('the scroll things', event);
-      // this.loadReplyList(this.state.curPage + 1, this.state.parentId);
-      this.props.loadReviewListMore(
-        this.props.reviews.loadMore,
-        this.props.reviews.last,
-        this.state.cateValue,
-        this.state.searchValue,
-      );
+      // console.log(
+      //   `event.target.scrollHeight -----] ${event.target.scrollHeight} [`,
+      // );
+      // console.log(`event.target.scrollTop -----] ${event.target.scrollTop} [`);
+      // console.log(
+      //   `event.target.clientHeight -----] ${event.target.clientHeight} [`,
+      // );
+      // console.log(bottom);
+      if (bottom) {
+        // console.log('the scroll things', event);
+        // this.loadReplyList(this.state.curPage + 1, this.state.parentId);
+        this.props.loadReviewListMore(
+          this.props.reviews.loadMore,
+          this.props.reviews.last,
+          this.state.cateValue,
+          this.state.searchValue,
+        );
+      }
     }
   }
   loadValue = value => {

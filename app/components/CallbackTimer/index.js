@@ -27,6 +27,7 @@ class CallbackTimer extends React.PureComponent {
       curTickTime: curTimeStamp,
       toTime: toTimeStamp,
       tickTime: 0,
+      limitTime: false,
     };
   }
 
@@ -42,7 +43,7 @@ class CallbackTimer extends React.PureComponent {
       const toTimeStamp = curTimeStamp + this.props.limitSeconds;
       self.setState({'fromTime': curTimeStamp});
       self.setState({'unixTime': unixTimeStamp});
-      self.setState({'toTime': toTimeStamp});      
+      self.setState({'toTime': toTimeStamp});
       // console.log("갱신 ------ ");
     } else {
       var dateObj = new Date();
@@ -52,6 +53,11 @@ class CallbackTimer extends React.PureComponent {
       // console.log("@@@서버 마감 시간", this.state.toTime);
       const timeDiff = this.state.toTime - localTimeDate;
       self.setState({'tickTime': timeDiff});
+      if(timeDiff <= 0) {
+        clearInterval(this.timer);
+        self.setState({'limitTime': true});
+      }
+        
     }
   }
 
@@ -92,8 +98,16 @@ class CallbackTimer extends React.PureComponent {
   render() {
     const { limitSeconds, storageItemName, items } = this.props;
 
+    if(this.state.limitTime) {
+      return (
+        <div>
+          <span>제한 시간을 초과하셨습니다.</span>
+        </div>  
+      );
+    }
+
     return (
-      <div>
+      <div>        
         <AccessTime />        
         {items.indexOf('H') > -1 && this.getLimit('HOUR')}
         {items.indexOf('H') > -1 && <FormattedMessage {...messages.hour} />}
@@ -102,6 +116,7 @@ class CallbackTimer extends React.PureComponent {
         {items.indexOf('S') > -1 && this.getLimit('SECONDS')}
         {items.indexOf('S') > -1 && <FormattedMessage {...messages.seconds} />}
         <br />
+
       </div>
     );
   }

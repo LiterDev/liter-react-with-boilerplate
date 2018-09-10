@@ -128,6 +128,7 @@ module.exports = options => ({
         API_URL: JSON.stringify(process.env.API_URL),
         NAVER_MAP_CLIENTID: JSON.stringify(process.env.NAVER_MAP_CLIENTID),
         FACEBOOK_APPID: JSON.stringify(process.env.FACEBOOK_APPID),
+        KAKAOTALK_APPID: JSON.stringify(process.env.KAKAOTALK_APPID),
       },
     }),
     // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),

@@ -41,6 +41,8 @@ import LikeList from 'components/LikeList';
 import { voteAction } from 'containers/ReviewCardBottomBar/actions';
 import makeSelectReviewCardBottomBar from 'containers/ReviewCardBottomBar/selectors';
 
+import ShareContainer from 'containers/ShareContainer';
+
 /* components */
 import ReplyList from 'containers/ReplyList/Loadable';
 import axios from 'axios';
@@ -150,8 +152,8 @@ const styles = theme => ({
     color: '#1591ff',
   },
   shareText: {
-    padding: '0 0 0 5px',
-    fontSize: '15px',
+    padding: '0 0 0 10px',
+    fontSize: '17px',
     fontWeight: '500',
     fontStyle: 'normal',
     fontStretch: 'normal',
@@ -454,12 +456,12 @@ class ReviewCardBottomBarView extends React.Component {
   };
 
   handleResponse = res => {
-    // console.log(res);
+    console.log(res);
 
     if (res.error_code) {
       console.log(`facebook share error:::${res.error_code}`);
     } else {
-      // console.log(`add share +1`);
+      console.log(`add share +1`);
       const accessToken = localStorage.getItem('accessToken');
       const requestURL = `${process.env.API_URL}/share`;
       const headerText = {
@@ -587,6 +589,9 @@ class ReviewCardBottomBarView extends React.Component {
     const shareLocation = window.location.hostname.concat(
       `/review/${review.id}`,
     );
+
+    const mediaCollection = review ? review.mediaCollection : false;
+    const mediaItem = mediaCollection ? mediaCollection[0] : false;
     // console.log(review.id);
     // console.log(`router ::: ${this.context.router}`);
     // const curVote = votingIcons.sel;
@@ -737,7 +742,15 @@ class ReviewCardBottomBarView extends React.Component {
               {/* <ListItem className={classes.activeStatus}> */}
               <ListItemText className={classes.cellList}>
                 <div className={classes.cellWrapper}>
-                  <FacebookProvider
+                  <ShareContainer 
+                    href={shareLocation}
+                    title={review.title}
+                    media={mediaItem}
+                    review={review}
+                    shareCount={shareCount}
+                    handleResponse={this.handleResponse}
+                  />
+                  {/* <FacebookProvider
                     appId={process.env.FACEBOOK_APPID}
                     mobileIframe
                     hashtag="#LITER"
@@ -750,7 +763,6 @@ class ReviewCardBottomBarView extends React.Component {
                       // mobileIframe
                       hashtag="#LITER"
                     >
-                      {/* <Share href="http://www.facebook.com"> */}
                       <div className={classes.captionWrapper}>
                         <img
                           src={ShareIcon}
@@ -767,7 +779,15 @@ class ReviewCardBottomBarView extends React.Component {
                         </span>
                       </div>
                     </Share>
-                  </FacebookProvider>
+                  </FacebookProvider> 
+                  <span
+                    className={classNames(
+                      classes.numCaption,
+                      curShare.styleClass,
+                    )}
+                  >
+                    {shareCount}
+                  </span>*/}
                 </div>
               </ListItemText>
               {/*----------Share Button:END ----------*/}

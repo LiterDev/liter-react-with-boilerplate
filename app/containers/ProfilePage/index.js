@@ -35,7 +35,7 @@ import axios from 'axios';
 
 const styles = {
   containerWrapper: {
-    position: 'fixed',
+    position: 'ralative',
     width: '100%',
     margin: 'auto',
     zIndex: 1000,
@@ -50,7 +50,7 @@ const styles = {
     backgroundColor: '#fbfbfb',
   },
   contents: {
-    paddingTop: 212,
+    // paddingTop: 212,
     backgroundColor: '#ffffff',
   },
   panelInfo: {

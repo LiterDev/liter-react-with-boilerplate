@@ -114,6 +114,7 @@ const styles = {
   krw: {
     marginRight: 1,
     fontSize: 12,
+    marginTop: 1,
   },
 };
 

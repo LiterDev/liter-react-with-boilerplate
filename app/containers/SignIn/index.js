@@ -439,11 +439,11 @@ export class SignIn extends React.PureComponent {
     const { classes, signinSuccess, signinError } = this.props;
     // console.log(signinSuccess);
     // console.log(signinEnd);
-    const { action } = this.props.history;
+    // const { action } = this.props.history;
 
-    if (action === 'PUSH') {
-      window.scrollTo(0, 0);
-    }
+    // if (action === 'PUSH') {
+    //   window.scrollTo(0, 0);
+    // }
     if (signinSuccess) {
       this.setState({
         openSuccesPop: true,

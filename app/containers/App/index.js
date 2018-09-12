@@ -154,7 +154,7 @@ function App(props) {
         <PrivateRoute path="/valid" component={EmailValid} />
         <Route path="/about" component={About} />
         <Route path="/profile/:userId" component={ProfilePage} />
-        <PrivateRoute path="/userProfile" component={UserProfile} />
+        <PrivateRoute path="/userprofile" component={UserProfile} />
         {/* <ModalRoute path="/hello" component={ReviewsMyLike} /> */}
         <Route path="" component={NotFoundPage} />
       </Switch>

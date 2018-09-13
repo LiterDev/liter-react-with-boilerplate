@@ -63,7 +63,7 @@ function reviewsReducer(state = initialState, action) {
     // .set('categoryId', action.data.pageable.categoryId);
     case LOAD_REVIEW_SUCCESS:
       // console.log(action.data);
-      console.log(action.data.last);
+      // console.log(action.data.last);
       return (
         state
           .set('loading', false)

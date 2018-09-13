@@ -42,6 +42,7 @@ import makeSelectUserProfile from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+import { loadUserDetail } from './actions';
 
 const styles = theme => ({
   root: {
@@ -277,7 +278,7 @@ export class UserProfile extends React.PureComponent {
     this.setState({
       handleAddressPopOpen: true,
     });
-  }
+  };
   handleAddressPopClose = () => {
     this.setState({
       handleAddressPopOpen: false,
@@ -285,7 +286,7 @@ export class UserProfile extends React.PureComponent {
     this.handleMarriedPop = this.handleMarriedPop.bind(this);
     this.handleLifePop = this.handleLifePop.bind(this);
     this.handleInterestPop = this.handleInterestPop.bind(this);
-  }
+  };
   handleBirthPop = () => {
     this.setState({
       handleBirthPopOpen: true,
@@ -331,24 +332,28 @@ export class UserProfile extends React.PureComponent {
   handleIdentityPop = () => {
     this.setState({
       handleIdentityPopOpen: true,
-    })
-  }
+    });
+  };
   handleIdentityPopClose = () => {
     this.setState({
       handleIdentityPopOpen: false,
-    })
-  }
+    });
+  };
   handlePhoto = () => {
     // alert('!');
   };
+  componentDidMount() {
+    this.props.loadUserDetail();
+  }
   render() {
-    const { classes } = this.props;
+    const { classes, userDetail } = this.props;
     const avatarImg = Boolean(
       localStorage.getItem('profileImageSmallUrl') &&
         localStorage.getItem('profileImageSmallUrl') != 'null',
     )
       ? localStorage.getItem('profileImageSmallUrl')
       : avatarDefault;
+    console.log(this.props.userprofile.userDetail);
     return (
       <div className={classes.root}>
         <AppBar className={classes.appBar}>
@@ -535,7 +540,7 @@ export class UserProfile extends React.PureComponent {
           TransitionComponent={Transition}
           scroll="paper"
         >
-          <ProfileAddress handleAddressPopClose={this.handleAddressPopClose}/>
+          <ProfileAddress handleAddressPopClose={this.handleAddressPopClose} />
         </Dialog>
         <Dialog
           fullScreen
@@ -544,7 +549,9 @@ export class UserProfile extends React.PureComponent {
           TransitionComponent={Transition}
           scroll="paper"
         >
-          <ProfileIdentity handleIdentityPopClose={this.handleIdentityPopClose}/>
+          <ProfileIdentity
+            handleIdentityPopClose={this.handleIdentityPopClose}
+          />
         </Dialog>
       </div>
     );
@@ -553,6 +560,7 @@ export class UserProfile extends React.PureComponent {
 
 UserProfile.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  loadUserDetail: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -562,6 +570,9 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    loadUserDetail: () => {
+      dispatch(loadUserDetail());
+    },
   };
 }
 

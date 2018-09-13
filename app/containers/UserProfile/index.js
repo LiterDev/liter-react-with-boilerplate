@@ -35,6 +35,7 @@ import ProfileBirth from 'components/ProfileBirth';
 import ProfileMarried from 'components/ProfileMarried';
 import ProfileLife from 'components/ProfileLife';
 import ProfileIdentity from 'components/ProfileIdentity';
+import ProfileInterest from 'components/ProfileInterest';
 
 import avatarDefault from '../../images/ic-avatar.png';
 import makeSelectUserProfile from './selectors';
@@ -264,6 +265,7 @@ export class UserProfile extends React.PureComponent {
       handleMarriedPopOpen: false,
       handleLifePopOpen: false,
       handleIdentityPopOpen: false,
+      handleInterestPopOpen: false,
     };
 
     this.handlePhoto = this.handlePhoto.bind(this);
@@ -282,6 +284,7 @@ export class UserProfile extends React.PureComponent {
     });
     this.handleMarriedPop = this.handleMarriedPop.bind(this);
     this.handleLifePop = this.handleLifePop.bind(this);
+    this.handleInterestPop = this.handleInterestPop.bind(this);
   }
   handleBirthPop = () => {
     this.setState({
@@ -303,6 +306,18 @@ export class UserProfile extends React.PureComponent {
       handleMarriedPopOpen: false,
     });
   };
+
+  handleInterestPop = () => {
+    this.setState({
+      handleInterestPopOpen: true,
+    });
+  };
+  handleInterestPopClose = () => {
+    this.setState({
+      handleInterestPopOpen: false,
+    });
+  };
+
   handleLifePop = () => {
     this.setState({
       handleLifePopOpen: true,
@@ -374,7 +389,11 @@ export class UserProfile extends React.PureComponent {
             <div>
               <div className={classes.userInfo}>사용자 이름</div>
               <div className={classes.userInfoValue}>
-                {localStorage.getItem('userNickName')}
+                {Boolean(localStorage.getItem('userNickName')) ? (
+                  localStorage.getItem('userNickName')
+                ) : (
+                  <div style={{ clear: 'both' }} />
+                )}
               </div>
             </div>
             <Divider className={classes.divider} />
@@ -428,6 +447,7 @@ export class UserProfile extends React.PureComponent {
                 root: classes.buttonRoot,
                 text: classes.buttonText,
               }}
+              onClick={this.handleInterestPop}
             >
               관심분야
             </Button>
@@ -489,6 +509,15 @@ export class UserProfile extends React.PureComponent {
           scroll="paper"
         >
           <ProfileMarried handleClose={this.handleMarriedPopClose} />
+        </Dialog>
+        <Dialog
+          fullScreen
+          open={this.state.handleInterestPopOpen}
+          onClose={this.handleInterestPopClose}
+          TransitionComponent={Transition}
+          scroll="paper"
+        >
+          <ProfileInterest handleClose={this.handleInterestPopClose} />
         </Dialog>
         <Dialog
           fullScreen

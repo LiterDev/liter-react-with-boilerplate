@@ -397,7 +397,7 @@ export class UserProfile extends React.PureComponent {
           TransitionComponent={Transition}
           scroll="paper"
         >
-          <ProfileBirth />
+          <ProfileBirth handleClose={this.handleBirthPopClose} />
         </Dialog>
       </div>
     );

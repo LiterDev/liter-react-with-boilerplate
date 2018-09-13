@@ -49,7 +49,7 @@ class ProfileBotton extends React.PureComponent {
     };
   }
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log(nextProps.active);
+    // console.log(nextProps.active);
     if (nextProps.active !== prevState.active) {
       return { active: nextProps.active };
     }
@@ -57,7 +57,7 @@ class ProfileBotton extends React.PureComponent {
   }
   render() {
     const { classes, active, buttonText, handleToggle } = this.props;
-    console.log(active);
+    // console.log(active);
     return (
       <div>
         {active == true ? (

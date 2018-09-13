@@ -44,6 +44,14 @@ class TagInput extends React.PureComponent {
 
     // this.detectSpacePresent = this.detectSpacePresent.bind(this);
   }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      ...this.state,
+      tagList: nextProps.tags,
+    });
+  }
+
   // detectSpacePresent = e => {
   //   if (e.keyCode === 32) {
   //     // this.props.changeInputValue('');

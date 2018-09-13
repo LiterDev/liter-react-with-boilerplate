@@ -34,6 +34,7 @@ import Divider from '@material-ui/core/Divider';
 import ProfileBirth from 'components/ProfileBirth';
 import ProfileMarried from 'components/ProfileMarried';
 import ProfileLife from 'components/ProfileLife';
+import ProfileIdentity from 'components/ProfileIdentity';
 
 import avatarDefault from '../../images/ic-avatar.png';
 import makeSelectUserProfile from './selectors';
@@ -262,11 +263,13 @@ export class UserProfile extends React.PureComponent {
       handleAddressPopOpen: false,
       handleMarriedPopOpen: false,
       handleLifePopOpen: false,
+      handleIdentityPopOpen: false,
     };
 
     this.handlePhoto = this.handlePhoto.bind(this);
     this.handleBirthPop = this.handleBirthPop.bind(this);
     this.handleAddressPop = this.handleAddressPop.bind(this);
+    this.handleIdentityPop = this.handleIdentityPop.bind(this);
   }
   handleAddressPop = () => {
     this.setState({
@@ -310,6 +313,16 @@ export class UserProfile extends React.PureComponent {
       handleLifePopOpen: false,
     });
   };
+  handleIdentityPop = () => {
+    this.setState({
+      handleIdentityPopOpen: true,
+    })
+  }
+  handleIdentityPopClose = () => {
+    this.setState({
+      handleIdentityPopOpen: false,
+    })
+  }
   handlePhoto = () => {
     // alert('!');
   };
@@ -445,6 +458,19 @@ export class UserProfile extends React.PureComponent {
               배송지 주소
             </Button>
           </div>
+          <div className={classes.buttonDiv}>
+            <Button
+              variant="outlined"
+              className={classes.button}
+              classes={{
+                root: classes.buttonRoot,
+                text: classes.buttonText,
+              }}
+              onClick={this.handleIdentityPop}
+            >
+              유저 아이덴티티
+            </Button>
+          </div>
         </div>
         <Dialog
           fullScreen
@@ -481,6 +507,15 @@ export class UserProfile extends React.PureComponent {
           scroll="paper"
         >
           <ProfileAddress handleAddressPopClose={this.handleAddressPopClose}/>
+        </Dialog>
+        <Dialog
+          fullScreen
+          open={this.state.handleIdentityPopOpen}
+          onClose={this.handleIdentityPopClose}
+          TransitionComponent={Transition}
+          scroll="paper"
+        >
+          <ProfileIdentity handleIdentityPopClose={this.handleIdentityPopClose}/>
         </Dialog>
       </div>
     );

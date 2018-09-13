@@ -25,7 +25,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Badge from '@material-ui/core/Badge';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Slide from '@material-ui/core/Slide';
-import ProfileBirth from 'components/ProfileBirth';
 import ProfileAddress from 'components/ProfileAddress';
 
 import CloseIcon from '@material-ui/icons/Close';

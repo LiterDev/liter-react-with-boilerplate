@@ -26,6 +26,7 @@ import Badge from '@material-ui/core/Badge';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Slide from '@material-ui/core/Slide';
 import ProfileBirth from 'components/ProfileBirth';
+import ProfileAddress from 'components/ProfileAddress';
 import CloseIcon from '@material-ui/icons/Close';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import Divider from '@material-ui/core/Divider';
@@ -254,10 +255,22 @@ export class UserProfile extends React.PureComponent {
     super(props);
     this.state = {
       handleBirthPopOpen: false,
+      handleAddressPopOpen: false,
     };
 
     this.handlePhoto = this.handlePhoto.bind(this);
     this.handleBirthPop = this.handleBirthPop.bind(this);
+    this.handleAddressPop = this.handleAddressPop.bind(this);
+  }
+  handleAddressPop = () => {
+    this.setState({
+      handleAddressPopOpen: true,
+    });
+  }
+  handleAddressPopClose = () => {
+    this.setState({
+      handleAddressPopOpen: false,
+    });
   }
   handleBirthPop = () => {
     this.setState({
@@ -389,6 +402,19 @@ export class UserProfile extends React.PureComponent {
               라이프 스타일
             </Button>
           </div>
+          <div className={classes.buttonDiv}>
+            <Button
+              variant="outlined"
+              className={classes.button}
+              classes={{
+                root: classes.buttonRoot,
+                text: classes.buttonText,
+              }}
+              onClick={this.handleAddressPop}
+            >
+              배송지 주소
+            </Button>
+          </div>
         </div>
         <Dialog
           fullScreen
@@ -398,6 +424,15 @@ export class UserProfile extends React.PureComponent {
           scroll="paper"
         >
           <ProfileBirth />
+        </Dialog>
+        <Dialog
+          fullScreen
+          open={this.state.handleAddressPopOpen}
+          onClose={this.handleAddressPopClose}
+          TransitionComponent={Transition}
+          scroll="paper"
+        >
+          <ProfileAddress handleAddressPopClose={this.handleAddressPopClose}/>
         </Dialog>
       </div>
     );

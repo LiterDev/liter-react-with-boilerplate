@@ -1,6 +1,6 @@
 /**
  *
- * ProfileBirth
+ * ProfileMarried
  *
  */
 /* react ref*/
@@ -15,9 +15,6 @@ import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import MaskedInput from 'react-text-mask';
-import NumberFormat from 'react-number-format';
-import LinearProgress from '@material-ui/core/LinearProgress';
 /* material-ui icon */
 import CloseIcon from '@material-ui/icons/Close';
 import Input from '@material-ui/core/Input';
@@ -27,6 +24,7 @@ import FormControl from '@material-ui/core/FormControl';
 /* components */
 import ProfileBotton from 'components/ProfileBotton';
 import BlueButton from 'components/BlueButton';
+
 /* image */
 /* ref */
 import { FormattedMessage } from 'react-intl';
@@ -144,6 +142,10 @@ const styles = theme => ({
     position: 'relative',
     marginTop: 35,
   },
+  buttonsSec: {
+    position: 'relative',
+    marginTop: 13,
+  },
   button: {
     width: '95%',
     // marginLeft: 13,
@@ -194,116 +196,85 @@ const styles = theme => ({
   },
 });
 
-function TextMaskCustom(props) {
-  const { inputRef, ...other } = props;
-
-  return (
-    <MaskedInput
-      {...other}
-      ref={inputRef}
-      mask={[/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/]}
-      placeholderChar={'\u2000'}
-      showMask
-    />
-  );
-}
-
-TextMaskCustom.propTypes = {
-  inputRef: PropTypes.func.isRequired,
-};
-
-function NumberFormatCustom(props) {
-  const { inputRef, onChange, ...other } = props;
-
-  return (
-    <NumberFormat
-      {...other}
-      getInputRef={inputRef}
-      onValueChange={values => {
-        onChange({
-          target: {
-            value: values.value,
-          },
-        });
-      }}
-      thousandSeparator
-      prefix="$"
-    />
-  );
-}
-
-NumberFormatCustom.propTypes = {
-  inputRef: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
-
 /* eslint-disable react/prefer-stateless-function */
-class ProfileBirth extends React.PureComponent {
+class ProfileMarried extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      man: false,
-      woman: false,
-      textmask: '0000-00-00',
-      numberformat: '1320',
+      married: false,
+      notMarried: false,
+      child1: false,
+      child2: false,
+      child3: false,
+      child4: false,
       complete: false,
       loading: false,
     };
 
     this.handleClose = this.handleClose.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
   handleClose = () => {
     this.props.handleClose();
   };
-  handleManToggle = () => {
-    const genderValue = !this.state.man;
+  handleMarriedToggle = () => {
+    const marriedValue = !this.state.married;
     this.setState({
-      man: genderValue,
-      woman: false,
+      married: marriedValue,
+      notMarried: false,
     });
-    this.handleComplete(genderValue, null);
+    this.handleComplete(marriedValue);
   };
-  handleWomanToggle = () => {
-    const genderValue = !this.state.woman;
+  handleNotMarriedToggle = () => {
+    const marriedValue = !this.state.notMarried;
     this.setState({
-      man: false,
-      woman: genderValue,
+      married: false,
+      notMarried: marriedValue,
     });
-    this.handleComplete(genderValue, null);
+    this.handleComplete(marriedValue);
   };
 
-  handleChange = name => event => {
+  handleChild1Toggle = () => {
     this.setState({
-      [name]: event.target.value,
+      child1: !this.state.child1,
     });
-    this.handleComplete(-1, event.target.value);
+    this.handleCompleteWithChild();
   };
-  handleFocus = () => {
+  handleChild2Toggle = () => {
     this.setState({
-      textmask: '',
+      child2: !this.state.child2,
     });
-    this.handleComplete();
+    this.handleCompleteWithChild();
   };
-  handleComplete = (genderVale, textmask) => {
-    if (!Boolean(textmask)) {
-      textmask = this.state.textmask;
+  handleChild3Toggle = () => {
+    this.setState({
+      child3: !this.state.child3,
+    });
+    this.handleCompleteWithChild();
+  };
+  handleChild4Toggle = () => {
+    this.setState({
+      child4: !this.state.child4,
+    });
+    this.handleCompleteWithChild();
+  };
+  handleCompleteWithChild = () => {
+    // console.log('complate');
+    if (this.state.married == true || this.state.notMarried == true) {
+      this.setState({
+        complete: true,
+      });
+    } else {
+      this.setState({
+        complete: false,
+      });
     }
-    // console.log(textmask.trim());
-    let birth = false;
-    let gender = false;
-    if (textmask !== '0000-00-00' && textmask.trim().length === 10) {
-      birth = true;
+  };
+  handleComplete = marriedValue => {
+    let married = false;
+    if (marriedValue == true) {
+      married = true;
     }
-    if (genderVale < 0) {
-      if (this.state.man == true || this.state.woman == true) {
-        gender = true;
-      }
-    }
-    if (genderVale == true) {
-      gender = true;
-    }
-    if (birth == true && gender == true) {
+    if (married == true) {
       this.setState({
         complete: true,
       });
@@ -314,19 +285,36 @@ class ProfileBirth extends React.PureComponent {
     }
   };
   submitForm = () => {
-    // console.log('Asdasd');
     if (this.state.complete == false) {
       return false;
     }
 
-    let gender = -1;
-    if (this.state.man == true) {
-      gender = 0;
+    let married = -1;
+    if (this.state.married == true) {
+      married = 0;
     }
-    if (this.state.woman == true) {
-      gender = 1;
+    if (this.state.notMarried == true) {
+      married = 1;
     }
-    // console.log(gender);
+    const hasChilds = [];
+    let hasChild = false;
+    if (this.state.child1) {
+      hasChilds.push(1);
+    }
+    if (this.state.child2) {
+      hasChilds.push(2);
+    }
+    if (this.state.child3) {
+      hasChilds.push(3);
+    }
+    if (this.state.child4) {
+      hasChilds.push(4);
+    }
+    // console.log(hasChilds);
+    // console.log(hasChilds.toString());
+    if (hasChilds.length > 0) {
+      hasChild = true;
+    }
     const self = this;
     if (this.state.loading === false) {
       self.setState({ loading: true });
@@ -344,15 +332,12 @@ class ProfileBirth extends React.PureComponent {
             Authorization: token,
           },
           data: {
-            birthDay: this.state.textmask,
-            gender: gender,
+            married: married,
+            hasChilds: hasChilds.toString(),
+            hasChild: hasChild,
           },
         })
           .then(resp => {
-            // console.log(resp);
-            // if (Boolean(resp.data)) {
-            // this.props.handleLikeState(reviewId);
-
             self.setState({ loading: false });
             this.props.handleClose();
             // }
@@ -383,25 +368,45 @@ class ProfileBirth extends React.PureComponent {
         })
           .then(resp => {
             console.log(resp.data);
-            // if (Boolean(resp.data)) {
-            // this.props.handleLikeState(reviewId);
-            let gender = -1;
-            if (resp.data.gender === 0) {
+            let married = -1;
+            if (resp.data.married === 0) {
               self.setState({
-                man: true,
-                woman: false,
+                married: true,
+                notMarried: false,
               });
             }
-            if (resp.data.gender === 1) {
+            if (resp.data.married === 1) {
               self.setState({
-                man: false,
-                woman: true,
+                married: false,
+                notMarried: true,
               });
             }
-            if (Boolean(resp.data.birthDay)) {
-              self.setState({
-                textmask: resp.data.birthDay,
-              });
+            if (
+              Boolean(resp.data.hasChilds) &&
+              resp.data.hasChilds !== 'NONE'
+            ) {
+              const childsArry = resp.data.hasChilds.split(',');
+              console.log(childsArry);
+              if (childsArry.includes('1')) {
+                self.setState({
+                  child1: true,
+                });
+              }
+              if (childsArry.includes('2')) {
+                self.setState({
+                  child2: true,
+                });
+              }
+              if (childsArry.includes('3')) {
+                self.setState({
+                  child3: true,
+                });
+              }
+              if (childsArry.includes('4')) {
+                self.setState({
+                  child4: true,
+                });
+              }
             }
             self.setState({
               loading: false,
@@ -417,7 +422,6 @@ class ProfileBirth extends React.PureComponent {
   };
   render() {
     const { classes, handleClose } = this.props;
-    const { textmask, numberformat } = this.state;
 
     return (
       <div className={classes.root}>
@@ -428,7 +432,7 @@ class ProfileBirth extends React.PureComponent {
               color="inherit"
               className={classes.title}
             >
-              성별/생년월일
+              결혼여부
             </Typography>
             <IconButton
               color="inherit"
@@ -441,10 +445,10 @@ class ProfileBirth extends React.PureComponent {
           </Toolbar>
         </AppBar>
         <div className={classes.procbarWrap}>
-          <div className={classes.textTop}>성별</div>
-          <div className={classes.textMid}>성별을 선택해주세요</div>
+          <div className={classes.textTop}>결혼여부</div>
+          <div className={classes.textMid}>결혼여부, 자녀의 나이에 따른</div>
           <div className={classes.textMid}>
-            고객님의 성별에 맞는 경험을 알려드립니다.
+            유용한 경험을 공유받으실 수 있습니다.
           </div>
 
           <div className={classes.buttons}>
@@ -452,9 +456,9 @@ class ProfileBirth extends React.PureComponent {
               className={classNames(classes.buttonWrap, classes.buttonWrapLeft)}
             >
               <ProfileBotton
-                handleToggle={this.handleManToggle}
-                active={this.state.man}
-                buttonText="남자"
+                handleToggle={this.handleMarriedToggle}
+                active={this.state.married}
+                buttonText="기혼"
               />
             </div>
             <div
@@ -464,37 +468,63 @@ class ProfileBirth extends React.PureComponent {
               )}
             >
               <ProfileBotton
-                handleToggle={this.handleWomanToggle}
-                active={this.state.woman}
-                buttonText="여자"
+                handleToggle={this.handleNotMarriedToggle}
+                active={this.state.notMarried}
+                buttonText="미혼"
               />
             </div>
-            {/* <div styles={{ clear: 'both' }} /> */}
           </div>
         </div>
         <div className={classes.procbarWrap}>
-          <div className={classes.textTop}>생년월일</div>
+          <div className={classes.textTop}>자녀의 나이</div>
           <div className={classes.textMid}>
-            태어난 년도와 날짜를 입력해 주세요
+            여러명의 자녀가 있으시면 중복 선택이 가능합니다.
           </div>
-          <div className={classes.textMid}>
-            고객님과 같은 연령대의 최신 트렌드를 알려두립니다
-          </div>
-          <div className={classes.formControlWrap}>
-            <FormControl className={classes.formControl}>
-              <Input
-                value={textmask}
-                onChange={this.handleChange('textmask')}
-                // placeholder="0000-00-00"
-                id="formatted-text-mask-input"
-                inputComponent={TextMaskCustom}
-                disableUnderline="true"
-                classes={{
-                  input: classes.inputCss,
-                }}
-                onFocus={this.handleFocus}
+          <div className={classes.buttons}>
+            <div
+              className={classNames(classes.buttonWrap, classes.buttonWrapLeft)}
+            >
+              <ProfileBotton
+                handleToggle={this.handleChild1Toggle}
+                active={this.state.child1}
+                buttonText="0 ~ 1세"
               />
-            </FormControl>
+            </div>
+            <div
+              className={classNames(
+                classes.buttonWrap,
+                classes.buttonWrapRight,
+              )}
+            >
+              <ProfileBotton
+                handleToggle={this.handleChild2Toggle}
+                active={this.state.child2}
+                buttonText="1 ~ 3 세"
+              />
+            </div>
+          </div>
+          <div className={classes.buttonsSec}>
+            <div
+              className={classNames(classes.buttonWrap, classes.buttonWrapLeft)}
+            >
+              <ProfileBotton
+                handleToggle={this.handleChild3Toggle}
+                active={this.state.child3}
+                buttonText="4 ~ 7 세"
+              />
+            </div>
+            <div
+              className={classNames(
+                classes.buttonWrap,
+                classes.buttonWrapRight,
+              )}
+            >
+              <ProfileBotton
+                handleToggle={this.handleChild4Toggle}
+                active={this.state.child4}
+                buttonText="8세 이상"
+              />
+            </div>
           </div>
         </div>
         <div className={classes.buttonDiv}>
@@ -503,63 +533,16 @@ class ProfileBirth extends React.PureComponent {
             onClickFunc={this.submitForm}
             complete={this.state.complete}
             btnType="button"
-            // onClick={this.submitForm}
           />
         </div>
-        {/* <div className={classes.procbarWrap}>
-          <div className={classes.textWrap}>
-            <div className={classes.procbarText}>
-              프로필 정보를 완성해주세요
-              <span className={classes.quicon}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
-                >
-                  <g fill="none">
-                    <circle
-                      cx="7"
-                      cy="7"
-                      r="7"
-                      fill="#B9CBDC"
-                      // fill-rule="nonzero"
-                    />
-                    <path
-                      fill="#FFF"
-                      d="M5 5.448C5.044 4.34 5.8 3.5 7.217 3.5c1.289 0 2.158.767 2.158 1.812 0 .756-.38 1.289-1.025 1.674-.63.371-.81.63-.81 1.133v.298H6.527l-.005-.39c-.024-.69.274-1.129.943-1.529.59-.356.8-.64.8-1.143 0-.551-.434-.957-1.103-.957-.674 0-1.108.406-1.152 1.05H5zm2.041 5.23a.627.627 0 0 1-.64-.63c0-.357.284-.63.64-.63.366 0 .645.273.645.63 0 .356-.279.63-.645.63z"
-                    />
-                  </g>
-                </svg>
-              </span>
-            </div>
-            <div className={classes.procbarPercent}>40%</div>
-          </div>
-          <div
-            style={{
-              clear: 'both',
-            }}
-          />
-          <div>
-            <LinearProgress
-              color="secondary"
-              variant="determinate"
-              value={40}
-              classes={{
-                root: classes.barRoot,
-                bar: classes.bar,
-              }}
-            />
-          </div>
-        </div> */}
       </div>
     );
   }
 }
 
-ProfileBirth.propTypes = {
+ProfileMarried.propTypes = {
   handleClose: PropTypes.func.isRequired,
 };
 
-// export default ProfileBirth;
-export default withStyles(styles)(ProfileBirth);
+// export default ProfileMarried;
+export default withStyles(styles)(ProfileMarried);

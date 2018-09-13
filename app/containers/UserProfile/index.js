@@ -25,10 +25,14 @@ import Avatar from '@material-ui/core/Avatar';
 import Badge from '@material-ui/core/Badge';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Slide from '@material-ui/core/Slide';
-import ProfileBirth from 'components/ProfileBirth';
+
 import CloseIcon from '@material-ui/icons/Close';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import Divider from '@material-ui/core/Divider';
+
+import ProfileBirth from 'components/ProfileBirth';
+import ProfileMarried from 'components/ProfileMarried';
+import ProfileLife from 'components/ProfileLife';
 
 import avatarDefault from '../../images/ic-avatar.png';
 import makeSelectUserProfile from './selectors';
@@ -254,10 +258,14 @@ export class UserProfile extends React.PureComponent {
     super(props);
     this.state = {
       handleBirthPopOpen: false,
+      handleMarriedPopOpen: false,
+      handleLifePopOpen: false,
     };
 
     this.handlePhoto = this.handlePhoto.bind(this);
     this.handleBirthPop = this.handleBirthPop.bind(this);
+    this.handleMarriedPop = this.handleMarriedPop.bind(this);
+    this.handleLifePop = this.handleLifePop.bind(this);
   }
   handleBirthPop = () => {
     this.setState({
@@ -269,8 +277,28 @@ export class UserProfile extends React.PureComponent {
       handleBirthPopOpen: false,
     });
   };
+  handleMarriedPop = () => {
+    this.setState({
+      handleMarriedPopOpen: true,
+    });
+  };
+  handleMarriedPopClose = () => {
+    this.setState({
+      handleMarriedPopOpen: false,
+    });
+  };
+  handleLifePop = () => {
+    this.setState({
+      handleLifePopOpen: true,
+    });
+  };
+  handleLifePopClose = () => {
+    this.setState({
+      handleLifePopOpen: false,
+    });
+  };
   handlePhoto = () => {
-    alert('!');
+    // alert('!');
   };
   render() {
     const { classes } = this.props;
@@ -361,6 +389,7 @@ export class UserProfile extends React.PureComponent {
                 root: classes.buttonRoot,
                 text: classes.buttonText,
               }}
+              onClick={this.handleMarriedPop}
             >
               결혼여부
             </Button>
@@ -385,6 +414,7 @@ export class UserProfile extends React.PureComponent {
                 root: classes.buttonRoot,
                 text: classes.buttonText,
               }}
+              onClick={this.handleLifePop}
             >
               라이프 스타일
             </Button>
@@ -398,6 +428,24 @@ export class UserProfile extends React.PureComponent {
           scroll="paper"
         >
           <ProfileBirth handleClose={this.handleBirthPopClose} />
+        </Dialog>
+        <Dialog
+          fullScreen
+          open={this.state.handleMarriedPopOpen}
+          onClose={this.handleMarriedPopClose}
+          TransitionComponent={Transition}
+          scroll="paper"
+        >
+          <ProfileMarried handleClose={this.handleMarriedPopClose} />
+        </Dialog>
+        <Dialog
+          fullScreen
+          open={this.state.handleLifePopOpen}
+          onClose={this.handleLifePopClose}
+          TransitionComponent={Transition}
+          scroll="paper"
+        >
+          <ProfileLife handleClose={this.handleLifePopClose} />
         </Dialog>
       </div>
     );

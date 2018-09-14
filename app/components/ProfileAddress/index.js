@@ -7,6 +7,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 /* material-ui core */
 import AppBar from '@material-ui/core/AppBar';
@@ -30,6 +32,7 @@ import DaumPostcode from 'react-daum-postcode';
 import { CountryCode, getCountryCallingCode, getPhoneCode } from 'libphonenumber-js';
 
 /* containers */
+import { loadUserDetail } from 'containers/UserProfile/actions';
 /* components */
 import ProfileBotton from 'components/ProfileBotton';
 import BlueButton from 'components/BlueButton';
@@ -292,6 +295,7 @@ class ProfileAddress extends React.PureComponent {
       errorPostCode: false,
       errorAddressBase: false,
       errorAddressDetail: false,
+      complete: false,
     };
     
     this._state = this.state;
@@ -369,8 +373,9 @@ class ProfileAddress extends React.PureComponent {
   }
 
   handleSubmit = () => {
-    // this.handleFormCheck();
-    if(this.handleFormCheck()) {
+
+    // if(this.handleFormCheck()) {
+    if(this.state.complete) {
       
       if(this._state == this.state) {
         this.props.handleAddressPopClose();
@@ -403,6 +408,7 @@ class ProfileAddress extends React.PureComponent {
           if(Boolean(resp.data)) {
             // console.log(']]]-------------put Address-------------[[[');
             // console.log(resp.data);
+            this.props.dispatch(loadUserDetail());
             this.props.handleAddressPopClose();
           }
         }).catch(error => {
@@ -459,7 +465,12 @@ class ProfileAddress extends React.PureComponent {
     if(event.target.name && event.target.name == "addressDetail" && event.target.value.length > 1000)
       return;
 
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ [event.target.name]: event.target.value }, () => {
+      if(this.state.receiver && this.state.mobile && this.state.postcode && this.state.addressBase && this.state.addressDetail)
+        this.setState({'complete': true});
+      else
+        this.setState({'complete': false});
+    });
   };
 
   render() {
@@ -588,7 +599,7 @@ class ProfileAddress extends React.PureComponent {
             btnType="submit"
             // onClickFunc={this.onSubmitFormInit}
             onClickFunc={this.handleSubmit} 
-            // complete={this.state.complete}
+            complete={this.state.complete}
             btnName="등록"
           />
         </div>
@@ -608,7 +619,12 @@ class ProfileAddress extends React.PureComponent {
   }
 }
 
-ProfileAddress.propTypes = {};
+ProfileAddress.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
 
 // export default ProfileAddress;
-export default withStyles(styles)(ProfileAddress);
+export default compose(
+  connect(),
+  withStyles(styles),
+)(ProfileAddress);

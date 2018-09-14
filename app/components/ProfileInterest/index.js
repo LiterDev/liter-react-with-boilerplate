@@ -7,6 +7,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 import axios from 'axios';
 /* material-ui core */
@@ -21,6 +23,7 @@ import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
 import Divider from '@material-ui/core/Divider';
 /* containers */
+import { loadUserDetail } from 'containers/UserProfile/actions';
 /* components */
 import ProfileBotton from 'components/ProfileBotton';
 import BlueButton from 'components/BlueButton';
@@ -566,6 +569,7 @@ class ProfileInterest extends React.PureComponent {
           },
         })
           .then(resp => {
+            this.props.dispatch(loadUserDetail());
             self.setState({ loading: false });
             this.props.handleClose();
             // }
@@ -837,4 +841,7 @@ class ProfileInterest extends React.PureComponent {
 ProfileInterest.propTypes = {};
 
 // export default ProfileInterest;
-export default withStyles(styles)(ProfileInterest);
+export default compose(
+  connect(),
+  withStyles(styles),
+)(ProfileInterest);

@@ -176,12 +176,14 @@ const styles = theme => ({
   buttonWrap: {
     marginTop: 13,
     backgroundColor: '#ffffff',
-    height: '100vh',
+    height: '100%',
     paddingTop: 18,
     paddingLeft: 16,
     paddingRight: 16,
   },
   buttonDiv: {
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
     marginBottom: 12,
   },
   buttonRoot: {
@@ -268,6 +270,23 @@ const styles = theme => ({
   buttonTextBottom: {
     color: 'rgb(51, 51, 51)',
   },
+  exDivider: {
+    paddingTop: '40px',
+  },
+  exCaption: {
+    fontFamily: 'Apple SD Gothic Neo',
+    fontSize: 14,
+    fontWeight: 400,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: '1.57',
+    letterSpacing: 'normal',
+    color: '#999999',
+    paddingLeft: 4,
+    paddingRight: 4,
+    paddingTop: '13px',
+    paddingBottom: '30px',
+  }
 });
 
 function Transition(props) {
@@ -292,6 +311,19 @@ export class UserProfile extends React.PureComponent {
     this.handleIdentityPop = this.handleIdentityPop.bind(this);
 
     this.selfie = React.createRef();
+
+    this.interestCategory = {
+      '0': '뷰티',
+      '1': '라이프',
+      '2': '푸드',
+      '3': '패션',
+      '4': '유아',
+      '5': '취미',
+      '6': '맛집',
+      '7': '펫',
+      '8': '그 외'
+    };
+
   }
   handleAddressPop = () => {
     this.setState({
@@ -408,16 +440,16 @@ export class UserProfile extends React.PureComponent {
         <div className={classes.avatarWrap}>
           <div className={classes.avatarDiv}>
             <Badge
-              badgeContent={<PhotoCamera className={classes.badgePhoto} />}
+              // badgeContent={<PhotoCamera className={classes.badgePhoto} />}
               color="primary"
-              classes={{ badge: classes.badge }}
-              onClick={this.handlePhoto}
+              // classes={{ badge: classes.badge }}
+              // onClick={this.handlePhoto}
             >
               <Avatar
                 alt=""
                 src={avatarImg}
                 className={classNames(classes.avatar, classes.bigAvatar)}
-                onClick={() => this.changeSelfie()}
+                // onClick={() => this.changeSelfie()}
               />
             </Badge>
           </div>
@@ -508,8 +540,8 @@ export class UserProfile extends React.PureComponent {
                   <div className={classes.buttonTextTop}>결혼여부</div>
                   <div className={classes.buttonTextBottom}>
                     {this.props.userprofile.userDetail.married === 0
-                      ? '미혼'
-                      : '기혼'}
+                      ? '기혼'
+                      : '미혼'}
                   </div>
                 </div>
               </Button>
@@ -528,6 +560,30 @@ export class UserProfile extends React.PureComponent {
             )}
           </div>
           <div className={classes.buttonDiv}>
+            {Boolean(this.props.userprofile.userDetail.interestCategory) ||
+            this.props.userprofile.userDetail.interestCategory === 0 ? (
+              <Button
+                variant="outlined"
+                className={classes.button}
+                classes={{
+                  root: classes.buttonRoot,
+                  text: classes.buttonText,
+                }}
+                onClick={this.handleInterestPop}
+              >
+                <div>
+                  <div className={classes.buttonTextTop}>관심분야</div>
+                  <div className={classes.buttonTextBottom}>
+                    { this.props.userprofile.userDetail.interestCategory.trim() && 
+                      Object.values(this.props.userprofile.userDetail.interestCategory.split(',')).map(
+                      item => { return (
+                        `${this.interestCategory[item]} `
+                        )}
+                    )}
+                  </div>
+                </div>
+              </Button>
+            ) : (
             <Button
               variant="outlined"
               className={classes.button}
@@ -539,8 +595,60 @@ export class UserProfile extends React.PureComponent {
             >
               관심분야
             </Button>
+            )}
           </div>
           <div className={classes.buttonDiv}>
+            {Boolean(this.props.userprofile.userDetail.singleLife) || 
+              Boolean(this.props.userprofile.userDetail.pets) ||
+              Boolean(this.props.userprofile.userDetail.singleLife) ? (
+              <Button
+                variant="outlined"
+                className={classes.button}
+                classes={{
+                  root: classes.buttonRoot,
+                  text: classes.buttonText,
+                }}
+                onClick={this.handleLifePop}
+              >
+                <div>
+                  <div className={classes.buttonTextTop}>라이프 스타일</div>
+                  <div className={classes.buttonTextBottom}>
+                    {
+                      this.props.userprofile.userDetail.singleLife && 
+                      this.props.userprofile.userDetail.singleLife == 1 ? (
+                        '1인가구'
+                      ) : ('')
+                    }
+                    {
+                      this.props.userprofile.userDetail.singleLife && 
+                      this.props.userprofile.userDetail.pets && Boolean(this.props.userprofile.userDetail.pets)
+                      && this.props.userprofile.userDetail.pets !== "NONE" ? (
+                        ' / '
+                        ) : ('')
+                    }
+                    {
+                      this.props.userprofile.userDetail.pets.split(',').map(item => {
+                        if(item == 1) return '개 ';
+                        if(item == 2) return '고양이 ';
+                        if(item == 3) return '그외 ';
+                      })
+                    }
+                    {
+                      this.props.userprofile.userDetail.pets && 
+                      this.props.userprofile.userDetail.pets !== "NONE" &&
+                      this.props.userprofile.userDetail.skinType 
+                      && Boolean(this.props.userprofile.userDetail.skinType) ? (
+                        ' / '
+                        ) : ('')
+                    }
+                    {this.props.userprofile.userDetail.skinType == 0 ? ('건성') : ('')}
+                    {this.props.userprofile.userDetail.skinType == 1 ? ('지성') : ('')}
+                    {this.props.userprofile.userDetail.skinType == 2 ? ('민감성') : ('')}
+                    {this.props.userprofile.userDetail.skinType == 3 ? ('복합성') : ('')}
+                  </div>
+                </div>
+              </Button>
+            ) : (
             <Button
               variant="outlined"
               className={classes.button}
@@ -552,8 +660,29 @@ export class UserProfile extends React.PureComponent {
             >
               라이프 스타일
             </Button>
+            )}
           </div>
           <div className={classes.buttonDiv}>
+            {Boolean(this.props.userprofile.userAddress.postNumber) ||
+            this.props.userprofile.userAddress.postNumber === 0 ? (
+              <Button
+                variant="outlined"
+                className={classes.button}
+                classes={{
+                  root: classes.buttonRoot,
+                  text: classes.buttonText,
+                }}
+                onClick={this.handleAddressPop}
+              >
+                <div>
+                  <div className={classes.buttonTextTop}>배송지 주소</div>
+                  <div className={classes.buttonTextBottom}>
+                    { this.props.userprofile.userAddress.addressFirst }
+                    { this.props.userprofile.userAddress.addressDetail }
+                  </div>
+                </div>
+              </Button>
+            ) : (
             <Button
               variant="outlined"
               className={classes.button}
@@ -565,8 +694,33 @@ export class UserProfile extends React.PureComponent {
             >
               배송지 주소
             </Button>
+            )}
           </div>
           <div className={classes.buttonDiv}>
+            {Boolean(this.props.userprofile.userDetail.tags) ||
+            this.props.userprofile.userDetail.tags === 0 ? (
+              <Button
+                variant="outlined"
+                className={classes.button}
+                classes={{
+                  root: classes.buttonRoot,
+                  text: classes.buttonText,
+                }}
+                onClick={this.handleIdentityPop}
+              >
+                <div>
+                  <div className={classes.buttonTextTop}>유저 아이덴티티</div>
+                  <div className={classes.buttonTextBottom}>
+                    { this.props.userprofile.userDetail.tags.trim() && 
+                      Object.values(this.props.userprofile.userDetail.tags.split(',')).map(
+                      item => { return (
+                        `#${item} `
+                        )}
+                    )}
+                  </div>
+                </div>
+              </Button>
+            ) : (
             <Button
               variant="outlined"
               className={classes.button}
@@ -578,6 +732,14 @@ export class UserProfile extends React.PureComponent {
             >
               유저 아이덴티티
             </Button>
+            )}
+          </div>
+          <div className={classes.exDivider}>
+            <Divider />
+          </div>
+          <div className={classes.exCaption}>
+            회원님이 제공해 주신 소중한 정보는 리뷰가 유용하게 쓰일 수 있도록, 추가적인 자료로 활용될 예정입니다. <br/>
+            개인정보는 필요에 따라 블록체인에 암호화 하여 기록되고, LITER는 회원님의 소중한 정보를 지켜드리기 위해 최선을 다할 것입니다.
           </div>
         </div>
         <Dialog

@@ -7,6 +7,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 import axios from 'axios';
 /* material-ui core */
@@ -21,6 +23,7 @@ import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
 import Divider from '@material-ui/core/Divider';
 /* containers */
+import { loadUserDetail } from 'containers/UserProfile/actions';
 /* components */
 import ProfileBotton from 'components/ProfileBotton';
 import BlueButton from 'components/BlueButton';
@@ -444,6 +447,7 @@ class ProfileLife extends React.PureComponent {
           },
         })
           .then(resp => {
+            this.props.dispatch(loadUserDetail());
             self.setState({ loading: false });
             this.props.handleClose();
             // }
@@ -485,7 +489,7 @@ class ProfileLife extends React.PureComponent {
               });
             }
             if (Boolean(resp.data.pets) && resp.data.pets !== 'NONE') {
-              const childsArry = resp.data.hasChilds.split(',');
+              const childsArry = resp.data.pets.split(',');
               // console.log(childsArry);
               if (childsArry.includes('1')) {
                 self.setState({
@@ -724,7 +728,11 @@ class ProfileLife extends React.PureComponent {
 
 ProfileLife.propTypes = {
   handleClose: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 // export default ProfileLife;
-export default withStyles(styles)(ProfileLife);
+export default compose(
+  connect(),
+  withStyles(styles),
+)(ProfileLife);

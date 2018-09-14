@@ -6,11 +6,12 @@ import {
   LOAD_USER_DETAIL_SUCCESS,
   LOAD_USER_DETAIL_ERROR,
 } from './constants';
-import { loadUserDetailSuccess, loadUserDetailError } from './actions';
+import { loadUserDetailSuccess, loadUserDetailError, loadUserAddressSuccess } from './actions';
 // Individual exports for testing
 
 export function* getUserDetail() {
   const requestURL = `${process.env.API_URL}/user/detailInfo`;
+  const requestAddrURL = `${process.env.API_URL}/user/addrInfo`;
   const accessToken = localStorage.getItem('accessToken');
 
   let token = null;
@@ -27,9 +28,13 @@ export function* getUserDetail() {
       },
     };
     try {
+      
+      const responseAddr = yield call(request, requestAddrURL, options);
+      yield put(loadUserAddressSuccess(responseAddr));
+
       const response = yield call(request, requestURL, options);
-      // console.log(response);
       yield put(loadUserDetailSuccess(response));
+
     } catch (err) {
       yield put(loadUserDetailError(err));
     }

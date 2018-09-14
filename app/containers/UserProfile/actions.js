@@ -9,6 +9,7 @@ import {
   LOAD_USER_DETAIL,
   LOAD_USER_DETAIL_SUCCESS,
   LOAD_USER_DETAIL_ERROR,
+  LOAD_USER_ADDRESS_SUCCESS,
 } from './constants';
 
 export function defaultAction() {
@@ -33,4 +34,10 @@ export function loadUserDetailError(data) {
     type: LOAD_USER_DETAIL_ERROR,
     data,
   };
+}
+export function loadUserAddressSuccess(data) {
+  return {
+    type: LOAD_USER_ADDRESS_SUCCESS,
+    data,
+  }
 }

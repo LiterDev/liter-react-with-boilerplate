@@ -7,6 +7,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 /* material-ui core */
 import AppBar from '@material-ui/core/AppBar';
@@ -27,7 +29,7 @@ import Select from '@material-ui/core/Select';
 
 import DaumPostcode from 'react-daum-postcode';
 import TagInput from './TagInput';
-
+import { loadUserDetail } from 'containers/UserProfile/actions';
 import { CountryCode, getCountryCallingCode, getPhoneCode } from 'libphonenumber-js';
 
 /* containers */
@@ -332,6 +334,7 @@ class ProfileIdentity extends React.PureComponent {
         if(Boolean(resp.data)) {
           // console.log(']]]-------------put Address-------------[[[');
           // console.log(resp.data);
+          this.props.dispatch(loadUserDetail());
           this.props.handleIdentityPopClose();
         }
       }).catch(error => {
@@ -458,4 +461,7 @@ class ProfileIdentity extends React.PureComponent {
 ProfileIdentity.propTypes = {};
 
 // export default ProfileIdentity;
-export default withStyles(styles)(ProfileIdentity);
+export default compose(
+  connect(),
+  withStyles(styles),
+)(ProfileIdentity);

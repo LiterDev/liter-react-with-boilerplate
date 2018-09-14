@@ -10,11 +10,13 @@ import {
   LOAD_USER_DETAIL,
   LOAD_USER_DETAIL_SUCCESS,
   LOAD_USER_DETAIL_ERROR,
+  LOAD_USER_ADDRESS_SUCCESS,
 } from './constants';
 
 export const initialState = fromJS({
   userDetail: false,
   loading: false,
+  userAddress: false,
 });
 
 function userProfileReducer(state = initialState, action) {
@@ -31,6 +33,9 @@ function userProfileReducer(state = initialState, action) {
         .set('userDetail', action.data);
     case LOAD_USER_DETAIL_ERROR:
       return state.set('loading', false).set('error', true);
+    case LOAD_USER_ADDRESS_SUCCESS:
+      return state
+        .set('userAddress', action.data);
     default:
       return state;
   }

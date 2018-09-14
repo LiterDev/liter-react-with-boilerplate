@@ -26,6 +26,7 @@ import Badge from '@material-ui/core/Badge';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Slide from '@material-ui/core/Slide';
 import ProfileAddress from 'components/ProfileAddress';
+import SelfieControl from 'components/SelfieControl';
 
 import CloseIcon from '@material-ui/icons/Close';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
@@ -273,6 +274,8 @@ export class UserProfile extends React.PureComponent {
     this.handleBirthPop = this.handleBirthPop.bind(this);
     this.handleAddressPop = this.handleAddressPop.bind(this);
     this.handleIdentityPop = this.handleIdentityPop.bind(this);
+
+    this.selfie = React.createRef();
   }
   handleAddressPop = () => {
     this.setState({
@@ -341,6 +344,13 @@ export class UserProfile extends React.PureComponent {
   };
   handlePhoto = () => {
     // alert('!');
+    console.log("handlePhoto");
+  };
+  openUserNickChange = () => {
+    console.log('nick change');
+    // this.setState({
+    //   nickChangePop: true,
+    // });
   };
   componentDidMount() {
     this.props.loadUserDetail();
@@ -356,6 +366,10 @@ export class UserProfile extends React.PureComponent {
     console.log(this.props.userprofile.userDetail);
     return (
       <div className={classes.root}>
+        <SelfieControl
+          changeSelfie={click => (this.changeSelfie = click)}
+          callbackFunc={this.handlePhoto}
+        />
         <AppBar className={classes.appBar}>
           <Toolbar className={classes.toolbar}>
             <IconButton
@@ -387,13 +401,18 @@ export class UserProfile extends React.PureComponent {
                 alt=""
                 src={avatarImg}
                 className={classNames(classes.avatar, classes.bigAvatar)}
+                onClick={() => this.changeSelfie()}
               />
             </Badge>
           </div>
           <div className={classes.userInfoWrap}>
             <div>
               <div className={classes.userInfo}>사용자 이름</div>
-              <div className={classes.userInfoValue}>
+              <div className={classes.userInfoValue}
+                onClick={() => {
+                  this.openUserNickChange();
+                }}
+              >
                 {Boolean(localStorage.getItem('userNickName')) ? (
                   localStorage.getItem('userNickName')
                 ) : (

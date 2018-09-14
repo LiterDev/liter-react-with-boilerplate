@@ -28,12 +28,16 @@ export function* getUserDetail() {
       },
     };
     try {
-      
-      const responseAddr = yield call(request, requestAddrURL, options);
-      yield put(loadUserAddressSuccess(responseAddr));
-
       const response = yield call(request, requestURL, options);
       yield put(loadUserDetailSuccess(response));
+
+    } catch (err) {
+      yield put(loadUserDetailError(err));
+    }
+
+    try {
+      const responseAddr = yield call(request, requestAddrURL, options);
+      yield put(loadUserAddressSuccess(responseAddr));
 
     } catch (err) {
       yield put(loadUserDetailError(err));

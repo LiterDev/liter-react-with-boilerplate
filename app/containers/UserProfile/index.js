@@ -394,6 +394,9 @@ export class UserProfile extends React.PureComponent {
     // alert('!');
     console.log("handlePhoto");
   };
+  handleCloseMain = () => {
+    this.props.history.push('/mypage');
+  };
   openUserNickChange = () => {
     console.log('nick change');
     // this.setState({
@@ -422,7 +425,7 @@ export class UserProfile extends React.PureComponent {
           <Toolbar className={classes.toolbar}>
             <IconButton
               color="inherit"
-              // onClick={handleClose}
+              onClick={this.handleCloseMain}
               aria-label="Close"
               className={classes.close}
             >

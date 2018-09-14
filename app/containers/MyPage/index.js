@@ -8,6 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -17,12 +18,14 @@ import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+
 /* material-ui icon */
 /* containers */
 import EmailAuthPop from 'containers/EmailAuthPop';
 /* components */
 import AlertDialog from 'components/popups/AlertDialog';
 import Button from 'components/Button';
+import MButton from '@material-ui/core/Button';
 import Header from 'components/Header';
 import ModifyPop from 'components/popups/ModifyPop';
 import SelfieControl from 'components/SelfieControl';
@@ -52,7 +55,7 @@ const styles = {
   },
   panelInfo: {
     marginTop: 20,
-    height: 88,
+    height: 68,
   },
   row: {
     display: 'flex',
@@ -130,6 +133,23 @@ const styles = {
     fontFamily: 'SFProText',
     // marginLeft: 5,
     marginRight: 3,
+  },
+  userProfileDiv: {
+    margin: 0,
+    paddingBottom: '28px',
+    textAlign: 'center',
+  },
+  userProfileLink: {
+    textDecoration: 'none',
+  },
+  userProfileButton: {
+    padding: '8px 45px 8px 45px',
+    border: 'solid 1px #cbcbcb',
+    color: '#333333',
+    fontSize: '13px',
+    fontWeight: 500,
+    height: '34px',
+    textAlign: 'center',
   },
 };
 
@@ -455,6 +475,18 @@ export class MyPage extends React.PureComponent {
                 팔로잉
               </div>
             </div>
+          </div>
+          <div className={classes.userProfileDiv}>
+          <Link 
+            className={classes.userProfileLink}
+            to={`/userprofile`}
+          >
+            <MButton 
+              className={classes.userProfileButton}
+            >
+              프로필 수정
+            </MButton>
+          </Link>
           </div>
         </div>
         <TabList

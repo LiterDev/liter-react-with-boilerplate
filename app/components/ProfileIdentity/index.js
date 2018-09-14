@@ -26,7 +26,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
 import DaumPostcode from 'react-daum-postcode';
-import TagInput from 'components/TagInput';
+import TagInput from './TagInput';
 
 import { CountryCode, getCountryCallingCode, getPhoneCode } from 'libphonenumber-js';
 
@@ -282,7 +282,7 @@ class ProfileIdentity extends React.PureComponent {
       tags: '',
       tagsList: [],
       errorTags: false,
-      complete: true,
+      complete: false,
     };
     
     this._state = this.state;
@@ -297,67 +297,58 @@ class ProfileIdentity extends React.PureComponent {
     // console.log(event.target.value);
   }
 
-  handleFormCheck = () => {
-    let bResult = true;
-    // address detail
-    if(!Boolean(this.state.tags)) {
-      this.setState({'errorTags': true });
-      bResult = false;
-    } else {
-      this.setState({'errorTags': false });
-    }
-    return bResult;
-  }
-
   onSubmitFormInit = (event) => {
     event.preventDefault();
 
     const data = new FormData(event.target);
-    console.log(data.get('tags'));
+    let tagsData = data.get('tags').toString();
 
-    // this.props.handleIdentityPopClose();
-    return;
+    if(!tagsData.trim()) {
+      tagsData = "";
+    }
 
-    if(this.handleFormCheck()) {
-      
-      if(this._state == this.state) {
-        this.props.handleIdentityPopClose();
-        return;
-      }
-      const requestURL = `${process.env.API_URL}/user/addr`;
-      const accessToken = localStorage.getItem('accessToken');
-      const token = `Bearer ${accessToken}`;
+    const requestURL = `${process.env.API_URL}/user`;
+    const accessToken = localStorage.getItem('accessToken');
+    const token = `Bearer ${accessToken}`;
 
-      let headerObj = {
-        'Accept': 'application/json;charset=UTF-8',
-        'Content-Type': 'application/json;charset=UTF-8',
-        'Access-Control-Allow-Origin': '*',
-      }
-      if(accessToken)
-        headerObj.Authorization = token;
+    let headerObj = {
+      'Accept': 'application/json;charset=UTF-8',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': '*',
+    }
+    if(accessToken)
+      headerObj.Authorization = token;
 
-      axios({
-          method: 'PUT',
-          url: requestURL,
-          headers: headerObj,
-          
-          // data: {            
-          // },
+    axios({
+        method: 'PUT',
+        url: requestURL,
+        headers: headerObj,
+        
+        data: {
+          tags: tagsData
+        },
 
-        }).then(resp => {
-          if(Boolean(resp.data)) {
-            // console.log(']]]-------------put Address-------------[[[');
-            // console.log(resp.data);
-            this.props.handleIdentityPopClose();
-          }
-        }).catch(error => {
-            console.log(error.response);
-        });
+      }).then(resp => {
+        if(Boolean(resp.data)) {
+          // console.log(']]]-------------put Address-------------[[[');
+          // console.log(resp.data);
+          this.props.handleIdentityPopClose();
+        }
+      }).catch(error => {
+          console.log(error.response);
+      });
+  }
+
+  handleBlur = (val) => {
+    if(val.trim()) {
+      this.setState({'complete': true});      
+    } else {
+      this.setState({'complete': false});
     }
   }
 
   handleLoadData = () => {
-    const requestURL = `${process.env.API_URL}/user/addrInfo`;
+    const requestURL = `${process.env.API_URL}/user/detailInfo`;
     const accessToken = localStorage.getItem('accessToken');
     const token = `Bearer ${accessToken}`;
 
@@ -377,11 +368,12 @@ class ProfileIdentity extends React.PureComponent {
         if(Boolean(resp.data)) {
           // console.log(']]]-------------get Address-------------[[[');
           // console.log(resp.data);
-          resp.data.tags = "aaa,bbb,ccc,ddd,eee,fff,aabasdf";
-          if(resp.data) {
+
+          if(resp.data && resp.data.tags.trim()) {
             this.setState({
             'tags': resp.data.tags,
-            'tagsList': resp.data.tags.split(',')
+            'tagsList': resp.data.tags.split(','),
+            'complete': true,
             });
           }
 
@@ -442,7 +434,7 @@ class ProfileIdentity extends React.PureComponent {
                 </div>
               </div>
               <div className={classes.divCol}>                
-                <TagInput tags={this.state.tagsList}/>
+                <TagInput tags={this.state.tagsList} handleBlur={this.handleBlur}/>
               </div>
             </div>
           </div>

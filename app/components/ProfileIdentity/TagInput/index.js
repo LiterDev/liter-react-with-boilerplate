@@ -51,6 +51,7 @@ class TagInput extends React.PureComponent {
       tagList: nextProps.tags,
     });
   }
+
   // detectSpacePresent = e => {
   //   if (e.keyCode === 32) {
   //     // this.props.changeInputValue('');
@@ -84,6 +85,8 @@ class TagInput extends React.PureComponent {
       this.setState({ value: tagVal });
     }
 
+    this.props.handleBlur && this.props.handleBlur(val);
+
     return true;
     // this.props.inputHandler && this.props.inputHandler(e);
   }
@@ -108,9 +111,9 @@ class TagInput extends React.PureComponent {
           onKeyDown={this.detectSpacePresent}
         />
         <Paper className={classes.root}>
-          {this.state.tagList && this.state.tagList.map((data, index) => {
+          {this.state.tagList.map((data, index) => {
             // console.log(data.index);
-            // console.log(index);
+            console.log(index);
             return (
               <Chip
                 key={data}

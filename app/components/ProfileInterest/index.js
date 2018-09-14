@@ -595,11 +595,11 @@ class ProfileInterest extends React.PureComponent {
           },
         })
           .then(resp => {
-            console.log(resp.data);
+            // console.log(resp.data);
 
             if (Boolean(resp.data.interestCategory)) {
               const childsArry = resp.data.interestCategory.split(',');
-              console.log(childsArry);
+              // console.log(childsArry);
               if (childsArry.includes('0')) {
                 self.setState({
                   cate1: true,

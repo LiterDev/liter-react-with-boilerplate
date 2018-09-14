@@ -8,6 +8,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import axios from 'axios';
 /* material-ui core */
 import AppBar from '@material-ui/core/AppBar';
@@ -19,6 +21,7 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
+import { loadUserDetail } from 'containers/UserProfile/actions';
 
 /* containers */
 /* components */
@@ -339,6 +342,7 @@ class ProfileMarried extends React.PureComponent {
         })
           .then(resp => {
             self.setState({ loading: false });
+            this.props.dispatch(loadUserDetail());
             this.props.handleClose();
             // }
           })
@@ -542,7 +546,12 @@ class ProfileMarried extends React.PureComponent {
 
 ProfileMarried.propTypes = {
   handleClose: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 // export default ProfileMarried;
-export default withStyles(styles)(ProfileMarried);
+// export default withStyles(styles)(ProfileMarried);
+export default compose(
+  connect(),
+  withStyles(styles),
+)(ProfileMarried);

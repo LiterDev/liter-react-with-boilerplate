@@ -50,6 +50,7 @@ const styles = theme => ({
     // backgroundColor: '#f9f9f9',
     // height: '100vh',
     // position: 'absolute'
+    fontFamily: 'Apple SD Gothic Neo',
   },
   appBar: {
     // height: theme.spacing.unit * 8,
@@ -188,6 +189,8 @@ const styles = theme => ({
     height: 63,
     border: 'solid 0.5px #8fa6bb',
     borderRadius: 0,
+    paddingTop: 4,
+    paddingBottom: 4,
   },
   buttonText: {
     fontFamily: 'Apple SD Gothic Neo',
@@ -251,6 +254,19 @@ const styles = theme => ({
     paddingLeft: 16,
     paddingRight: 16,
     marginTop: 13,
+  },
+  buttonTextTop: {
+    fontSize: 10,
+    // fontWeight: 'normal',
+    // fontStyle: 'normal',
+    // fontStretch: 'normal',
+    // lineHeight: 'normal',
+    // letterSpacing: 'normal',
+    color: 'rgb(21, 145, 255)',
+    marginBottom: 4,
+  },
+  buttonTextBottom: {
+    color: 'rgb(51, 51, 51)',
   },
 });
 
@@ -438,30 +454,78 @@ export class UserProfile extends React.PureComponent {
         <div className={classes.profileText}>프로필 정보</div>
         <div className={classes.buttonWrap}>
           <div className={classes.buttonDiv}>
-            <Button
-              variant="outlined"
-              className={classes.button}
-              classes={{
-                root: classes.buttonRoot,
-                text: classes.buttonText,
-              }}
-              onClick={this.handleBirthPop}
-            >
-              성별/생년월일
-            </Button>
+            {Boolean(this.props.userprofile.userDetail.gender) ||
+            this.props.userprofile.userDetail.gender === 0 ||
+            Boolean(this.props.userprofile.userDetail.birthDay) ? (
+              <Button
+                variant="outlined"
+                className={classes.button}
+                classes={{
+                  root: classes.buttonRoot,
+                  text: classes.buttonText,
+                }}
+                onClick={this.handleBirthPop}
+              >
+                <div>
+                  <div className={classes.buttonTextTop}>성별/생년월일</div>
+                  <div className={classes.buttonTextBottom}>
+                    {this.props.userprofile.userDetail.gender === 0
+                      ? '남'
+                      : '여'}
+                    {Boolean(this.props.userprofile.userDetail.birthDay)
+                      ? ` / ${this.props.userprofile.userDetail.birthDay}`
+                      : ''}
+                  </div>
+                </div>
+              </Button>
+            ) : (
+              <Button
+                variant="outlined"
+                className={classes.button}
+                classes={{
+                  root: classes.buttonRoot,
+                  text: classes.buttonText,
+                }}
+                onClick={this.handleBirthPop}
+              >
+                성별/생년월일
+              </Button>
+            )}
           </div>
           <div className={classes.buttonDiv}>
-            <Button
-              variant="outlined"
-              className={classes.button}
-              classes={{
-                root: classes.buttonRoot,
-                text: classes.buttonText,
-              }}
-              onClick={this.handleMarriedPop}
-            >
-              결혼여부
-            </Button>
+            {Boolean(this.props.userprofile.userDetail.married) ||
+            this.props.userprofile.userDetail.married === 0 ? (
+              <Button
+                variant="outlined"
+                className={classes.button}
+                classes={{
+                  root: classes.buttonRoot,
+                  text: classes.buttonText,
+                }}
+                onClick={this.handleMarriedPop}
+              >
+                <div>
+                  <div className={classes.buttonTextTop}>결혼여부</div>
+                  <div className={classes.buttonTextBottom}>
+                    {this.props.userprofile.userDetail.married === 0
+                      ? '미혼'
+                      : '기혼'}
+                  </div>
+                </div>
+              </Button>
+            ) : (
+              <Button
+                variant="outlined"
+                className={classes.button}
+                classes={{
+                  root: classes.buttonRoot,
+                  text: classes.buttonText,
+                }}
+                onClick={this.handleMarriedPop}
+              >
+                결혼여부
+              </Button>
+            )}
           </div>
           <div className={classes.buttonDiv}>
             <Button

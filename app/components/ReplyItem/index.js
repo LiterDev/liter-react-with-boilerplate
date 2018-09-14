@@ -701,13 +701,21 @@ class ReplyItem extends React.PureComponent {
                   : classes.avatarWrapDelete
               }
             >
-              <StyledLink to={`/profile/${reply.user.id}`}>
+              {deleteYn == false ? (
+                <StyledLink to={`/profile/${reply.user.id}`}>
+                  <Avatar
+                    alt=""
+                    src={avatarImg}
+                    className={classNames(classes.avatar, classes.bigAvatar)}
+                  />
+                </StyledLink>
+              ) : (
                 <Avatar
                   alt=""
                   src={avatarImg}
                   className={classNames(classes.avatar, classes.bigAvatar)}
                 />
-              </StyledLink>
+              )}
             </div>
 
             <div className={classes.replyWrap}>

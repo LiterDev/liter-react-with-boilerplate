@@ -28,7 +28,7 @@ export function* getUserDetail() {
     };
     try {
       const response = yield call(request, requestURL, options);
-      console.log(response);
+      // console.log(response);
       yield put(loadUserDetailSuccess(response));
     } catch (err) {
       yield put(loadUserDetailError(err));

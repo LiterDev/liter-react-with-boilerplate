@@ -45,12 +45,23 @@ class TagInput extends React.PureComponent {
     // this.detectSpacePresent = this.detectSpacePresent.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      ...this.state,
-      tagList: nextProps.tags,
-    });
-  }
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   // console.log(nextProps.active);
+  //   if (Boolean(nextProps.tags)) {
+  //     if (nextProps.tags !== prevState.tagList) {
+  //       return { tagList: nextProps.tags };
+  //     }
+  //   }
+
+  //   return null;
+  // }
+
+  // componentWillReceiveProps(nextProps) {
+  //   this.setState({
+  //     ...this.state,
+  //     tagList: nextProps.tags,
+  //   });
+  // }
 
   // detectSpacePresent = e => {
   //   if (e.keyCode === 32) {
@@ -106,21 +117,22 @@ class TagInput extends React.PureComponent {
           placeholder="스페이스로 입력해주세요."
           value={this.state.value}
           onChange={this.onChange}
-          onKeyDown={this.detectSpacePresent}
+          // onKeyDown={this.detectSpacePresent}
         />
         <Paper className={classes.root}>
-          {this.state.tagList.map((data, index) => {
-            // console.log(data.index);
-            console.log(index);
-            return (
-              <Chip
-                key={data}
-                label={data}
-                onDelete={this.handleDelete(data)}
-                className={classes.chip}
-              />
-            );
-          })}
+          {this.state.tagList &&
+            this.state.tagList.map((data, index) => {
+              // console.log(data.index);
+              // console.log(index);
+              return (
+                <Chip
+                  key={data}
+                  label={data}
+                  onDelete={this.handleDelete(data)}
+                  className={classes.chip}
+                />
+              );
+            })}
         </Paper>
         <input value={this.state.tagList} type="hidden" name="tags" />
       </div>

@@ -8,6 +8,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import axios from 'axios';
 /* material-ui core */
 import AppBar from '@material-ui/core/AppBar';
@@ -27,6 +29,7 @@ import FormControl from '@material-ui/core/FormControl';
 /* components */
 import ProfileBotton from 'components/ProfileBotton';
 import BlueButton from 'components/BlueButton';
+import { loadUserDetail } from 'containers/UserProfile/actions';
 /* image */
 /* ref */
 import { FormattedMessage } from 'react-intl';
@@ -354,6 +357,8 @@ class ProfileBirth extends React.PureComponent {
             // this.props.handleLikeState(reviewId);
 
             self.setState({ loading: false });
+            // console.log(this.props);
+            this.props.dispatch(loadUserDetail());
             this.props.handleClose();
             // }
           })
@@ -559,7 +564,12 @@ class ProfileBirth extends React.PureComponent {
 
 ProfileBirth.propTypes = {
   handleClose: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 // export default ProfileBirth;
-export default withStyles(styles)(ProfileBirth);
+// export default withStyles(styles)(ProfileBirth);
+export default compose(
+  connect(),
+  withStyles(styles),
+)(ProfileBirth);
